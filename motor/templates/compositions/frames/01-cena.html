@@ -1,0 +1,180 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f1-root {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #030914;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f1-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    #f1-overlay-2d {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 2;
+      pointer-events: none;
+      box-sizing: border-box;
+      padding: 96px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .f1-header {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .f1-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 26px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #38bdf8;
+    }
+
+    .f1-kicker::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #38bdf8;
+      box-shadow: 0 0 16px #38bdf8;
+    }
+
+    .f1-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 72px;
+      line-height: 1.05;
+      font-weight: 700;
+      color: #f8fafc;
+      margin: 0;
+      max-width: 920px;
+    }
+
+    .f1-metric-card {
+      align-self: flex-start;
+      background: rgba(8, 14, 26, 0.82);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      border-radius: 20px;
+      padding: 24px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .f1-metric-val {
+      font-size: 56px;
+      font-weight: 800;
+      color: #38bdf8;
+      font-feature-settings: 'tnum';
+      line-height: 1;
+    }
+
+    .f1-metric-label {
+      font-size: 20px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+  </style>
+
+  <div id="f1-root" data-composition-id="frame-01-cena" data-width="1080" data-height="1920">
+    <!-- Palco 3D WebGL (Three.js) -->
+    <div id="f1-stage-3d"></div>
+
+    <!-- Camada 2D Editorial (Tipografia + Telemetria) -->
+    <div id="f1-overlay-2d">
+      <div class="f1-header">
+        <div class="f1-kicker">CATEGORIA // ENGENHARIA</div>
+        <h1 class="f1-title">Título da Cena</h1>
+      </div>
+
+      <div class="f1-metric-card">
+        <span class="f1-metric-val">100%</span>
+        <span class="f1-metric-label">MÉTRICA EDITORIAL</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.currentScript.ownerDocument || document;
+      var elRoot = root.getElementById('f1-root');
+      var container3D = root.getElementById('f1-stage-3d');
+
+      var tl = gsap.timeline({ paused: true });
+
+      // Animações 2D via GSAP
+      tl.from('.f1-header', { opacity: 0, y: -40, duration: 0.8, ease: 'power3.out' }, 0);
+      tl.from('.f1-metric-card', { opacity: 0, scale: 0.85, duration: 0.7, ease: 'back.out(1.7)' }, 0.4);
+
+      // Inicialização do Palco 3D se Three.js e Motor3D estiverem disponíveis
+      if (window.THREE && window.Motor3D && container3D) {
+        var M = window.Motor3D;
+        var palco = M.criarPalco(THREE, container3D, {
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'estudio'
+        });
+
+        // Exemplo: cria um mascote/boneco no palco
+        var mascote = M.criarBoneco(THREE, { escala: 0.85 });
+        mascote.raiz.position.set(-0.6, 0.0, 0.0);
+        palco.cena.add(mascote.raiz);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          M.resetPose(mascote, t);
+          M.respirar(mascote, t);
+          M.olharCamera(mascote, palco.camera, 0.7);
+        });
+      }
+
+      window.__FRAME_TIMELINE__ = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,59 @@
+{
+  "id": "template-video",
+  "titulo": "Título do Vídeo",
+  "subtitulo": "Subtítulo ou Tema",
+  "tema": "Tema Principal",
+  "modo": "3d",
+  "fps": 30,
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "alvoPpm": 190,
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "SEU_VOICE_ID",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.80,
+    "estilo": 0.40,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.20
+  },
+  "efeitos": {
+    "abaixa": true,
+    "ganho": 1.0
+  },
+  "frames": [
+    {
+      "id": "frame-01-cena",
+      "numero": "01",
+      "titulo": "Primeira Cena",
+      "arquivo": "compositions/frames/01-cena.html",
+      "kicker": "CATEGORIA // DESTAQUE",
+      "metrica": {
+        "valor": "01",
+        "rotulo": "MÉTRICA INICIAL"
+      },
+      "direcao3D": "Posicione seus objetos 3D ou mascote aqui.",
+      "direcao2D": "Tipografia editorial, telemetria e legendas.",
+      "frases": [
+        {
+          "texto": "Escreva a primeira frase do seu vídeo aqui.",
+          "plano": "abertura"
+        }
+      ],
+      "sons": [
+        {
+          "nome": "whoosh",
+          "offset": 0.1,
+          "ganho": 0.5
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+# ==============================================================================
+# GitIgnore — Motor Gerador de Vídeos 2.0 (Motor V2)
+# ==============================================================================
+
+# Segredos e Variáveis de Ambiente
+.env
+.env.*
+!.env.example
+motor/publish/.tokens.json
+.tokens.json
+motor/publish/agendamentos.json
+
+# Dependências
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Renders e Arquivos Pesados de Vídeo
+*.mp4
+*.webm
+*.mov
+*.mkv
+*.avi
+**/renders/
+**/snapshots/
+videos/*/renders/
+videos/*/snapshots/
+
+# Áudios Gerados por IA e Mixagens Brutas (regeneráveis via pipeline)
+videos/*/narracao/
+videos/*/assets/audio/*.wav
+videos/*/assets/bgm/master_mix_*.wav
+canal/testes-de-voz/
+assets/narracao-cache/
+
+# Metadados e Timestamps Gerados (gerados pelo pipeline de áudio)
+videos/*/audio_meta.json
+videos/*/caption_groups.json
+videos/*/timeline.json
+
+# Artefatos internos de Check/Render do HyperFrames
+**/.hyperframes/
+.hyperframes/
+
+# Logs e Processos
+*.log
+logs/
+
+# Sistema Operacional e IDEs
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Diretórios Temporários de Rascunho
+scratch/
+**/scratch/
+tmp/
+temp/

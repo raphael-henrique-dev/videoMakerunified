@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1920">
+  <title>Motor 2.0 — Template de Vídeo</title>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="assets/vendor/three.min.js"></script>
+  <script src="assets/vendor/motor3d.global.js"></script>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('./assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('./assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('./assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #030914;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #030914;
+    }
+
+    .clip {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #clip-captions {
+      z-index: 40;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-width="1080" data-height="1920" data-start="0" data-duration="10.0">
+
+    <!-- Track 1: Visual Frame -->
+    <div id="clip-f1" class="clip"
+         data-composition-src="compositions/frames/01-cena.html"
+         data-composition-id="frame-01-cena"
+         data-start="0" data-duration="10.0" data-track-index="1"></div>
+
+    <!-- Track 2: Per-Frame Voice Audio -->
+    <audio id="audio-f1" src="assets/voice/frame-01.wav" data-start="0" data-duration="10.0" data-track-index="2"></audio>
+
+    <!-- Track 3: Sidechain-Ducked BGM Bed -->
+    <audio id="audio-bgm" src="assets/bgm/master_ducked_bgm.wav" data-start="0" data-duration="10.0" data-track-index="3" data-volume="1.0"></audio>
+
+    <!-- Track 4: Word-Level Karaoke Captions -->
+    <div id="clip-captions" class="clip"
+         data-composition-src="compositions/captions.html"
+         data-composition-id="captions"
+         data-track-kind="captions"
+         data-start="0" data-duration="10.0" data-track-index="4"></div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+    window.__timelines['main'] = tl;
+  </script>
+</body>
+</html>
