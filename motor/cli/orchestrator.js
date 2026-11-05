@@ -140,6 +140,45 @@ switch (comando) {
     break;
   }
 
+  case "audit":
+  case "audit:fast": {
+    const vDir = resolverVideoDir(argVideo);
+    const slug = path.basename(vDir);
+    const argsRestantes = process.argv.slice(4);
+    const eFast = comando === "audit:fast" || argsRestantes.includes("--fast");
+    const jsonModo = argsRestantes.includes("--json");
+    const providerArg = argsRestantes.find((a) => a.startsWith("--provider="))?.split("=")[1];
+    const engineArg = argsRestantes.find((a) => a.startsWith("--engine="))?.split("=")[1];
+
+    const { auditarVideoVisual } = await import("../audit/visual.js");
+    try {
+      const res = await auditarVideoVisual(slug, {
+        fast: eFast,
+        provider: providerArg,
+        engine: engineArg,
+      });
+      if (jsonModo) {
+        console.log(JSON.stringify(res, null, 2));
+      } else {
+        console.log(`\n======================================================`);
+        console.log(`📊 RESULTADO DA AUDITORIA VISUAL: ${slug.toUpperCase()}`);
+        console.log(`======================================================`);
+        console.log(`• Status:     ${res.aprovado ? "🟢 APROVADO" : "🔴 REPROVADO"}`);
+        console.log(`• Nota Final: ${res.notaFinal.toFixed(1)} / 10`);
+        console.log(`• Tier 1:     ${res.tier1.motor} (${res.tier1.duracaoMs}ms, ${res.tier1.resumo.criticos} críticos, ${res.tier1.resumo.altos} altos)`);
+        console.log(`• Tier 2 VLM: ${res.tier2.ativo ? `${res.tier2.provedorNome} (${res.tier2.nota_geral?.toFixed(1)}/10)` : "Inativo"}`);
+        console.log(`• Prancha:    ${path.relative(ROOT, res.pranchas.humana)}`);
+        console.log(`• Relatório:  ${path.relative(ROOT, res.caminhoMd)}`);
+        console.log(`======================================================\n`);
+      }
+      if (!res.aprovado) process.exitCode = 2;
+    } catch (err) {
+      console.error(`\n❌ Falha na auditoria visual de videos/${slug}:`, err.message);
+      process.exit(1);
+    }
+    break;
+  }
+
   case "dev": {
     const vDir = resolverVideoDir(argVideo);
     const child = spawn("npx", ["--yes", "hyperframes@0.8.177", "preview", path.relative(ROOT, vDir)], {
@@ -276,6 +315,8 @@ Comandos disponíveis:
   npm run video:audio -- <slug>           Gera narração, alinhamento, ducking e legendas do vídeo
   npm run video:storyboard -- <slug>      Regenera STORYBOARD.md e captions.html do vídeo
   npm run video:check -- <slug>           Audita o vídeo com o linter estático do HyperFrames
+  npm run video:audit -- <slug>           Audita o vídeo com Visão Computacional (Tier 1 + Tier 2 VLM)
+  npm run video:audit:fast -- <slug>      Auditoria visual determinística ultra-rápida (100% offline)
   npm run video:dev -- <slug>             Abre o estúdio/preview do vídeo no navegador
   npm run video:snapshot -- <slug>        Captura 5 snapshots visuais para verificação rápida
   npm run video:render -- <slug>          Renderiza o arquivo MP4 final em videos/<slug>/renders/

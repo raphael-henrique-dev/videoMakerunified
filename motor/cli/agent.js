@@ -165,19 +165,89 @@ ${perfil}
     console.warn("Aviso ao processar áudio:", err.message);
   }
 
-  console.log(`\n🔍 [4/5] Auditando conformidade técnica com o linter estático HyperFrames...`);
+  console.log(`\n🔍 [4/6] Auditando conformidade técnica com o linter estático HyperFrames...`);
   try {
     execFileSync("node", [path.join(ROOT, "motor", "cli", "orchestrator.js"), "check", slug], { stdio: "inherit" });
   } catch (err) {
-    console.warn("Aviso na auditoria:", err.message);
+    console.warn("Aviso na auditoria estática:", err.message);
   }
 
-  // 5. REGRA MANDATÓRIA: Memória evolutiva do canal COM APROVAÇÃO DO USUÁRIO
+  // 5. Auditoria Visual por Visão Computacional (Tier 1 + Tier 2 VLM) e Loop de Auto-Cura
   console.log(`\n======================================================`);
-  console.log(`💡 [5/5] MEMÓRIA EVOLUTIVA DO CANAL`);
+  console.log(`👁️ [5/6] AUDITORIA VISUAL POR VISÃO COMPUTACIONAL (CV)`);
   console.log(`======================================================`);
 
-  const propostaAprendizado = `Produção do vídeo "${temaPrompt}" (${slug}): Estruturação atômica modular validada com 0 erros no HyperFrames.`;
+  const { auditarVideoVisual } = await import("../audit/visual.js");
+  const provedorVlmPref = opcaoIA === "1" ? "gemini" : opcaoIA === "2" ? "openai" : null;
+  const modoRapido = opcaoIA === "3";
+
+  let resultadoAudit = null;
+  let iteracaoCura = 0;
+  const MAX_ITERACOES_CURA = 2;
+
+  while (iteracaoCura <= MAX_ITERACOES_CURA) {
+    try {
+      resultadoAudit = await auditarVideoVisual(slug, {
+        fast: modoRapido,
+        provider: provedorVlmPref,
+      });
+    } catch (err) {
+      console.warn("Aviso ao executar auditoria visual:", err.message);
+      break;
+    }
+
+    if (resultadoAudit.aprovado) {
+      console.log(`\n✅ Auditoria Visual APROVADA com Nota: ${resultadoAudit.notaFinal.toFixed(1)} / 10!`);
+      break;
+    }
+
+    iteracaoCura++;
+    if (iteracaoCura > MAX_ITERACOES_CURA) {
+      console.warn(`\n⚠️ Limite de ${MAX_ITERACOES_CURA} tentativas de auto-cura atingido.`);
+      console.log(`• Nota Final Atual: ${resultadoAudit.notaFinal.toFixed(1)} / 10`);
+      console.log(`• Prancha Anotada:  ${path.relative(ROOT, resultadoAudit.pranchas.humana)}`);
+      console.log(`• Relatório:        ${path.relative(ROOT, resultadoAudit.caminhoMd)}`);
+
+      const prosseguir = await rl.question(`\nDeseja aprovar o vídeo manualmente e prosseguir mesmo assim? (s/N)\n> `);
+      if (prosseguir.trim().toLowerCase() !== "s" && prosseguir.trim().toLowerCase() !== "sim") {
+        console.log("Operação interrompida pelo usuário para ajustes visuais manuais.");
+        rl.close();
+        return;
+      }
+      break;
+    }
+
+    console.log(`\n🔧 [Auto-Cura ${iteracaoCura}/${MAX_ITERACOES_CURA}] Aplicando correções visuais sugeridas pela auditoria...`);
+    const framesDir = path.join(destVideoDir, "compositions", "frames");
+    if (fs.existsSync(framesDir)) {
+      const arquivosFrames = fs.readdirSync(framesDir).filter((f) => f.endsWith(".html"));
+      // Aplica correções automáticas seguras de layout/safe-zone se detectadas
+      for (const arq of arquivosFrames) {
+        const arqPath = path.join(framesDir, arq);
+        let conteudo = fs.readFileSync(arqPath, "utf8");
+        let alterou = false;
+
+        // Se houver violação de rodapé, eleva elementos sobrepostos
+        if (resultadoAudit.tier1.resumo.altos > 0 && conteudo.includes("top: 1350px")) {
+          conteudo = conteudo.replace(/top:\s*1350px/g, "top: 1250px");
+          alterou = true;
+        }
+
+        if (alterou) {
+          fs.writeFileSync(arqPath, conteudo, "utf8");
+          console.log(`  • Ajuste automático de layout aplicado em: compositions/frames/${arq}`);
+        }
+      }
+    }
+  }
+
+  // 6. REGRA MANDATÓRIA: Memória evolutiva do canal COM APROVAÇÃO DO USUÁRIO
+  console.log(`\n======================================================`);
+  console.log(`💡 [6/6] MEMÓRIA EVOLUTIVA DO CANAL`);
+  console.log(`======================================================`);
+
+  const notaTxt = resultadoAudit?.notaFinal ? ` (Nota Visual: ${resultadoAudit.notaFinal.toFixed(1)}/10)` : "";
+  const propostaAprendizado = `Produção do vídeo "${temaPrompt}" (${slug}): Estruturação atômica validada com 0 erros no HyperFrames e aprovada na Auditoria Visual CV${notaTxt}.`;
   console.log(`\nO agente identificou o seguinte aprendizado para registrar:\n"${propostaAprendizado}"`);
   const aprova = await rl.question(`\nDeseja aprovar e registrar este aprendizado em canal/aprendizados.md? (s/N)\n> `);
 

@@ -12,6 +12,8 @@
     "video:audio": "node motor/cli/orchestrator.js audio",
     "video:storyboard": "node motor/cli/orchestrator.js storyboard",
     "video:check": "node motor/cli/orchestrator.js check",
+    "video:audit": "node motor/cli/orchestrator.js audit",
+    "video:audit:fast": "node motor/cli/orchestrator.js audit:fast",
     "video:dev": "node motor/cli/orchestrator.js dev",
     "video:snapshot": "node motor/cli/orchestrator.js snapshot",
     "video:render": "node motor/cli/orchestrator.js render",

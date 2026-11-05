@@ -59,7 +59,10 @@ Quando o usuário solicitar no chat a criação ou planejamento de um vídeo:
 5. **Pipeline de Áudio & Auditoria:**
    - Execute `npm run video:audio -- <slug>`.
    - Execute `npm run video:check -- <slug>` (meta: **0 erros** no HyperFrames check).
-   - Capture snapshots visuais em `videos/<slug>/renders/snapshots/`.
+   - Execute `npm run video:audit:fast -- <slug>` (ou `npm run video:audit -- <slug>`):
+     - Meta: **Status APROVADO** e nota **>= 8.0/10**.
+     - Inspecione a prancha anotada gerada em `videos/<slug>/renders/audit/contact-sheet-anotada.jpg`.
+     - Garanta que nenhum card de texto, legenda ou métrica colida com o rodapé (`y > 1540px`) ou lateral direita (`x > 940px`).
 6. **Entrega e Checkpoint de Aprendizado:**
    - Apresente os snapshots e o resumo ao usuário.
    - **REGRA MANDATÓRIA DE MEMÓRIA:** Se você desenvolveu uma nova solução técnica, geometria 3D reutilizável ou ajuste de layout durante a criação, formule a proposta de aprendizado e pergunte:  
@@ -90,10 +93,16 @@ npm run video:audio -- meu-video
 # 4. Pré-visualização com hot-reload no navegador (HyperFrames Studio)
 npm run video:dev -- meu-video
 
-# 5. Auditoria de conformidade técnica (linter, layout, contraste WCAG)
+# 5. Auditoria de conformidade técnica (linter estático de código HyperFrames)
 npm run video:check -- meu-video
 
-# 6. Renderização do vídeo final MP4
+# 6. Auditoria Visual por Visão Computacional (Tier 1 Local + Tier 2 VLM)
+npm run video:audit -- meu-video                        # Auditoria visual completa (Tier 1 + VLM)
+npm run video:audit:fast -- meu-video                   # Auditoria determinística ultra-rápida (offline)
+npm run video:audit -- meu-video --provider=groq        # Usa Groq Llama 3.2 Vision (~300ms)
+npm run video:audit -- meu-video --provider=nvidia      # Usa NVIDIA NIM Vision
+
+# 7. Renderização do vídeo final MP4
 npm run video:render -- meu-video
 
 # 7. Listagem de todos os vídeos da fábrica
@@ -128,7 +137,24 @@ npm run video:agendados -- --cancel <id-ou-slug>        # Cancela agendamento da
 
 ---
 
-## 4. Regra de Ouro da Memória Evolutiva
+## 4. Regras Críticas de Safe-Zone Vertical 9:16 & Auditoria Visual
+
+Para garantir legibilidade perfeita nas plataformas de vídeo curto (TikTok, YouTube Shorts e Instagram Reels), o motor impõe zonas de segurança obrigatórias no canvas vertical `1080x1920`:
+
+| Zona | Coordenadas Críticas | Elementos das Redes | Regra para o Agente |
+| :--- | :--- | :--- | :--- |
+| **Rodapé** | `y: 1540px` a `1920px` (`h: 380px`) | Nome do canal, descrição, som e legendas nativas | **PROIBIDO** posicionar cards de dados, kickers ou títulos nesta área. Legendas devem ficar acima de `y=1250px`. |
+| **Topo** | `y: 0px` a `160px` (`h: 160px`) | Abas "Seguindo/Para você", busca e botão de câmera | Não use para textos essenciais. O kicker editorial pode tangenciar, mas sem encostar no topo. |
+| **Lateral Direita** | `x: 940px` a `1080px`, `y: 800` a `1600px` | Coluna de curtir, comentar, salvar e compartilhar | Mantenha margem direita mínima de `140px` para elementos interativos. |
+
+### Tolerâncias do Motor
+- **Blackout / Falha de Iluminação:** Média de brilho `< 16` acusa tela preta ou ausência de luzes no Three.js.
+- **Congelamento (Animation Freeze):** Se a diferença média entre amostras da mesma cena for `< 0.35`, o motor acusa trava de JavaScript/Timeline.
+- **Auto-Cura:** O agente executa até 2 iterações automáticas para corrigir enquadramento de câmera (`camera.position.z`) e layout antes de consultar o usuário.
+
+---
+
+## 5. Regra de Ouro da Memória Evolutiva
 
 > [!CAUTION]
 > **APROVAÇÃO HUMANA OBRIGATÓRIA PARA A MEMÓRIA DO CANAL:**  

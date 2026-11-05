@@ -42,6 +42,7 @@ motor-v2/
 │   ├── 2d/                     # Runtime SVG vetorial (motor2d.global.js)
 │   ├── 3d/                     # Módulos Three.js (câmera, rigging, props, shaders)
 │   ├── audio/                  # Pipeline de TTS ElevenLabs, alinhamento e mixagem
+│   ├── audit/                  # Auditoria Visual por Visão Computacional (Tier 1 Local + Tier 2 VLM)
 │   ├── cli/                    # CLI orquestradora e assistente de IA
 │   ├── publish/                # Upload, OAuth2, agendador e diagnósticos
 │   ├── schema/                 # Validador de schema de roteiro
@@ -87,6 +88,11 @@ npm run video:dev -- meu-primeiro-video
 
 # Audita conformidade técnica (linter, colisão de texto, conformidade WCAG AA)
 npm run video:check -- meu-primeiro-video
+
+# Audita visualmente com Visão Computacional (safe-zones 9:16, iluminação, freeze e VLM)
+npm run video:audit:fast -- meu-primeiro-video   # Auditoria determinística local ultra-rápida (offline)
+npm run video:audit -- meu-primeiro-video        # Auditoria completa (Tier 1 + Crítico VLM)
+npm run video:audit -- meu-primeiro-video --provider=groq # Crítico ultra-rápido via Groq Llama 3.2
 
 # Captura 5 snapshots visuais para inspeção rápida
 npm run video:snapshot -- meu-primeiro-video
