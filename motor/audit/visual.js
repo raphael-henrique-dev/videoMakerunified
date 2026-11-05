@@ -16,6 +16,9 @@ import { executarHeuristicas } from "./heuristics.js";
 import { gerarPranchas } from "./contact-sheet.js";
 import { auditarComVlm } from "./vlm-critic.js";
 import { formatarRelatorioMarkdown, salvarRelatorio } from "./reporter.js";
+import { carregarEnv } from "../publish/env-helper.js";
+
+carregarEnv();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../..");
@@ -251,11 +254,12 @@ if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToP
   }
 
   const fast = process.argv.includes("--fast");
+  const reuseSnaps = process.argv.includes("--reuse-snapshots");
   const providerArg = process.argv.find((a) => a.startsWith("--provider="))?.split("=")[1];
 
   console.log(`\n🔍 Iniciando auditoria visual por visão computacional para: videos/${slug}...`);
 
-  auditarVideoVisual(slug, { fast, provider: providerArg })
+  auditarVideoVisual(slug, { fast, provider: providerArg, reuseSnapshots: reuseSnaps })
     .then((r) => {
       console.log(`\n======================================================`);
       console.log(`📊 RESULTADO DA AUDITORIA VISUAL: ${r.slug.toUpperCase()}`);

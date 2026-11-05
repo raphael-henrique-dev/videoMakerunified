@@ -5,6 +5,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync, spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { carregarEnv } from "../publish/env-helper.js";
+
+carregarEnv();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../..");
@@ -23,7 +26,7 @@ function sanitizarSlug(nome) {
 
 function resolverVideoDir(slug) {
   if (!slug) {
-    console.error("Erro: Especifique o identificador ou pasta do vídeo (ex: meu-video ou videos/meu-video).");
+    console.error("Erro: Especifique o identificador ou pasta do vídeo (ex: cabo-submarino ou videos/cabo-submarino).");
     process.exit(1);
   }
   const limpo = slug.replace(/^videos\//, "");
@@ -150,12 +153,15 @@ switch (comando) {
     const providerArg = argsRestantes.find((a) => a.startsWith("--provider="))?.split("=")[1];
     const engineArg = argsRestantes.find((a) => a.startsWith("--engine="))?.split("=")[1];
 
+    const reuseSnaps = argsRestantes.includes("--reuse-snapshots");
+
     const { auditarVideoVisual } = await import("../audit/visual.js");
     try {
       const res = await auditarVideoVisual(slug, {
         fast: eFast,
         provider: providerArg,
         engine: engineArg,
+        reuseSnapshots: reuseSnaps,
       });
       if (jsonModo) {
         console.log(JSON.stringify(res, null, 2));

@@ -33,7 +33,7 @@ export const CONFIG_PROVEDORES = {
     nome: "NVIDIA NIM",
     tipo: "openai-compatible",
     endpointPadrao: "https://integrate.api.nvidia.com/v1/chat/completions",
-    modeloPadrao: "meta/llama-3.2-11b-vision-instruct",
+    modeloPadrao: process.env.NVIDIA_VISION_MODEL || "meta/llama-3.2-90b-vision-instruct",
     envKey: "NVIDIA_API_KEY",
   },
   openai: {
@@ -113,8 +113,8 @@ export function resolverProvedorVlm(preferencia = null, env = process.env) {
     return { id: pref, ...prov, apiKey: apiKey || null };
   }
 
-  // Ordem de auto-detecção: Gemini -> Groq -> NVIDIA -> OpenAI -> Ollama (se explícito)
-  const candidatos = ["gemini", "groq", "nvidia", "openai"];
+  // Ordem de auto-detecção: NVIDIA NIM (ativo padrão) -> Gemini -> Groq -> OpenAI -> Ollama (se explícito)
+  const candidatos = ["nvidia", "gemini", "groq", "openai"];
   for (const id of candidatos) {
     const prov = CONFIG_PROVEDORES[id];
     if (prov.envKey && env[prov.envKey]) {
@@ -222,7 +222,8 @@ export async function chamarOpenAiCompativelVlm(config, caminhoImagem, promptUsu
         ],
       },
     ],
-    temperature: 0.3,
+    temperature: 0.2,
+    max_tokens: 2048,
   };
 
   // Se o provedor suportar response_format json_object (OpenAI, Groq)
@@ -230,11 +231,20 @@ export async function chamarOpenAiCompativelVlm(config, caminhoImagem, promptUsu
     payload.response_format = { type: "json_object" };
   }
 
-  const res = await fetchFn(url, {
-    method: "POST",
-    headers,
-    body: JSON.stringify(payload),
-  });
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 120000); // 120s para modelos 90B na nuvem
+
+  let res;
+  try {
+    res = await fetchFn(url, {
+      method: "POST",
+      signal: controller.signal,
+      headers,
+      body: JSON.stringify(payload),
+    });
+  } finally {
+    clearTimeout(timeoutId);
+  }
 
   if (!res.ok) {
     const errText = await res.text();
@@ -245,12 +255,38 @@ export async function chamarOpenAiCompativelVlm(config, caminhoImagem, promptUsu
   const rawContent = json.choices?.[0]?.message?.content;
   if (!rawContent) throw new Error(`${config.nome} retornou resposta vazia.`);
 
-  // Extrai JSON mesmo se vier envelopado em markdown ```json ... ```
+  // 1. Tenta parsear JSON completo
   const matchJson = rawContent.match(/\{[\s\S]*\}/);
-  if (!matchJson) {
-    throw new Error(`Não foi possível parsear JSON na resposta de ${config.nome}: ${rawContent.slice(0, 120)}...`);
+  if (matchJson) {
+    try {
+      return JSON.parse(matchJson[0]);
+    } catch {}
   }
-  return JSON.parse(matchJson[0]);
+
+  // 2. Fallback resiliente: extrai campos mesmo se o JSON foi truncado ou veio em texto livre
+  const mNota =
+    rawContent.match(/"?nota_geral"?\s*:\s*([0-9]+(?:[.,][0-9]+)?)/i) ||
+    rawContent.match(/Nota(?:\s*Geral)?:\s*([0-9]+(?:[.,][0-9]+)?)/i);
+  const mAprov =
+    rawContent.match(/"?aprovado"?\s*:\s*(true|false|"true"|"false")/i) ||
+    rawContent.match(/Aprovado:\s*(Sim|Não|True|False)/i);
+  const mResumo =
+    rawContent.match(/"?resumo_critico"?\s*:\s*"([^"]+)"?/i) ||
+    rawContent.match(/Resumo(?:\s*Cr[íi]tico)?:\s*([^\n\r]+)/i);
+
+  if (mNota) {
+    const nota = parseFloat(mNota[1].replace(",", "."));
+    const aprov = mAprov ? /true|sim/i.test(mAprov[1]) : nota >= 8.0;
+    return {
+      nota_geral: nota,
+      aprovado: aprov,
+      resumo_critico: mResumo ? mResumo[1].trim() : "Auditoria visual semântica concluída.",
+      cenas: [],
+      sugestoes_gerais: [],
+    };
+  }
+
+  throw new Error(`Não foi possível parsear JSON na resposta de ${config.nome}: ${rawContent.slice(0, 120)}...`);
 }
 
 /**
@@ -281,7 +317,8 @@ export async function auditarComVlm(caminhoImagem, mapaCenas = [], opcoes = {}) 
 As cenas apresentadas na prancha correspondem a:
 ${mapaCenas.map((m) => `- Quadro #${m.indice}: Cena "${m.cena}" no timestamp ${m.tempo.toFixed(2)}s`).join("\n")}
 
-Avalie rigorosamente enquadramento 9:16, iluminação, legibilidade móvel e clipping. Emita as notas e correções em JSON.`;
+Avalie rigorosamente enquadramento 9:16, iluminação, legibilidade móvel e clipping. Emita as notas e correções em JSON.
+IMPORTANTE: Sua resposta inteira DEVE ser um único objeto JSON válido, iniciando imediatamente com "{" e terminando com "}". Não escreva nada antes ou depois do JSON.`;
 
   const fetchFn = opcoes.fetch || globalThis.fetch;
   let resposta = null;

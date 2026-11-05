@@ -90,9 +90,12 @@ npm run video:dev -- meu-primeiro-video
 npm run video:check -- meu-primeiro-video
 
 # Audita visualmente com Visão Computacional (safe-zones 9:16, iluminação, freeze e VLM)
-npm run video:audit:fast -- meu-primeiro-video   # Auditoria determinística local ultra-rápida (offline)
-npm run video:audit -- meu-primeiro-video        # Auditoria completa (Tier 1 + Crítico VLM)
-npm run video:audit -- meu-primeiro-video --provider=groq # Crítico ultra-rápido via Groq Llama 3.2
+npm run video:audit:fast -- meu-primeiro-video   # Tier 1 determinístico local ultra-rápido (~25ms/frame, offline)
+npm run video:audit -- meu-primeiro-video        # Tier 1 + Tier 2 com NVIDIA NIM 90B (padrão ativo)
+npm run video:audit -- meu-primeiro-video --reuse-snapshots # Pula re-captura se snapshots já existirem
+npm run video:audit -- meu-primeiro-video --provider=gemini # Alternativa: Google Gemini 2.5 Flash
+npm run video:audit -- meu-primeiro-video --provider=openai # Alternativa: OpenAI GPT-4o
+npm run video:audit -- meu-primeiro-video --provider=ollama # Alternativa: Ollama Local (llama3.2-vision)
 
 # Captura 5 snapshots visuais para inspeção rápida
 npm run video:snapshot -- meu-primeiro-video
@@ -103,7 +106,53 @@ npm run video:render -- meu-primeiro-video
 
 ---
 
-### 2. Autenticação das Redes Sociais
+### 2. Auditoria Visual por Visão Computacional (Two-Tier CV)
+
+O Motor 2.0 possui uma camada dupla de auditoria visual automatizada antes do render final:
+
+```
+[Snapshots das Cenas]
+         │
+         ├───► Tier 1: Local Determinístico (Python PIL / Sharp) [~25ms/frame, 100% offline]
+         │     ├── Safe-Zones 9:16 (Rodapé 1540-1920px, Topo 0-160px, Lateral 940-1080px)
+         │     ├── Histograma de Luminância (Blackout / Superexposição / Baixo Contraste)
+         │     ├── Detecção de Freeze de Animação (RMS delta entre amostras da cena < 0.35)
+         │     └── Geração de Pranchas de Contato (Anotada para humanos + Limpa para VLM)
+         │
+         └───► Tier 2: Crítico Multimodal Universal (VLM)
+               ├── Provedor Padrão Ativo: NVIDIA NIM (meta/llama-3.2-90b-vision-instruct)
+               ├── Alternativas Prontas: Gemini 2.5 Flash, OpenAI GPT-4o, Ollama Local
+               ├── Avaliação Semântica: Enquadramento 3D, clipping, clareza didática móvel
+               └── Saída: Nota 1-10, Aprovado/Reprovado, correções de CSS/layout em código
+```
+
+#### Comandos de Auditoria:
+```bash
+# Auditoria rápida local (Tier 1 apenas — offline, sem consumo de API):
+npm run video:audit:fast -- <slug>
+
+# Auditoria completa (Tier 1 + Crítico NVIDIA NIM 90B):
+npm run video:audit -- <slug>
+
+# Reutilizar snapshots existentes (não dispara nova captura do HyperFrames):
+npm run video:audit -- <slug> --reuse-snapshots
+
+# Selecionar provedor VLM explicitamente:
+npm run video:audit -- <slug> --provider=nvidia
+npm run video:audit -- <slug> --provider=gemini
+npm run video:audit -- <slug> --provider=openai
+npm run video:audit -- <slug> --provider=ollama
+```
+
+Artefatos gerados em `videos/<slug>/renders/audit/`:
+- `contact-sheet-anotada.jpg`: Visão consolidada com overlays de safe-zones e badges de status por cena.
+- `vlm-sheet.jpg`: Prancha em grade 2×N limpa enviada ao VLM.
+- `AUDITORIA_VISUAL.md`: Relatório completo com notas, advertências e sugestões acionáveis de código.
+- `audit-result.json`: Metadados estruturados para integração contínua e auto-cura (self-healing).
+
+---
+
+### 3. Autenticação das Redes Sociais
 Conecte suas contas com os assistentes interativos locais:
 
 ```bash
@@ -116,7 +165,7 @@ npm run auth:tiktok
 
 ---
 
-### 3. Diagnóstico e Status em Tempo Real
+### 4. Diagnóstico e Status em Tempo Real
 A qualquer momento, verifique a integridade das suas conexões e saldos de cota:
 
 ```bash
@@ -129,7 +178,7 @@ Exibe o canal conectado no YouTube (inscritos e vídeos), o usuário ativo no Ti
 
 ---
 
-### 4. Publicação Automática de Vídeos
+### 5. Publicação Automática de Vídeos
 
 ```bash
 # Upload em ambas as plataformas (em modo PRIVADO para revisão segura):
@@ -147,7 +196,7 @@ npm run video:upload -- meu-primeiro-video --tiktok
 
 ---
 
-### 5. Agendamento Inteligente de Postagens
+### 6. Agendamento Inteligente de Postagens
 
 O Motor compreende datas tanto em **linguagem natural** quanto em **tempo relativo**:
 

@@ -59,7 +59,9 @@ Quando o usuário solicitar no chat a criação ou planejamento de um vídeo:
 5. **Pipeline de Áudio & Auditoria:**
    - Execute `npm run video:audio -- <slug>`.
    - Execute `npm run video:check -- <slug>` (meta: **0 erros** no HyperFrames check).
-   - Execute `npm run video:audit:fast -- <slug>` (ou `npm run video:audit -- <slug>`):
+   - **Auditoria de Desenvolvimento (Rápida):** Execute `npm run video:audit:fast -- <slug>` durante a montagem das cenas para feedback determinístico imediato (< 300ms, offline, valida safe-zones, iluminação e freeze).
+   - **Auditoria Final (Qualidade Semântica):** Execute `npm run video:audit -- <slug>` (ou `npm run video:audit -- <slug> --reuse-snapshots` se já tiver gerado snapshots recentes):
+     - Executa o crítico VLM universal ativo (**NVIDIA NIM `meta/llama-3.2-90b-vision-instruct`**).
      - Meta: **Status APROVADO** e nota **>= 8.0/10**.
      - Inspecione a prancha anotada gerada em `videos/<slug>/renders/audit/contact-sheet-anotada.jpg`.
      - Garanta que nenhum card de texto, legenda ou métrica colida com o rodapé (`y > 1540px`) ou lateral direita (`x > 940px`).
@@ -97,10 +99,13 @@ npm run video:dev -- meu-video
 npm run video:check -- meu-video
 
 # 6. Auditoria Visual por Visão Computacional (Tier 1 Local + Tier 2 VLM)
-npm run video:audit -- meu-video                        # Auditoria visual completa (Tier 1 + VLM)
-npm run video:audit:fast -- meu-video                   # Auditoria determinística ultra-rápida (offline)
-npm run video:audit -- meu-video --provider=groq        # Usa Groq Llama 3.2 Vision (~300ms)
-npm run video:audit -- meu-video --provider=nvidia      # Usa NVIDIA NIM Vision
+npm run video:audit:fast -- meu-video                   # Tier 1 determinístico ultra-rápido (offline, safe-zones, freeze, luz)
+npm run video:audit -- meu-video                        # Tier 1 + Tier 2 com NVIDIA NIM (Llama 3.2 90B Vision Instruct - padrão ativo)
+npm run video:audit -- meu-video --reuse-snapshots      # Reutiliza snapshots existentes (pula captura HyperFrames)
+npm run video:audit -- meu-video --provider=nvidia      # Força NVIDIA NIM (meta/llama-3.2-90b-vision-instruct)
+npm run video:audit -- meu-video --provider=gemini      # Alternativa: Google Gemini 2.5 Flash
+npm run video:audit -- meu-video --provider=openai      # Alternativa: OpenAI GPT-4o
+npm run video:audit -- meu-video --provider=ollama      # Alternativa: Ollama Local (llama3.2-vision)
 
 # 7. Renderização do vídeo final MP4
 npm run video:render -- meu-video
@@ -147,9 +152,10 @@ Para garantir legibilidade perfeita nas plataformas de vídeo curto (TikTok, You
 | **Topo** | `y: 0px` a `160px` (`h: 160px`) | Abas "Seguindo/Para você", busca e botão de câmera | Não use para textos essenciais. O kicker editorial pode tangenciar, mas sem encostar no topo. |
 | **Lateral Direita** | `x: 940px` a `1080px`, `y: 800` a `1600px` | Coluna de curtir, comentar, salvar e compartilhar | Mantenha margem direita mínima de `140px` para elementos interativos. |
 
-### Tolerâncias do Motor
+### Tolerâncias e Motores de Auditoria
 - **Blackout / Falha de Iluminação:** Média de brilho `< 16` acusa tela preta ou ausência de luzes no Three.js.
 - **Congelamento (Animation Freeze):** Se a diferença média entre amostras da mesma cena for `< 0.35`, o motor acusa trava de JavaScript/Timeline.
+- **Crítico VLM Ativo (NVIDIA NIM):** O modelo `meta/llama-3.2-90b-vision-instruct` inspeciona a prancha `vlm-sheet.jpg` avaliando enquadramento 3D, clipping e harmonia estética com nota mínima de corte `>= 8.0/10`.
 - **Auto-Cura:** O agente executa até 2 iterações automáticas para corrigir enquadramento de câmera (`camera.position.z`) e layout antes de consultar o usuário.
 
 ---
