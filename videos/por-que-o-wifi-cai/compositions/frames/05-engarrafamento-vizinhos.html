@@ -1,0 +1,260 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f5-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f5-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 1;
+    }
+
+    .f5-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(5, 10, 20, 0.88) 0%,
+        rgba(5, 10, 20, 0.16) 28%,
+        rgba(5, 10, 20, 0.18) 64%,
+        rgba(5, 10, 20, 0.94) 100%
+      );
+    }
+
+    .f5-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f5-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(168, 85, 247, 0.42);
+      border-radius: 14px;
+    }
+
+    .f5-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #c084fc;
+    }
+
+    .f5-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f5-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #a855f7;
+      border-radius: 0 18px 18px 0;
+    }
+
+    .f5-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .f5-title-accent {
+      color: #c084fc;
+    }
+
+    .f5-subtitle {
+      font-size: 24px;
+      line-height: 1.38;
+      color: #cbd5e1;
+    }
+
+    .f5-cards-row {
+      position: absolute;
+      top: 1030px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f5-card {
+      flex: 1;
+      padding: 22px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border-radius: 16px;
+      border: 1px solid rgba(168, 85, 247, 0.36);
+    }
+
+    .f5-card-tag {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #c084fc;
+      margin-bottom: 6px;
+    }
+
+    .f5-card-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 6px;
+    }
+
+    .f5-card-desc {
+      font-size: 20px;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+  </style>
+
+  <div id="f5-root" data-composition-id="frame-05-engarrafamento-vizinhos" data-width="1080" data-height="1920" data-start="0" data-duration="17.35">
+    <div id="f5-stage-3d"></div>
+    <div class="f5-vignette"></div>
+
+    <div class="f5-ui-layer">
+      <div id="f5-topbar" class="f5-topbar">
+        <span class="f5-kicker">ERRO 04 // HORA DO PICO À NOITE</span>
+        <span class="f5-badge">AR CONGESTIONADO</span>
+      </div>
+
+      <div id="f5-header" class="f5-header-card">
+        <h1 class="f5-title">O Trânsito dos <span class="f5-title-accent">Vizinhos</span></h1>
+        <p class="f5-subtitle">À noite, o Wi-Fi do prédio inteiro tenta passar pelo mesmo corredor invisível no ar</p>
+      </div>
+
+      <div id="f5-cards" class="f5-cards-row">
+        <div class="f5-card" id="f5-c1">
+          <div class="f5-card-tag">MESMA RUA NO AR</div>
+          <div class="f5-card-title">20 Redes Juntas</div>
+          <div class="f5-card-desc">Os roteadores dos vizinhos usam as mesmas faixas para transmitir</div>
+        </div>
+        <div class="f5-card" id="f5-c2">
+          <div class="f5-card-tag">TODO MUNDO VENDO TV</div>
+          <div class="f5-card-title">Sinal Atropelado</div>
+          <div class="f5-card-desc">Uma rede esbarra na outra e deixa a internet lenta às 21h</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 17.35;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f5-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f5-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f5-c1', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f5-c2', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 5.60);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f5-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'noite'
+        });
+
+        var vizinhos = M.criarVizinhosCongestionados(THREE);
+        vizinhos.raiz.position.set(0.28, 0.35, -0.05);
+        vizinhos.raiz.scale.setScalar(0.68);
+        palco.cena.add(vizinhos.raiz);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.72 });
+        menino.raiz.position.set(-0.78, 0.35, 0.45);
+        palco.cena.add(menino.raiz);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          M.resetPose(menino, t);
+
+          var cong = M.suave(M.faixa(t, 0.4, 8.0));
+          vizinhos.atualizar(t, cong);
+
+          if (t < 5.5) {
+            M.pensar(menino, t, 0.2, 5.5);
+          } else {
+            M.humor(menino, 'cansado');
+            M.suar(menino, t, 5.5, DUR);
+            M.apontar(menino, [0.28, 1.35, 0.0], 'D');
+          }
+          M.olharCamera(menino, palco.camera, 0.72);
+
+          M.plano(
+            palco.camera,
+            t,
+            0,
+            DUR,
+            { pos: [-0.2, 1.85, 7.5], alvo: [0.0, 1.38, 0.0] },
+            { pos: [0.15, 1.78, 7.1], alvo: [0.05, 1.38, 0.0] }
+          );
+        }, { duracao: DUR, offsetGlobal: 65.70 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-05-engarrafamento-vizinhos'] = tl;
+    })();
+  </script>
+</template>

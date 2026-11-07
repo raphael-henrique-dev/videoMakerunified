@@ -1,0 +1,156 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #captions-comp {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .caption-bar {
+      position: absolute;
+      left: 64px;
+      right: 64px;
+      top: 1350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .caption-pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px 14px;
+      padding: 18px 30px;
+      background: rgba(6, 11, 22, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.32);
+      border-radius: 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65);
+      min-height: 76px;
+      max-width: 940px;
+    }
+
+    .cap-word {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #94a3b8;
+    }
+
+    .cap-word.is-spoken {
+      color: #f8fafc;
+    }
+
+    .cap-word.is-active {
+      color: #38bdf8;
+      text-shadow: 0 0 22px rgba(56, 189, 248, 0.55);
+    }
+
+    .cap-word.cap-brand.is-spoken {
+      color: #fbbf24;
+    }
+
+    .cap-word.cap-brand.is-active {
+      color: #facc15;
+      text-shadow: 0 0 24px rgba(250, 204, 21, 0.65);
+    }
+  </style>
+
+  <div id="captions-comp" data-composition-id="captions" data-width="1080" data-height="1920" data-start="0" data-duration="39.98">
+    <div class="caption-bar">
+      <div id="caption-pill" class="caption-pill" style="opacity: 0;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var GROUPS = [{"frameId":"frame-01-gancho-abismo","plano":"gancho","start":0.12,"end":0.804,"words":[{"word":"Como","start":0.12,"end":0.368,"brand":false},{"word":"um","start":0.387,"end":0.428,"brand":false},{"word":"fio","start":0.497,"end":0.666,"brand":false},{"word":"de","start":0.705,"end":0.765,"brand":false}]},{"frameId":"frame-01-gancho-abismo","plano":"gancho","start":0.804,"end":1.618,"words":[{"word":"cabelo","start":0.804,"end":1.122,"brand":true},{"word":"no","start":1.161,"end":1.231,"brand":false},{"word":"fundo","start":1.28,"end":1.469,"brand":false},{"word":"do","start":1.508,"end":1.578,"brand":false}]},{"frameId":"frame-01-gancho-abismo","plano":"gancho","start":1.618,"end":2.868,"words":[{"word":"oceano","start":1.618,"end":1.945,"brand":true},{"word":"carrega","start":1.985,"end":2.322,"brand":false},{"word":"a","start":2.342,"end":2.362,"brand":false},{"word":"internet","start":2.392,"end":2.788,"brand":true}]},{"frameId":"frame-01-gancho-abismo","plano":"gancho","start":2.878,"end":4.088,"words":[{"word":"do","start":2.878,"end":2.937,"brand":false},{"word":"mundo","start":2.967,"end":3.156,"brand":false},{"word":"inteiro?","start":3.185,"end":4.008,"brand":false}]},{"frameId":"frame-01-gancho-abismo","plano":"quebra","start":4.139,"end":4.864,"words":[{"word":"Se","start":4.139,"end":4.258,"brand":false},{"word":"você","start":4.298,"end":4.477,"brand":false},{"word":"pega","start":4.536,"end":4.744,"brand":false},{"word":"um","start":4.774,"end":4.813,"brand":false}]},{"frameId":"frame-01-gancho-abismo","plano":"quebra","start":4.864,"end":5.786,"words":[{"word":"fio","start":4.864,"end":4.983,"brand":false},{"word":"de","start":5.022,"end":5.082,"brand":false},{"word":"vidro","start":5.121,"end":5.349,"brand":true},{"word":"fininho","start":5.399,"end":5.746,"brand":false}]},{"frameId":"frame-01-gancho-abismo","plano":"quebra","start":5.786,"end":6.788,"words":[{"word":"como","start":5.786,"end":5.945,"brand":false},{"word":"cabelo","start":5.975,"end":6.332,"brand":false},{"word":"e","start":6.42,"end":6.51,"brand":false},{"word":"tenta","start":6.56,"end":6.768,"brand":false}]},{"frameId":"frame-01-gancho-abismo","plano":"quebra","start":6.788,"end":8.018,"words":[{"word":"esticar,","start":6.788,"end":7.294,"brand":false},{"word":"ele","start":7.433,"end":7.601,"brand":false},{"word":"racha","start":7.641,"end":7.899,"brand":true},{"word":"no","start":7.928,"end":7.988,"brand":false}]},{"frameId":"frame-01-gancho-abismo","plano":"quebra","start":8.018,"end":9.497,"words":[{"word":"primeiro","start":8.018,"end":8.335,"brand":false},{"word":"passo.","start":8.385,"end":9.417,"brand":false}]},{"frameId":"frame-02-camadas-internas","plano":"revestimento","start":9.89,"end":11.418,"words":[{"word":"A","start":9.89,"end":9.969,"brand":false},{"word":"solução?","start":10.029,"end":10.604,"brand":false},{"word":"Uma","start":10.902,"end":11.041,"brand":false},{"word":"camada","start":11.071,"end":11.368,"brand":false}]},{"frameId":"frame-02-camadas-internas","plano":"revestimento","start":11.418,"end":12.747,"words":[{"word":"de","start":11.418,"end":11.467,"brand":false},{"word":"acrílico","start":11.497,"end":11.884,"brand":true},{"word":"flexível","start":11.934,"end":12.449,"brand":false},{"word":"que","start":12.608,"end":12.717,"brand":false}]},{"frameId":"frame-02-camadas-internas","plano":"revestimento","start":12.747,"end":13.64,"words":[{"word":"abraça","start":12.747,"end":13.104,"brand":false},{"word":"o","start":13.154,"end":13.193,"brand":false},{"word":"fio","start":13.243,"end":13.421,"brand":false},{"word":"como","start":13.461,"end":13.619,"brand":false}]},{"frameId":"frame-02-camadas-internas","plano":"revestimento","start":13.64,"end":14.573,"words":[{"word":"uma","start":13.64,"end":13.759,"brand":false},{"word":"capa.","start":13.808,"end":14.493,"brand":false}]},{"frameId":"frame-02-camadas-internas","plano":"tubo","start":14.622,"end":15.773,"words":[{"word":"E","start":14.622,"end":14.751,"brand":false},{"word":"pra","start":14.8,"end":14.91,"brand":false},{"word":"evitar","start":14.929,"end":15.227,"brand":false},{"word":"atrito,","start":15.276,"end":15.693,"brand":false}]},{"frameId":"frame-02-camadas-internas","plano":"tubo","start":15.852,"end":16.943,"words":[{"word":"vários","start":15.852,"end":16.12,"brand":false},{"word":"fios","start":16.169,"end":16.328,"brand":false},{"word":"vão","start":16.358,"end":16.477,"brand":false},{"word":"soltos","start":16.526,"end":16.883,"brand":false}]},{"frameId":"frame-02-camadas-internas","plano":"tubo","start":16.943,"end":18.034,"words":[{"word":"num","start":16.943,"end":17.052,"brand":false},{"word":"tubo","start":17.101,"end":17.31,"brand":true},{"word":"plástico","start":17.35,"end":17.766,"brand":false},{"word":"cheio","start":17.806,"end":18.004,"brand":false}]},{"frameId":"frame-02-camadas-internas","plano":"tubo","start":18.034,"end":19.027,"words":[{"word":"de","start":18.034,"end":18.093,"brand":false},{"word":"gel.","start":18.133,"end":18.947,"brand":true}]},{"frameId":"frame-03-blindagem-aco","plano":"cobre","start":19.41,"end":20.392,"words":[{"word":"No","start":19.41,"end":19.559,"brand":false},{"word":"centro","start":19.589,"end":19.866,"brand":false},{"word":"de","start":19.916,"end":19.976,"brand":false},{"word":"tudo,","start":20.025,"end":20.322,"brand":false}]},{"frameId":"frame-03-blindagem-aco","plano":"cobre","start":20.392,"end":21.097,"words":[{"word":"passa","start":20.392,"end":20.61,"brand":false},{"word":"um","start":20.65,"end":20.699,"brand":false},{"word":"tubo","start":20.749,"end":20.948,"brand":false},{"word":"de","start":20.987,"end":21.047,"brand":false}]},{"frameId":"frame-03-blindagem-aco","plano":"cobre","start":21.097,"end":22.317,"words":[{"word":"cobre","start":21.097,"end":21.325,"brand":true},{"word":"maciço","start":21.364,"end":21.85,"brand":false},{"word":"que","start":21.989,"end":22.068,"brand":false},{"word":"leva","start":22.118,"end":22.276,"brand":false}]},{"frameId":"frame-03-blindagem-aco","plano":"cobre","start":22.317,"end":24.211,"words":[{"word":"corrente","start":22.317,"end":22.663,"brand":true},{"word":"pra","start":22.693,"end":22.812,"brand":false},{"word":"cada","start":22.862,"end":23.07,"brand":false},{"word":"repetidor.","start":23.11,"end":24.131,"brand":false}]},{"frameId":"frame-03-blindagem-aco","plano":"aco","start":24.258,"end":25.408,"words":[{"word":"Por","start":24.258,"end":24.416,"brand":false},{"word":"cima,","start":24.466,"end":24.774,"brand":false},{"word":"entram","start":24.862,"end":25.14,"brand":false},{"word":"fios","start":25.2,"end":25.359,"brand":false}]},{"frameId":"frame-03-blindagem-aco","plano":"aco","start":25.408,"end":26.857,"words":[{"word":"pesados","start":25.408,"end":25.825,"brand":false},{"word":"de","start":25.874,"end":25.944,"brand":false},{"word":"aço","start":25.994,"end":26.182,"brand":true},{"word":"trançados","start":26.222,"end":26.777,"brand":false}]},{"frameId":"frame-03-blindagem-aco","plano":"aco","start":26.916,"end":27.858,"words":[{"word":"que","start":26.916,"end":27.016,"brand":false},{"word":"aguentam","start":27.065,"end":27.432,"brand":false},{"word":"a","start":27.481,"end":27.501,"brand":false},{"word":"tração","start":27.531,"end":27.829,"brand":true}]},{"frameId":"frame-03-blindagem-aco","plano":"aco","start":27.858,"end":28.742,"words":[{"word":"do","start":27.858,"end":27.907,"brand":false},{"word":"abismo.","start":27.958,"end":28.662,"brand":false}]},{"frameId":"frame-04-vista-explodida","plano":"por_dentro","start":29.13,"end":30.171,"words":[{"word":"Por","start":29.13,"end":29.289,"brand":false},{"word":"dentro,","start":29.338,"end":29.696,"brand":false},{"word":"é","start":29.784,"end":29.834,"brand":false},{"word":"fibra","start":29.904,"end":30.132,"brand":true}]},{"frameId":"frame-04-vista-explodida","plano":"por_dentro","start":30.171,"end":31.709,"words":[{"word":"de","start":30.171,"end":30.231,"brand":false},{"word":"vidro,","start":30.281,"end":30.668,"brand":false},{"word":"gel,","start":30.757,"end":31.153,"brand":true},{"word":"cobre,","start":31.292,"end":31.66,"brand":true}]},{"frameId":"frame-04-vista-explodida","plano":"por_dentro","start":31.709,"end":33.138,"words":[{"word":"alumínio","start":31.709,"end":32.136,"brand":true},{"word":"e","start":32.185,"end":32.215,"brand":false},{"word":"aço.","start":32.265,"end":33.058,"brand":true}]},{"frameId":"frame-04-vista-explodida","plano":"segue","start":33.183,"end":34.463,"words":[{"word":"Pois","start":33.183,"end":33.431,"brand":false},{"word":"é…","start":33.48,"end":33.748,"brand":false},{"word":"o","start":34.145,"end":34.194,"brand":false},{"word":"mundo","start":34.235,"end":34.433,"brand":false}]},{"frameId":"frame-04-vista-explodida","plano":"segue","start":34.463,"end":35.206,"words":[{"word":"é","start":34.463,"end":34.482,"brand":false},{"word":"mais","start":34.522,"end":34.681,"brand":false},{"word":"curioso","start":34.73,"end":35.078,"brand":true},{"word":"do","start":35.107,"end":35.167,"brand":false}]},{"frameId":"frame-04-vista-explodida","plano":"segue","start":35.206,"end":36.546,"words":[{"word":"que","start":35.206,"end":35.266,"brand":false},{"word":"parece.","start":35.306,"end":35.812,"brand":false},{"word":"Se","start":36.159,"end":36.258,"brand":false},{"word":"você","start":36.298,"end":36.496,"brand":false}]},{"frameId":"frame-04-vista-explodida","plano":"segue","start":36.546,"end":37.617,"words":[{"word":"é","start":36.546,"end":36.576,"brand":false},{"word":"curioso,","start":36.615,"end":37.091,"brand":false},{"word":"segue","start":37.23,"end":37.497,"brand":false},{"word":"o","start":37.538,"end":37.568,"brand":false}]},{"frameId":"frame-04-vista-explodida","plano":"segue","start":37.617,"end":38.619,"words":[{"word":"Curiorisando!","start":37.617,"end":38.539,"brand":true}]}];
+      var DURACAO = 39.98;
+      var pill = document.getElementById('caption-pill');
+      var indiceGrupoAtual = -1;
+      var spansPalavras = [];
+
+      function montarGrupo(idx) {
+        if (idx === indiceGrupoAtual) return;
+        indiceGrupoAtual = idx;
+        spansPalavras = [];
+        if (idx < 0 || idx >= GROUPS.length) {
+          pill.style.opacity = '0';
+          pill.innerHTML = '';
+          return;
+        }
+        var g = GROUPS[idx];
+        pill.innerHTML = '';
+        for (var i = 0; i < g.words.length; i++) {
+          var w = g.words[i];
+          var span = document.createElement('span');
+          span.className = 'cap-word' + (w.brand ? ' cap-brand' : '');
+          span.textContent = w.word;
+          pill.appendChild(span);
+          spansPalavras.push(span);
+        }
+        pill.style.opacity = '1';
+      }
+
+      function renderizarLegenda(t) {
+        var idx = -1;
+        for (var i = 0; i < GROUPS.length; i++) {
+          if (t >= GROUPS[i].start && t <= GROUPS[i].end) {
+            idx = i;
+            break;
+          }
+        }
+        montarGrupo(idx);
+        if (idx < 0) return;
+        var g = GROUPS[idx];
+        for (var j = 0; j < g.words.length; j++) {
+          var w = g.words[j];
+          var sp = spansPalavras[j];
+          if (!sp) continue;
+          sp.classList.remove('is-active', 'is-spoken');
+          if (t >= w.start && t <= w.end + 0.04) {
+            sp.classList.add('is-active');
+          } else if (t > w.end + 0.04) {
+            sp.classList.add('is-spoken');
+          }
+        }
+      }
+
+      var tl = gsap.timeline({ paused: true });
+      var proxy = { t: 0 };
+      tl.to(proxy, {
+        t: DURACAO,
+        duration: DURACAO,
+        ease: 'none',
+        onUpdate: function () {
+          renderizarLegenda(proxy.t);
+        }
+      }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['captions'] = tl;
+
+      window.addEventListener('hf-seek', function (ev) {
+        if (ev && ev.detail && typeof ev.detail.time === 'number') {
+          renderizarLegenda(ev.detail.time);
+        }
+      });
+
+      renderizarLegenda(0);
+    })();
+  </script>
+</template>

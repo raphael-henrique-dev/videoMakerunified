@@ -1,0 +1,273 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f5-root {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #040914;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f5-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .f5-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(4, 9, 20, 0.88) 0%,
+        rgba(4, 9, 20, 0.22) 28%,
+        rgba(4, 9, 20, 0.16) 62%,
+        rgba(4, 9, 20, 0.92) 100%
+      );
+    }
+
+    .f5-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f5-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 26px;
+      background: rgba(6, 13, 28, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f5-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #38bdf8;
+    }
+
+    .f5-badge {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #fb923c;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .f5-header-card {
+      position: absolute;
+      top: 168px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(6, 13, 28, 0.86);
+      border-left: 5px solid #0ea5e9;
+      border-radius: 0 16px 16px 0;
+    }
+
+    .f5-title {
+      margin: 0 0 10px 0;
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.06;
+      color: #f8fafc;
+    }
+
+    .f5-title-accent {
+      color: #38bdf8;
+    }
+
+    .f5-subtitle {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.4;
+      color: #cbd5e1;
+    }
+
+    .f5-cards-grid {
+      position: absolute;
+      top: 1035px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f5-card {
+      flex: 1;
+      padding: 22px 24px;
+      background: rgba(6, 14, 28, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 16px;
+    }
+
+    .f5-card-step {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #fb923c;
+      margin-bottom: 6px;
+    }
+
+    .f5-card-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 6px;
+    }
+
+    .f5-card-desc {
+      font-size: 20px;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+  </style>
+
+  <div data-hf-id="hf-wa08" id="f5-root" data-composition-id="frame-05-efeito-cascata-solo" data-width="1080" data-height="1920" data-start="0" data-duration="15.51">
+    <div data-hf-id="hf-a8cd" id="f5-stage-3d"></div>
+    <div data-hf-id="hf-klqu" class="f5-vignette"></div>
+
+    <div data-hf-id="hf-vcsa" class="f5-ui-layer">
+      <div data-hf-id="hf-qz9e" id="f5-topbar" class="f5-topbar">
+        <span data-hf-id="hf-3sz0" class="f5-kicker">PASSO 04 // TERRA DURA E MUITO ASFALTO</span>
+        <span data-hf-id="hf-g1zd" class="f5-badge">ENCHENTE EM 10 MIN</span>
+      </div>
+
+      <div data-hf-id="hf-f53r" id="f5-header" class="f5-header-card">
+        <h1 data-hf-id="hf-wtq7" class="f5-title">Chão Duro + <span data-hf-id="hf-zb38" class="f5-title-accent">Rua Asfaltada</span></h1>
+        <p data-hf-id="hf-knnn" class="f5-subtitle">Terra esturricada pelo sol e ruas sem árvore não deixam a água da chuva descer</p>
+      </div>
+
+      <div data-hf-id="hf-8utx" id="f5-cards" class="f5-cards-grid">
+        <div data-hf-id="hf-69zk" class="f5-card" id="f5-c1">
+          <div data-hf-id="hf-127p" class="f5-card-step">DEPOIS DO SOL FORTE</div>
+          <div data-hf-id="hf-hboa" class="f5-card-title">Terra Igual Cimento</div>
+          <div data-hf-id="hf-a3r6" class="f5-card-desc">O chão seco endurece tanto que a água bate e escorre por cima</div>
+        </div>
+        <div data-hf-id="hf-h5h7" class="f5-card" id="f5-c2">
+          <div data-hf-id="hf-9yw9" class="f5-card-step">CIDADE SEM VERDE</div>
+          <div data-hf-id="hf-2bkk" class="f5-card-title">Rua Vira Rio</div>
+          <div data-hf-id="hf-hcmq" class="f5-card-desc">Com tudo coberto de asfalto, a água sobe na calçada em minutos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 15.51;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f5-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f5-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f5-c1', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.55);
+      tl.fromTo('#f5-c2', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 6.45);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f5-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'tempestade'
+        });
+
+        var chao = M.malha(
+          THREE,
+          new THREE.CircleGeometry(45, 48),
+          M.mat(THREE, 0x0b1324, { roughness: 0.9 })
+        );
+        chao.rotation.x = -Math.PI / 2;
+        palco.cena.add(chao);
+
+        var solo = M.criarCorteSoloUrbano(THREE);
+        solo.raiz.position.set(0.30, 0.75, 0.0);
+        solo.raiz.scale.setScalar(0.54);
+        palco.cena.add(solo.raiz);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.72 });
+        M.capacete(menino, true);
+        menino.raiz.position.set(-0.82, 0.35, 0.45);
+        palco.cena.add(menino.raiz);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          M.resetPose(menino, t);
+
+          var enx = M.suave(M.faixa(t, 4.2, 11.5));
+          solo.atualizar(t, enx);
+
+          if (t < 4.5) {
+            M.humor(menino, 'bravo');
+            M.apontar(menino, [-0.15, 1.1, 0.0], 'D');
+          } else if (t < 7.2) {
+            M.pensar(menino, t, 4.5, 7.2);
+          } else {
+            M.humor(menino, 'assustado');
+            M.suar(menino, t, 7.2, DUR);
+            M.apontar(menino, [0.65, 1.25, 0.0], 'D');
+          }
+          M.olharCamera(menino, palco.camera, 0.72);
+
+          M.plano(
+            palco.camera,
+            t,
+            0,
+            DUR,
+            { pos: [-0.25, 2.05, 7.4], alvo: [0.0, 1.25, 0.0] },
+            { pos: [0.2, 1.95, 7.0], alvo: [0.05, 1.25, 0.0] }
+          );
+        }, { duracao: DUR, offsetGlobal: 60.84 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-05-efeito-cascata-solo'] = tl;
+    })();
+  </script>
+</template>

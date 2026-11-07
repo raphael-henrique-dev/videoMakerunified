@@ -1,0 +1,206 @@
+{
+  "id": "por-que-a-bateria-despenca",
+  "titulo": "Por Que a Bateria Despenca de 20% Para Zero?",
+  "subtitulo": "Você precisa pedir um carro na rua, a barra marca vinte por cento e o celular apaga na sua cara: o que acontece lá dentro",
+  "modo": "2d",
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "fps": 30,
+  "alvoPpm": 180,
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.80,
+    "estilo": 0.40,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.22
+  },
+  "efeitos": {
+    "ganho": 1.12
+  },
+  "frames": [
+    {
+      "id": "frame-01-apaga-na-rua",
+      "numero": "01",
+      "titulo": "O Susto dos 20% na Rua",
+      "arquivo": "compositions/frames/01-apaga-na-rua.html",
+      "kicker": "NOSSO DIA A DIA // O APAGÃO NA RUA",
+      "metrica": {
+        "rotulo": "BATERIA",
+        "valor": "20% → 0%"
+      },
+      "direcao2D": "Mascote na rua desesperado olhando a barra de 20% no smartphone piscar vermelho e apagar enquanto tenta pedir um carro.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.12, "ganho": 0.55 },
+        { "nome": "erro", "offset": 6.2, "ganho": 0.58 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "gancho_rua",
+          "gancho": true,
+          "texto": "Você está no meio da rua precisando chamar uma corrida, olha a tela marcando vinte por *cento* e, bem na hora de confirmar, o celular apaga na sua *cara!*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "ralo_energia",
+          "texto": "Dá uma raiva danada: de cem até cinquenta ele demora o dia todo, mas dos vinte para baixo parece que a energia escorre por um *ralo!*"
+        }
+      ]
+    },
+    {
+      "id": "frame-02-estante-de-gavetas",
+      "numero": "02",
+      "titulo": "A Estante de Gavetas Invisíveis",
+      "arquivo": "compositions/frames/02-estante-de-gavetas.html",
+      "kicker": "COMO FUNCIONA // NÃO É UM BALDE",
+      "metrica": {
+        "rotulo": "ESTRUTURA",
+        "valor": "GAVETAS QUÍMICAS"
+      },
+      "direcao2D": "Diagrama em corte da bateria mostrando partículas de energia subindo para o andar de cima na carga e descendo no uso.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "pop", "offset": 0.25, "ganho": 0.5 },
+        { "nome": "sucesso", "offset": 6.8, "ganho": 0.52 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "estante_gavetas",
+          "texto": "A primeira surpresa é que a bateria não é um balde de *energia:* ela funciona igualzinho a uma estante cheia de *gavetas!*"
+        },
+        {
+          "plano": "M",
+          "jogo": "subir_descer",
+          "texto": "Quando você coloca na tomada, empurra milhares de pecinhas invisíveis para o andar de *cima;* conforme você usa o celular, elas vão escorregando de *volta.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-03-veneno-do-calor",
+      "numero": "03",
+      "titulo": "O Veneno do Calor e da Capinha",
+      "arquivo": "compositions/frames/03-veneno-do-calor.html",
+      "kicker": "ERRO REAL // CAPA E TRAVESSEIRO",
+      "metrica": {
+        "rotulo": "TEMPERATURA",
+        "valor": "45°C DEFORMA TUDO"
+      },
+      "direcao2D": "Celular esquentando com ondas de calor sob a capa e travesseiro, mostrando as gavetas internas entortando e bloqueando pecinhas.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "impacto", "offset": 0.35, "ganho": 0.52 },
+        { "nome": "fogo", "offset": 5.9, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "PG",
+          "jogo": "capa_travesseiro",
+          "texto": "Só que o grande veneno do aparelho tem nome e sobrenome: o *calor* da capa grossa e do travesseiro enquanto ele *carrega.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "gavetas_tortas",
+          "texto": "A quentura entorta essas gavetas por dentro, e toda pecinha que fica presa no caminho é energia que você nunca mais vai conseguir *usar!*"
+        }
+      ]
+    },
+    {
+      "id": "frame-04-ferrugem-interna",
+      "numero": "04",
+      "titulo": "A Ferrugem Que Rouba Espaço",
+      "arquivo": "compositions/frames/04-ferrugem-interna.html",
+      "kicker": "O FALSO VÍCIO // CRISTAIS DE LÍTIO",
+      "metrica": {
+        "rotulo": "DESGASTE",
+        "valor": "ESPAÇO PERDIDO"
+      },
+      "direcao2D": "Fundo da bateria acumulando pontas afiadas e entulho que reduzem o espaço útil igual uma mochila enchendo de lixo.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "metal-1", "offset": 0.3, "ganho": 0.5 },
+        { "nome": "erro", "offset": 6.2, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "pontas_afiadas",
+          "texto": "Com o passar dos meses, essa sujeira acumulada cria pontas afiadas lá no *fundo,* como se fosse uma ferrugem que entope a *estrada.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "mochila_velha",
+          "texto": "Aí a bateria não vicia de verdade: ela simplesmente perde o *espaço,* como uma mochila velha que vai enchendo de entulho no *fundo!*"
+        }
+      ]
+    },
+    {
+      "id": "frame-05-queda-de-pressao",
+      "numero": "05",
+      "titulo": "Por Que Apaga de Repente nos 20%",
+      "arquivo": "compositions/frames/05-queda-de-pressao.html",
+      "kicker": "A MENTIRA DA BARRA // MEDIR PRESSÃO",
+      "metrica": {
+        "rotulo": "VOLTAGEM",
+        "valor": "DESPENCA EM 1s"
+      },
+      "direcao2D": "Manômetro e curva de voltagem despencando ao abrir a câmera em 20%, com o chip desligando o aparelho em pânico para proteção.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.25, "ganho": 0.52 },
+        { "nome": "desliga", "offset": 6.8, "ganho": 0.6 }
+      ],
+      "frases": [
+        {
+          "plano": "PG",
+          "jogo": "medir_pressao",
+          "texto": "E sabe por que ele desliga de repente nos vinte por cento? Porque o celular não conta energia de verdade, ele só mede a *pressão!*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "abrir_camera",
+          "texto": "Quando a bateria já está cansada e você abre a câmera ou um mapa pesado, a força despenca de uma *vez* e o aparelho se desliga para não queimar a *placa.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-06-raio-x-bateria",
+      "numero": "06",
+      "titulo": "Por Fora e Por Dentro da Bateria",
+      "arquivo": "compositions/frames/06-raio-x-bateria.html",
+      "kicker": "RAIO-X COMPLETO // HÁBITOS DE OURO",
+      "metrica": {
+        "rotulo": "CURIORISANDO",
+        "valor": "VIDA LONGA"
+      },
+      "direcao2D": "Torre de 7 camadas de cuidados (não ferver, tirar da capa, 20-80%, carregador confiável) + comemoração do mascote e CTA do Curiorisando.",
+      "cauda": 0.45,
+      "sons": [
+        { "nome": "pop", "offset": 0.3, "ganho": 0.52 },
+        { "nome": "sucesso", "offset": 6.8, "ganho": 0.65 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "por_fora_por_dentro_bateria",
+          "texto": "Por fora, parece só uma barrinha verde que te deixou na mão na *calçada;* por dentro, é uma usina química lutando contra o calor e o *desgaste!*"
+        },
+        {
+          "plano": "M",
+          "jogo": "fechamento_curiorisando",
+          "texto": "Pois é, o mundo é mais *curioso* do que parece! Se a sua bateria também já te deixou na mão, segue o *Curiorisando!*"
+        }
+      ]
+    }
+  ]
+}

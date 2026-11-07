@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "/home/raphael/codigos/projetos_javascript/videoMakerunified-main/videos/luz-forte-como-o-sol",
+    "data_upload": "2026-11-07T16:22:47.651Z",
+    "agendado_para": "2026-11-07T19:00:00.000Z",
+    "plataformas": {
+      "youtube": {
+        "plataforma": "youtube",
+        "sucesso": true,
+        "id": "uvDgnzygUeQ",
+        "url": "https://youtube.com/shorts/uvDgnzygUeQ",
+        "privacidade": "private",
+        "agendado_para": "2026-11-07T19:00:00.000Z",
+        "status": "scheduled",
+        "data": "2026-11-07T16:22:52.276Z"
+      },
+      "tiktok": {
+        "sucesso": true,
+        "status": "scheduled_queue",
+        "agendamento_id": "agend_1794068572276_95cbd4",
+        "agendado_para": "2026-11-07T19:00:00.000Z",
+        "mensagem": "Registrado na fila local para publicação no horário agendado."
+      }
+    }
+  }
+]

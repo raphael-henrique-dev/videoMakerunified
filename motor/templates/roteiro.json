@@ -1,0 +1,138 @@
+{
+  "id": "cabo-submarino-v2",
+  "titulo": "Cabo Submarino & Nuvem Global",
+  "subtitulo": "Engenharia Abissal em 7 Camadas",
+  "fps": 30,
+  "resolucao": { "largura": 1080, "altura": 1920 },
+  "alvoPpm": 190,
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.80,
+    "estilo": 0.40,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.24
+  },
+  "efeitos": {
+    "abaixa": true,
+    "ganho": 1.15
+  },
+  "frames": [
+    {
+      "id": "frame-01-gancho-abismo",
+      "numero": "01",
+      "titulo": "O Abismo e a Fragilidade do Vidro",
+      "arquivo": "compositions/frames/01-gancho-abismo.html",
+      "kicker": "INFRAESTRUTURA GLOBAL // 99% DOS DADOS",
+      "metrica": { "valor": "8.000 m", "rotulo": "PROFUNDIDADE ABISSAL" },
+      "direcao3D": "Oceano abissal com cáusticas GLSL, núcleo de sílica pura pulsando laser ciano e mascote testando a fibra nua que se rompe.",
+      "direcao2D": "Header editorial EB Garamond, HUD de telemetria oceânica e alerta vermelho de falha estrutural (Tensão > Limite).",
+      "frases": [
+        {
+          "texto": "Como um fio de *cabelo* no fundo do *oceano* carrega a *internet* do mundo inteiro?",
+          "plano": "gancho",
+          "gancho": true
+        },
+        {
+          "texto": "Se você pega um fio de *vidro* fininho como cabelo e tenta esticar, ele *racha* no primeiro passo.",
+          "plano": "quebra",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "agua", "offset": 0.0, "dur": 4.2, "ganho": 0.35 },
+        { "nome": "laser", "offset": 0.8, "ganho": 0.45 },
+        { "nome": "errado", "offset": 5.2, "ganho": 0.65 },
+        { "nome": "estalo", "offset": 5.6, "ganho": 0.70 }
+      ]
+    },
+    {
+      "id": "frame-02-camadas-internas",
+      "numero": "02",
+      "titulo": "Proteção Óptica: Acrílico & Tubo Gel",
+      "arquivo": "compositions/frames/02-camadas-internas.html",
+      "kicker": "CAMADAS 01–03 // NÚCLEO ÓPTICO",
+      "metrica": { "valor": "69 µm", "rotulo": "DIÂMETRO DO NÚCLEO" },
+      "direcao3D": "Mascote com capacete de engenharia acoplando o revestimento primário de acrílico e o buffer tube com 6 fibras coloridas em gel.",
+      "direcao2D": "Cards técnicos escalonados detalhando Camada 1 (Sílica), Camada 2 (Acrílico) e Camada 3 (Tubo Buffer + Gel Hidrofóbico).",
+      "frases": [
+        {
+          "texto": "A solução? Uma camada de *acrílico* flexível que abraça o fio como uma capa.",
+          "plano": "revestimento",
+          "jogo": "corrige"
+        },
+        {
+          "texto": "E pra evitar atrito, vários fios vão soltos num *tubo* plástico cheio de *gel*.",
+          "plano": "tubo",
+          "jogo": "corrige"
+        }
+      ],
+      "sons": [
+        { "nome": "whoosh", "offset": 0.3, "ganho": 0.55 },
+        { "nome": "trava", "offset": 1.4, "ganho": 0.65 },
+        { "nome": "bolhas", "offset": 4.2, "dur": 3.0, "ganho": 0.45 },
+        { "nome": "certo", "offset": 6.8, "ganho": 0.60 }
+      ]
+    },
+    {
+      "id": "frame-03-blindagem-aco",
+      "numero": "03",
+      "titulo": "Alta Tensão & Armadura de Aço",
+      "arquivo": "compositions/frames/03-blindagem-aco.html",
+      "kicker": "CAMADAS 04–07 // BLINDAGEM PESADA",
+      "metrica": { "valor": "10.000 V", "rotulo": "CONDUTOR DE COBRE" },
+      "direcao3D": "Montagem telescópica do tubo condutor de cobre, vedação hermética de alumínio, 18 fios de aço trançados e jaqueta PEAD.",
+      "direcao2D": "Medidor de tração mecânica e cards de especificação do Cobre 10kV, Barreira Hermética e Armadura de Aço.",
+      "frases": [
+        {
+          "texto": "No centro de tudo, passa um tubo de *cobre* maciço que leva *corrente* pra cada repetidor.",
+          "plano": "cobre",
+          "jogo": "corrige"
+        },
+        {
+          "texto": "Por cima, entram fios pesados de *aço* trançados que aguentam a *tração* do abismo.",
+          "plano": "aco",
+          "jogo": "corrige"
+        }
+      ],
+      "sons": [
+        { "nome": "choque", "offset": 0.6, "ganho": 0.50 },
+        { "nome": "bigorna", "offset": 4.4, "ganho": 0.65 },
+        { "nome": "trava", "offset": 5.8, "ganho": 0.65 },
+        { "nome": "certo", "offset": 7.5, "ganho": 0.60 }
+      ]
+    },
+    {
+      "id": "frame-04-vista-explodida",
+      "numero": "04",
+      "titulo": "Anatomia Completa: Vista Explodida",
+      "arquivo": "compositions/frames/04-vista-explodida.html",
+      "kicker": "SÍNTESE DE ENGENHARIA // 7 CAMADAS",
+      "metrica": { "valor": "400 Tbps", "rotulo": "CAPACIDADE DE DADOS" },
+      "direcao3D": "Torre vertical em vista explodida das 7 camadas girando suavemente enquanto o mascote comemora ao lado.",
+      "direcao2D": "Projeção 3D->2D em tempo real ancorando 7 linhas chamadas SVG (leader lines) às etiquetas técnicas numeradas + CTA final.",
+      "frases": [
+        {
+          "texto": "Por dentro, é *fibra* de vidro, *gel*, *cobre*, *alumínio* e *aço*.",
+          "plano": "por_dentro"
+        },
+        {
+          "texto": "Pois é… o mundo é mais *curioso* do que parece. Se você é curioso, segue o *Curiorisando*!",
+          "plano": "segue"
+        }
+      ],
+      "cauda": 1.1,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.2, "ganho": 0.55 },
+        { "nome": "plim", "offset": 1.2, "ganho": 0.60 },
+        { "nome": "tada", "offset": 4.8, "ganho": 0.65 }
+      ]
+    }
+  ]
+}

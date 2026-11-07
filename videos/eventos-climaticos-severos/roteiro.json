@@ -1,0 +1,184 @@
+{
+  "id": "eventos-climaticos-severos",
+  "titulo": "Por Que os Eventos Climáticos Estão Cada Vez Mais Severos?",
+  "subtitulo": "O Que Acontece de Verdade com o Calor e a Chuva na Sua Rua",
+  "fps": 30,
+  "resolucao": { "largura": 1080, "altura": 1920 },
+  "alvoPpm": 182,
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.80,
+    "estilo": 0.40,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.22
+  },
+  "efeitos": {
+    "abaixa": true,
+    "ganho": 1.15
+  },
+  "frames": [
+    {
+      "id": "frame-01-gancho-anomalia",
+      "numero": "01",
+      "titulo": "O Calor Que Pesa Dentro de Casa e a Febre da Terra",
+      "arquivo": "compositions/frames/01-gancho-anomalia.html",
+      "kicker": "NOSSO DIA A DIA // CALOR QUE PESA",
+      "metrica": { "valor": "Febre Global", "rotulo": "+1,5 °C NO PLANETA INTEIRO" },
+      "direcao3D": "Globo terrestre 3D fervendo com termômetro gigante estourando enquanto o mascote sua tentando se refrescar.",
+      "direcao2D": "Header conversado sobre o calor dentro de casa e a conta de luz, comparando +1,5 °C à febre no corpo humano.",
+      "frases": [
+        {
+          "texto": "Você já reparou que hoje em dia não faz só *calor*, parece que o ar *pesa* e nem o ventilador dá conta?",
+          "plano": "gancho",
+          "gancho": true
+        },
+        {
+          "texto": "Quando falam que a Terra esquentou um grau e *meio*, parece pouco, mas é igual *febre* no nosso corpo: muda tudo por dentro!",
+          "plano": "termometro",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "whoosh", "offset": 0.2, "ganho": 0.55 },
+        { "nome": "errado", "offset": 6.2, "ganho": 0.60 },
+        { "nome": "estalo", "offset": 6.8, "ganho": 0.60 }
+      ]
+    },
+    {
+      "id": "frame-02-esponja-atmosferica",
+      "numero": "02",
+      "titulo": "A Toalha Gigante no Céu: Da Feira Cara ao Temporal",
+      "arquivo": "compositions/frames/02-esponja-atmosferica.html",
+      "kicker": "PASSO 01 // A TOALHA GIGANTE NO CÉU",
+      "metrica": { "valor": "Toalha Cheia", "rotulo": "SECA NA REPRESA E TORÓ NO BAIRRO" },
+      "direcao3D": "Nuvem-esponja gigante puxando a água do chão seco e depois despejando tudo de uma vez em cima do mascote.",
+      "direcao2D": "Cards mostrando o impacto real: Seca e Feira Cara vs. Temporal de Verão.",
+      "frases": [
+        {
+          "texto": "Pense no ar quente como uma *toalha* gigante estendida no céu: nos dias secos, ela suga toda a água das represas e encarece até a *feira*!",
+          "plano": "seca",
+          "jogo": "falha"
+        },
+        {
+          "texto": "Só que uma hora essa toalha fica tão *encharcada* que alguém torce tudo de uma vez só em cima do seu *bairro*!",
+          "plano": "diluvio",
+          "jogo": "corrige"
+        }
+      ],
+      "sons": [
+        { "nome": "whoosh", "offset": 0.3, "ganho": 0.55 },
+        { "nome": "bolhas", "offset": 3.5, "dur": 3.0, "ganho": 0.45 },
+        { "nome": "choque", "offset": 7.6, "ganho": 0.65 }
+      ]
+    },
+    {
+      "id": "frame-03-combustivel-oceanico",
+      "numero": "03",
+      "titulo": "O Mar Virou Panela de Pressão: Vento de Arrancar Telhado",
+      "arquivo": "compositions/frames/03-combustivel-oceanico.html",
+      "kicker": "PASSO 02 // A PANELA DE PRESSÃO DO MAR",
+      "metrica": { "valor": "Força Bruta", "rotulo": "VENTO QUE DERRUBA ÁRVORE" },
+      "direcao3D": "Mar superaquecido soltando vapor e girando um redemoinho de vento forte enquanto o mascote segura o capacete.",
+      "direcao2D": "Explicação simples do mar quente funcionando como panela de pressão acesa.",
+      "frases": [
+        {
+          "texto": "E sabe por que agora qualquer chuva vem com *vento* de arrancar telhado e derrubar *árvore* antiga na calçada?",
+          "plano": "oceano_calor"
+        },
+        {
+          "texto": "É que o mar guardou quase todo esse calor e virou uma *panela* de pressão acesa, dando força de *furacão* pra tempestade!",
+          "plano": "vortice",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "agua", "offset": 0.2, "dur": 4.0, "ganho": 0.40 },
+        { "nome": "whoosh", "offset": 6.2, "ganho": 0.65 }
+      ]
+    },
+    {
+      "id": "frame-04-corrente-jato-travada",
+      "numero": "04",
+      "titulo": "Trânsito Travado no Céu: Dias Seguidos do Mesmo Tempo",
+      "arquivo": "compositions/frames/04-corrente-jato-travada.html",
+      "kicker": "PASSO 03 // TRÂNSITO TRAVADO NO CÉU",
+      "metrica": { "valor": "Engarrafado", "rotulo": "DIAS SEGUIDOS SEM MUDAR" },
+      "direcao3D": "Globo com o gelo do polo derretendo e a corrente de vento lá no alto ficando lenta e travada sobre a mesma cidade.",
+      "direcao2D": "Cards mostrando por que a chuva ou o sol forte estacionam por semanas no mesmo lugar.",
+      "frases": [
+        {
+          "texto": "Pra piorar, você já notou que quando começa a *chover* são dias sem parar, e quando vem *sol* são semanas sem uma gota?",
+          "plano": "artico"
+        },
+        {
+          "texto": "Com o gelo derretendo lá nos polos, o vento que empurrava as nuvens perdeu *força*, e o clima fica *engarrafado* em cima da mesma cidade!",
+          "plano": "rossby",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "whoosh", "offset": 0.3, "ganho": 0.55 },
+        { "nome": "trava", "offset": 6.8, "ganho": 0.65 }
+      ]
+    },
+    {
+      "id": "frame-05-efeito-cascata-solo",
+      "numero": "05",
+      "titulo": "Terra Dura no Quintal + Asfalto na Rua = Enchente em 10 Minutos",
+      "arquivo": "compositions/frames/05-efeito-cascata-solo.html",
+      "kicker": "PASSO 04 // TERRA DURA E MUITO ASFALTO",
+      "metrica": { "valor": "10 Minutos", "rotulo": "RUA VIRA RIO NA HORA" },
+      "direcao3D": "Corte do chão mostrando a terra seca dura igual cimento ao lado da rua asfaltada alagando rápido.",
+      "direcao2D": "Cards comparando a Terra Seca no Quintal com a Cidade Coberta de Asfalto.",
+      "frases": [
+        {
+          "texto": "Aí essa água toda cai num chão que torrou no sol por semanas e ficou *duro* igual cimento, sem conseguir *absorver* nada.",
+          "plano": "solo_seco",
+          "jogo": "falha"
+        },
+        {
+          "texto": "Junte isso com nossas ruas cobertas de *asfalto* e sem árvores: em dez minutos a água sobe na calçada e vira *enchente*!",
+          "plano": "enxurrada",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "bigorna", "offset": 0.4, "ganho": 0.55 },
+        { "nome": "agua", "offset": 5.5, "dur": 4.0, "ganho": 0.50 }
+      ]
+    },
+    {
+      "id": "frame-06-anatomia-supercelula",
+      "numero": "06",
+      "titulo": "Por Fora e Por Dentro da Tempestade + Segue o Curiorisando",
+      "arquivo": "compositions/frames/06-anatomia-supercelula.html",
+      "kicker": "POR DENTRO DA TEMPESTADE // 7 PEÇAS",
+      "metrica": { "valor": "7 Peças", "rotulo": "A MÁQUINA POR DENTRO" },
+      "direcao3D": "Vista explodida das 7 peças da tempestade girando ao lado do mascote que comemora e acena.",
+      "direcao2D": "7 etiquetas em linguagem simples conectadas às peças 3D + Plaquinha final do Curiorisando.",
+      "frases": [
+        {
+          "texto": "Por fora, parece só uma *chuva* maluca no fim da tarde. Por dentro, é o mar fervendo, o ar puxando água igual *esponja* e o vento travado lá no alto.",
+          "plano": "explodido_1"
+        },
+        {
+          "texto": "Pois é… o mundo é mais *curioso* do que parece. Se você é curioso, segue o *Curiorisando*!",
+          "plano": "cta"
+        }
+      ],
+      "cauda": 1.2,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.2, "ganho": 0.55 },
+        { "nome": "plim", "offset": 1.4, "ganho": 0.60 },
+        { "nome": "tada", "offset": 7.2, "ganho": 0.65 }
+      ]
+    }
+  ]
+}

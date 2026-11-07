@@ -1,0 +1,24 @@
+[
+  {
+    "slug": "/home/raphael/motor_gerador_de_videos_2.0/motor-v2/videos/por-que-a-bateria-despenca",
+    "data_upload": "2026-11-05T11:38:30.760Z",
+    "plataformas": {
+      "youtube": {
+        "plataforma": "youtube",
+        "sucesso": true,
+        "id": "dr7ZWxG9odY",
+        "url": "https://youtube.com/shorts/dr7ZWxG9odY",
+        "privacidade": "private",
+        "data": "2026-11-05T11:38:35.086Z"
+      },
+      "tiktok": {
+        "plataforma": "tiktok",
+        "sucesso": true,
+        "publish_id": "v_inbox_file~v2.7704650081693304853",
+        "status": "PROCESSING_UPLOAD",
+        "privacidade": "SELF_ONLY",
+        "data": "2026-11-05T11:38:43.404Z"
+      }
+    }
+  }
+]

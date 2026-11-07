@@ -1,0 +1,358 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f1-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    .f1-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f1-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f1-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+
+    .f1-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f1-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 24px 32px;
+      background: rgba(8, 14, 26, 0.88);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f1-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 60px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .f1-title-accent {
+      color: #38bdf8;
+    }
+
+    .f1-subtitle {
+      font-size: 22px;
+      line-height: 1.34;
+      color: #cbd5e1;
+    }
+
+    .f1-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(14, 26, 10, 0.92);
+      border: 1.5px solid rgba(250, 204, 21, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f1-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fef9c3;
+      letter-spacing: 0.04em;
+    }
+
+    .f1-banner-pill {
+      padding: 6px 16px;
+      background: #facc15;
+      color: #050a14;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    #f1-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 30%, #12203a 0%, #081426 55%, #050a14 100%);
+    }
+    #f1-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 380px;
+      width: 1080px;
+      height: 780px;
+      z-index: 1;
+    }
+  </style>
+
+  <div data-hf-id="hf-spj8" id="f1-root" data-composition-id="frame-01-apocalipse-de-inseto" data-width="1080" data-height="1920" data-start="0" data-duration="14.45">
+    <div data-hf-id="hf-z1ui" class="m2-fundo"></div>
+    <div data-hf-id="hf-jgbm" id="f1-cena" class="m2-cena"></div>
+
+    <div data-hf-id="hf-x5l2" class="f1-ui-layer">
+      <div data-hf-id="hf-hxh6" id="f1-topbar" class="f1-topbar">
+        <span data-hf-id="hf-s8qe" class="f1-kicker">O APOCALIPSE QUE JÁ EXISTE // ESCALA DE INSETO</span>
+        <span data-hf-id="hf-7ai9" class="f1-badge">JÁ COMEÇOU</span>
+      </div>
+
+      <div data-hf-id="hf-8n3z" id="f1-header" class="f1-header-card">
+        <h1 data-hf-id="hf-idoy" class="f1-title">O Apocalipse Que <span data-hf-id="hf-o9et" class="f1-title-accent">Já Existe</span></h1>
+        <p data-hf-id="hf-4vuz" class="f1-subtitle">Ele não veio das ruas. Veio de um fungo que assume o controle de um inseto.</p>
+      </div>
+
+      <div data-hf-id="hf-i4q0" id="f1-banner" class="f1-banner" style="opacity: 0;">
+        <span data-hf-id="hf-qdcf" class="f1-banner-text">O ZUMBI DE VERDADE TEM SEIS PATAS</span>
+        <span data-hf-id="hf-1m8v" class="f1-banner-pill">ESCALA REAL</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 14.45;
+      var P2 = 6.22;   // início da 2ª frase
+      var BAN = 12.70; // entrada do banner
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f1-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f1-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f1-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, BAN);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        // ── cidade do cinema (silhueta) ─────────────────────────────────────
+        var predios = '', px = 90;
+        var alturas = [138, 196, 112, 232, 156, 188, 120, 210, 146];
+        for (var b = 0; b < alturas.length; b++) {
+          var w = 28 + (b % 3) * 8;
+          predios += T('rect', { x: px, y: 600 - alturas[b], width: w, height: alturas[b], fill: '#111c2e', stroke: '#22304a', 'stroke-width': 1.5 });
+          for (var wy = 600 - alturas[b] + 16; wy < 590; wy += 26) {
+            predios += T('rect', { x: px + 7, y: wy, width: 6, height: 9, fill: '#f59e0b', opacity: 0.35 });
+            predios += T('rect', { x: px + 18, y: wy, width: 6, height: 9, fill: '#38bdf8', opacity: 0.22 });
+          }
+          px += w + 8;
+        }
+
+        // ── formiga (macro) ────────────────────────────────────────────────
+        var pernas = '';
+        var juntas = [
+          [726, 404, -150, 0.9], [742, 424, -110, 1.1], [752, 448, -62, 1.3],
+          [726, 404, -30, 0.85], [742, 424, 30, 1.05], [752, 448, 62, 1.25]
+        ];
+        for (var p = 0; p < 6; p++) {
+          pernas += T('line', {
+            id: 's1-leg' + p,
+            x1: juntas[p][0], y1: juntas[p][1],
+            x2: juntas[p][0] + Math.cos(juntas[p][2] * Math.PI / 180) * 46,
+            y2: juntas[p][1] + Math.sin(juntas[p][2] * Math.PI / 180) * 46,
+            stroke: '#8a5a3b', 'stroke-width': 7, 'stroke-linecap': 'round'
+          });
+        }
+
+        var esporos = '';
+        for (var e = 0; e < 14; e++) {
+          esporos += T('circle', { id: 's1-sp' + e, cx: 700, cy: 300, r: 2.6, fill: '#86efac', opacity: 0 });
+        }
+
+        var svg = M.svgBase(1080, 780,
+          '<defs>' +
+          '<radialGradient id="s1-lua"><stop offset="0" stop-color="#f87171"/><stop offset="1" stop-color="#7f1d1d"/></radialGradient>' +
+          '<radialGradient id="s1-fungoGrad"><stop offset="0" stop-color="#4ade80"/><stop offset="1" stop-color="#15803d"/></radialGradient>' +
+          '<linearGradient id="s1-corpo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a16207"/><stop offset="1" stop-color="#5b3413"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: '#070d18', stroke: '#1f3350', 'stroke-width': 3 }) +
+
+          // lua vermelha + cidade
+          G({ id: 's1-cidade' },
+            T('circle', { cx: 250, cy: 190, r: 74, fill: 'url(#s1-lua)', opacity: 0.9 }) +
+            T('circle', { cx: 250, cy: 190, r: 96, fill: 'none', stroke: '#ef4444', 'stroke-opacity': 0.25, 'stroke-width': 3 }) +
+            predios +
+            T('rect', { x: 80, y: 600, width: 370, height: 8, rx: 4, fill: '#22304a' })) +
+          // vultos cambaleando
+          G({ id: 's1-vulto0' },
+            T('circle', { cx: 150, cy: 512, r: 15, fill: '#16243a', stroke: '#7f1d1d', 'stroke-width': 2 }) +
+            T('path', { d: 'M150 528 L146 574 M150 536 L128 552 M150 536 L172 550 M146 574 L134 604 M146 574 L160 602', stroke: '#334a68', 'stroke-width': 9, 'stroke-linecap': 'round', fill: 'none' })) +
+          G({ id: 's1-vulto1' },
+            T('circle', { cx: 232, cy: 520, r: 14, fill: '#16243a', stroke: '#7f1d1d', 'stroke-width': 2 }) +
+            T('path', { d: 'M232 535 L228 578 M232 543 L212 560 M232 543 L252 556 M228 578 L218 606 M228 578 L240 604', stroke: '#334a68', 'stroke-width': 9, 'stroke-linecap': 'round', fill: 'none' })) +
+          G({ id: 's1-vulto2' },
+            T('circle', { cx: 330, cy: 506, r: 15, fill: '#16243a', stroke: '#7f1d1d', 'stroke-width': 2 }) +
+            T('path', { d: 'M330 522 L326 570 M330 530 L310 546 M330 530 L350 544 M326 570 L314 602 M326 570 L338 600', stroke: '#334a68', 'stroke-width': 9, 'stroke-linecap': 'round', fill: 'none' })) +
+          // X vermelho sobre o cinema
+          G({ id: 's1-x', opacity: 0 },
+            T('line', { x1: 96, y1: 96, x2: 404, y2: 612, stroke: '#ef4444', 'stroke-width': 10, 'stroke-linecap': 'round', opacity: 0.85 }) +
+            T('line', { x1: 404, y1: 96, x2: 96, y2: 612, stroke: '#ef4444', 'stroke-width': 10, 'stroke-linecap': 'round', opacity: 0.85 })) +
+          T('rect', { x: 108, y: 646, width: 122, height: 38, rx: 9, fill: 'rgba(30,10,10,0.9)', stroke: '#b91c1c', 'stroke-width': 1.6 }) +
+          T('text', { x: 169, y: 672, 'text-anchor': 'middle', fill: '#fca5a5', 'font-family': 'Inter, sans-serif', 'font-size': 18, 'font-weight': 700, 'letter-spacing': 2 }, 'CINEMA') +
+
+          // folha
+          G({ id: 's1-folha', opacity: 0 },
+            T('path', { d: 'M560 596 Q700 636 900 588 Q812 700 646 686 Q566 668 560 596 Z', fill: '#14532d', stroke: '#22c55e', 'stroke-width': 3, 'stroke-opacity': 0.55 }) +
+            T('path', { d: 'M566 600 Q700 638 892 592', fill: 'none', stroke: '#4ade80', 'stroke-width': 2.4, opacity: 0.6 }) +
+            T('path', { d: 'M640 640 L660 590 M700 650 L712 594 M760 650 L764 592 M816 636 L812 592', stroke: '#4ade80', 'stroke-width': 1.6, opacity: 0.35 })) +
+
+          // formiga pousada na folha
+          G({ id: 's1-formiga-wrap', transform: 'translate(0 145)' },
+          G({ id: 's1-formiga', opacity: 0 },
+            T('ellipse', { cx: 806, cy: 452, rx: 66, ry: 46, fill: 'url(#s1-corpo)', stroke: '#d97706', 'stroke-width': 2, 'stroke-opacity': 0.6 }) +
+            T('ellipse', { cx: 744, cy: 436, rx: 34, ry: 30, fill: '#7c4a1c', stroke: '#d97706', 'stroke-width': 2, 'stroke-opacity': 0.5 }) +
+            T('circle', { cx: 700, cy: 420, r: 31, fill: '#8a5a2b', stroke: '#f59e0b', 'stroke-width': 2, 'stroke-opacity': 0.55 }) +
+            T('circle', { cx: 690, cy: 412, r: 6, fill: '#0b1220', stroke: '#fbbf24', 'stroke-width': 1.5 }) +
+            T('path', { d: 'M676 402 Q664 388 658 372 M712 402 Q724 386 728 368', fill: 'none', stroke: '#b45309', 'stroke-width': 3, 'stroke-linecap': 'round' }) +
+            T('path', { d: 'M672 436 Q658 446 650 456 M728 436 Q742 446 750 456', fill: 'none', stroke: '#b45309', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+            pernas) +
+
+          // fungo crescendo na cabeça
+          G({ id: 's1-fungo', opacity: 0 },
+            T('path', { id: 's1-hifa', d: 'M700 394 Q694 346 710 306', fill: 'none', stroke: '#22c55e', 'stroke-width': 9, 'stroke-linecap': 'round' }) +
+            T('path', { d: 'M710 340 Q692 332 684 316 M708 358 Q728 350 736 334', fill: 'none', stroke: '#22c55e', 'stroke-width': 5, 'stroke-linecap': 'round', opacity: 0.8 }) +
+            T('circle', { id: 's1-bulbo', cx: 710, cy: 300, r: 16, fill: 'url(#s1-fungoGrad)', stroke: '#86efac', 'stroke-width': 2 }) +
+            T('circle', { cx: 710, cy: 300, r: 26, fill: 'none', stroke: '#4ade80', 'stroke-width': 2, opacity: 0.35 })) +
+          esporos) +
+
+          // etiquetas da cena
+          T('rect', { x: 596, y: 96, width: 190, height: 38, rx: 9, fill: 'rgba(8,20,14,0.9)', stroke: 'rgba(34,197,94,0.6)', 'stroke-width': 1.6 }) +
+          T('text', { x: 691, y: 122, 'text-anchor': 'middle', fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 18, 'font-weight': 700, 'letter-spacing': 2 }, 'REALIDADE') +
+          T('line', { x1: 660, y1: 700, x2: 860, y2: 700, stroke: '#94a3b8', 'stroke-width': 2 }) +
+          T('line', { x1: 660, y1: 692, x2: 660, y2: 708, stroke: '#94a3b8', 'stroke-width': 2 }) +
+          T('line', { x1: 860, y1: 692, x2: 860, y2: 708, stroke: '#94a3b8', 'stroke-width': 2 }) +
+          T('text', { x: 760, y: 734, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 19, 'font-weight': 700 }, '1,5 centímetro') +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: 'none', stroke: '#2b4a6f', 'stroke-width': 3 })
+        );
+        M.montar('#f1-cena', svg);
+
+        var cena = M.pegar('#f1-cena');
+        var cidade = M.pegar(cena, '#s1-cidade');
+        var xis = M.pegar(cena, '#s1-x');
+        var folha = M.pegar(cena, '#s1-folha');
+        var formiga = M.pegar(cena, '#s1-formiga');
+        var fungo = M.pegar(cena, '#s1-fungo');
+        var hifa = M.pegar(cena, '#s1-hifa');
+        var bulbo = M.pegar(cena, '#s1-bulbo');
+        var perna = [], esporo = [], vulto = [];
+        for (var i = 0; i < 6; i++) perna.push(M.pegar(cena, '#s1-leg' + i));
+        for (var j = 0; j < 14; j++) esporo.push(M.pegar(cena, '#s1-sp' + j));
+        for (var v = 0; v < 3; v++) vulto.push(M.pegar(cena, '#s1-vulto' + v));
+
+        M.conectar(tl, function (t, og) {
+          var entra = suave(faixa(t, 0.3, 1.6));
+          cidade.setAttribute('opacity', f2(entra * (1 - 0.55 * suave(faixa(t, P2, P2 + 1.0)))));
+
+          var anda = Math.sin(t * 7);
+          for (var i = 0; i < 6; i++) {
+            var j0 = juntas[i];
+            var ang = j0[2] + anda * 7 * j0[3];
+            perna[i].setAttribute('x2', f2(j0[0] + Math.cos(ang * Math.PI / 180) * 46));
+            perna[i].setAttribute('y2', f2(j0[1] + Math.sin(ang * Math.PI / 180) * 46));
+          }
+
+          var vultoMove = Math.sin(t * 1.4) * 4;
+          for (var v2 = 0; v2 < 3; v2++) {
+            vulto[v2].setAttribute('transform', 'translate(' + f2(vultoMove * (v2 % 2 === 0 ? 1 : -1)) + ' 0)');
+          }
+
+          var revela = suave(faixa(t, 2.9, 3.9));
+          folha.setAttribute('opacity', f2(revela));
+          formiga.setAttribute('opacity', f2(revela));
+          formiga.setAttribute('transform', 'translate(760 452) scale(' + f2(0.9 + 0.1 * revela) + ') translate(-760 -452)');
+
+          var corta = suave(faixa(t, P2 + 0.25, P2 + 0.85));
+          xis.setAttribute('opacity', f2(corta));
+
+          var cresce = suave(faixa(t, 9.15, 10.45));
+          fungo.setAttribute('opacity', f2(cresce));
+          hifa.setAttribute('stroke-dasharray', '150');
+          hifa.setAttribute('stroke-dashoffset', f2(150 * (1 - cresce)));
+          bulbo.setAttribute('r', f2(4 + 12 * cresce));
+
+          for (var k = 0; k < 14; k++) {
+            var nasce = faixa(t, 9.6 + k * 0.06, 10.1 + k * 0.06);
+            var sobe = faixa(t, 9.6 + k * 0.06, 12.7 + k * 0.06);
+            var px2 = 700 + (M.ruido(k * 3.7) - 0.5) * 150;
+            var py2 = 300 - sobe * (90 + M.ruido(k * 5.1) * 120) + Math.sin(t * 1.6 + k) * 8;
+            esporo[k].setAttribute('cx', f2(px2));
+            esporo[k].setAttribute('cy', f2(py2));
+            esporo[k].setAttribute('opacity', f2(nasce * (1 - sobe) * 0.85));
+            esporo[k].setAttribute('r', f2(2.2 + M.ruido(k) * 1.8));
+          }
+        }, { duracao: DUR, offsetGlobal: 0.00 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-01-apocalipse-de-inseto'] = tl;
+    })();
+  </script>
+</template>

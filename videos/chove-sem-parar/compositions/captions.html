@@ -1,0 +1,156 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #captions-comp {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .caption-bar {
+      position: absolute;
+      left: 64px;
+      right: 64px;
+      top: 1350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .caption-pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px 14px;
+      padding: 18px 30px;
+      background: rgba(6, 11, 22, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.32);
+      border-radius: 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65);
+      min-height: 76px;
+      max-width: 940px;
+    }
+
+    .cap-word {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #94a3b8;
+    }
+
+    .cap-word.is-spoken {
+      color: #f8fafc;
+    }
+
+    .cap-word.is-active {
+      color: #38bdf8;
+      text-shadow: 0 0 22px rgba(56, 189, 248, 0.55);
+    }
+
+    .cap-word.cap-brand.is-spoken {
+      color: #fbbf24;
+    }
+
+    .cap-word.cap-brand.is-active {
+      color: #facc15;
+      text-shadow: 0 0 24px rgba(250, 204, 21, 0.65);
+    }
+  </style>
+
+  <div id="captions-comp" data-composition-id="captions" data-width="1080" data-height="1920" data-start="0" data-duration="67.56">
+    <div class="caption-bar">
+      <div id="caption-pill" class="caption-pill" style="opacity: 0;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var GROUPS = [{"frameId":"frame-01-gancho-torneira","plano":"gancho","start":0.12,"end":0.979,"words":[{"word":"E","start":0.12,"end":0.201,"brand":false},{"word":"se","start":0.271,"end":0.352,"brand":false},{"word":"começasse","start":0.399,"end":0.898,"brand":false},{"word":"a","start":0.921,"end":0.944,"brand":false}]},{"frameId":"frame-01-gancho-torneira","plano":"gancho","start":0.979,"end":2.21,"words":[{"word":"chover","start":0.979,"end":1.258,"brand":false},{"word":"agora","start":1.316,"end":1.699,"brand":false},{"word":"e","start":1.769,"end":1.85,"brand":false},{"word":"nunca","start":1.908,"end":2.163,"brand":false}]},{"frameId":"frame-01-gancho-torneira","plano":"gancho","start":2.21,"end":3.822,"words":[{"word":"mais","start":2.21,"end":2.361,"brand":false},{"word":"parasse?","start":2.407,"end":3.742,"brand":false}]},{"frameId":"frame-01-gancho-torneira","plano":"torneira","start":3.856,"end":4.692,"words":[{"word":"Não","start":3.856,"end":4.088,"brand":false},{"word":"é","start":4.146,"end":4.181,"brand":false},{"word":"cena","start":4.239,"end":4.495,"brand":false},{"word":"de","start":4.541,"end":4.622,"brand":false}]},{"frameId":"frame-01-gancho-torneira","plano":"torneira","start":4.692,"end":5.946,"words":[{"word":"filme.","start":4.692,"end":5.133,"brand":false},{"word":"É","start":5.539,"end":5.609,"brand":false},{"word":"só","start":5.69,"end":5.841,"brand":false},{"word":"o","start":5.876,"end":5.911,"brand":false}]},{"frameId":"frame-01-gancho-torneira","plano":"torneira","start":5.946,"end":7.084,"words":[{"word":"céu","start":5.946,"end":6.155,"brand":false},{"word":"abrindo","start":6.19,"end":6.491,"brand":false},{"word":"a","start":6.515,"end":6.538,"brand":false},{"word":"torneira","start":6.584,"end":7.026,"brand":true}]},{"frameId":"frame-01-gancho-torneira","plano":"torneira","start":7.084,"end":8.952,"words":[{"word":"e","start":7.084,"end":7.118,"brand":false},{"word":"esquecendo","start":7.142,"end":7.594,"brand":false},{"word":"de","start":7.629,"end":7.687,"brand":false},{"word":"fechar.","start":7.734,"end":8.872,"brand":false}]},{"frameId":"frame-02-solo-cimento","plano":"quintal","start":9.33,"end":10.201,"words":[{"word":"O","start":9.33,"end":9.481,"brand":false},{"word":"chao","start":9.585,"end":9.829,"brand":false},{"word":"do","start":9.876,"end":9.945,"brand":false},{"word":"seu","start":10.015,"end":10.166,"brand":false}]},{"frameId":"frame-02-solo-cimento","plano":"quintal","start":10.201,"end":11.871,"words":[{"word":"quintal","start":10.201,"end":10.595,"brand":false},{"word":"aguenta","start":10.642,"end":11.013,"brand":false},{"word":"um","start":11.06,"end":11.106,"brand":false},{"word":"temporal,","start":11.164,"end":11.791,"brand":false}]},{"frameId":"frame-02-solo-cimento","plano":"quintal","start":11.989,"end":12.941,"words":[{"word":"mas","start":11.989,"end":12.163,"brand":false},{"word":"nao","start":12.221,"end":12.349,"brand":false},{"word":"chuva","start":12.395,"end":12.685,"brand":false},{"word":"sem","start":12.732,"end":12.871,"brand":false}]},{"frameId":"frame-02-solo-cimento","plano":"quintal","start":12.941,"end":13.822,"words":[{"word":"fim.","start":12.941,"end":13.742,"brand":false}]},{"frameId":"frame-02-solo-cimento","plano":"cimento","start":13.857,"end":14.983,"words":[{"word":"Depois","start":13.857,"end":14.229,"brand":false},{"word":"de","start":14.275,"end":14.345,"brand":false},{"word":"horas,","start":14.379,"end":14.786,"brand":false},{"word":"a","start":14.855,"end":14.914,"brand":false}]},{"frameId":"frame-02-solo-cimento","plano":"cimento","start":14.983,"end":16.294,"words":[{"word":"terra","start":14.983,"end":15.181,"brand":false},{"word":"vira","start":15.25,"end":15.424,"brand":false},{"word":"cimento","start":15.471,"end":16.005,"brand":true},{"word":"e","start":16.109,"end":16.214,"brand":false}]},{"frameId":"frame-02-solo-cimento","plano":"cimento","start":16.295,"end":17.444,"words":[{"word":"nao","start":16.295,"end":16.469,"brand":false},{"word":"absorve","start":16.504,"end":16.945,"brand":false},{"word":"mais","start":17.003,"end":17.224,"brand":false},{"word":"uma","start":17.27,"end":17.398,"brand":false}]},{"frameId":"frame-02-solo-cimento","plano":"cimento","start":17.444,"end":18.302,"words":[{"word":"gota.","start":17.444,"end":18.222,"brand":false}]},{"frameId":"frame-03-ralo-transborda","plano":"entupido","start":18.68,"end":20.002,"words":[{"word":"A","start":18.68,"end":18.796,"brand":false},{"word":"galeria","start":18.866,"end":19.226,"brand":false},{"word":"de","start":19.272,"end":19.342,"brand":false},{"word":"pluvial","start":19.388,"end":19.922,"brand":false}]},{"frameId":"frame-03-ralo-transborda","plano":"entupido","start":20.027,"end":21.815,"words":[{"word":"entope","start":20.027,"end":20.538,"brand":false},{"word":"com","start":20.572,"end":20.7,"brand":false},{"word":"folha,","start":20.781,"end":21.281,"brand":false},{"word":"lixo","start":21.362,"end":21.757,"brand":false}]},{"frameId":"frame-03-ralo-transborda","plano":"entupido","start":21.815,"end":23.543,"words":[{"word":"e","start":21.815,"end":21.861,"brand":false},{"word":"sacola","start":21.919,"end":22.256,"brand":false},{"word":"plastica.","start":22.302,"end":23.463,"brand":false}]},{"frameId":"frame-03-ralo-transborda","plano":"transborda","start":23.578,"end":24.542,"words":[{"word":"A","start":23.578,"end":23.729,"brand":false},{"word":"agua","start":23.764,"end":24.008,"brand":false},{"word":"sobe","start":24.077,"end":24.356,"brand":false},{"word":"no","start":24.391,"end":24.484,"brand":false}]},{"frameId":"frame-03-ralo-transborda","plano":"transborda","start":24.542,"end":26.748,"words":[{"word":"ralo,","start":24.542,"end":25.018,"brand":false},{"word":"transborda","start":25.215,"end":25.935,"brand":false},{"word":"e","start":26.132,"end":26.272,"brand":false},{"word":"comeca","start":26.341,"end":26.713,"brand":false}]},{"frameId":"frame-03-ralo-transborda","plano":"transborda","start":26.748,"end":28.766,"words":[{"word":"a","start":26.748,"end":26.771,"brand":false},{"word":"correr","start":26.829,"end":27.096,"brand":false},{"word":"pela","start":27.154,"end":27.34,"brand":false},{"word":"calcada.","start":27.386,"end":28.686,"brand":false}]},{"frameId":"frame-04-rua-rio","plano":"rio","start":29.14,"end":30.614,"words":[{"word":"Em","start":29.14,"end":29.337,"brand":false},{"word":"minutos","start":29.361,"end":29.883,"brand":false},{"word":"sua","start":30.046,"end":30.301,"brand":false},{"word":"rua","start":30.336,"end":30.545,"brand":false}]},{"frameId":"frame-04-rua-rio","plano":"rio","start":30.614,"end":32.668,"words":[{"word":"vira","start":30.614,"end":30.847,"brand":false},{"word":"rio.","start":30.916,"end":31.265,"brand":true},{"word":"Carro","start":31.625,"end":31.984,"brand":false},{"word":"boiando,","start":32.042,"end":32.588,"brand":false}]},{"frameId":"frame-04-rua-rio","plano":"rio","start":32.751,"end":34.979,"words":[{"word":"lixeira","start":32.751,"end":33.192,"brand":false},{"word":"descendo","start":33.238,"end":33.621,"brand":false},{"word":"a","start":33.645,"end":33.668,"brand":false},{"word":"ladeira.","start":33.703,"end":34.899,"brand":false}]},{"frameId":"frame-04-rua-rio","plano":"fonte","start":35.016,"end":36.444,"words":[{"word":"A","start":35.016,"end":35.12,"brand":false},{"word":"enxurrada","start":35.19,"end":35.782,"brand":false},{"word":"nao","start":35.864,"end":36.049,"brand":false},{"word":"para","start":36.119,"end":36.398,"brand":false}]},{"frameId":"frame-04-rua-rio","plano":"fonte","start":36.444,"end":37.628,"words":[{"word":"porque","start":36.444,"end":36.723,"brand":false},{"word":"a","start":36.757,"end":36.792,"brand":false},{"word":"fonte","start":36.862,"end":37.187,"brand":true},{"word":"nunca","start":37.268,"end":37.559,"brand":false}]},{"frameId":"frame-04-rua-rio","plano":"fonte","start":37.628,"end":38.579,"words":[{"word":"fecha.","start":37.628,"end":38.499,"brand":false}]},{"frameId":"frame-05-drenagem","plano":"solucao","start":38.96,"end":40.446,"words":[{"word":"A","start":38.96,"end":39.041,"brand":false},{"word":"solucao?","start":39.123,"end":39.738,"brand":true},{"word":"Rede","start":40.04,"end":40.307,"brand":false},{"word":"de","start":40.353,"end":40.411,"brand":false}]},{"frameId":"frame-05-drenagem","plano":"solucao","start":40.446,"end":42.337,"words":[{"word":"drenagem","start":40.446,"end":40.992,"brand":false},{"word":"com","start":41.05,"end":41.178,"brand":false},{"word":"bueiros","start":41.236,"end":41.584,"brand":false},{"word":"maiores,","start":41.642,"end":42.257,"brand":false}]},{"frameId":"frame-05-drenagem","plano":"solucao","start":42.373,"end":43.963,"words":[{"word":"que","start":42.373,"end":42.478,"brand":false},{"word":"engolem","start":42.524,"end":42.907,"brand":false},{"word":"o","start":42.965,"end":42.989,"brand":false},{"word":"volume.","start":43.035,"end":43.883,"brand":false}]},{"frameId":"frame-05-drenagem","plano":"piso","start":44,"end":45.521,"words":[{"word":"Para","start":44,"end":44.221,"brand":false},{"word":"blindar","start":44.255,"end":44.615,"brand":false},{"word":"isso,","start":44.685,"end":45.068,"brand":false},{"word":"entra","start":45.231,"end":45.498,"brand":false}]},{"frameId":"frame-05-drenagem","plano":"piso","start":45.521,"end":47.518,"words":[{"word":"o","start":45.521,"end":45.544,"brand":false},{"word":"piso","start":45.614,"end":45.881,"brand":true},{"word":"permeavel:","start":45.95,"end":46.647,"brand":true},{"word":"deixa","start":47.007,"end":47.46,"brand":false}]},{"frameId":"frame-05-drenagem","plano":"piso","start":47.518,"end":48.48,"words":[{"word":"a","start":47.518,"end":47.541,"brand":false},{"word":"agua","start":47.564,"end":47.82,"brand":false},{"word":"descer","start":47.878,"end":48.203,"brand":false},{"word":"pra","start":48.272,"end":48.4,"brand":false}]},{"frameId":"frame-05-drenagem","plano":"piso","start":48.505,"end":49.712,"words":[{"word":"dentro","start":48.505,"end":48.83,"brand":false},{"word":"da","start":48.876,"end":48.946,"brand":false},{"word":"terra","start":49.016,"end":49.364,"brand":false},{"word":"em","start":49.503,"end":49.642,"brand":false}]},{"frameId":"frame-05-drenagem","plano":"piso","start":49.712,"end":50.455,"words":[{"word":"vez","start":49.712,"end":49.863,"brand":false},{"word":"de","start":49.898,"end":49.956,"brand":false},{"word":"correr","start":50.002,"end":50.304,"brand":false},{"word":"na","start":50.351,"end":50.42,"brand":false}]},{"frameId":"frame-05-drenagem","plano":"piso","start":50.455,"end":51.603,"words":[{"word":"superficie.","start":50.455,"end":51.523,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"por_fora_por_dentro","start":51.98,"end":53.524,"words":[{"word":"Por","start":51.98,"end":52.189,"brand":false},{"word":"fora,","start":52.247,"end":52.746,"brand":false},{"word":"parece","start":52.944,"end":53.304,"brand":false},{"word":"so","start":53.362,"end":53.489,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"por_fora_por_dentro","start":53.524,"end":55.231,"words":[{"word":"uma","start":53.524,"end":53.687,"brand":false},{"word":"chuva","start":53.745,"end":54.047,"brand":true},{"word":"chata.","start":54.093,"end":54.569,"brand":true},{"word":"Por","start":54.975,"end":55.161,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"por_fora_por_dentro","start":55.231,"end":56.485,"words":[{"word":"dentro,","start":55.231,"end":55.788,"brand":false},{"word":"e","start":55.904,"end":56.02,"brand":false},{"word":"a","start":56.078,"end":56.102,"brand":false},{"word":"cidade","start":56.148,"end":56.461,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"por_fora_por_dentro","start":56.485,"end":57.82,"words":[{"word":"inteira","start":56.485,"end":56.856,"brand":false},{"word":"testando","start":56.903,"end":57.321,"brand":false},{"word":"o","start":57.379,"end":57.413,"brand":false},{"word":"limite","start":57.46,"end":57.773,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"por_fora_por_dentro","start":57.82,"end":59.165,"words":[{"word":"do","start":57.82,"end":57.889,"brand":false},{"word":"escoamento.","start":57.959,"end":59.085,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"cta","start":59.202,"end":60.537,"words":[{"word":"Pois","start":59.202,"end":59.597,"brand":false},{"word":"e,","start":59.701,"end":59.829,"brand":false},{"word":"o","start":59.899,"end":60.003,"brand":false},{"word":"mundo","start":60.073,"end":60.467,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"cta","start":60.537,"end":61.687,"words":[{"word":"e","start":60.537,"end":60.595,"brand":false},{"word":"mais","start":60.7,"end":60.978,"brand":false},{"word":"curioso","start":61.048,"end":61.536,"brand":true},{"word":"do","start":61.582,"end":61.64,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"cta","start":61.687,"end":63.556,"words":[{"word":"que","start":61.687,"end":61.756,"brand":false},{"word":"parece.","start":61.803,"end":62.348,"brand":false},{"word":"Se","start":62.998,"end":63.149,"brand":false},{"word":"voce","start":63.219,"end":63.533,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"cta","start":63.556,"end":64.821,"words":[{"word":"e","start":63.556,"end":63.579,"brand":false},{"word":"curioso,","start":63.625,"end":64.171,"brand":false},{"word":"segue","start":64.392,"end":64.694,"brand":false},{"word":"o","start":64.717,"end":64.752,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"cta","start":64.821,"end":66.109,"words":[{"word":"Curiorisando!","start":64.821,"end":66.029,"brand":true}]}];
+      var DURACAO = 67.56;
+      var pill = document.getElementById('caption-pill');
+      var indiceGrupoAtual = -1;
+      var spansPalavras = [];
+
+      function montarGrupo(idx) {
+        if (idx === indiceGrupoAtual) return;
+        indiceGrupoAtual = idx;
+        spansPalavras = [];
+        if (idx < 0 || idx >= GROUPS.length) {
+          pill.style.opacity = '0';
+          pill.innerHTML = '';
+          return;
+        }
+        var g = GROUPS[idx];
+        pill.innerHTML = '';
+        for (var i = 0; i < g.words.length; i++) {
+          var w = g.words[i];
+          var span = document.createElement('span');
+          span.className = 'cap-word' + (w.brand ? ' cap-brand' : '');
+          span.textContent = w.word;
+          pill.appendChild(span);
+          spansPalavras.push(span);
+        }
+        pill.style.opacity = '1';
+      }
+
+      function renderizarLegenda(t) {
+        var idx = -1;
+        for (var i = 0; i < GROUPS.length; i++) {
+          if (t >= GROUPS[i].start && t <= GROUPS[i].end) {
+            idx = i;
+            break;
+          }
+        }
+        montarGrupo(idx);
+        if (idx < 0) return;
+        var g = GROUPS[idx];
+        for (var j = 0; j < g.words.length; j++) {
+          var w = g.words[j];
+          var sp = spansPalavras[j];
+          if (!sp) continue;
+          sp.classList.remove('is-active', 'is-spoken');
+          if (t >= w.start && t <= w.end + 0.04) {
+            sp.classList.add('is-active');
+          } else if (t > w.end + 0.04) {
+            sp.classList.add('is-spoken');
+          }
+        }
+      }
+
+      var tl = gsap.timeline({ paused: true });
+      var proxy = { t: 0 };
+      tl.to(proxy, {
+        t: DURACAO,
+        duration: DURACAO,
+        ease: 'none',
+        onUpdate: function () {
+          renderizarLegenda(proxy.t);
+        }
+      }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['captions'] = tl;
+
+      window.addEventListener('hf-seek', function (ev) {
+        if (ev && ev.detail && typeof ev.detail.time === 'number') {
+          renderizarLegenda(ev.detail.time);
+        }
+      });
+
+      renderizarLegenda(0);
+    })();
+  </script>
+</template>

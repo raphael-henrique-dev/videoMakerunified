@@ -1,0 +1,339 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f5-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f5-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 1;
+    }
+
+    .f5-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(5, 10, 20, 0.88) 0%,
+        rgba(5, 10, 20, 0.16) 28%,
+        rgba(5, 10, 20, 0.18) 64%,
+        rgba(5, 10, 20, 0.94) 100%
+      );
+    }
+
+    .f5-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f5-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(168, 85, 247, 0.42);
+      border-radius: 14px;
+    }
+
+    .f5-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #c084fc;
+    }
+
+    .f5-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f5-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #a855f7;
+      border-radius: 0 18px 18px 0;
+    }
+
+    .f5-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .f5-title-accent {
+      color: #c084fc;
+    }
+
+    .f5-subtitle {
+      font-size: 24px;
+      line-height: 1.38;
+      color: #cbd5e1;
+    }
+
+    .f5-cards-row {
+      position: absolute;
+      top: 1030px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f5-card {
+      flex: 1;
+      padding: 22px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border-radius: 16px;
+      border: 1px solid rgba(168, 85, 247, 0.36);
+    }
+
+    .f5-card-tag {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #c084fc;
+      margin-bottom: 6px;
+    }
+
+    .f5-card-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 6px;
+    }
+
+    .f5-card-desc {
+      font-size: 20px;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+  
+    /* ── Palco 2D (SVG vetorial + mascote 2D + medidor de sinal) ── */
+    #f5-root .m2-fundo { position: absolute; inset: 0; z-index: 0; background: radial-gradient(circle at 50% 28%, #10264d 0%, #08142a 55%, #050a14 100%); }
+    #f5-root .m2-piso { position: absolute; left: 0; top: 1465px; width: 1080px; height: 455px; z-index: 0; background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%); border-top: 2px solid rgba(56, 189, 248, 0.28); }
+    #f5-root .m2-cena { position: absolute; left: 0; top: 340px; width: 1080px; height: 680px; z-index: 1; }
+    #f5-root .m2-mascote { position: absolute; left: 50px; top: 1490px; width: 300px; height: 420px; z-index: 2; }
+    #f5-root .m2-hud { position: absolute; left: 400px; top: 1510px; width: 612px; height: 300px; z-index: 2; background: rgba(8, 14, 26, 0.9); border: 1px solid rgba(56, 189, 248, 0.32); border-radius: 22px; }
+    </style>
+
+  <div id="f5-root" data-composition-id="frame-05-engarrafamento-vizinhos" data-width="1080" data-height="1920" data-start="0" data-duration="17.35">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f5-cena" class="m2-cena"></div>
+    <div id="f5-mascote" class="m2-mascote"></div>
+    <div id="f5-hud" class="m2-hud"></div>
+
+    <div class="f5-ui-layer">
+      <div id="f5-topbar" class="f5-topbar">
+        <span class="f5-kicker">ERRO 04 // HORA DO PICO À NOITE</span>
+        <span class="f5-badge">AR CONGESTIONADO</span>
+      </div>
+
+      <div id="f5-header" class="f5-header-card">
+        <h1 class="f5-title">O Trânsito dos <span class="f5-title-accent">Vizinhos</span></h1>
+        <p class="f5-subtitle">À noite, o Wi-Fi do prédio inteiro tenta passar pelo mesmo corredor invisível no ar</p>
+      </div>
+
+      <div id="f5-cards" class="f5-cards-row">
+        <div class="f5-card" id="f5-c1">
+          <div class="f5-card-tag">MESMA RUA NO AR</div>
+          <div class="f5-card-title">20 Redes Juntas</div>
+          <div class="f5-card-desc">Os roteadores dos vizinhos usam as mesmas faixas para transmitir</div>
+        </div>
+        <div class="f5-card" id="f5-c2">
+          <div class="f5-card-tag">TODO MUNDO VENDO TV</div>
+          <div class="f5-card-title">Sinal Atropelado</div>
+          <div class="f5-card-desc">Uma rede esbarra na outra e deixa a internet lenta às 21h</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 17.35;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f5-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f5-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f5-c1', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f5-c2', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 5.60);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, clamp = M.clamp, mix = M.mixCor, f2 = M.f2;
+        // Cena 5 — O trânsito dos vizinhos (redes viram carros num corredor invisível que engarrafa)
+        var PAL = ['#38bdf8', '#f472b6', '#a78bfa', '#34d399', '#fb923c', '#facc15'];
+        var LANES5 = [256, 340, 424], SLOTS = 5, ESP = 100, LARG = 500, X5 = 480;
+        var COLS = [120, 232, 344], ROWS = [100, 195, 290, 385, 480];
+        var ROUT = [1, 4, 6, 8, 11, 13];
+        // tabela de distância percorrida (integral da velocidade) — determinística
+        var STEP = 1 / 60, cum = [0];
+        (function () {
+          var v0 = 170;
+          for (var i = 1; i <= Math.ceil(DUR / STEP) + 2; i++) {
+            var tt = i * STEP;
+            cum[i] = cum[i - 1] + v0 * (1 - 0.94 * M.suave(M.faixa(tt, 10.2, 13.0))) * STEP;
+          }
+        })();
+        function dist(t) { var f = t / STEP, i = Math.floor(f); return cum[i] + (cum[Math.min(i + 1, cum.length - 1)] - cum[i]) * (f - i); }
+
+        var estrelas = '';
+        for (var s = 0; s < 34; s++) estrelas += T('circle', { id: 's5-st' + s, cx: 40 + M.ruido(s) * 1000, cy: 40 + M.ruido(s + 50) * 260, r: 1.5 + M.ruido(s + 9) * 2, fill: '#fff' });
+        var janelas = '';
+        for (var r = 0; r < 5; r++) for (var c = 0; c < 3; c++) janelas += T('rect', { id: 's5-w' + (r * 3 + c), x: COLS[c], y: ROWS[r], width: 86, height: 70, rx: 6, fill: '#1e293b' });
+        var wifiArcs = '';
+        for (var q = 0; q < ROUT.length; q++) wifiArcs += M.criarOndas('s5-ra' + q + '-', 2, false);
+        var carros = '';
+        for (var l = 0; l < 3; l++) for (var sl = 0; sl < SLOTS; sl++) {
+          var col = PAL[(l * SLOTS + sl) % 6];
+          carros += G({ id: 's5-c' + l + sl, opacity: 0 },
+            T('rect', { x: -40, y: -22, width: 80, height: 38, rx: 14, fill: col }) +
+            T('rect', { x: -20, y: -36, width: 44, height: 22, rx: 9, fill: col }) +
+            T('rect', { x: -12, y: -31, width: 28, height: 13, rx: 4, fill: '#0f172a', 'fill-opacity': 0.55 }) +
+            T('circle', { cx: -24, cy: 16, r: 8, fill: '#0f172a' }) + T('circle', { cx: 24, cy: 16, r: 8, fill: '#0f172a' }) +
+            T('circle', { cx: 38, cy: -6, r: 4, fill: '#fef08a' }) +
+            T('circle', { id: 's5-tl' + l + sl, cx: -38, cy: -6, r: 5, fill: '#ef4444', opacity: 0.25 }) +
+            T('path', { d: M.arco(2, -40, 6, -150, -30), stroke: '#fff', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }) +
+            G({ id: 's5-ex' + l + sl, opacity: 0, transform: 'translate(0 -56)' }, T('rect', { x: -4, y: -22, width: 8, height: 18, rx: 4, fill: '#ef4444' }) + T('circle', { cx: 0, cy: 4, r: 5, fill: '#ef4444' })));
+        }
+        var svg = M.svgBase(1080, 680,
+          '<defs><linearGradient id="s5-ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1230"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient><clipPath id="s5-cl"><rect x="30" y="30" width="1020" height="620" rx="26"/></clipPath></defs>' +
+          G({ 'clip-path': 'url(#s5-cl)' },
+            T('rect', { x: 30, y: 30, width: 1020, height: 620, fill: 'url(#s5-ceu)' }) + estrelas +
+            T('circle', { cx: 960, cy: 100, r: 36, fill: '#fef9c3' }) + T('circle', { cx: 976, cy: 90, r: 32, fill: '#1b1a4a' }) +
+            T('rect', { x: 30, y: 620, width: 1020, height: 30, fill: '#0c1a33' }) +
+            // corredor invisível no ar
+            T('rect', { x: 480, y: 214, width: 570, height: 252, rx: 22, fill: '#38bdf8', 'fill-opacity': 0.07, stroke: '#7dd3fc', 'stroke-opacity': 0.4, 'stroke-width': 3, 'stroke-dasharray': '10 10' }) +
+            T('line', { id: 's5-l1', x1: 480, y1: 298, x2: 1050, y2: 298, stroke: '#e2e8f0', 'stroke-opacity': 0.35, 'stroke-width': 4, 'stroke-dasharray': '26 22' }) +
+            T('line', { id: 's5-l2', x1: 480, y1: 382, x2: 1050, y2: 382, stroke: '#e2e8f0', 'stroke-opacity': 0.35, 'stroke-width': 4, 'stroke-dasharray': '26 22' }) +
+            // prédio
+            T('rect', { x: 80, y: 56, width: 400, height: 22, rx: 6, fill: '#334155' }) +
+            T('rect', { x: 90, y: 78, width: 380, height: 542, fill: '#1f2a44' }) +
+            janelas +
+            T('rect', { x: 255, y: 560, width: 70, height: 60, rx: 6, fill: '#0f172a' }) +
+            wifiArcs + carros
+          ) +
+          T('rect', { x: 30, y: 30, width: 1020, height: 620, rx: 26, fill: 'none', stroke: '#3b5b8c', 'stroke-width': 4 })
+        );
+        M.montar('#f5-cena', svg);
+        var cena = M.pegar('#f5-cena');
+        var W = [], i5;
+        for (i5 = 0; i5 < 15; i5++) W.push(M.pegar(cena, '#s5-w' + i5));
+        var ST = []; for (i5 = 0; i5 < 34; i5++) ST.push(M.pegar(cena, '#s5-st' + i5));
+        var RA = []; for (i5 = 0; i5 < ROUT.length; i5++) RA.push(M.pegarLista(cena, 's5-ra' + i5 + '-', 2));
+        var CAR = [], TL = [], EX = [];
+        for (var a = 0; a < 3; a++) { CAR[a] = []; TL[a] = []; EX[a] = []; for (var b = 0; b < SLOTS; b++) { CAR[a][b] = M.pegar(cena, '#s5-c' + a + b); TL[a][b] = M.pegar(cena, '#s5-tl' + a + b); EX[a][b] = M.pegar(cena, '#s5-ex' + a + b); } }
+        var L1 = M.pegar(cena, '#s5-l1'), L2 = M.pegar(cena, '#s5-l2');
+        var boy = M.mascote('#f5-mascote');
+        var hud = M.medidor('#f5-hud');
+
+        M.conectar(tl, function (t, og) {
+          var tv = suave(faixa(t, 9.3, 11.0));            // todo mundo vendo TV
+          var jam = suave(faixa(t, 10.2, 13.0));
+          for (var s = 0; s < 34; s++) ST[s].setAttribute('opacity', f2(0.45 + 0.45 * Math.sin(t * 2 + s)));
+          for (var w = 0; w < 15; w++) {
+            var base = M.ruido(w + 1) > 0.35 ? '#fde68a' : '#1e293b';
+            var alvo = M.ruido(w + 3) > 0.15 ? mix('#3b82f6', '#93c5fd', 0.5 + 0.5 * Math.sin(t * 5 + w * 1.7)) : '#1e293b';
+            var cor = base === '#fde68a' ? mix(base, alvo, tv) : mix('#1e293b', alvo, tv);
+            W[w].setAttribute('fill', cor);
+          }
+          // redes nas janelas (arcos pequenos que saem do prédio)
+          for (var q = 0; q < ROUT.length; q++) {
+            var wi = ROUT[q], wr = Math.floor(wi / 3), wc = wi % 3;
+            var cx = COLS[wc] + 43, cy = ROWS[wr] + 35;
+            M.animarOndas(RA[q], cx + 50, cy, t + q * 0.31, {
+              periodo: lerp(2.4, 1.2, tv), r0: 10, rMax: 70, a0: -50, a1: 50, largura: 5, cor: PAL[q % 6],
+              opac: function (r, ph) { return 0.8 * (1 - ph); }
+            });
+          }
+          L1.setAttribute('stroke-dashoffset', f2(-dist(t) * 0.6)); L2.setAttribute('stroke-dashoffset', f2(-dist(t) * 0.6));
+          var d = dist(t);
+          for (var l = 0; l < 3; l++) {
+            for (var sl = 0; sl < SLOTS; sl++) {
+              var extra = !(sl === 0 || sl === 3);
+              var surge = extra ? suave(faixa(t, 9.4 + sl * 0.14 + l * 0.08, 9.9 + sl * 0.14 + l * 0.08)) : 1;
+              var pos = (((sl * ESP + l * 37 + d) % LARG) + LARG) % LARG;
+              var borda = Math.min(faixa(pos, 0, 36), 1 - faixa(pos, 450, 500));
+              CAR[l][sl].setAttribute('transform', 'translate(' + f2(X5 + 40 + pos) + ' ' + f2(LANES5[l] + (1 - surge) * -18) + ')');
+              CAR[l][sl].setAttribute('opacity', f2(surge * borda));
+              TL[l][sl].setAttribute('opacity', f2(0.25 + 0.75 * jam));
+              var ex = jam > 0.6 && ((l + sl) % 2 === 0) ? Math.max(0, Math.sin(t * 9 + sl * 1.7 + l)) : 0;
+              EX[l][sl].setAttribute('opacity', f2(ex * jam));
+            }
+          }
+          var n1 = lerp(3.8, 3.0, faixa(t, 0.5, 9));
+          hud.atualizar(lerp(n1, 0.9, suave(faixa(t, 9.6, 13.6))), 'VELOCIDADE ÀS 21H');
+          var fase2 = t >= 9.25;
+          boy.atualizar(t, og, {
+            humor: fase2 ? 'bravo' : 'surpreso',
+            bracoD: t > 11.8 ? 165 : (fase2 ? 80 : 72), bracoE: fase2 ? 30 : 12,
+            olhar: [4, -3], tremer: t > 11.8 ? 0.8 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 65.70 });
+
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-05-engarrafamento-vizinhos'] = tl;
+    })();
+  </script>
+</template>

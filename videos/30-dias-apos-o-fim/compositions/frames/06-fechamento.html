@@ -1,0 +1,135 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f6-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f6-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f6-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f6-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f6-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f6-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f6-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f6-title-accent { color:#38bdf8; }
+    .f6-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f6-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f6-banner-text { font-size:20px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f6-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f6-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 50% 32%, #10264d 0%, #08142a 55%, #050a14 100%); }
+    #f6-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f6-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f6-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f6-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f6-root" data-composition-id="frame-06-fechamento" data-width="1080" data-height="1920" data-start="0" data-duration="13.86">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f6-cena" class="m2-cena"></div>
+    <div id="f6-mascote" class="m2-mascote"></div>
+    <div id="f6-hud" class="m2-hud"></div>
+
+    <div class="f6-ui-layer">
+      <div id="f6-header" class="f6-header-card">
+        <h1 class="f6-title">Por Fora e <span class="f6-title-accent">Por Dentro</span></h1>
+        <p class="f6-subtitle">O fim do mundo, visto de dentro, é só o planeta respirando de novo.</p>
+      </div>
+      <div id="f6-banner" class="f6-banner" style="opacity: 0;">
+        <span class="f6-banner-text">O MUNDO É MAIS CURIOSO DO QUE PARECE</span>
+        <span class="f6-banner-pill">SEGUE O CANAL</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 13.86;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f6-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f6-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 9.4);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2, mixCor = M.mixCor;
+        
+        var labels = [
+          { id: 's6-lbl0', x: 812, y: 150, alvo: [686, 196], txt: 'ENERGIA' },
+          { id: 's6-lbl1', x: 812, y: 250, alvo: [702, 300], txt: 'ÁGUA' },
+          { id: 's6-lbl2', x: 812, y: 350, alvo: [706, 404], txt: 'NATUREZA' },
+          { id: 's6-lbl3', x: 812, y: 450, alvo: [676, 470], txt: 'CÉU' }
+        ];
+        var labelsSvg = '';
+        labels.forEach(function (lb, i) {
+          labelsSvg += G({ id: lb.id, opacity: 0 },
+            T('line', { x1: lb.alvo[0], y1: lb.alvo[1], x2: lb.x - 12, y2: lb.y - 6, stroke: '#38bdf8', 'stroke-width': 2.5, 'stroke-dasharray': '7 7' }) +
+            T('circle', { cx: lb.alvo[0], cy: lb.alvo[1], r: 6, fill: '#38bdf8' }) +
+            T('text', { x: lb.x, y: lb.y, fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 26, 'font-weight': 700 }, lb.txt));
+        });
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s6-earthGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d4ed8"/><stop offset="0.55" stop-color="#0e7490"/><stop offset="1" stop-color="#166534"/></linearGradient>' +
+          '<clipPath id="s6-clip"><circle cx="540" cy="300" r="210"/></clipPath>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: '#050a14' }) +
+          G({ id: 's6-globo' },
+            T('circle', { cx: 540, cy: 300, r: 218, fill: '#38bdf8', 'fill-opacity': 0.10 }) +
+            T('circle', { cx: 540, cy: 300, r: 210, fill: 'url(#s6-earthGrad)' }) +
+            G({ 'clip-path': 'url(#s6-clip)' },
+              // metade cidade apagada
+              T('rect', { x: 330, y: 90, width: 212, height: 420, fill: '#0b1220', 'fill-opacity': 0.86 }) +
+              T('rect', { x: 360, y: 300, width: 34, height: 90, fill: '#1e293b' }) +
+              T('rect', { x: 404, y: 270, width: 40, height: 120, fill: '#1e293b' }) +
+              T('rect', { x: 454, y: 310, width: 34, height: 80, fill: '#1e293b' }) +
+              T('rect', { x: 370, y: 320, width: 10, height: 14, fill: '#334155' }) +
+              T('rect', { x: 414, y: 290, width: 10, height: 14, fill: '#334155' }) +
+              T('rect', { x: 414, y: 330, width: 10, height: 14, fill: '#334155' }) +
+              // metade floresta viva
+              T('circle', { cx: 640, cy: 250, r: 34, fill: '#16a34a' }) +
+              T('circle', { cx: 700, cy: 300, r: 42, fill: '#22c55e' }) +
+              T('circle', { cx: 650, cy: 360, r: 38, fill: '#15803d' }) +
+              T('circle', { cx: 720, cy: 410, r: 30, fill: '#16a34a' }) +
+              T('circle', { cx: 600, cy: 430, r: 28, fill: '#22c55e' }) +
+              T('path', { d: 'M560 470 Q640 430 740 470', fill: 'none', stroke: '#4ade80', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+              T('path', { d: 'M580 500 Q660 460 730 500', fill: 'none', stroke: '#22c55e', 'stroke-width': 5, 'stroke-linecap': 'round' })) +
+            T('circle', { cx: 540, cy: 300, r: 210, fill: 'none', stroke: '#7dd3fc', 'stroke-width': 3, 'stroke-opacity': 0.55 })) +
+          labelsSvg +
+          G({ id: 's6-cta', opacity: 0 },
+            T('rect', { x: 330, y: 548, width: 420, height: 56, rx: 14, fill: 'rgba(8,14,26,0.92)', stroke: '#facc15', 'stroke-width': 2 }) +
+            T('text', { x: 540, y: 585, 'text-anchor': 'middle', fill: '#facc15', 'font-family': 'EB Garamond, serif', 'font-size': 34, 'font-weight': 700, 'letter-spacing': 2 }, 'CURIORISANDO'))
+        );
+        M.montar('#f6-cena', svg);
+        var cena = M.pegar('#f6-cena');
+        var lblEls = labels.map(function (lb) { return M.pegar(cena, '#' + lb.id); });
+        var cta = M.pegar(cena, '#s6-cta');
+        var globo = M.pegar(cena, '#s6-globo');
+        var boy = M.mascote('#f6-mascote');
+        var hud = M.medidorBarra('#f6-hud', { rotulo: 'CURIOSIDADE', unidade: '%', max: 100, cor: '#facc15', decimais: 0 });
+        
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.5, 6.5));
+          globo.setAttribute('transform', 'rotate(' + f2(-3 + u * 7) + ' 540 300)');
+          for (var i = 0; i < lblEls.length; i++) {
+            lblEls[i].setAttribute('opacity', f2(suave(faixa(t, 0.9 + i * 1.05, 1.7 + i * 1.05))));
+          }
+          var pop = suave(faixa(t, 4.2, 5.0));
+          cta.setAttribute('opacity', f2(pop));
+          cta.setAttribute('transform', 'translate(540 576) scale(' + f2(0.82 + 0.18 * pop) + ') translate(-540 -576)');
+          hud.atualizar(100 * suave(faixa(t, 0.8, 5.0)), 'SEMPRE CURIOSO', '#facc15');
+          boy.atualizar(t, og, {
+            humor: 'feliz',
+            bracoD: t > 2 ? 140 : 90,
+            bracoE: 12,
+            olhar: [4, -4],
+            inclinar: 0,
+            pulo: t > 2 ? Math.abs(Math.sin(t * 2.6)) * 10 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 75.27 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-06-fechamento'] = tl;
+    })();
+  </script>
+</template>

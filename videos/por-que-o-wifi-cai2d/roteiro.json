@@ -1,0 +1,254 @@
+{
+  "id": "por-que-o-wifi-cai2d",
+  "titulo": "Por Que o Wi-Fi Cai Bem no Quarto? (2D)",
+  "subtitulo": "Da caixinha escondida atrás da TV até o micro-ondas da cozinha: a corrida de obstáculos invisível dentro da sua casa",
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "fps": 30,
+  "alvoPpm": 180,
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.80,
+    "estilo": 0.40,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.22
+  },
+  "efeitos": {
+    "ganho": 1.12
+  },
+  "frames": [
+    {
+      "id": "frame-01-bolinha-girando",
+      "numero": "01",
+      "titulo": "A Bolinha Que Trava no Quarto",
+      "arquivo": "compositions/frames/01-bolinha-girando.html",
+      "kicker": "NOSSO DIA A DIA // A BOLINHA DA RAIVA",
+      "metrica": {
+        "rotulo": "DISTÂNCIA",
+        "valor": "SÓ 10 PASSOS"
+      },
+      "direcao2D": "Card editorial mostrando o contraste entre a internet rápida na sala e o vídeo travando na cama.",
+      "cauda": 0.25,
+      "sons": [
+        {
+          "nome": "whoosh",
+          "offset": 0.12,
+          "ganho": 0.55
+        },
+        {
+          "nome": "erro",
+          "offset": 5.8,
+          "ganho": 0.58
+        }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "gancho_quarto",
+          "gancho": true,
+          "texto": "Você deita na cama para ver um *vídeo,* fecha a porta do quarto e bem na melhor parte aparece aquela *bolinha* girando na tela!"
+        },
+        {
+          "plano": "PA",
+          "jogo": "preguica_sinal",
+          "texto": "O roteador está ali na sala, você paga caro todo *mês,* mas parece que a internet tem preguiça de andar dez *passos* até você!"
+        }
+      ]
+    },
+    {
+      "id": "frame-02-lampada-no-armario",
+      "numero": "02",
+      "titulo": "A Lâmpada Trancada na Gaveta",
+      "arquivo": "compositions/frames/02-lampada-no-armario.html",
+      "kicker": "ERRO 01 // ESCONDER ATRÁS DA TV",
+      "metrica": {
+        "rotulo": "SINAL PRESO",
+        "valor": "METADE PERDIDA"
+      },
+      "direcao2D": "Comparativo visual entre o roteador escondido no móvel e livre no alto da estante.",
+      "cauda": 0.25,
+      "sons": [
+        {
+          "nome": "pop",
+          "offset": 0.25,
+          "ganho": 0.5
+        },
+        {
+          "nome": "sucesso",
+          "offset": 7.2,
+          "ganho": 0.55
+        }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "esconder_rack",
+          "texto": "O primeiro erro mora na *sala:* muita gente esconde o aparelho atrás da *televisão* ou dentro do rack para não ficar feio."
+        },
+        {
+          "plano": "M",
+          "jogo": "lampada_gaveta",
+          "texto": "Só que o Wi-Fi funciona igualzinho a uma *lâmpada:* se você tranca a luz dentro da *gaveta,* o resto da casa inteira fica no escuro!"
+        }
+      ]
+    },
+    {
+      "id": "frame-03-espelho-e-agua",
+      "numero": "03",
+      "titulo": "Parede, Espelho e Cano d'Água",
+      "arquivo": "compositions/frames/03-espelho-e-agua.html",
+      "kicker": "ERRO 02 // O BANHEIRO NO CAMINHO",
+      "metrica": {
+        "rotulo": "PIOR INIMIGO",
+        "valor": "ESPELHO + ÁGUA"
+      },
+      "direcao2D": "Cards explicando como o espelho rebate o sinal igual muro e a água dos canos engole a internet.",
+      "cauda": 0.25,
+      "sons": [
+        {
+          "nome": "impacto",
+          "offset": 0.4,
+          "ganho": 0.55
+        },
+        {
+          "nome": "bolhas",
+          "offset": 6.8,
+          "ganho": 0.55
+        }
+      ],
+      "frases": [
+        {
+          "plano": "PG",
+          "jogo": "parede_tijolo",
+          "texto": "Para chegar no quarto, o sinal precisa atravessar a *casa,* e cada parede de tijolo no meio do caminho já rouba metade da *força.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "vilao_banheiro",
+          "texto": "Mas o pior vilão é o *banheiro:* o espelho rebate o sinal igual bola no *muro,* e os canos cheios de água engolem o resto pelo caminho!"
+        }
+      ]
+    },
+    {
+      "id": "frame-04-vilao-microondas",
+      "numero": "04",
+      "titulo": "O Caminhão Buzinando na Cozinha",
+      "arquivo": "compositions/frames/04-vilao-microondas.html",
+      "kicker": "ERRO 03 // QUANDO ESQUENTA O PRATO",
+      "metrica": {
+        "rotulo": "NA COZINHA",
+        "valor": "MESMO RITMO"
+      },
+      "direcao2D": "HUD de alerta mostrando a colisão entre o micro-ondas esquentando água e a chamada de vídeo travando na sala.",
+      "cauda": 0.25,
+      "sons": [
+        {
+          "nome": "laser",
+          "offset": 0.35,
+          "ganho": 0.52
+        },
+        {
+          "nome": "erro",
+          "offset": 6.4,
+          "ganho": 0.58
+        }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "prato_cozinha",
+          "texto": "Já reparou que alguém liga o *micro-ondas* na cozinha e a chamada de vídeo trava na mesma *hora* lá no sofá?"
+        },
+        {
+          "plano": "PA",
+          "jogo": "caminhao_buzinando",
+          "texto": "Não é coincidência: ele esquenta a comida sacudindo a água no mesmo *ritmo* do Wi-Fi, igual um caminhão *buzinando* no meio da sua conversa!"
+        }
+      ]
+    },
+    {
+      "id": "frame-05-engarrafamento-vizinhos",
+      "numero": "05",
+      "titulo": "Trânsito Travado com os Vizinhos",
+      "arquivo": "compositions/frames/05-engarrafamento-vizinhos.html",
+      "kicker": "ERRO 04 // HORA DO PICO À NOITE",
+      "metrica": {
+        "rotulo": "ÀS 21 HORAS",
+        "valor": "AR CONGESTIONADO"
+      },
+      "direcao2D": "Dois cards lado a lado mostrando o corredor único no ar e o engarrafamento quando todo mundo vê filme junto.",
+      "cauda": 0.25,
+      "sons": [
+        {
+          "nome": "whoosh",
+          "offset": 0.25,
+          "ganho": 0.55
+        },
+        {
+          "nome": "impacto",
+          "offset": 6.5,
+          "ganho": 0.55
+        }
+      ],
+      "frases": [
+        {
+          "plano": "PG",
+          "jogo": "redes_vizinhos",
+          "texto": "E quando chega a *noite,* entra a armadilha dos vizinhos: o roteador da rua inteira tenta passar pelo mesmo *corredor* invisível no ar."
+        },
+        {
+          "plano": "PA",
+          "jogo": "transito_sala",
+          "texto": "Com todo mundo assistindo filme ao mesmo *tempo,* o ar da sua sala vira um trânsito *travado* onde um sinal atropela o outro!"
+        }
+      ]
+    },
+    {
+      "id": "frame-06-raio-x-wifi",
+      "numero": "06",
+      "titulo": "Por Fora e Por Dentro do Seu Wi-Fi",
+      "arquivo": "compositions/frames/06-raio-x-wifi.html",
+      "kicker": "RAIO-X COMPLETO // 7 ETAPAS EM CASA",
+      "metrica": {
+        "rotulo": "CURIORISANDO",
+        "valor": "COMO RESOLVER"
+      },
+      "direcao2D": "7 chamadas técnicas SVG alinhadas aos discos 3D + cartão final de assinatura do Curiorisando.",
+      "cauda": 0.45,
+      "sons": [
+        {
+          "nome": "pop",
+          "offset": 0.3,
+          "ganho": 0.52
+        },
+        {
+          "nome": "sucesso",
+          "offset": 6.8,
+          "ganho": 0.65
+        }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "por_fora_por_dentro",
+          "texto": "Por fora, é só uma caixinha piscando luz *verde* na estante; por dentro, é uma corrida de obstáculos desviando de espelhos, canos e *micro-ondas!*"
+        },
+        {
+          "plano": "M",
+          "jogo": "fechamento_curiorisando",
+          "texto": "Pois é, o mundo é mais *curioso* do que parece! Se você também tinha raiva dessa bolinha girando, segue o *Curiorisando!*"
+        }
+      ]
+    }
+  ],
+  "modo": "2d"
+}

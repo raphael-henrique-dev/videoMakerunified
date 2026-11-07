@@ -1,0 +1,273 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f3-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    .f3-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f3-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f3-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+
+    .f3-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f3-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 24px 32px;
+      background: rgba(8, 14, 26, 0.88);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f3-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .f3-title-accent {
+      color: #38bdf8;
+    }
+
+    .f3-subtitle {
+      font-size: 22px;
+      line-height: 1.34;
+      color: #cbd5e1;
+    }
+
+    .f3-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(14, 26, 10, 0.92);
+      border: 1.5px solid rgba(250, 204, 21, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f3-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fef9c3;
+      letter-spacing: 0.04em;
+    }
+
+    .f3-banner-pill {
+      padding: 6px 16px;
+      background: #facc15;
+      color: #050a14;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    #f3-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 30%, #1a1f2e 0%, #081426 55%, #050a14 100%);
+    }
+    #f3-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 380px;
+      width: 1080px;
+      height: 780px;
+      z-index: 1;
+    }
+  </style>
+
+  <div data-hf-id="hf-p3" id="f3-root" data-composition-id="frame-03-memoria-aprendizado" data-width="1080" data-height="1920" data-start="28.00" data-duration="12.84">
+    <div data-hf-id="hf-p3bg" class="m2-fundo"></div>
+    <div data-hf-id="hf-p3cn" id="f3-cena" class="m2-cena"></div>
+
+    <div data-hf-id="hf-p3ui" class="f3-ui-layer">
+      <div data-hf-id="hf-p3tb" id="f3-topbar" class="f3-topbar">
+        <span data-hf-id="hf-p3kk" class="f3-kicker">MEMÓRIA // ARQUIVANDO O DIA</span>
+        <span data-hf-id="hf-p3bd" class="f3-badge">DISCO RÍGIDO</span>
+      </div>
+
+      <div data-hf-id="hf-p3hd" id="f3-header" class="f3-header-card">
+        <h1 data-hf-id="hf-p3tt" class="f3-title">Memória e <span data-hf-id="hf-p3ac" class="f3-title-accent">Aprendizado</span></h1>
+        <p data-hf-id="hf-p3sb" class="f3-subtitle">No sono profundo, o cérebro grava o dia no disco rígido de longo prazo.</p>
+      </div>
+
+      <div data-hf-id="hf-p3bn" id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span data-hf-id="hf-p3bt" class="f3-banner-text">SE VOCÊ NÃO DORME, O APRENDIZADO SOME</span>
+        <span data-hf-id="hf-p3bp" class="f3-banner-pill">CONSOLIDAÇÃO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 12.84;
+      var GRAVA = 6.60;
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 11.50);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var estante = '';
+        for (var e = 0; e < 5; e++) {
+          var ex = 110 + e * 180;
+          estante +=
+            T('rect', { x: ex, y: 100, width: 140, height: 560, rx: 10, fill: '#0f172a', stroke: '#334155', 'stroke-width': 2 }) +
+            T('rect', { x: ex + 10, y: 120, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 156, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 192, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 228, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 264, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 300, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 336, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 372, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 408, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 444, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 480, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 516, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('rect', { x: ex + 10, y: 552, width: 120, height: 24, rx: 4, fill: '#1e293b', stroke: '#475569', 'stroke-width': 1 }) +
+            T('text', { x: ex + 70, y: 640, 'text-anchor': 'middle', fill: '#64748b', 'font-family': 'Inter', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1 }, 'ARQUIVO ' + (e + 1));
+        }
+
+        var hd = G({ id: 's3-hd', transform: 'translate(720 420)' },
+          T('rect', { x: -110, y: -110, width: 220, height: 220, rx: 24, fill: '#0f172a', stroke: '#334155', 'stroke-width': 4 }) +
+          T('circle', { cx: 0, cy: 0, r: 92, fill: 'none', stroke: '#1e293b', 'stroke-width': 3 }) +
+          T('circle', { id: 's3-prato', cx: 0, cy: 0, r: 78, fill: 'none', stroke: '#38bdf8', 'stroke-width': 2, 'stroke-dasharray': '490', 'stroke-dashoffset': '490' }) +
+          T('circle', { cx: 0, cy: 0, r: 12, fill: '#f8fafc' }) +
+          T('rect', { x: -4, y: -100, width: 8, height: 100, fill: '#475569' }) +
+          T('rect', { id: 's3-leitura', x: 10, y: -96, width: 14, height: 12, rx: 2, fill: '#22c55e', opacity: 0 })
+        );
+
+        var arquivos = '';
+        for (var a = 0; a < 8; a++) {
+          arquivos += T('rect', { id: 's3-arq' + a, x: 60 + a * 110, y: 640, width: 86, height: 22, rx: 4, fill: '#334155', opacity: 0 });
+        }
+
+        var svg = M.svgBase(1080, 780,
+          '<defs>' +
+          '<radialGradient id="s3-hdGrad"><stop offset="0" stop-color="#38bdf8" stop-opacity="0.25"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: '#070d18', stroke: '#1f3350', 'stroke-width': 3 }) +
+          estante +
+          hd +
+          G({ id: 's3-hd-glow', opacity: 0 },
+            T('circle', { cx: 720, cy: 420, r: 130, fill: 'url(#s3-hdGrad)' })
+          ) +
+          arquivos +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: 'none', stroke: '#2b4a6f', 'stroke-width': 3 })
+        );
+        M.montar('#f3-cena', svg);
+
+        var cena = M.pegar('#f3-cena');
+        var prato = M.pegar(cena, '#s3-prato');
+        var leitura = M.pegar(cena, '#s3-leitura');
+        var glow = M.pegar(cena, '#s3-hd-glow');
+        var arqEls = [];
+        for (var a = 0; a < 8; a++) arqEls.push(M.pegar(cena, '#s3-arq' + a));
+
+        M.conectar(tl, function (t, og) {
+          var entra = suave(faixa(t, 0.3, 1.5));
+          glow.setAttribute('opacity', f2(entra * 0.5));
+
+          var grava = suave(faixa(t, GRAVA, GRAVA + 2.6));
+          prato.setAttribute('stroke-dashoffset', f2(490 * (1 - grava)));
+          leitura.setAttribute('opacity', f2(grava > 0.2 ? 1 : 0));
+          leitura.setAttribute('transform', 'rotate(' + f2(t * 90) + ' 17 -90)');
+
+          for (var a = 0; a < 8; a++) {
+            var surge = suave(faixa(t, GRAVA + 0.2 + a * 0.15, GRAVA + 0.6 + a * 0.15));
+            arqEls[a].setAttribute('opacity', f2(surge));
+            arqEls[a].setAttribute('fill', surge > 0.5 ? '#22c55e' : '#334155');
+          }
+        }, { duracao: DUR, offsetGlobal: 24.95 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-memoria-aprendizado'] = tl;
+    })();
+  </script>
+</template>

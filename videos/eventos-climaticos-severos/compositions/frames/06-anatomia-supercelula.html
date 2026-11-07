@@ -1,0 +1,349 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f6-root {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #030914;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f6-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .f6-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(3, 9, 20, 0.88) 0%,
+        rgba(3, 9, 20, 0.20) 26%,
+        rgba(3, 9, 20, 0.20) 66%,
+        rgba(3, 9, 20, 0.92) 100%
+      );
+    }
+
+    #f6-svg-leaders {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f6-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .f6-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 26px;
+      background: rgba(6, 12, 24, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f6-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #38bdf8;
+    }
+
+    .f6-cap-tag {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.08em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .f6-header-card {
+      position: absolute;
+      top: 168px;
+      left: 68px;
+      right: 68px;
+      padding: 24px 34px;
+      background: rgba(6, 12, 24, 0.86);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 16px 16px 0;
+    }
+
+    .f6-title {
+      margin: 0 0 6px 0;
+      font-family: 'EB Garamond', serif;
+      font-size: 60px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+    }
+
+    .f6-title-accent {
+      color: #38bdf8;
+    }
+
+    .f6-subtitle {
+      margin: 0;
+      font-size: 22px;
+      color: #cbd5e1;
+    }
+
+    .f6-labels-col {
+      position: absolute;
+      top: 390px;
+      right: 68px;
+      width: 448px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .f6-layer-chip {
+      padding: 14px 20px;
+      background: rgba(6, 14, 28, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .f6-chip-name {
+      font-size: 21px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f6-chip-role {
+      font-size: 17px;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.06em;
+    }
+
+    .f6-cta-banner {
+      position: absolute;
+      top: 1140px;
+      left: 68px;
+      right: 68px;
+      padding: 26px 34px;
+      background: rgba(8, 18, 38, 0.94);
+      border: 2px solid #facc15;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .f6-cta-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .f6-cta-kicker {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #facc15;
+    }
+
+    .f6-cta-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 46px;
+      font-weight: 700;
+      color: #f8fafc;
+      line-height: 1.05;
+    }
+
+    .f6-cta-btn {
+      padding: 16px 28px;
+      background: #facc15;
+      color: #090d16;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      border-radius: 12px;
+    }
+  </style>
+
+  <div data-hf-id="hf-zqtk" id="f6-root" data-composition-id="frame-06-anatomia-supercelula" data-width="1080" data-height="1920" data-start="0" data-duration="18.49">
+    <div data-hf-id="hf-sxcw" id="f6-stage-3d"></div>
+    <div data-hf-id="hf-2pan" class="f6-vignette"></div>
+
+    <svg data-hf-id="hf-phi6" id="f6-svg-leaders" viewBox="0 0 1080 1920" fill="none">
+      <g data-hf-id="hf-neh4" id="f6-leaders-group"></g>
+    </svg>
+
+    <div data-hf-id="hf-d4df" class="f6-ui-layer">
+      <div data-hf-id="hf-39sg" id="f6-topbar" class="f6-topbar">
+        <span data-hf-id="hf-z7mp" class="f6-kicker">POR DENTRO DA TEMPESTADE // 7 PEÇAS</span>
+        <span data-hf-id="hf-j3g2" class="f6-cap-tag">COMO TUDO SE JUNTA</span>
+      </div>
+
+      <div data-hf-id="hf-mrzj" id="f6-header" class="f6-header-card">
+        <h1 data-hf-id="hf-caty" class="f6-title">Por Fora e <span data-hf-id="hf-3mmi" class="f6-title-accent">Por Dentro</span></h1>
+        <p data-hf-id="hf-sarm" class="f6-subtitle">Do calor abafado dentro de casa até o temporal que alaga a esquina</p>
+      </div>
+
+      <div data-hf-id="hf-mct8" id="f6-labels-col" class="f6-labels-col">
+        <div data-hf-id="hf-u8st" class="f6-layer-chip" id="f6-chip-6"><span data-hf-id="hf-w0q4" class="f6-chip-name">7. Topo Congelado</span><span data-hf-id="hf-3akq" class="f6-chip-role">GRANIZO</span></div>
+        <div data-hf-id="hf-y6wu" class="f6-layer-chip" id="f6-chip-5"><span data-hf-id="hf-x0jr" class="f6-chip-name">6. Vento Engarrafado</span><span data-hf-id="hf-j6s5" class="f6-chip-role">NÃO ANDA</span></div>
+        <div data-hf-id="hf-250v" class="f6-layer-chip" id="f6-chip-4"><span data-hf-id="hf-1t0g" class="f6-chip-name">5. Raios e Trovões</span><span data-hf-id="hf-3oju" class="f6-chip-role">CHOQUE</span></div>
+        <div data-hf-id="hf-634w" class="f6-layer-chip" id="f6-chip-3"><span data-hf-id="hf-96vm" class="f6-chip-name">4. Vento de Destelhar</span><span data-hf-id="hf-dq86" class="f6-chip-role">VENTANIA</span></div>
+        <div data-hf-id="hf-6usp" class="f6-layer-chip" id="f6-chip-2"><span data-hf-id="hf-tfmo" class="f6-chip-name">3. Toalha Torcida</span><span data-hf-id="hf-3kj7" class="f6-chip-role">TEMPORAL</span></div>
+        <div data-hf-id="hf-d0ii" class="f6-layer-chip" id="f6-chip-1"><span data-hf-id="hf-nspz" class="f6-chip-name">2. Ar Puxando Água</span><span data-hf-id="hf-1ica" class="f6-chip-role">SECA</span></div>
+        <div data-hf-id="hf-gymj" class="f6-layer-chip" id="f6-chip-0"><span data-hf-id="hf-tc4s" class="f6-chip-name">1. Mar Igual Panela</span><span data-hf-id="hf-17r6" class="f6-chip-role">CALORÃO</span></div>
+      </div>
+
+      <div data-hf-id="hf-u0ld" id="f6-cta" class="f6-cta-banner" style="opacity: 0;">
+        <div data-hf-id="hf-5wtd" class="f6-cta-left">
+          <span data-hf-id="hf-k0cu" class="f6-cta-kicker">O MUNDO É MAIS CURIOSO DO QUE PARECE</span>
+          <span data-hf-id="hf-6geo" class="f6-cta-title">Segue o Curiorisando!</span>
+        </div>
+        <span data-hf-id="hf-8mn1" class="f6-cta-btn">SEGUIR +</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 18.49;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f6-topbar', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }, 0.05);
+      tl.fromTo('#f6-header', { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out' }, 0.15);
+      tl.fromTo('.f6-layer-chip', { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.45, stagger: 0.08, ease: 'power3.out' }, 0.35);
+      tl.fromTo('#f6-cta', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'back.out(1.5)' }, 7.65);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f6-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'espaco'
+        });
+
+        var chao = M.malha(
+          THREE,
+          new THREE.CircleGeometry(45, 48),
+          M.mat(THREE, 0x060d1c, { roughness: 0.88 })
+        );
+        chao.rotation.x = -Math.PI / 2;
+        palco.cena.add(chao);
+
+        var pilha = M.criarPilhaExplodidaTempestade(THREE);
+        pilha.grupo.position.set(-0.48, 1.72, 0.0);
+        pilha.grupo.scale.setScalar(0.68);
+        palco.cena.add(pilha.grupo);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.64 });
+        menino.raiz.position.set(-0.98, 0.42, 0.35);
+        palco.cena.add(menino.raiz);
+
+        var svgGroup = document.getElementById('f6-leaders-group');
+        var yAlvosChips = [837, 767, 697, 627, 557, 487, 417];
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          pilha.atualizar(t, 0.15);
+          M.resetPose(menino, t);
+
+          if (t < 4.8) {
+            M.humor(menino, 'orgulhoso');
+            M.apontar(menino, [-0.48, 1.72, 0], 'D');
+          } else if (t < 9.2) {
+            M.comemorar(menino, t, 4.8, 9.2);
+          } else {
+            M.acenar(menino, t, 9.2, DUR, 'D');
+          }
+          M.olharCamera(menino, palco.camera, 0.75);
+
+          M.plano(
+            palco.camera,
+            t,
+            0,
+            DUR,
+            { pos: [0.0, 1.85, 7.4], alvo: [-0.1, 1.55, 0.0] },
+            { pos: [0.1, 1.82, 7.1], alvo: [-0.1, 1.55, 0.0] }
+          );
+
+          if (svgGroup && t > 0.45) {
+            var opacidadeLinhas = Math.min(1, (t - 0.45) / 0.6);
+            var htmlSvg = '';
+            var vecTemp = new THREE.Vector3();
+            for (var i = 0; i < pilha.pecas.length; i++) {
+              pilha.pecas[i].grp.getWorldPosition(vecTemp);
+              var p2d = M.tela(THREE, vecTemp, palco.camera, 1080, 1920);
+              var yChip = yAlvosChips[i];
+              var xChip = 560;
+              var xMeio = Math.round((p2d.x + xChip) * 0.56);
+              htmlSvg +=
+                '<circle cx="' + p2d.x.toFixed(1) + '" cy="' + p2d.y.toFixed(1) + '" r="5" fill="#38bdf8" fill-opacity="' + opacidadeLinhas.toFixed(2) + '"/>' +
+                '<polyline points="' +
+                p2d.x.toFixed(1) + ',' + p2d.y.toFixed(1) + ' ' +
+                xMeio + ',' + yChip + ' ' +
+                xChip + ',' + yChip +
+                '" stroke="#38bdf8" stroke-width="2" stroke-dasharray="5 5" stroke-opacity="' + (opacidadeLinhas * 0.82).toFixed(2) + '" fill="none"/>';
+            }
+            svgGroup.innerHTML = htmlSvg;
+          }
+        }, { duracao: DUR, offsetGlobal: 76.35 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-06-anatomia-supercelula'] = tl;
+    })();
+  </script>
+</template>

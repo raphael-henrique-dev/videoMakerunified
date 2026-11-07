@@ -1,0 +1,276 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f2-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    .f2-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f2-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f2-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+
+    .f2-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #22c55e;
+      letter-spacing: 0.06em;
+    }
+
+    .f2-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 24px 32px;
+      background: rgba(8, 14, 26, 0.88);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f2-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 58px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .f2-title-accent {
+      color: #38bdf8;
+    }
+
+    .f2-subtitle {
+      font-size: 22px;
+      line-height: 1.34;
+      color: #cbd5e1;
+    }
+
+    .f2-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(14, 26, 10, 0.92);
+      border: 1.5px solid rgba(250, 204, 21, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f2-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fef9c3;
+      letter-spacing: 0.04em;
+    }
+
+    .f2-banner-pill {
+      padding: 6px 16px;
+      background: #facc15;
+      color: #050a14;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    #f2-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 30%, #0c243a 0%, #081426 55%, #050a14 100%);
+    }
+    #f2-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 380px;
+      width: 1080px;
+      height: 780px;
+      z-index: 1;
+    }
+  </style>
+
+  <div data-hf-id="hf-p2" id="f2-root" data-composition-id="frame-02-lava-jato-cerebro" data-width="1080" data-height="1920" data-start="14.50" data-duration="13.45">
+    <div data-hf-id="hf-p2bg" class="m2-fundo"></div>
+    <div data-hf-id="hf-p2cn" id="f2-cena" class="m2-cena"></div>
+
+    <div data-hf-id="hf-p2ui" class="f2-ui-layer">
+      <div data-hf-id="hf-p2tb" id="f2-topbar" class="f2-topbar">
+        <span data-hf-id="hf-p2kk" class="f2-kicker">LIMPEZA CEREBRAL // O LAVA-JATO</span>
+        <span data-hf-id="hf-p2bd" class="f2-badge">LÍQUIDO LIMPEZA</span>
+      </div>
+
+      <div data-hf-id="hf-p2hd" id="f2-header" class="f2-header-card">
+        <h1 data-hf-id="hf-p2tt" class="f2-title">O Lava-Jato <span data-hf-id="hf-p2ac" class="f2-title-accent">do Cérebro</span></h1>
+        <p data-hf-id="hf-p2sb" class="f2-subtitle">Enquanto você dorme, um líquido leva o lixo metabólico embora.</p>
+      </div>
+
+      <div data-hf-id="hf-p2bn" id="f2-banner" class="f2-banner" style="opacity: 0;">
+        <span data-hf-id="hf-p2bt" class="f2-banner-text">NEURÔNIOS ENCOGHEM E ABREM CANAIS</span>
+        <span data-hf-id="hf-p2bp" class="f2-banner-pill">SISTEMA GLINFÁTICO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 13.45;
+      var LIMPA = 6.40;
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 11.00);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var gotas = '';
+        for (var g = 0; g < 20; g++) {
+          gotas += T('circle', { id: 's2-gota' + g, cx: 540 + M.ruido(g * 11) * 200, cy: 40 + M.ruido(g * 7) * 100, r: 4, fill: '#38bdf8', opacity: 0 });
+        }
+
+        var botoes = '';
+        for (var b = 0; b < 16; b++) {
+          botoes += T('circle', { id: 's2-neuro' + b, cx: 200 + (b % 4) * 200, cy: 420 + Math.floor(b / 4) * 150, r: 22, fill: '#1e3a8a', stroke: '#38bdf8', 'stroke-width': 2, opacity: 0.6 });
+        }
+
+        var canais = '';
+        for (var c = 0; c < 12; c++) {
+          canais += T('path', { id: 's2-canal' + c, d: 'M' + (300 + c * 60) + ' 620 L' + (300 + c * 60) + ' 700', fill: 'none', stroke: '#22c55e', 'stroke-width': 4, 'stroke-opacity': 0 });
+        }
+
+        var cerebro = G({ id: 's2-cerebro', transform: 'translate(540 420)' },
+          T('path', { d: 'M-90 -40 Q-120 -100 -60 -160 Q-20 -220 40 -180 Q100 -140 130 -60 Q160 20 110 80 Q60 140 0 160 Q-60 140 -110 80 Q-160 20 -130 -60 Q-100 -100 -90 -40 Z', fill: '#2a4365', stroke: '#1e293b', 'stroke-width': 4 }) +
+          T('path', { d: 'M-70 -30 Q-50 -80 -30 -60 Q-10 -40 10 -70 Q30 -100 60 -80 Q90 -60 70 -20', fill: 'none', stroke: '#cbd5e1', 'stroke-width': 2, opacity: 0.5 }) +
+          T('path', { d: 'M-60 -20 Q-40 -60 -20 -40 Q0 -20 20 -50 Q40 -80 70 -60 Q90 -40 60 0', fill: 'none', stroke: '#cbd5e1', 'stroke-width': 2, opacity: 0.5 }) +
+          T('ellipse', { cx: -40, cy: -10, rx: 16, ry: 20, fill: '#1e293b', opacity: 0.6 }) +
+          T('ellipse', { cx: 40, cy: -10, rx: 16, ry: 20, fill: '#1e293b', opacity: 0.6 })
+        );
+
+        var svg = M.svgBase(1080, 780,
+          '<defs>' +
+          '<radialGradient id="s2-luzGrad"><stop offset="0" stop-color="#38bdf8" stop-opacity="0.6"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: '#070d18', stroke: '#1f3350', 'stroke-width': 3 }) +
+          G({ id: 's2-luz-ambiente', opacity: 0 },
+            T('circle', { cx: 540, cy: 420, r: 340, fill: 'url(#s2-luzGrad)' })
+          ) +
+          gotas +
+          botoes +
+          canais +
+          cerebro +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: 'none', stroke: '#2b4a6f', 'stroke-width': 3 })
+        );
+        M.montar('#f2-cena', svg);
+
+        var cena = M.pegar('#f2-cena');
+        var gotaEls = [], neuroEls = [], canalEls = [];
+        for (var i = 0; i < 20; i++) gotaEls.push(M.pegar(cena, '#s2-gota' + i));
+        for (var j = 0; j < 16; j++) neuroEls.push(M.pegar(cena, '#s2-neuro' + j));
+        for (var k = 0; k < 12; k++) canalEls.push(M.pegar(cena, '#s2-canal' + k));
+        var luz = M.pegar(cena, '#s2-luz-ambiente');
+        var cerebroEl = M.pegar(cena, '#s2-cerebro');
+
+        M.conectar(tl, function (t, og) {
+          var entra = suave(faixa(t, 0.3, 1.5));
+          luz.setAttribute('opacity', f2(entra * 0.55));
+
+          var limpa = suave(faixa(t, LIMPA, LIMPA + 2.2));
+          var enc = suave(faixa(t, LIMPA, LIMPA + 1.6));
+
+          for (var i = 0; i < 20; i++) {
+            var cai = faixa(t, 0.5 + i * 0.1, 1.0 + i * 0.1);
+            var yy = 40 + cai * 640;
+            gotaEls[i].setAttribute('cy', f2(yy));
+            gotaEls[i].setAttribute('opacity', f2(cai > 0.02 && cai < 0.98 ? 0.8 : 0));
+          }
+
+          for (var j = 0; j < 16; j++) {
+            var escala = 1 - enc * 0.35;
+            neuroEls[j].setAttribute('r', f2(22 * escala));
+            neuroEls[j].setAttribute('fill', limpa > 0.3 ? '#22c55e' : '#1e3a8a');
+          }
+
+          for (var k = 0; k < 12; k++) {
+            var abre = suave(faixa(t, LIMPA + 0.3 + k * 0.08, LIMPA + 1.0 + k * 0.08));
+            canalEls[k].setAttribute('stroke-opacity', f2(abre * 0.9));
+          }
+
+          var pulso = 1 + 0.05 * Math.sin(t * 6);
+          cerebroEl.setAttribute('transform', 'translate(540 420) scale(' + f2(pulso) + ')');
+        }, { duracao: DUR, offsetGlobal: 11.50 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-lava-jato-cerebro'] = tl;
+    })();
+  </script>
+</template>

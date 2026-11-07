@@ -1,0 +1,363 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f3-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #040915;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f3-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 1;
+    }
+
+    .f3-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(4, 9, 21, 0.88) 0%,
+        rgba(4, 9, 21, 0.18) 28%,
+        rgba(4, 9, 21, 0.18) 64%,
+        rgba(4, 9, 21, 0.94) 100%
+      );
+    }
+
+    .f3-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f3-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f3-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+    }
+
+    .f3-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #f59e0b;
+      letter-spacing: 0.06em;
+    }
+
+    .f3-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+    }
+
+    .f3-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .f3-title-accent {
+      color: #38bdf8;
+    }
+
+    .f3-subtitle {
+      font-size: 24px;
+      line-height: 1.38;
+      color: #cbd5e1;
+    }
+
+    .f3-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f3-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 16px;
+    }
+
+    .f3-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .f3-metric-val {
+      font-size: 36px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f3-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(36, 20, 8, 0.92);
+      border: 1.5px solid rgba(245, 158, 11, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f3-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fde68a;
+      letter-spacing: 0.04em;
+    }
+
+    .f3-banner-pill {
+      padding: 6px 16px;
+      background: #fbbf24;
+      color: #090d16;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+  
+    /* ── Palco 2D (SVG vetorial + mascote 2D + medidor de sinal) ── */
+    #f3-root .m2-fundo { position: absolute; inset: 0; z-index: 0; background: radial-gradient(circle at 50% 28%, #10264d 0%, #08142a 55%, #050a14 100%); }
+    #f3-root .m2-piso { position: absolute; left: 0; top: 1465px; width: 1080px; height: 455px; z-index: 0; background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%); border-top: 2px solid rgba(56, 189, 248, 0.28); }
+    #f3-root .m2-cena { position: absolute; left: 0; top: 340px; width: 1080px; height: 680px; z-index: 1; }
+    #f3-root .m2-mascote { position: absolute; left: 50px; top: 1490px; width: 300px; height: 420px; z-index: 2; }
+    #f3-root .m2-hud { position: absolute; left: 400px; top: 1510px; width: 612px; height: 300px; z-index: 2; background: rgba(8, 14, 26, 0.9); border: 1px solid rgba(56, 189, 248, 0.32); border-radius: 22px; }
+    </style>
+
+  <div id="f3-root" data-composition-id="frame-03-espelho-e-agua" data-width="1080" data-height="1920" data-start="0" data-duration="17.77">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f3-cena" class="m2-cena"></div>
+    <div id="f3-mascote" class="m2-mascote"></div>
+    <div id="f3-hud" class="m2-hud"></div>
+
+    <div class="f3-ui-layer">
+      <div id="f3-topbar" class="f3-topbar">
+        <span class="f3-kicker">ERRO 02 // O BANHEIRO NO CAMINHO</span>
+        <span class="f3-badge">ESPELHO + ÁGUA</span>
+      </div>
+
+      <div id="f3-header" class="f3-header-card">
+        <h1 class="f3-title">Espelho Rebate, <span class="f3-title-accent">Água Engole</span></h1>
+        <p class="f3-subtitle">Paredes de tijolo, espelhos de banheiro e canos cheios de água sugam a força da internet</p>
+      </div>
+
+      <div id="f3-telemetry" class="f3-telemetry-row">
+        <div class="f3-metric-box">
+          <div class="f3-metric-label">ESPELHO DO BANHEIRO</div>
+          <div class="f3-metric-val">Bate e Volta</div>
+        </div>
+        <div class="f3-metric-box">
+          <div class="f3-metric-label">CANO COM ÁGUA</div>
+          <div class="f3-metric-val">Chupa o Sinal</div>
+        </div>
+      </div>
+
+      <div id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span class="f3-banner-text">QUANDO O BANHEIRO FICA ENTRE A SALA E O QUARTO, O SINAL DESPENCA</span>
+        <span class="f3-banner-pill">BARREIRA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 17.77;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 5.60);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, clamp = M.clamp, mix = M.mixCor, f2 = M.f2;
+        // Cena 3 — Parede, espelho e cano d'água (3 pistas: tijolo perde força, espelho rebate, cano engole)
+        var LANES = [155, 335, 530];
+        var HIT = 500, X0 = 205, VEL = 250, VIDA = 3.4, NPK = 3;
+        function brick() {
+          var s = T('rect', { x: 520, y: 92, width: 80, height: 126, fill: '#e5d3b8' });
+          for (var r = 0; r < 5; r++) {
+            for (var c = 0; c < 3; c++) {
+              var off = r % 2 ? 18 : 0;
+              s += T('rect', { x: 522 + c * 27 - off, y: 94 + r * 25, width: 25, height: 23, rx: 2, fill: r % 2 ? '#b45309' : '#c2410c' });
+            }
+          }
+          return G({ 'clip-path': 'url(#s3-clip-tijolo)' }, s);
+        }
+        var pk = '';
+        for (var k = 0; k < 3; k++) {
+          for (var j = 0; j < NPK; j++) {
+            var id = 's3-p' + k + j;
+            pk += G({ id: id, opacity: 0 },
+              T('circle', { cx: 0, cy: 0, r: 26, fill: '#22c55e', 'fill-opacity': 0.25, class: 'g' }) +
+              T('circle', { cx: 0, cy: 0, r: 14, fill: '#22c55e', class: 'c' }) +
+              T('path', { d: M.arco(0, 0, 8, -150, -30), fill: 'none', stroke: '#fff', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-opacity': 0.9 })) +
+              T('circle', { id: id + 'r', cx: 520, cy: LANES[k], r: 10, fill: 'none', stroke: '#60a5fa', 'stroke-width': 5, opacity: 0 }) +
+              T('path', { id: id + 'f', d: 'M0 -26 L7 -8 L26 0 L7 8 L0 26 L-7 8 L-26 0 L-7 -8 Z', fill: '#fef08a', transform: 'translate(' + (HIT + 12) + ' ' + LANES[k] + ')', opacity: 0 });
+          }
+        }
+        var svg = M.svgBase(1080, 680,
+          '<defs><clipPath id="s3-clip-tijolo"><rect x="520" y="92" width="80" height="126" rx="6"/></clipPath></defs>' +
+          T('rect', { x: 30, y: 30, width: 1020, height: 600, rx: 26, fill: '#14233f', stroke: '#3b5b8c', 'stroke-width': 4 }) +
+          T('rect', { x: 30, y: 560, width: 1020, height: 70, fill: '#0c1a33' }) +
+          T('rect', { x: 505, y: 40, width: 110, height: 580, rx: 10, fill: '#334155' }) +
+          // pistas guia
+          (function () { var s = ''; for (var i = 0; i < 3; i++) s += T('line', { x1: 200, y1: LANES[i], x2: 1020, y2: LANES[i], stroke: '#94a3b8', 'stroke-opacity': 0.22, 'stroke-width': 3, 'stroke-dasharray': '4 14' }); return s; })() +
+          // roteador na mesa
+          T('rect', { x: 70, y: 392, width: 130, height: 12, rx: 5, fill: '#a16207' }) +
+          T('rect', { x: 84, y: 404, width: 10, height: 156, fill: '#854d0e' }) + T('rect', { x: 176, y: 404, width: 10, height: 156, fill: '#854d0e' }) +
+          M.roteadorSVG(135, 392, 1.0, 's3-r') +
+          (function () { var s = ''; for (var i = 0; i < 3; i++) s += T('path', { d: 'M165 ' + (350) + ' Q190 ' + (350) + ' ' + X0 + ' ' + LANES[i], fill: 'none', stroke: '#38bdf8', 'stroke-opacity': 0.35, 'stroke-width': 3, 'stroke-dasharray': '3 9' }); return s; })() +
+          brick() +
+          // espelho
+          T('rect', { x: 528, y: 248, width: 64, height: 174, rx: 12, fill: '#cffafe', stroke: '#e2e8f0', 'stroke-width': 6 }) +
+          T('path', { d: 'M542 380 L576 280 M550 410 L584 330', stroke: '#fff', 'stroke-width': 7, 'stroke-linecap': 'round', 'stroke-opacity': 0.8 }) +
+          // cano com água
+          T('rect', { x: 535, y: 432, width: 50, height: 196, rx: 10, fill: '#1d4ed8', stroke: '#1e3a8a', 'stroke-width': 4 }) +
+          T('line', { id: 's3-agua', x1: 560, y1: 440, x2: 560, y2: 620, stroke: '#93c5fd', 'stroke-width': 10, 'stroke-linecap': 'round', 'stroke-dasharray': '18 16' }) +
+          T('rect', { x: 527, y: 470, width: 66, height: 12, rx: 4, fill: '#1e40af' }) + T('rect', { x: 527, y: 570, width: 66, height: 12, rx: 4, fill: '#1e40af' }) +
+          // celular de destino
+          M.celularSVG(930, 92, 76, 126, 's3-cel', T('rect', { x: 20, y: 56, width: 36, height: 6, rx: 3, fill: '#475569' }) + T('rect', { x: 20, y: 70, width: 22, height: 6, rx: 3, fill: '#334155' })) +
+          pk
+        );
+        M.montar('#f3-cena', svg);
+        var cena = M.pegar('#f3-cena');
+        var agua = M.pegar(cena, '#s3-agua');
+        var boy = M.mascote('#f3-mascote');
+        var hud = M.medidor('#f3-hud');
+        var P = [];
+        for (var k2 = 0; k2 < 3; k2++) { P[k2] = []; for (var j2 = 0; j2 < NPK; j2++) { var id2 = 's3-p' + k2 + j2; P[k2][j2] = { g: M.pegar(cena, '#' + id2), core: M.pegar(cena, '#' + id2 + ' .c'), glow: M.pegar(cena, '#' + id2 + ' .g'), ring: M.pegar(cena, '#' + id2 + 'r'), flash: M.pegar(cena, '#' + id2 + 'f') }; } }
+
+        M.conectar(tl, function (t, og) {
+          agua.setAttribute('stroke-dashoffset', f2(-t * 70));
+          // foco da narração: tijolo → espelho → cano
+          var foco = [
+            lerp(1, 0.4, suave(faixa(t, 7.6, 8.2))),
+            lerp(0.4, 1, suave(faixa(t, 7.9, 8.5))) * lerp(1, 0.45, suave(faixa(t, 12.6, 13.2))),
+            lerp(0.4, 1, suave(faixa(t, 12.9, 13.5)))
+          ];
+          var uh = (HIT - X0) / VEL;
+          for (var k = 0; k < 3; k++) {
+            for (var j = 0; j < NPK; j++) {
+              var p = P[k][j];
+              var u = (((t + j * (VIDA / NPK) + k * 0.45) % VIDA) + VIDA) % VIDA;
+              var x, sc = 1, op = 1, cor = '#22c55e', anel = 0, flash = 0, rr = 10;
+              if (u < uh) { x = X0 + VEL * u; op = faixa(u, 0, 0.18); }
+              else {
+                var d = u - uh;
+                if (k === 0) { // tijolo: passa, mas bem mais fraca
+                  var s1 = suave(faixa(d, 0, 0.3));
+                  x = HIT + 20 + VEL * 0.8 * d; sc = lerp(1, 0.52, s1); cor = mix('#22c55e', '#f59e0b', s1);
+                  op = 1 - faixa(d, 1.6, 2.1);
+                  if (x > 905) op = 0;
+                } else if (k === 1) { // espelho: rebate
+                  x = HIT - VEL * d; sc = lerp(1, 0.75, faixa(d, 0, 1.2)); cor = mix('#22c55e', '#ef4444', suave(faixa(d, 0, 0.25)));
+                  op = 1 - faixa(d, 0.9, 1.9);
+                  flash = 1 - faixa(d, 0, 0.35);
+                } else { // cano: engole
+                  x = HIT; sc = 1 - suave(faixa(d, 0, 0.45)); cor = mix('#22c55e', '#2563eb', suave(faixa(d, 0, 0.3)));
+                  op = 1; anel = faixa(d, 0, 0.8); rr = lerp(14, 70, anel);
+                  if (d > 0.8) op = 0;
+                }
+              }
+              p.g.setAttribute('transform', 'translate(' + f2(x) + ' ' + f2(LANES[k]) + ') scale(' + f2(Math.max(0.01, sc * 1.3)) + ')');
+              p.g.setAttribute('opacity', f2(op * foco[k]));
+              p.core.setAttribute('fill', cor); p.glow.setAttribute('fill', cor);
+              p.ring.setAttribute('opacity', f2(k === 2 && anel > 0 && anel < 1 ? (1 - anel) * 0.9 * foco[k] : 0));
+              p.ring.setAttribute('r', f2(rr));
+              p.flash.setAttribute('opacity', f2(k === 1 ? flash * foco[k] : 0));
+              p.flash.setAttribute('transform', 'translate(' + (HIT + 14) + ' ' + LANES[k] + ') scale(' + f2(0.6 + (1 - flash) * 0.8) + ')');
+            }
+          }
+          M.piscarLeds(cena, 's3-r', t, '#22c55e');
+          hud.atualizar(lerp(3.8, 1.0, suave(faixa(t, 1.8, 9))), 'SINAL DEPOIS DO BANHEIRO');
+          var segunda = t >= 7.9;
+          boy.atualizar(t, og, {
+            humor: segunda ? 'bravo' : 'surpreso', capacete: true,
+            bracoD: 85 + Math.sin(t * 2) * 5, bracoE: segunda ? 60 : 12, olhar: [3, -3]
+          });
+        }, { duracao: DUR, offsetGlobal: 32.58 });
+
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-espelho-e-agua'] = tl;
+    })();
+  </script>
+</template>

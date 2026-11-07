@@ -1,0 +1,453 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f5-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #0a0710;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    .f5-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f5-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(20, 10, 14, 0.88);
+      border: 1px solid rgba(239, 68, 68, 0.42);
+      border-radius: 14px;
+    }
+
+    .f5-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #f87171;
+      text-transform: uppercase;
+    }
+
+    .f5-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #fcd34d;
+      letter-spacing: 0.06em;
+    }
+
+    .f5-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 26px 32px;
+      background: rgba(20, 10, 14, 0.88);
+      border-left: 5px solid #ef4444;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f5-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .f5-title-accent {
+      color: #f87171;
+    }
+
+    .f5-subtitle {
+      font-size: 23px;
+      line-height: 1.36;
+      color: #cbd5e1;
+    }
+
+    .f5-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f5-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(20, 10, 14, 0.90);
+      border: 1px solid rgba(239, 68, 68, 0.34);
+      border-radius: 16px;
+    }
+
+    .f5-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #f87171;
+      margin-bottom: 6px;
+    }
+
+    .f5-metric-val {
+      font-size: 34px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f5-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(30, 10, 12, 0.92);
+      border: 1.5px solid rgba(239, 68, 68, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f5-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fecaca;
+      letter-spacing: 0.04em;
+    }
+
+    .f5-banner-pill {
+      padding: 6px 16px;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    #f5-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 30%, #2a1420 0%, #160d1c 48%, #0a0710 100%);
+    }
+    #f5-root .m2-piso {
+      position: absolute;
+      left: 0;
+      top: 1465px;
+      width: 1080px;
+      height: 455px;
+      z-index: 0;
+      background: linear-gradient(180deg, #23121c 0%, #0c0810 100%);
+      border-top: 2px solid rgba(239, 68, 68, 0.28);
+    }
+    #f5-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 340px;
+      width: 1080px;
+      height: 680px;
+      z-index: 1;
+    }
+    #f5-root .m2-mascote {
+      position: absolute;
+      left: 50px;
+      top: 1490px;
+      width: 300px;
+      height: 420px;
+      z-index: 2;
+    }
+    #f5-root .m2-hud {
+      position: absolute;
+      left: 400px;
+      top: 1510px;
+      width: 612px;
+      height: 300px;
+      z-index: 2;
+      background: rgba(20, 10, 14, 0.9);
+      border: 1px solid rgba(239, 68, 68, 0.34);
+      border-radius: 22px;
+    }
+  </style>
+
+  <div data-hf-id="hf-fhu0" id="f5-root" data-composition-id="frame-05-freio-de-emergencia" data-width="1080" data-height="1920" data-start="0" data-duration="13.83">
+    <div data-hf-id="hf-z1ui" class="m2-fundo"></div>
+    <div data-hf-id="hf-n4f5" class="m2-piso"></div>
+    <div data-hf-id="hf-djq6" id="f5-cena" class="m2-cena"></div>
+    <div data-hf-id="hf-2ci4" id="f5-mascote" class="m2-mascote"></div>
+    <div data-hf-id="hf-mzy4" id="f5-hud" class="m2-hud"></div>
+
+    <div data-hf-id="hf-vcsa" class="f5-ui-layer">
+      <div data-hf-id="hf-qz9e" id="f5-topbar" class="f5-topbar">
+        <span data-hf-id="hf-jxid" class="f5-kicker">SEGREDO 04 // SE TUDO FALHAR</span>
+        <span data-hf-id="hf-fy22" class="f5-badge">1,3x O NORMAL</span>
+      </div>
+
+      <div data-hf-id="hf-f53r" id="f5-header" class="f5-header-card">
+        <h1 data-hf-id="hf-g48d" class="f5-title">O Freio de <span data-hf-id="hf-th4n" class="f5-title-accent">Emergência</span></h1>
+        <p data-hf-id="hf-0qur" class="f5-subtitle">Se a cabine acelerar demais, cunhas agarram os trilhos laterais na marra</p>
+      </div>
+
+      <div data-hf-id="hf-imdd" id="f5-telemetry" class="f5-telemetry-row">
+        <div data-hf-id="hf-312k" class="f5-metric-box">
+          <div data-hf-id="hf-0tv8" class="f5-metric-label">VELOCIDADE NORMAL</div>
+          <div data-hf-id="hf-4drf" class="f5-metric-val">1,0x</div>
+        </div>
+        <div data-hf-id="hf-22f8" class="f5-metric-box">
+          <div data-hf-id="hf-wfag" class="f5-metric-label">VELOCIDADE DE DISPARO</div>
+          <div data-hf-id="hf-vpvk" class="f5-metric-val">1,3x</div>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-dwrc" id="f5-banner" class="f5-banner" style="opacity: 0;">
+        <span data-hf-id="hf-ip3d" class="f5-banner-text">AS CUNHAS AGARRAM O TRILHO NA MARRA</span>
+        <span data-hf-id="hf-5xgy" class="f5-banner-pill">EMERGÊNCIA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 13.83;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f5-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f5-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f5-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f5-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 10.35);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        // velocímetro: 0 → 135°, 160 → 405°
+        var ticks = '';
+        for (var i = 0; i <= 8; i++) {
+          var ang = (135 + (i / 8) * 270) * Math.PI / 180;
+          var r1 = 78, r2 = 88;
+          ticks += T('line', {
+            x1: f2(165 + Math.cos(ang) * r1), y1: f2(250 + Math.sin(ang) * r1),
+            x2: f2(165 + Math.cos(ang) * r2), y2: f2(250 + Math.sin(ang) * r2),
+            stroke: i >= 7 ? '#f87171' : '#64748b', 'stroke-width': 3, 'stroke-linecap': 'round'
+          });
+        }
+
+        var svg = M.svgBase(1080, 680,
+          '<defs>' +
+          '<linearGradient id="s5-gradCab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1a28"/><stop offset="1" stop-color="#170f1c"/></linearGradient>' +
+          '<linearGradient id="s5-trilho" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#64748b"/><stop offset="1" stop-color="#334155"/></linearGradient>' +
+          '</defs>' +
+          // prédio e poço
+          T('rect', { x: 30, y: 10, width: 1020, height: 650, rx: 26, fill: '#0d0b18', stroke: '#3b3d5c', 'stroke-width': 4 }) +
+          T('rect', { x: 300, y: 30, width: 440, height: 620, fill: '#070812', stroke: '#2c2a45', 'stroke-width': 3 }) +
+          // trilhos
+          T('rect', { x: 330, y: 34, width: 18, height: 612, rx: 4, fill: 'url(#s5-trilho)' }) +
+          T('rect', { x: 692, y: 34, width: 18, height: 612, rx: 4, fill: 'url(#s5-trilho)' }) +
+          T('line', { x1: 339, y1: 38, x2: 339, y2: 642, stroke: '#cbd5e1', 'stroke-width': 2, 'stroke-dasharray': '7 15' }) +
+          T('line', { x1: 701, y1: 38, x2: 701, y2: 642, stroke: '#cbd5e1', 'stroke-width': 2, 'stroke-dasharray': '7 15' }) +
+          // cabos (rompem em 1s)
+          T('line', { id: 's5-cab0', x1: 400, y1: 200, x2: 400, y2: 44, stroke: '#e2e8f0', 'stroke-width': 4 }) +
+          T('line', { id: 's5-cab1', x1: 640, y1: 200, x2: 640, y2: 44, stroke: '#e2e8f0', 'stroke-width': 4 }) +
+          G({ id: 's5-frayT', opacity: 0 },
+            T('path', { d: 'M400 44 L392 76 M400 44 L410 80 M640 44 L630 78 M640 44 L650 76', stroke: '#f87171', 'stroke-width': 4, 'stroke-linecap': 'round' })) +
+          G({ id: 's5-frayC', opacity: 0 },
+            T('path', { id: 's5-frayC0', d: 'M400 200 L392 168 M400 200 L410 164', stroke: '#f87171', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+            T('path', { id: 's5-frayC1', d: 'M640 200 L630 166 M640 200 L650 164', stroke: '#f87171', 'stroke-width': 4, 'stroke-linecap': 'round' })) +
+          // cabine
+          G({ id: 's5-cab' },
+            T('rect', { x: 380, y: 200, width: 280, height: 180, rx: 8, fill: 'url(#s5-gradCab)', stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('rect', { x: 394, y: 214, width: 252, height: 152, rx: 4, fill: 'none', stroke: '#4c3a54', 'stroke-width': 2 }) +
+            T('rect', { x: 404, y: 224, width: 66, height: 92, rx: 5, fill: '#160f1e', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('rect', { x: 474, y: 224, width: 66, height: 92, rx: 5, fill: '#160f1e', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('rect', { x: 544, y: 224, width: 66, height: 92, rx: 5, fill: '#160f1e', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('text', { x: 520, y: 360, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700 }, 'CABINE') +
+            T('rect', { x: 380, y: 366, width: 280, height: 14, rx: 3, fill: '#475569' })) +
+          // cunhas laterais
+          G({ id: 's5-wedgeE' },
+            T('path', { d: 'M380 292 L338 276 L338 344 L380 328 Z', fill: '#f59e0b', stroke: '#78350f', 'stroke-width': 3 }) +
+            T('line', { x1: 344, y1: 288, x2: 344, y2: 332, stroke: '#fde047', 'stroke-width': 4 })) +
+          G({ id: 's5-wedgeD' },
+            T('path', { d: 'M660 292 L702 276 L702 344 L660 328 Z', fill: '#f59e0b', stroke: '#78350f', 'stroke-width': 3 }) +
+            T('line', { x1: 696, y1: 288, x2: 696, y2: 332, stroke: '#fde047', 'stroke-width': 4 })) +
+          // velocímetro
+          G({ id: 's5-speedo' },
+            T('circle', { cx: 165, cy: 250, r: 95, fill: '#0b0d18', stroke: '#f87171', 'stroke-width': 3 }) +
+            T('path', { d: M.arco(165, 250, 82, 135 + (130 / 160) * 270, 405), fill: 'none', stroke: '#ef4444', 'stroke-width': 10, 'stroke-linecap': 'round' }) +
+            ticks +
+            T('line', { id: 's5-needle', x1: 165, y1: 250, x2: 235, y2: 250, stroke: '#f8fafc', 'stroke-width': 5, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 165, cy: 250, r: 11, fill: '#f87171', stroke: '#f8fafc', 'stroke-width': 3 }) +
+            T('text', { x: 165, y: 118, 'text-anchor': 'middle', fill: '#f87171', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 1.6 }, 'VELOCIDADE') +
+            T('text', { id: 's5-speedTxt', x: 165, y: 388, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 34, 'font-weight': 700 }, '100%') +
+            T('text', { x: 262, y: 330, 'text-anchor': 'middle', fill: '#f87171', 'font-family': 'Inter, sans-serif', 'font-size': 16, 'font-weight': 700 }, '1,3x')) +
+          // limitador de velocidade (governador)
+          T('text', { x: 878, y: 70, 'text-anchor': 'middle', fill: '#f87171', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 1.4 }, 'LIMITADOR DE VELOCIDADE') +
+          T('line', { x1: 862, y1: 150, x2: 862, y2: 568, stroke: '#94a3b8', 'stroke-width': 3 }) +
+          T('line', { x1: 894, y1: 150, x2: 894, y2: 568, stroke: '#94a3b8', 'stroke-width': 3 }) +
+          G({ id: 's5-gov' },
+            T('circle', { cx: 878, cy: 150, r: 44, fill: '#1e1b2e', stroke: '#94a3b8', 'stroke-width': 5 }) +
+            T('circle', { cx: 878, cy: 150, r: 8, fill: '#f87171' }) +
+            T('line', { x1: 834, y1: 150, x2: 922, y2: 150, stroke: '#64748b', 'stroke-width': 4 }) +
+            T('line', { x1: 878, y1: 106, x2: 878, y2: 194, stroke: '#64748b', 'stroke-width': 4 })) +
+          G({ id: 's5-arms' },
+            T('line', { id: 's5-armE', x1: 878, y1: 150, x2: 838, y2: 150, stroke: '#fbbf24', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+            T('circle', { id: 's5-weightE', cx: 838, cy: 150, r: 12, fill: '#f59e0b', stroke: '#78350f', 'stroke-width': 3 }) +
+            T('line', { id: 's5-armD', x1: 878, y1: 150, x2: 918, y2: 150, stroke: '#fbbf24', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+            T('circle', { id: 's5-weightD', cx: 918, cy: 150, r: 12, fill: '#f59e0b', stroke: '#78350f', 'stroke-width': 3 })) +
+          T('circle', { cx: 878, cy: 568, r: 28, fill: '#1e1b2e', stroke: '#64748b', 'stroke-width': 4 }) +
+          // faíscas
+          (function () {
+            var s = '';
+            for (var q = 0; q < 12; q++) s += T('circle', { id: 's5-sp' + q, r: 4, fill: '#fde047', opacity: 0 });
+            return s;
+          })() +
+          // selo de cabine segura
+          G({ id: 's5-safe', opacity: 0 },
+            T('rect', { x: 420, y: 556, width: 200, height: 56, rx: 12, fill: 'rgba(8,26,20,0.95)', stroke: 'rgba(34,197,94,0.7)', 'stroke-width': 2 }) +
+            T('text', { x: 520, y: 593, 'text-anchor': 'middle', fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 21, 'font-weight': 700, 'letter-spacing': 1.2 }, 'CABINE SEGURA')) +
+          T('text', { x: 758, y: 612, 'text-anchor': 'start', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700 }, 'TRILHO') +
+          T('rect', { x: 30, y: 10, width: 1020, height: 650, rx: 26, fill: 'none', stroke: '#4b3b56', 'stroke-width': 4 })
+        );
+        M.montar('#f5-cena', svg);
+
+        var cena = M.pegar('#f5-cena');
+        var cab = M.pegar(cena, '#s5-cab');
+        var cab0 = M.pegar(cena, '#s5-cab0'), cab1 = M.pegar(cena, '#s5-cab1');
+        var frayT = M.pegar(cena, '#s5-frayT'), frayC = M.pegar(cena, '#s5-frayC'), frayC0 = M.pegar(cena, '#s5-frayC0'), frayC1 = M.pegar(cena, '#s5-frayC1');
+        var wedgeE = M.pegar(cena, '#s5-wedgeE'), wedgeD = M.pegar(cena, '#s5-wedgeD');
+        var needle = M.pegar(cena, '#s5-needle'), speedTxt = M.pegar(cena, '#s5-speedTxt');
+        var gov = M.pegar(cena, '#s5-gov'), arms = M.pegar(cena, '#s5-arms');
+        var armE = M.pegar(cena, '#s5-armE'), armD = M.pegar(cena, '#s5-armD');
+        var weightE = M.pegar(cena, '#s5-weightE'), weightD = M.pegar(cena, '#s5-weightD');
+        var safe = M.pegar(cena, '#s5-safe');
+        var sp = [];
+        for (var q = 0; q < 12; q++) sp.push(M.pegar(cena, '#s5-sp' + q));
+        var boy = M.mascote('#f5-mascote');
+        var hud = M.medidorBarra('#f5-hud', { rotulo: 'VELOCIDADE', unidade: '%', max: 160, cor: '#38bdf8', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var queda = Math.pow(faixa(t, 1.0, 9.55), 1.32);
+          var dy = 150 * queda;
+          var jolt = t > 9.55 ? Math.sin((t - 9.55) * 38) * 3 * (1 - faixa(t, 9.55, 10.15)) : 0;
+          cab.setAttribute('transform', 'translate(0 ' + f2(dy + jolt) + ')');
+          cab0.setAttribute('y1', f2(200 + dy));
+          cab1.setAttribute('y1', f2(200 + dy));
+
+          var romp = faixa(t, 1.0, 1.25);
+          cab0.setAttribute('opacity', f2(1 - romp));
+          cab1.setAttribute('opacity', f2(1 - romp));
+          frayT.setAttribute('opacity', f2(romp));
+          frayC.setAttribute('opacity', f2(romp));
+          frayC0.setAttribute('d', 'M400 ' + f2(200 + dy) + ' L392 ' + f2(168 + dy) + ' M400 ' + f2(200 + dy) + ' L410 ' + f2(164 + dy));
+          frayC1.setAttribute('d', 'M640 ' + f2(200 + dy) + ' L630 ' + f2(166 + dy) + ' M640 ' + f2(200 + dy) + ' L650 ' + f2(164 + dy));
+
+          var vel;
+          if (t < 1.0) vel = 100;
+          else if (t < 9.55) vel = 100 + 30 * Math.pow(faixa(t, 1.0, 9.55), 1.15);
+          else vel = 130 * (1 - suave(faixa(t, 9.55, 10.15)));
+
+          var ang = 135 + (vel / 160) * 270;
+          needle.setAttribute('transform', 'rotate(' + f2(ang) + ' 165 250)');
+          speedTxt.textContent = Math.round(vel) + '%';
+          speedTxt.setAttribute('fill', vel > 125 ? '#f87171' : '#f8fafc');
+
+          var captura = suave(faixa(t, 9.55, 9.75));
+          var sx = captura;
+          wedgeE.setAttribute('transform', 'translate(0 ' + f2(dy) + ') translate(380 318) scale(' + f2(sx) + ' 1) translate(-380 -318)');
+          wedgeD.setAttribute('transform', 'translate(0 ' + f2(dy) + ') translate(660 318) scale(' + f2(sx) + ' 1) translate(-660 -318)');
+
+          gov.setAttribute('transform', 'rotate(' + f2(t * 40 + vel * 3.2) + ' 878 150)');
+          var destaque = Math.sin(Math.PI * faixa(t, 4.2, 6.2));
+          gov.style.filter = destaque > 0.02 ? 'drop-shadow(0 0 ' + f2(6 + 14 * destaque) + 'px rgba(248,113,113,.85))' : 'none';
+          var ext = faixa(vel, 100, 130);
+          var wr = 26 + 56 * ext;
+          armE.setAttribute('x2', f2(878 - wr));
+          weightE.setAttribute('cx', f2(878 - wr));
+          armD.setAttribute('x2', f2(878 + wr));
+          weightD.setAttribute('cx', f2(878 + wr));
+
+          if (captura > 0.02) {
+            for (var s = 0; s < 12; s++) {
+              var fx = s % 2 === 0 ? 348 : 692;
+              var vida = 1 - faixa(t, 9.55 + s * 0.03, 10.3 + s * 0.03);
+              var a = (M.ruido(s * 11) - 0.5) * 3.0;
+              var d = 10 + 70 * faixa(t, 9.55 + s * 0.03, 10.3 + s * 0.03);
+              sp[s].setAttribute('cx', f2(fx + Math.cos(a) * d));
+              sp[s].setAttribute('cy', f2(318 + dy + Math.sin(a) * d));
+              sp[s].setAttribute('opacity', f2(Math.max(0, vida) * 0.95));
+            }
+          } else {
+            for (var z = 0; z < 12; z++) sp[z].setAttribute('opacity', 0);
+          }
+
+          safe.setAttribute('opacity', f2(suave(faixa(t, 10.4, 11.0))));
+
+          var estado, cor;
+          if (t >= 10.4) { estado = 'CABINE SEGURA'; cor = '#22c55e'; }
+          else if (t > 9.55) { estado = 'FREANDO!'; cor = '#fb923c'; }
+          else if (vel > 125) { estado = 'DISPAROU!'; cor = '#ef4444'; }
+          else { estado = 'NORMAL'; cor = '#38bdf8'; }
+          hud.atualizar(vel, estado, cor);
+
+          var alivio = t >= 10.4;
+          var susto = t > 1.0 && !alivio;
+          boy.atualizar(t, og, {
+            humor: alivio ? 'feliz' : (susto ? 'surpreso' : 'neutro'),
+            bracoD: alivio ? 116 : (susto ? 156 : 18),
+            bracoE: alivio ? 70 : (susto ? 150 : 10),
+            olhar: [5, susto ? 7 : -2],
+            tremer: susto ? 1.1 : 0,
+            pulo: alivio ? Math.abs(Math.sin((t - 10.4) * 4.5)) * 12 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 60.86 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-05-freio-de-emergencia'] = tl;
+    })();
+  </script>
+</template>

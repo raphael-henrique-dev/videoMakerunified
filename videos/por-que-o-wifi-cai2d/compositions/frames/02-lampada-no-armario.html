@@ -1,0 +1,324 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f2-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f2-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 1;
+    }
+
+    .f2-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(5, 10, 20, 0.88) 0%,
+        rgba(5, 10, 20, 0.20) 28%,
+        rgba(5, 10, 20, 0.16) 64%,
+        rgba(5, 10, 20, 0.92) 100%
+      );
+    }
+
+    .f2-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f2-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(250, 204, 21, 0.38);
+      border-radius: 14px;
+    }
+
+    .f2-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #facc15;
+    }
+
+    .f2-badge {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #38bdf8;
+    }
+
+    .f2-header-card {
+      position: absolute;
+      top: 168px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #facc15;
+      border-radius: 0 16px 16px 0;
+    }
+
+    .f2-title {
+      margin: 0 0 10px 0;
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.06;
+      color: #f8fafc;
+    }
+
+    .f2-title-accent {
+      color: #facc15;
+    }
+
+    .f2-subtitle {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.4;
+      color: #cbd5e1;
+    }
+
+    .f2-cards-grid {
+      position: absolute;
+      top: 1030px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f2-card {
+      flex: 1;
+      padding: 22px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(250, 204, 21, 0.32);
+      border-radius: 16px;
+    }
+
+    .f2-card-step {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #facc15;
+      margin-bottom: 6px;
+    }
+
+    .f2-card-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 6px;
+    }
+
+    .f2-card-desc {
+      font-size: 20px;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+  
+    /* ── Palco 2D (SVG vetorial + mascote 2D + medidor de sinal) ── */
+    #f2-root .m2-fundo { position: absolute; inset: 0; z-index: 0; background: radial-gradient(circle at 50% 28%, #10264d 0%, #08142a 55%, #050a14 100%); }
+    #f2-root .m2-piso { position: absolute; left: 0; top: 1465px; width: 1080px; height: 455px; z-index: 0; background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%); border-top: 2px solid rgba(56, 189, 248, 0.28); }
+    #f2-root .m2-cena { position: absolute; left: 0; top: 340px; width: 1080px; height: 680px; z-index: 1; }
+    #f2-root .m2-mascote { position: absolute; left: 50px; top: 1490px; width: 300px; height: 420px; z-index: 2; }
+    #f2-root .m2-hud { position: absolute; left: 400px; top: 1510px; width: 612px; height: 300px; z-index: 2; background: rgba(8, 14, 26, 0.9); border: 1px solid rgba(56, 189, 248, 0.32); border-radius: 22px; }
+    </style>
+
+  <div id="f2-root" data-composition-id="frame-02-lampada-no-armario" data-width="1080" data-height="1920" data-start="0" data-duration="16.66">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f2-cena" class="m2-cena"></div>
+    <div id="f2-mascote" class="m2-mascote"></div>
+    <div id="f2-hud" class="m2-hud"></div>
+
+    <div class="f2-ui-layer">
+      <div id="f2-topbar" class="f2-topbar">
+        <span class="f2-kicker">ERRO 01 // ESCONDER ATRÁS DA TV</span>
+        <span class="f2-badge">METADE PERDIDA</span>
+      </div>
+
+      <div id="f2-header" class="f2-header-card">
+        <h1 class="f2-title">Igual Lâmpada na <span class="f2-title-accent">Gaveta</span></h1>
+        <p class="f2-subtitle">Esconder o roteador dentro do móvel ou atrás da televisão apaga o sinal na casa toda</p>
+      </div>
+
+      <div id="f2-cards" class="f2-cards-grid">
+        <div class="f2-card" id="f2-c1">
+          <div class="f2-card-step">DENTRO DO RACK</div>
+          <div class="f2-card-title">Sinal Abafado</div>
+          <div class="f2-card-desc">A madeira e a chapa da TV seguram a onda logo na saída</div>
+        </div>
+        <div class="f2-card" id="f2-c2">
+          <div class="f2-card-step">NO ALTO E LIVRE</div>
+          <div class="f2-card-title">Casa Iluminada</div>
+          <div class="f2-card-desc">Quanto mais alto e visível, mais longe o Wi-Fi alcança</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 16.66;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-c1', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f2-c2', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 5.80);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, clamp = M.clamp, mix = M.mixCor, f2 = M.f2;
+        // Cena 2 — Lâmpada trancada na gaveta (roteador escondido x roteador livre no alto)
+        function bulb(x, y, on, id) {
+          return G({ id: id, transform: 'translate(' + x + ' ' + y + ')' },
+            T('circle', { cx: 0, cy: 0, r: 20, fill: on ? '#fde047' : '#475569', stroke: on ? '#fef9c3' : '#64748b', 'stroke-width': 3 }) +
+            T('rect', { x: -9, y: 18, width: 18, height: 14, rx: 3, fill: '#94a3b8' }) +
+            (on ? T('path', { d: 'M-34 -34 L-26 -26 M0 -42 L0 -32 M34 -34 L26 -26 M-40 0 L-30 0 M40 0 L30 0', stroke: '#fde047', 'stroke-width': 4, 'stroke-linecap': 'round' }) : ''));
+        }
+        var svg = M.svgBase(1080, 680,
+          '<defs>' +
+          '<linearGradient id="s2-tv" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0e7490"/><stop offset="1" stop-color="#6d28d9"/></linearGradient>' +
+          '<radialGradient id="s2-halo"><stop offset="0" stop-color="#fde047" stop-opacity="0.5"/><stop offset="1" stop-color="#fde047" stop-opacity="0"/></radialGradient>' +
+          '<radialGradient id="s2-halo2"><stop offset="0" stop-color="#facc15" stop-opacity="0.35"/><stop offset="1" stop-color="#facc15" stop-opacity="0"/></radialGradient>' +
+          '<clipPath id="s2-clip-arm"><rect x="100" y="330" width="350" height="240" rx="8"/></clipPath>' +
+          '<clipPath id="s2-clip-dir"><rect x="560" y="30" width="490" height="600" rx="26"/></clipPath>' +
+          '</defs>' +
+          // painel esquerdo: escondido
+          G({ id: 's2-esq' },
+            T('rect', { x: 30, y: 30, width: 490, height: 600, rx: 26, fill: '#1c2340', stroke: '#475569', 'stroke-width': 4 }) +
+            T('rect', { x: 105, y: 80, width: 340, height: 200, rx: 14, fill: '#0b1220', stroke: '#64748b', 'stroke-width': 6 }) +
+            T('rect', { x: 117, y: 92, width: 316, height: 176, rx: 8, fill: 'url(#s2-tv)' }) +
+            T('path', { d: 'M117 268 L190 190 L240 240 L300 170 L433 268 Z', fill: '#0b1220', 'fill-opacity': 0.4 }) +
+            T('rect', { x: 245, y: 280, width: 60, height: 20, fill: '#475569' }) +
+            T('rect', { x: 205, y: 298, width: 140, height: 10, rx: 5, fill: '#64748b' }) +
+            T('rect', { x: 80, y: 312, width: 390, height: 280, rx: 14, fill: '#78350f', stroke: '#451a03', 'stroke-width': 4 }) +
+            T('rect', { x: 100, y: 330, width: 350, height: 240, rx: 8, fill: '#1c1917' }) +
+            T('ellipse', { cx: 275, cy: 490, rx: 150, ry: 100, fill: 'url(#s2-halo2)' }) +
+            M.roteadorSVG(275, 560, 0.85, 's2-re') +
+            G({ 'clip-path': 'url(#s2-clip-arm)' }, M.criarOndas('s2-oe', 4, true)) +
+            T('rect', { x: 80, y: 312, width: 195, height: 280, rx: 14, fill: '#92400e', 'fill-opacity': 0.82, stroke: '#451a03', 'stroke-width': 4 }) +
+            T('rect', { x: 275, y: 312, width: 195, height: 280, rx: 14, fill: '#92400e', 'fill-opacity': 0.82, stroke: '#451a03', 'stroke-width': 4 }) +
+            T('circle', { cx: 252, cy: 452, r: 7, fill: '#fbbf24' }) + T('circle', { cx: 298, cy: 452, r: 7, fill: '#fbbf24' }) +
+            T('path', { d: 'M110 350 L240 350 M110 372 L240 372 M310 350 L440 350 M310 372 L440 372', stroke: '#b45309', 'stroke-width': 3 }) +
+            bulb(470, 66, false, 's2-bulbE')
+          ) +
+          // painel direito: livre e no alto
+          G({ id: 's2-dir' },
+            T('rect', { x: 560, y: 30, width: 490, height: 600, rx: 26, fill: '#17294a', stroke: '#38bdf8', 'stroke-width': 4 }) +
+            G({ 'clip-path': 'url(#s2-clip-dir)' },
+              T('circle', { id: 's2-haloc', cx: 830, cy: 215, r: 200, fill: 'url(#s2-halo)' }) +
+              M.criarOndas('s2-od', 5, true)) +
+            T('rect', { x: 700, y: 272, width: 260, height: 14, rx: 5, fill: '#a16207' }) +
+            T('rect', { x: 716, y: 286, width: 10, height: 24, fill: '#854d0e' }) + T('rect', { x: 934, y: 286, width: 10, height: 24, fill: '#854d0e' }) +
+            M.roteadorSVG(830, 272, 1.05, 's2-rd') +
+            // aparelhos que "acendem": notebook, celular, TV pequena
+            G({ id: 's2-dev0', transform: 'translate(600 470)' }, T('rect', { x: 0, y: 0, width: 110, height: 70, rx: 8, fill: '#0b1220', stroke: '#94a3b8', 'stroke-width': 4 }) + T('rect', { x: 8, y: 8, width: 94, height: 54, rx: 4, fill: '#38bdf8' }) + T('rect', { x: -10, y: 72, width: 130, height: 10, rx: 5, fill: '#94a3b8' }) + T('circle', { cx: 55, cy: -18, r: 11, fill: '#22c55e' })) +
+            G({ id: 's2-dev1', transform: 'translate(800 440)' }, T('rect', { x: 0, y: 0, width: 66, height: 120, rx: 14, fill: '#0b1220', stroke: '#94a3b8', 'stroke-width': 4 }) + T('rect', { x: 7, y: 12, width: 52, height: 90, rx: 8, fill: '#a78bfa' }) + T('circle', { cx: 33, cy: -18, r: 11, fill: '#22c55e' })) +
+            G({ id: 's2-dev2', transform: 'translate(910 470)' }, T('rect', { x: 0, y: 0, width: 110, height: 70, rx: 8, fill: '#0b1220', stroke: '#94a3b8', 'stroke-width': 4 }) + T('rect', { x: 8, y: 8, width: 94, height: 54, rx: 4, fill: '#fb923c' }) + T('rect', { x: 40, y: 72, width: 30, height: 10, fill: '#94a3b8' }) + T('circle', { cx: 55, cy: -18, r: 11, fill: '#22c55e' })) +
+            bulb(1010, 66, true, 's2-bulbD')
+          )
+        );
+        M.montar('#f2-cena', svg);
+        var cena = M.pegar('#f2-cena');
+        var oe = M.pegarLista(cena, 's2-oe', 4), od = M.pegarLista(cena, 's2-od', 5);
+        var esq = M.pegar(cena, '#s2-esq'), dir = M.pegar(cena, '#s2-dir'), halo = M.pegar(cena, '#s2-haloc');
+        var bE = M.pegar(cena, '#s2-bulbE'), bD = M.pegar(cena, '#s2-bulbD');
+        var boy = M.mascote('#f2-mascote');
+        var hud = M.medidor('#f2-hud');
+
+        M.conectar(tl, function (t, og) {
+          var virada = suave(faixa(t, 7.5, 8.4));
+          esq.setAttribute('opacity', f2(lerp(1, 0.4, virada)));
+          dir.setAttribute('opacity', f2(lerp(0.32, 1, virada)));
+          // ondas presas no armário (amarelo fraco)
+          M.animarOndas(oe, 275, 490, t, { periodo: 2.6, r0: 20, rMax: 200, circulo: true, largura: 5, cor: '#fbbf24', opac: function (r, ph) { return 0.5 * (1 - ph); } });
+          M.piscarLeds(cena, 's2-re', t, '#fbbf24');
+          // ondas soltas (casa iluminada)
+          M.animarOndas(od, 830, 215, t, {
+            periodo: 3.0, r0: 30, rMax: 330, circulo: true, largura: 6,
+            cor: function (r) { return mix('#fde047', '#38bdf8', (r - 30) / 300); },
+            opac: function (r, ph) { return 0.9 * (1 - ph) * virada; }
+          });
+          M.piscarLeds(cena, 's2-rd', t, '#22c55e');
+          halo.setAttribute('r', f2(170 + 60 * Math.sin(t * 2.2) * virada));
+          halo.setAttribute('opacity', f2(0.15 + 0.85 * virada));
+          // aparelhos acendem em sequência
+          for (var i = 0; i < 3; i++) {
+            var d = M.pegar(cena, '#s2-dev' + i);
+            d.setAttribute('opacity', f2(0.25 + 0.75 * suave(faixa(t, 8.6 + i * 0.5, 9.2 + i * 0.5))));
+          }
+          var pop = suave(faixa(t, 7.6, 8.1));
+          bE.setAttribute('opacity', f2(pop)); bD.setAttribute('opacity', f2(pop));
+          // "tranca a luz dentro da gaveta" → lâmpada esquerda balança
+          var bal = t > 10.9 && t < 12.8 ? Math.sin((t - 10.9) * 14) * 6 : 0;
+          bE.setAttribute('transform', 'translate(470 66) rotate(' + f2(bal) + ')');
+          var nivel = t < 7.6 ? 1.1 + 0.15 * Math.sin(t * 3) : lerp(1.1, 3.9, suave(faixa(t, 7.8, 10.2)));
+          hud.atualizar(nivel, 'SINAL NA CASA TODA');
+          var feliz = t >= 7.6;
+          boy.atualizar(t, og, {
+            humor: feliz ? 'feliz' : 'triste',
+            bracoD: feliz ? 80 + 80 * suave(faixa(t, 9.5, 10.3)) : 70, bracoE: feliz ? 20 : 10,
+            pulo: feliz ? Math.abs(Math.sin(Math.max(0, t - 9.5) * 4)) * 6 * suave(faixa(t, 9.5, 10)) : 0,
+            olhar: [3, -3]
+          });
+        }, { duracao: DUR, offsetGlobal: 15.92 });
+
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-lampada-no-armario'] = tl;
+    })();
+  </script>
+</template>

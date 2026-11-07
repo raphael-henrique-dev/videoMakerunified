@@ -1,0 +1,160 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f1-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f1-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f1-topbar { position:absolute; top:76px; left:68px; right:140px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f1-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f1-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f1-header-card { position:absolute; top:164px; left:68px; right:140px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f1-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f1-title-accent { color:#f59e0b; }
+    .f1-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f1-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f1-banner-text { font-size:19px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f1-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; white-space:nowrap; }
+    #f1-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 58% 26%, #1b2a4d 0%, #0a1326 55%, #050a14 100%); }
+    #f1-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f1-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f1-root .m2-mascote { position:absolute; left:20px; top:624px; width:250px; height:350px; z-index:2; }
+    #f1-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f1-root" data-composition-id="frame-01-torre" data-width="1080" data-height="1920" data-start="0" data-duration="14.34">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f1-cena" class="m2-cena"></div>
+    <div id="f1-mascote" class="m2-mascote"></div>
+    <div id="f1-hud" class="m2-hud"></div>
+
+    <div class="f1-ui-layer">
+      <div id="f1-topbar" class="f1-topbar">
+        <span class="f1-kicker">ESCALA 01 // A PILHA</span>
+        <span class="f1-badge">1.000 m</span>
+      </div>
+      <div id="f1-header" class="f1-header-card">
+        <h1 class="f1-title">Quanto é <span class="f1-title-accent">1 bilhão</span> de reais?</h1>
+        <p class="f1-subtitle">Empilhado em notas de 100, esse número deixa de caber na tela — e vira uma torre.</p>
+      </div>
+      <div id="f1-banner" class="f1-banner" style="opacity: 0;">
+        <span class="f1-banner-text">10 MILHÕES DE CÉDULAS DE R$ 100</span>
+        <span class="f1-banner-pill">1 KM</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 14.34;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f1-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f1-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f1-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 5.9);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2, ruido = M.ruido;
+
+        var BASE = 560, TOPO = 90, X0 = 300, LARG = 150;
+        var N = 44;
+        var fatia = (BASE - TOPO) / N;
+        var pilha = '';
+        for (var i = 0; i < N; i++) {
+          var y = BASE - (i + 1) * fatia;
+          var wob = (ruido(i * 3.7) - 0.5) * 10;
+          var tom = i % 2 === 0 ? '#b45309' : '#92400e';
+          pilha +=
+            T('rect', { x: X0 + wob, y: f2(y), width: LARG, height: f2(fatia - 1.4), rx: 2.5, fill: tom, stroke: '#f59e0b', 'stroke-width': 0.7, 'stroke-opacity': 0.55 }) +
+            T('rect', { x: X0 + 8 + wob, y: f2(y + 1.2), width: LARG - 16, height: 1.6, fill: '#fbbf24', 'fill-opacity': 0.45 });
+        }
+
+        // Prédio de comparação (silhueta estilo torre alta)
+        var predio =
+          T('path', { d: 'M726 560 L726 330 L742 262 L754 168 L760 150 L766 262 L776 330 L776 560 Z', fill: '#0e1c33', stroke: '#27406b', 'stroke-width': 3 }) +
+          T('line', { x1: 760, y1: 168, x2: 760, y2: 560, stroke: '#1e3a5f', 'stroke-width': 1.5 }) +
+          T('line', { x1: 736, y1: 420, x2: 766, y2: 420, stroke: '#1e3a5f', 'stroke-width': 1.5 }) +
+          T('line', { x1: 736, y1: 480, x2: 766, y2: 480, stroke: '#1e3a5f', 'stroke-width': 1.5 }) +
+          T('line', { x1: 740, y1: 360, x2: 762, y2: 360, stroke: '#1e3a5f', 'stroke-width': 1.5 });
+        var janelasP = '';
+        for (var r = 0; r < 7; r++) {
+          for (var c = 0; c < 3; c++) {
+            janelasP += T('rect', { x: 734 + c * 14, y: 350 + r * 28, width: 7, height: 12, rx: 1, fill: '#38bdf8', 'fill-opacity': 0.35 });
+          }
+        }
+
+        var reguas =
+          G({ id: 's1-reguaTorre', opacity: 0 },
+            T('line', { x1: 492, y1: 560, x2: 492, y2: TOPO, stroke: '#f59e0b', 'stroke-width': 2, 'stroke-dasharray': '8 8' }) +
+            T('line', { x1: 484, y1: 560, x2: 508, y2: 560, stroke: '#f59e0b', 'stroke-width': 3 }) +
+            T('line', { x1: 484, y1: TOPO, x2: 508, y2: TOPO, stroke: '#f59e0b', 'stroke-width': 3 }) +
+            T('text', { x: 510, y: 332, fill: '#fbbf24', 'font-family': 'Inter, sans-serif', 'font-size': 30, 'font-weight': 700 }, '1.000 m')) +
+          G({ id: 's1-reguaPredio', opacity: 0 },
+            T('line', { x1: 812, y1: 560, x2: 812, y2: 166, stroke: '#38bdf8', 'stroke-width': 2, 'stroke-dasharray': '8 8' }) +
+            T('line', { x1: 804, y1: 560, x2: 828, y2: 560, stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('line', { x1: 804, y1: 166, x2: 828, y2: 166, stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('text', { x: 826, y: 372, fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 26, 'font-weight': 700 }, '828 m'));
+
+        var chip =
+          G({ id: 's1-chip', opacity: 0 },
+            T('rect', { x: 246, y: 16, width: 296, height: 48, rx: 12, fill: 'rgba(8,14,26,0.94)', stroke: '#facc15', 'stroke-width': 2 }) +
+            T('text', { x: 394, y: 48, 'text-anchor': 'middle', fill: '#facc15', 'font-family': 'Inter, sans-serif', 'font-size': 21, 'font-weight': 700, 'letter-spacing': 1 }, '10 MILHÕES DE NOTAS'));
+
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s1-ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#16233d"/><stop offset="1" stop-color="#050a14"/></linearGradient>' +
+          '<linearGradient id="s1-ouro" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#b45309"/><stop offset="0.5" stop-color="#f59e0b"/><stop offset="1" stop-color="#b45309"/></linearGradient>' +
+          '<clipPath id="s1-corte"><rect id="s1-corteRect" x="270" y="560" width="230" height="0"/></clipPath>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s1-ceu)' }) +
+          (function () {
+            var g = '';
+            for (var k = 0; k < 9; k++) { g += T('line', { x1: 0, y1: 40 + k * 62, x2: 1080, y2: 40 + k * 62, stroke: '#1e3a5f', 'stroke-width': 1, 'stroke-opacity': 0.35 }); }
+            return g;
+          })() +
+          T('circle', { cx: 880, cy: 96, r: 46, fill: '#1e3a5f', 'fill-opacity': 0.45 }) +
+          predio + janelasP +
+          G({ 'clip-path': 'url(#s1-corte)' },
+            T('rect', { x: X0, y: TOPO, width: LARG, height: BASE - TOPO, fill: 'url(#s1-ouro)', 'fill-opacity': 0.22 }) +
+            pilha) +
+          reguas + chip +
+          T('rect', { x: 0, y: 560, width: 1080, height: 70, fill: '#0b1220' }) +
+          T('line', { x1: 0, y1: 560, x2: 1080, y2: 560, stroke: '#38bdf8', 'stroke-width': 2, 'stroke-opacity': 0.45 })
+        );
+        M.montar('#f1-cena', svg);
+        var cena = M.pegar('#f1-cena');
+        var corte = M.pegar(cena, '#s1-corteRect');
+        var reguaTorre = M.pegar(cena, '#s1-reguaTorre');
+        var reguaPredio = M.pegar(cena, '#s1-reguaPredio');
+        var chipEl = M.pegar(cena, '#s1-chip');
+        var boy = M.mascote('#f1-mascote');
+        var hud = M.medidorBarra('#f1-hud', { rotulo: 'ALTURA DA PILHA', unidade: 'm', max: 1000, cor: '#f59e0b', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.7, 5.2));
+          var h = (BASE - TOPO) * u;
+          corte.setAttribute('y', f2(BASE - h));
+          corte.setAttribute('height', f2(h));
+          reguaTorre.setAttribute('opacity', f2(suave(faixa(t, 4.4, 5.1))));
+          reguaPredio.setAttribute('opacity', f2(suave(faixa(t, 3.0, 3.7))));
+          chipEl.setAttribute('opacity', f2(suave(faixa(t, 5.3, 5.9))));
+          hud.atualizar(Math.round(1000 * u), u > 0.98 ? 'ACIMA DO BURJ' : 'SUBINDO', u > 0.98 ? '#f59e0b' : '#38bdf8');
+          boy.atualizar(t, og, {
+            humor: t > 4.6 ? 'surpreso' : 'feliz',
+            bracoD: t > 4.6 ? 168 : 96,
+            bracoE: 16,
+            olhar: [10, -8],
+            inclinar: t > 4.6 ? -6 : -2,
+            pulo: t > 5.2 ? Math.abs(Math.sin(t * 3.1)) * 7 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 0.00 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-01-torre'] = tl;
+    })();
+  </script>
+</template>

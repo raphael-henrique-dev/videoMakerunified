@@ -1,0 +1,181 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f4-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f4-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f4-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f4-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f4-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f4-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f4-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f4-title-accent { color:#7dd3fc; }
+    .f4-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f4-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(56,189,248,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f4-banner-text { font-size:20px; font-weight:700; color:#e0f2fe; letter-spacing:.04em; }
+    .f4-banner-pill { padding:6px 16px; background:#38bdf8; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f4-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 50% 30%, #0d2947 0%, #08142a 55%, #050a14 100%); }
+    #f4-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f4-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f4-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f4-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f4-root" data-composition-id="frame-04-lasers" data-width="1080" data-height="1920" data-start="0" data-duration="21.07">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f4-cena" class="m2-cena"></div>
+    <div id="f4-mascote" class="m2-mascote"></div>
+    <div id="f4-hud" class="m2-hud"></div>
+
+    <div class="f4-ui-layer">
+      <div id="f4-topbar" class="f4-topbar">
+        <span class="f4-kicker">SOLUÇÃO // 192 LASERS</span>
+        <span class="f4-badge">FUSÃO</span>
+      </div>
+      <div id="f4-header" class="f4-header-card">
+        <h1 class="f4-title">Uma Estrela em <span class="f4-title-accent">Bilionésimos de Segundo</span></h1>
+        <p class="f4-subtitle">192 feixes de laser atacam uma microesfera do tamanho de um grão de pimenta.</p>
+      </div>
+      <div id="f4-banner" class="f4-banner" style="opacity: 0;">
+        <span class="f4-banner-text">MAIS POTÊNCIA QUE A REDE DE UM PAÍS — POR UM INSTANTE</span>
+        <span class="f4-banner-pill">192 LASERS</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 21.07;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f4-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f4-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 19.4);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var feixesSvg = '';
+        var N = 32;
+        for (var i = 0; i < N; i++) {
+          var ang = (i / N) * Math.PI * 2;
+          var x0 = 540 + Math.cos(ang) * 202;
+          var y0 = 300 + Math.sin(ang) * 202;
+          feixesSvg += T('line', { id: 's4-f' + i, x1: f2(x0), y1: f2(y0), x2: 540, y2: 300, stroke: i % 3 === 0 ? '#fbbf24' : '#7dd3fc', 'stroke-width': i % 3 === 0 ? 3 : 2, 'stroke-opacity': 0, 'stroke-dasharray': '230 230' });
+        }
+
+        var parafusos = '';
+        for (var b = 0; b < 16; b++) {
+          var ba = (b / 16) * Math.PI * 2;
+          parafusos += T('circle', { cx: f2(540 + Math.cos(ba) * 240), cy: f2(300 + Math.sin(ba) * 240), r: 5, fill: '#475569', stroke: '#94a3b8', 'stroke-width': 1.5 });
+        }
+
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<radialGradient id="s4-bgGrad" cx="50%" cy="45%" r="70%"><stop offset="0" stop-color="#0e2a4d"/><stop offset="1" stop-color="#050a14"/></radialGradient>' +
+          '<radialGradient id="s4-chamberGrad" cx="42%" cy="34%" r="70%"><stop offset="0" stop-color="#1e293b"/><stop offset="0.65" stop-color="#0b1220"/><stop offset="1" stop-color="#060b14"/></radialGradient>' +
+          '<radialGradient id="s4-coreGrad" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffffff"/><stop offset="0.35" stop-color="#fef08a"/><stop offset="0.7" stop-color="#fbbf24" stop-opacity="0.75"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/></radialGradient>' +
+          '<radialGradient id="s4-flashGrad" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/><stop offset="0.5" stop-color="#bae6fd" stop-opacity="0.35"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s4-bgGrad)' }) +
+          // câmara
+          G({ id: 's4-camara' },
+            T('circle', { cx: 540, cy: 300, r: 258, fill: '#0a1424', stroke: '#1e3a5f', 'stroke-width': 8 }) +
+            T('circle', { cx: 540, cy: 300, r: 238, fill: 'url(#s4-chamberGrad)', stroke: '#334155', 'stroke-width': 4 }) +
+            T('circle', { cx: 540, cy: 300, r: 210, fill: 'none', stroke: '#1e40af', 'stroke-width': 2, 'stroke-opacity': 0.65, 'stroke-dasharray': '14 10' }) +
+            parafusos +
+            T('path', { d: 'M540 42 L540 78', stroke: '#475569', 'stroke-width': 8 }) +
+            T('path', { d: 'M540 522 L540 558', stroke: '#475569', 'stroke-width': 8 }) +
+            T('path', { d: 'M282 300 L246 300', stroke: '#475569', 'stroke-width': 8 }) +
+            T('path', { d: 'M798 300 L834 300', stroke: '#475569', 'stroke-width': 8 })) +
+          // feixes
+          feixesSvg +
+          // alvo
+          G({ id: 's4-alvo' },
+            T('circle', { id: 's4-alvoAnel', cx: 540, cy: 300, r: 34, fill: 'none', stroke: '#38bdf8', 'stroke-width': 2.5, 'stroke-dasharray': '8 8', opacity: 0.75 }) +
+            T('circle', { id: 's4-flash', cx: 540, cy: 300, r: 120, fill: 'url(#s4-flashGrad)', opacity: 0 }) +
+            T('circle', { id: 's4-coreHalo', cx: 540, cy: 300, r: 64, fill: 'url(#s4-coreGrad)', opacity: 0 }) +
+            T('circle', { id: 's4-core', cx: 540, cy: 300, r: 9, fill: '#fffbeb' }) +
+            T('circle', { id: 's4-onda0', cx: 540, cy: 300, r: 20, fill: 'none', stroke: '#7dd3fc', 'stroke-width': 3, opacity: 0 }) +
+            T('circle', { id: 's4-onda1', cx: 540, cy: 300, r: 20, fill: 'none', stroke: '#fbbf24', 'stroke-width': 2.5, opacity: 0 })) +
+          // console inferior
+          G({ id: 's4-console' },
+            T('rect', { x: 150, y: 548, width: 780, height: 66, rx: 16, fill: 'rgba(8,14,26,0.94)', stroke: 'rgba(56,189,248,0.4)', 'stroke-width': 2 }) +
+            T('text', { x: 186, y: 590, fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700, 'letter-spacing': 1 }, 'CÂMARA DE FUSÃO') +
+            T('text', { x: 552, y: 590, fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700 }, '2,05 MJ') +
+            T('text', { x: 700, y: 590, fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700 }, '1 ns') +
+            T('circle', { id: 's4-led0', cx: 470, cy: 577, r: 5, fill: '#22c55e' }) +
+            T('circle', { id: 's4-led1', cx: 486, cy: 577, r: 5, fill: '#22c55e' }) +
+            T('circle', { id: 's4-led2', cx: 502, cy: 577, r: 5, fill: '#22c55e' })) +
+          // chamada do alvo
+          G({ id: 's4-lblAlvo' },
+            T('line', { x1: 700, y1: 214, x2: 578, y2: 288, stroke: '#38bdf8', 'stroke-width': 2.5, 'stroke-dasharray': '6 6' }) +
+            T('circle', { cx: 578, cy: 288, r: 5, fill: '#38bdf8' }) +
+            T('text', { x: 708, y: 208, fill: '#e0f2fe', 'font-family': 'Inter, sans-serif', 'font-size': 24, 'font-weight': 700, 'letter-spacing': 1 }, 'MICROESFERA'))
+        );
+        M.montar('#f4-cena', svg);
+        var cena = M.pegar('#f4-cena');
+        var feixes = [];
+        for (var fi = 0; fi < N; fi++) feixes.push(M.pegar(cena, '#s4-f' + fi));
+        var alvoAnel = M.pegar(cena, '#s4-alvoAnel');
+        var flash = M.pegar(cena, '#s4-flash');
+        var coreHalo = M.pegar(cena, '#s4-coreHalo');
+        var core = M.pegar(cena, '#s4-core');
+        var onda0 = M.pegar(cena, '#s4-onda0');
+        var onda1 = M.pegar(cena, '#s4-onda1');
+        var leds = [M.pegar(cena, '#s4-led0'), M.pegar(cena, '#s4-led1'), M.pegar(cena, '#s4-led2')];
+        var boy = M.mascote('#f4-mascote');
+        var hud = M.medidorBarra('#f4-hud', { rotulo: 'FEIXES LASER', unidade: 'feixes', max: 200, cor: '#38bdf8', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          for (var i = 0; i < feixes.length; i++) {
+            var liga = suave(faixa(t, 2.6 + (i % 8) * 0.55, 4.2 + (i % 8) * 0.55));
+            var offset = 230 * (1 - liga);
+            feixes[i].setAttribute('stroke-dashoffset', f2(offset));
+            feixes[i].setAttribute('stroke-opacity', f2(liga * (0.45 + 0.4 * Math.sin(t * 5 + i))));
+          }
+
+          var ignicao = suave(faixa(t, 17.6, 18.4));
+          var pulso = 0.8 + 0.2 * Math.sin(t * 10);
+          core.setAttribute('r', f2(9 + 22 * ignicao));
+          core.setAttribute('fill', ignicao > 0.5 ? '#fffbeb' : '#fef9c3');
+          coreHalo.setAttribute('opacity', f2(ignicao * pulso));
+          coreHalo.setAttribute('r', f2(52 + 20 * ignicao + Math.sin(t * 8) * 6));
+          flash.setAttribute('opacity', f2(Math.max(0, 0.9 - Math.abs(t - 17.6) * 2.2)));
+          flash.setAttribute('r', f2(90 + 90 * faixa(t, 17.6, 18.8)));
+          alvoAnel.setAttribute('transform', 'rotate(' + f2(t * 26) + ' 540 300)');
+          alvoAnel.setAttribute('r', f2(36 + Math.sin(t * 3) * 3));
+
+          var c0 = (t % 1.8) / 1.8;
+          onda0.setAttribute('r', f2(24 + c0 * 170));
+          onda0.setAttribute('opacity', f2(ignicao * 0.5 * (1 - c0)));
+          var c1 = ((t + 0.9) % 1.8) / 1.8;
+          onda1.setAttribute('r', f2(24 + c1 * 170));
+          onda1.setAttribute('opacity', f2(ignicao * 0.35 * (1 - c1)));
+
+          for (var l = 0; l < leds.length; l++) {
+            var pisca = (Math.floor(t * 3 + l) % 3) !== 0;
+            leds[l].setAttribute('fill', pisca ? '#22c55e' : '#14532d');
+          }
+
+          hud.atualizar(192 * suave(faixa(t, 6.4, 8.0)), ignicao > 0.6 ? 'MINI-ESTRELA ACESA' : 'ALVO: GRÃO DE PIMENTA', ignicao > 0.6 ? '#fbbf24' : '#38bdf8');
+          boy.atualizar(t, og, {
+            humor: t < 17.6 ? 'surpreso' : 'feliz',
+            bracoD: t < 17.6 ? 150 : 128,
+            bracoE: t < 17.6 ? 110 : 20,
+            olhar: [8, -6],
+            inclinar: t > 18 ? -3 : 2,
+            pulo: t > 18.2 ? Math.abs(Math.sin(t * 2.8)) * 7 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 55.08 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-lasers'] = tl;
+    })();
+  </script>
+</template>

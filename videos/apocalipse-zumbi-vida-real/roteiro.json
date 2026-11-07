@@ -1,0 +1,177 @@
+{
+  "id": "apocalipse-zumbi-vida-real",
+  "titulo": "É Possível um Apocalipse Zumbi na Vida Real?",
+  "subtitulo": "O fungo que comanda formigas, a conta de energia que um corpo morto não paga e o verdadeiro risco que ninguém te conta",
+  "fps": 30,
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "alvoPpm": 180,
+  "modo": "2d",
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.8,
+    "estilo": 0.4,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.2
+  },
+  "efeitos": {
+    "abaixa": true,
+    "ganho": 1.12
+  },
+  "frames": [
+    {
+      "id": "frame-01-apocalipse-de-inseto",
+      "numero": "01",
+      "titulo": "O Apocalipse Que Já Existe",
+      "arquivo": "compositions/frames/01-apocalipse-de-inseto.html",
+      "kicker": "O APOCALIPSE QUE JÁ EXISTE // ESCALA DE INSETO",
+      "frases": [
+        {
+          "texto": "O apocalipse *zumbi* já começou. Só que ele tem *seis patas* e cabe na palma da sua mão.",
+          "plano": "gancho",
+          "gancho": true
+        },
+        {
+          "texto": "Enquanto o cinema imagina hordas nas ruas, existe um *fungo* que assume o cérebro de uma *formiga* e passa a comandar o corpo dela.",
+          "plano": "quebra",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "zumbido", "offset": 0.0, "dur": 3.4, "ganho": 0.34 },
+        { "nome": "whoosh", "offset": 0.15, "ganho": 0.5 },
+        { "nome": "estalo", "offset": 6.4, "ganho": 0.45 }
+      ]
+    },
+    {
+      "id": "frame-02-corpo-sem-combustivel",
+      "numero": "02",
+      "titulo": "Por Que Um Corpo Não Levanta",
+      "arquivo": "compositions/frames/02-corpo-sem-combustivel.html",
+      "kicker": "FÍSICA DO CORPO // SEM COMBUSTÍVEL",
+      "frases": [
+        {
+          "texto": "A primeira notícia ruim pro apocalipse é simples: um corpo *morto* não tem *combustível*.",
+          "plano": "falha",
+          "jogo": "falha"
+        },
+        {
+          "texto": "Sem energia nas células, o *músculo* trava e o corpo *esfria*. Não sobra força nem pra fechar a mão.",
+          "plano": "mecanismo",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "desliga", "offset": 0.4, "ganho": 0.5 },
+        { "nome": "errado", "offset": 1.2, "ganho": 0.6 },
+        { "nome": "congela", "offset": 6.2, "ganho": 0.5 }
+      ]
+    },
+    {
+      "id": "frame-03-a-conta-nao-fecha",
+      "numero": "03",
+      "titulo": "A Conta Que Não Fecha",
+      "arquivo": "compositions/frames/03-a-conta-nao-fecha.html",
+      "kicker": "DECOMPOSIÇÃO // A CONTA NÃO FECHA",
+      "frases": [
+        {
+          "texto": "E tem mais: em poucos dias, *bactérias* e *fungos* começam a devolver o corpo pra natureza.",
+          "plano": "decomposicao",
+          "jogo": "falha"
+        },
+        {
+          "texto": "Um zumbi precisaria *comer*, *digerir* e *cicatrizar*. Só que um corpo em decomposição não faz nem uma dessas três coisas.",
+          "plano": "conta",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "bolhas", "offset": 1.0, "dur": 2.6, "ganho": 0.34 },
+        { "nome": "estalo", "offset": 2.2, "ganho": 0.4 },
+        { "nome": "errado", "offset": 7.0, "ganho": 0.55 }
+      ]
+    },
+    {
+      "id": "frame-04-zumbis-reais",
+      "numero": "04",
+      "titulo": "Os Zumbis Reais da Natureza",
+      "arquivo": "compositions/frames/04-zumbis-reais.html",
+      "kicker": "BIOLOGIA REAL // CONTROLE REMOTO",
+      "frases": [
+        {
+          "texto": "Mas a natureza já testou esse roteiro — e aprovou *só* no mundo dos *insetos*.",
+          "plano": "virada",
+          "jogo": "corrige"
+        },
+        {
+          "texto": "O fungo *cordyceps*, o vírus da *raiva* e o *toxoplasma* conseguem mudar o comportamento do hospedeiro pra se espalhar melhor.",
+          "plano": "exemplos",
+          "jogo": "corrige"
+        }
+      ],
+      "sons": [
+        { "nome": "whoosh", "offset": 0.3, "ganho": 0.5 },
+        { "nome": "certo", "offset": 2.4, "ganho": 0.5 },
+        { "nome": "clique-1", "offset": 4.0, "ganho": 0.5 },
+        { "nome": "clique-2", "offset": 6.2, "ganho": 0.5 }
+      ]
+    },
+    {
+      "id": "frame-05-tres-barreiras",
+      "numero": "05",
+      "titulo": "Por Que Não Funciona Em Nós",
+      "arquivo": "compositions/frames/05-tres-barreiras.html",
+      "kicker": "NOSSO CORPO // TRÊS BARREIRAS",
+      "frases": [
+        {
+          "texto": "Pra controlar um humano, o parasita teria que vencer o nosso *calor*, o nosso *sistema imunológico* e um *cérebro* caro demais.",
+          "plano": "barreiras",
+          "jogo": "corrige"
+        },
+        {
+          "texto": "É por isso que, na prática, esses micróbios mexem com o *medo* e com o *humor* — mas não transformam ninguém em caçador de gente.",
+          "plano": "limite",
+          "jogo": "corrige"
+        }
+      ],
+      "sons": [
+        { "nome": "trava", "offset": 1.4, "ganho": 0.55 },
+        { "nome": "bip", "offset": 3.2, "ganho": 0.45 },
+        { "nome": "certo", "offset": 7.4, "ganho": 0.55 }
+      ]
+    },
+    {
+      "id": "frame-06-quantos-dias",
+      "numero": "06",
+      "titulo": "O Verdadeiro Risco",
+      "arquivo": "compositions/frames/06-quantos-dias.html",
+      "kicker": "SOBREVIVÊNCIA // O PRÓXIMO VÍDEO",
+      "frases": [
+        {
+          "texto": "O apocalipse zumbi de filme não vem. Mas a pergunta que fica é outra: você aguentaria ficar sem *energia*, sem *água* e sem *remédio* por quanto tempo?",
+          "plano": "virada_final",
+          "jogo": "corrige"
+        },
+        {
+          "texto": "Quantos *dias* você acha que conseguiria sobreviver? Siga o *Curiorisando* e veja no próximo vídeo!",
+          "plano": "segue"
+        }
+      ],
+      "cauda": 1.1,
+      "sons": [
+        { "nome": "estrondo", "offset": 0.2, "ganho": 0.5 },
+        { "nome": "zumbido", "offset": 1.0, "dur": 3.0, "ganho": 0.22 },
+        { "nome": "final", "offset": 6.6, "ganho": 0.6 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,299 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f4-root {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #050914;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f4-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .f4-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(5, 9, 20, 0.88) 0%,
+        rgba(5, 9, 20, 0.22) 28%,
+        rgba(5, 9, 20, 0.16) 62%,
+        rgba(5, 9, 20, 0.92) 100%
+      );
+    }
+
+    .f4-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f4-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 26px;
+      background: rgba(8, 14, 28, 0.88);
+      border: 1px solid rgba(168, 85, 247, 0.42);
+      border-radius: 14px;
+    }
+
+    .f4-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #c084fc;
+    }
+
+    .f4-badge {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #f87171;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .f4-header-card {
+      position: absolute;
+      top: 168px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 28, 0.86);
+      border-left: 5px solid #a855f7;
+      border-radius: 0 16px 16px 0;
+    }
+
+    .f4-title {
+      margin: 0 0 10px 0;
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.06;
+      color: #f8fafc;
+    }
+
+    .f4-title-accent {
+      color: #c084fc;
+    }
+
+    .f4-subtitle {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.4;
+      color: #cbd5e1;
+    }
+
+    .f4-telemetry-row {
+      position: absolute;
+      top: 1045px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 22px;
+    }
+
+    .f4-metric-box {
+      flex: 1;
+      padding: 22px 26px;
+      background: rgba(8, 14, 28, 0.90);
+      border: 1px solid rgba(192, 132, 252, 0.32);
+      border-radius: 16px;
+    }
+
+    .f4-metric-label {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .f4-metric-val {
+      font-size: 42px;
+      font-weight: 700;
+      color: #f8fafc;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .f4-alert-card {
+      position: absolute;
+      top: 1212px;
+      left: 68px;
+      right: 68px;
+      padding: 20px 28px;
+      background: rgba(24, 10, 34, 0.92);
+      border: 1.5px solid #a855f7;
+      border-radius: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .f4-alert-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #e9d5ff;
+      letter-spacing: 0.04em;
+    }
+
+    .f4-alert-tag {
+      padding: 8px 16px;
+      background: #9333ea;
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 8px;
+    }
+  </style>
+
+  <div data-hf-id="hf-oeph" id="f4-root" data-composition-id="frame-04-corrente-jato-travada" data-width="1080" data-height="1920" data-start="0" data-duration="16.22">
+    <div data-hf-id="hf-hyg2" id="f4-stage-3d"></div>
+    <div data-hf-id="hf-lhop" class="f4-vignette"></div>
+
+    <div data-hf-id="hf-wjel" class="f4-ui-layer">
+      <div data-hf-id="hf-u0ec" id="f4-topbar" class="f4-topbar">
+        <span data-hf-id="hf-o2op" class="f4-kicker">PASSO 03 // TRÂNSITO TRAVADO NO CÉU</span>
+        <span data-hf-id="hf-7g5q" class="f4-badge">DIAS SEM MUDAR</span>
+      </div>
+
+      <div data-hf-id="hf-pe6v" id="f4-header" class="f4-header-card">
+        <h1 data-hf-id="hf-vtn0" class="f4-title">O Clima <span data-hf-id="hf-uxoq" class="f4-title-accent">Engarrafado</span></h1>
+        <p data-hf-id="hf-tcor" class="f4-subtitle">Por que agora chove quatro dias seguidos ou faz semanas do mesmo sol de rachar</p>
+      </div>
+
+      <div data-hf-id="hf-losx" id="f4-telemetry" class="f4-telemetry-row">
+        <div data-hf-id="hf-qpi7" class="f4-metric-box">
+          <div data-hf-id="hf-pm6z" class="f4-metric-label">VENTO LÁ NO ALTO</div>
+          <div data-hf-id="hf-3hfn" class="f4-metric-val">Perdeu Força</div>
+        </div>
+        <div data-hf-id="hf-yf4v" class="f4-metric-box">
+          <div data-hf-id="hf-9fco" class="f4-metric-label">NA NOSSA CABEÇA</div>
+          <div data-hf-id="hf-v3z6" class="f4-metric-val">Nuvem Parada</div>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-xbp9" id="f4-alert" class="f4-alert-card" style="opacity: 0;">
+        <span data-hf-id="hf-r59o" class="f4-alert-title">A CHUVA OU O CALORÃO ESTACIONAM EM CIMA DA MESMA CIDADE</span>
+        <span data-hf-id="hf-x1g4" class="f4-alert-tag">TRAVADO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 16.22;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f4-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f4-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f4-alert', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 6.45);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f4-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'escuro'
+        });
+
+        var chao = M.malha(
+          THREE,
+          new THREE.CircleGeometry(45, 48),
+          M.mat(THREE, 0x09101f, { roughness: 0.9 })
+        );
+        chao.rotation.x = -Math.PI / 2;
+        palco.cena.add(chao);
+
+        var jato = M.criarCorrenteDeJato(THREE);
+        jato.raiz.position.set(0.28, 1.68, -0.1);
+        jato.raiz.scale.setScalar(0.76);
+        palco.cena.add(jato.raiz);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.72 });
+        menino.raiz.position.set(-0.78, 0.35, 0.45);
+        palco.cena.add(menino.raiz);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          M.resetPose(menino, t);
+
+          var meandro = M.suave(M.faixa(t, 0.5, 9.5));
+          jato.atualizar(t, meandro);
+
+          if (t < 4.5) {
+            M.humor(menino, 'pensativo');
+            M.apontar(menino, [0.28, 2.3, -0.1], 'D');
+          } else if (t < 9.0) {
+            M.humor(menino, 'surpreso');
+            M.apontar(menino, [0.28, 1.9, 0.2], 'D');
+          } else {
+            M.humor(menino, 'assustado');
+            M.suar(menino, t, 9.0, DUR);
+          }
+          M.olharCamera(menino, palco.camera, 0.72);
+
+          M.plano(
+            palco.camera,
+            t,
+            0,
+            DUR,
+            { pos: [-0.25, 1.90, 7.5], alvo: [0.0, 1.48, 0.0] },
+            { pos: [0.2, 1.82, 7.1], alvo: [0.05, 1.48, 0.0] }
+          );
+        }, { duracao: DUR, offsetGlobal: 44.62 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-corrente-jato-travada'] = tl;
+    })();
+  </script>
+</template>

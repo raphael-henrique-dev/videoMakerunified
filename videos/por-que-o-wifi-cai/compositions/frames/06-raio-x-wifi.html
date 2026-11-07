@@ -1,0 +1,328 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f6-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #030712;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f6-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 1;
+    }
+
+    .f6-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(3, 7, 18, 0.90) 0%,
+        rgba(3, 7, 18, 0.14) 24%,
+        rgba(3, 7, 18, 0.16) 72%,
+        rgba(3, 7, 18, 0.94) 100%
+      );
+    }
+
+    .f6-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f6-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f6-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+    }
+
+    .f6-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f6-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 24px 32px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+    }
+
+    .f6-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 58px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .f6-title-accent {
+      color: #38bdf8;
+    }
+
+    .f6-subtitle {
+      font-size: 23px;
+      line-height: 1.35;
+      color: #cbd5e1;
+    }
+
+    .f6-callouts {
+      position: absolute;
+      top: 410px;
+      right: 68px;
+      width: 470px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .f6-callout-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 20px;
+      background: rgba(8, 14, 26, 0.90);
+      border-left: 4px solid #38bdf8;
+      border-radius: 0 12px 12px 0;
+    }
+
+    .f6-callout-name {
+      font-size: 21px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f6-callout-spec {
+      font-size: 17px;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.06em;
+    }
+
+    .f6-cta-banner {
+      position: absolute;
+      top: 1140px;
+      left: 68px;
+      right: 68px;
+      padding: 22px 30px;
+      background: rgba(10, 22, 42, 0.94);
+      border: 2px solid #facc15;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+    }
+
+    .f6-cta-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .f6-cta-kicker {
+      font-size: 17px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.12em;
+    }
+
+    .f6-cta-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f6-cta-pill {
+      padding: 12px 26px;
+      background: #facc15;
+      color: #030712;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 12px;
+      letter-spacing: 0.06em;
+    }
+  </style>
+
+  <div id="f6-root" data-composition-id="frame-06-raio-x-wifi" data-width="1080" data-height="1920" data-start="0" data-duration="17.83">
+    <div id="f6-stage-3d"></div>
+    <div class="f6-vignette"></div>
+
+    <div class="f6-ui-layer">
+      <div id="f6-topbar" class="f6-topbar">
+        <span class="f6-kicker">RAIO-X COMPLETO // 7 ETAPAS EM CASA</span>
+        <span class="f6-badge">COMO RESOLVER</span>
+      </div>
+
+      <div id="f6-header" class="f6-header-card">
+        <h1 class="f6-title">Por Fora e <span class="f6-title-accent">Por Dentro</span></h1>
+        <p class="f6-subtitle">Da caixinha piscando na sala até a corrida de obstáculos invisível pelo seu quarto</p>
+      </div>
+
+      <div id="f6-callouts" class="f6-callouts">
+        <div class="f6-callout-item" id="f6-c7">
+          <span class="f6-callout-name">7. Vídeo Liso na Mão</span>
+          <span class="f6-callout-spec">SEM TRAVAR</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c6">
+          <span class="f6-callout-name">6. Redes dos Vizinhos</span>
+          <span class="f6-callout-spec">TRÂNSITO</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c5">
+          <span class="f6-callout-name">5. Micro-ondas Ligado</span>
+          <span class="f6-callout-spec">BUZINA</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c4">
+          <span class="f6-callout-name">4. Espelho e Canos</span>
+          <span class="f6-callout-spec">REBATE</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c3">
+          <span class="f6-callout-name">3. Parede de Tijolo</span>
+          <span class="f6-callout-spec">BARREIRA</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c2">
+          <span class="f6-callout-name">2. Fora da Gaveta</span>
+          <span class="f6-callout-spec">LUZ LIVRE</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c1">
+          <span class="f6-callout-name">1. Roteador no Alto</span>
+          <span class="f6-callout-spec">NO CENTRO</span>
+        </div>
+      </div>
+
+      <div id="f6-cta" class="f6-cta-banner" style="opacity: 0;">
+        <div class="f6-cta-left">
+          <span class="f6-cta-kicker">O MUNDO É MAIS CURIOSO DO QUE PARECE</span>
+          <span class="f6-cta-title">Segue o Curiorisando!</span>
+        </div>
+        <span class="f6-cta-pill">SEGUIR +</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 17.83;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f6-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f6-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+
+      var ids = ['#f6-c1', '#f6-c2', '#f6-c3', '#f6-c4', '#f6-c5', '#f6-c6', '#f6-c7'];
+      ids.forEach(function (id, idx) {
+        tl.fromTo(id, { opacity: 0, x: 32 }, { opacity: 1, x: 0, duration: 0.42, ease: 'power2.out' }, 0.45 + idx * 0.22);
+      });
+
+      tl.fromTo('#f6-cta', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, ease: 'back.out(1.6)' }, 6.80);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f6-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'noite'
+        });
+
+        var pilha = M.criarPilhaExplodidaWifi(THREE);
+        pilha.grupo.position.set(-0.32, 1.35, 0.0);
+        pilha.grupo.scale.setScalar(0.66);
+        palco.cena.add(pilha.grupo);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.66 });
+        menino.raiz.position.set(-0.92, 0.22, 0.55);
+        palco.cena.add(menino.raiz);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          M.resetPose(menino, t);
+          pilha.atualizar(t, 0.2);
+
+          if (t < 6.8) {
+            M.humor(menino, 'feliz');
+            M.apontar(menino, [-0.32, 1.45, 0.0], 'D');
+          } else {
+            M.comemorar(menino, t, 6.8, DUR);
+          }
+          M.olharCamera(menino, palco.camera, 0.75);
+
+          M.plano(
+            palco.camera,
+            t,
+            0,
+            DUR,
+            { pos: [-0.15, 1.75, 7.6], alvo: [-0.1, 1.32, 0.0] },
+            { pos: [0.05, 1.68, 7.2], alvo: [-0.05, 1.32, 0.0] }
+          );
+        }, { duracao: DUR, offsetGlobal: 83.05 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-06-raio-x-wifi'] = tl;
+    })();
+  </script>
+</template>

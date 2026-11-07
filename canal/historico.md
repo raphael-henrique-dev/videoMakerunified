@@ -1,0 +1,23 @@
+# Histórico de Vídeos Produzidos (`motor-v2`)
+
+| Data | ID do Projeto | Título / Tema | Duração | Destaques Arquiteturais |
+| :--- | :--- | :--- | :--- | :--- |
+| 2026-11-04 | `cabo-submarino-v2` | **O Segredo no Fundo do Mar: Cabo Submarino & Nuvem Global** | ~30.0s | PoC inaugural do Motor 2.0 unificando palco 3D submarino (`criarCaboSubmarino` 7 camadas + mascote `menino` + caustics shader), HUD Code Editorial 2D, vista explodida com chamadas técnicas, legendas karaokê 3 estados e áudio masterizado `-14 LUFS`. |
+| 2026-11-04 | `por-que-o-elevador-nao-despenca` | **Por Que o Elevador Não Despenca?** | 93.05s | 2D vetorial puro (6 frames, 12 frases, 168 PPM): contrapeso, cordoalha em `<pattern>` hexagonal, freio de mola com duas sapatas, limitador com cunhas no trilho e raio-x com 5 chamadas. `index.html` passou a tocar o master `-14 LUFS` como faixa única (fim do MP4 a -19.6 LUFS); render em 1m04s, 17 MB. |
+| 2026-11-04 | `por-que-a-bateria-despenca` | **Por Que a Bateria Despenca de 20% Para Zero?** | 105.29s | 2D vetorial puro de alta performance (3.159 quadros renderizados em 1m17s): gráfico de descarga de lítio, partículas aniônicas/catiônicas com pass-through, conformidade WCAG AA total, mascote com lip-sync determinístico. Primeiro vídeo publicado de ponta a ponta via Motor 2.0. |
+| 2026-11-05 | `apocalipse-zumbi-vida-real` | **É Possível um Apocalipse Zumbi na Vida Real?** | 90.90s | 2D vetorial puro, 6 frames sem mascote e sem card de HUD (palco limpo): fungo/ formiga, corpo sem ATP, checklist comer→digerir→cicatrizar, zumbis reais (cordyceps, raiva, toxoplasma), 3 barreiras (calor, sistema imune, cérebro caro) e risco real (energia, água, remédio) com CTA para o próximo vídeo. 180 PPM, check 0 erros/0 avisos, contraste 90/90 WCAG AA, render 49,7s, 11,2 MB, master −14,4 LUFS / TP −1,4 dBTP. |
+| 2026-11-07 | `30-dias-apos-o-fim` | **30 Dias Após o Fim** | 89.13s | 2D vetorial puro (6 frames, 12 frases, 156 PPM natural): experimento mental de um planeta sem humanidade — skyline apagando no dia 1, rede elétrica em cascata, água secando e esgoto voltando ao rio, cidade virando selva na semana 2 e céu/estrelas reaparecendo no dia 30, fechando com o planeta respirando de novo. Safe-zones 9:16 com HUD/banner limitados a x≤940px; check 0 erros/0 avisos, contraste 77/77 WCAG AA, auditoria Tier 1 10,0/10 (0 críticos/altos/médios), render 51,9s, 14,6 MB, master −14,3 LUFS. |
+
+---
+
+## Registro de Publicações e Uploads
+
+- **[2026-11-05 11:38] Upload de `por-que-a-bateria-despenca`**: [YouTube Shorts](https://youtube.com/shorts/dr7ZWxG9odY) (private) · TikTok Publish ID: `v_inbox_file~v2.7704650081693304853` (SELF_ONLY)
+
+- **[2026-11-05 14:33] Upload de `apocalipse-zumbi-vida-real`**: [YouTube Shorts](https://youtube.com/shorts/XA2WkG485iM) (private) · TikTok Publish ID: `v_inbox_file~v2.7704695113695660052` (SEND_TO_USER_INBOX / Rascunho entregue no app)
+- **[2026-11-05 15:08] Reenvio de rascunho de `apocalipse-zumbi-vida-real` (TikTok)**: Publish ID: `v_inbox_file~v2.7704704327399147540` (SEND_TO_USER_INBOX / Rascunho entregue no app)
+- **[2026-11-05 19:05] Upload de `sobrevivencia-sem-comer-beber` (render v1 — sem frames)**: [YouTube Shorts](https://youtube.com/shorts/r58SA35q2Tc) (private) · TikTok: `v_inbox_file~v2.7704765207737993236` (SEND_TO_USER_INBOX)
+- **[2026-11-05 19:16] Upload de `sobrevivencia-sem-comer-beber` (render v2 — corrigido)**: [YouTube Shorts](https://youtube.com/shorts/cqEQxnFaJBw) (private) · TikTok: `v_inbox_file~v2.7704768056539826196` (SEND_TO_USER_INBOX / Rascunho entregue no app)
+- **[2026-11-07 14:44] Upload de `/home/raphael/codigos/projetos_javascript/videoMakerunified-main/videos/30-dias-apos-o-fim`**: [YouTube Shorts](https://youtube.com/shorts/I7ncMN_wtM0) (private) · TikTok Publish ID: `v_inbox_file~v2.7705439974661081109` (SELF_ONLY)
+- **[2026-11-07 15:14] Upload de `/home/raphael/codigos/projetos_javascript/videoMakerunified-main/videos/quanto-vale-1-bilhao`**: [YouTube Shorts](https://youtube.com/shorts/eYMDKMc4LXQ) (Agendado para 07/11/2026, 14:00:00) · TikTok (Agendado na fila para 07/11/2026, 14:00:00)
+- **[2026-11-07 16:22] Upload de `/home/raphael/codigos/projetos_javascript/videoMakerunified-main/videos/luz-forte-como-o-sol`**: [YouTube Shorts](https://youtube.com/shorts/uvDgnzygUeQ) (Agendado para 07/11/2026, 16:00:00) · TikTok (Agendado na fila para 07/11/2026, 16:00:00)

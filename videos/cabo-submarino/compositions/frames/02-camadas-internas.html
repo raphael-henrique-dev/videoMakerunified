@@ -1,0 +1,305 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f2-root {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #030914;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f2-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .f2-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(3, 9, 20, 0.88) 0%,
+        rgba(3, 9, 20, 0.22) 30%,
+        rgba(3, 9, 20, 0.18) 64%,
+        rgba(3, 9, 20, 0.92) 100%
+      );
+    }
+
+    .f2-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f2-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 26px;
+      background: rgba(6, 12, 24, 0.86);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 14px;
+    }
+
+    .f2-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #38bdf8;
+    }
+
+    .f2-step-tag {
+      font-size: 19px;
+      font-weight: 700;
+      color: #22c55e;
+      letter-spacing: 0.08em;
+    }
+
+    .f2-header-card {
+      position: absolute;
+      top: 168px;
+      left: 68px;
+      right: 68px;
+      padding: 26px 34px;
+      background: rgba(6, 12, 24, 0.84);
+      border-left: 5px solid #22c55e;
+      border-radius: 0 16px 16px 0;
+    }
+
+    .f2-title {
+      margin: 0 0 8px 0;
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.06;
+      color: #f8fafc;
+    }
+
+    .f2-title-accent {
+      color: #38bdf8;
+    }
+
+    .f2-subtitle {
+      margin: 0;
+      font-size: 23px;
+      color: #cbd5e1;
+    }
+
+    .f2-cards-stack {
+      position: absolute;
+      top: 990px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .f2-spec-card {
+      padding: 22px 28px;
+      background: rgba(6, 14, 28, 0.90);
+      border: 1.5px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .f2-spec-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .f2-spec-num {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+    }
+
+    .f2-spec-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f2-spec-desc {
+      font-size: 20px;
+      color: #cbd5e1;
+    }
+
+    .f2-spec-pill {
+      padding: 10px 18px;
+      background: rgba(34, 197, 94, 0.18);
+      border: 1px solid #22c55e;
+      color: #4ade80;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      border-radius: 10px;
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+
+  <div data-hf-id="hf-pz8c" id="f2-root" data-composition-id="frame-02-camadas-internas" data-width="1080" data-height="1920" data-start="0" data-duration="9.52">
+    <div data-hf-id="hf-q8g4" id="f2-stage-3d"></div>
+    <div data-hf-id="hf-qpr7" class="f2-vignette"></div>
+
+    <div data-hf-id="hf-uesv" class="f2-ui-layer">
+      <div data-hf-id="hf-z8gw" id="f2-topbar" class="f2-topbar">
+        <span data-hf-id="hf-vx69" class="f2-kicker">CAMADAS 01–03 // NÚCLEO ÓPTICO</span>
+        <span data-hf-id="hf-sec6" class="f2-step-tag">ENGENHARIA DE CORREÇÃO</span>
+      </div>
+
+      <div data-hf-id="hf-peyv" id="f2-header" class="f2-header-card">
+        <h1 data-hf-id="hf-lsdv" class="f2-title">Revestimento <span data-hf-id="hf-15wn" class="f2-title-accent">Acrílico</span> &amp; Tubo com Gel</h1>
+        <p data-hf-id="hf-8m9f" class="f2-subtitle">Isolamento elástico contra microcurvaturas e flutuação livre em gel hidrofóbico</p>
+      </div>
+
+      <div data-hf-id="hf-wmxl" class="f2-cards-stack">
+        <div data-hf-id="hf-yb9r" id="f2-card-acrilico" class="f2-spec-card" style="opacity: 0;">
+          <div data-hf-id="hf-9lle" class="f2-spec-left">
+            <span data-hf-id="hf-g9yb" class="f2-spec-num">CAMADA 02 // POLÍMERO ACRILATO</span>
+            <span data-hf-id="hf-195g" class="f2-spec-name">Revestimento Primário de Acrílico</span>
+            <span data-hf-id="hf-xib9" class="f2-spec-desc">Abraça a fibra de vidro (250 µm) absorvendo microdobras</span>
+          </div>
+          <span data-hf-id="hf-yr9s" class="f2-spec-pill">250 µm OK</span>
+        </div>
+
+        <div data-hf-id="hf-b0jj" id="f2-card-tubo" class="f2-spec-card" style="opacity: 0;">
+          <div data-hf-id="hf-x3va" class="f2-spec-left">
+            <span data-hf-id="hf-i5k9" class="f2-spec-num">CAMADA 03 // BUFFER TUBE + GEL</span>
+            <span data-hf-id="hf-8fv9" class="f2-spec-name">Tubo Plástico com Gel Hidrofóbico</span>
+            <span data-hf-id="hf-ymts" class="f2-spec-desc">6 pares de fibras flutuam sem atrito mecânico</span>
+          </div>
+          <span data-hf-id="hf-jhm4" class="f2-spec-pill">6 FIBRAS OK</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 9.52;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }, 0.05);
+      tl.fromTo('#f2-header', { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out' }, 0.15);
+      tl.fromTo('#f2-card-acrilico', { opacity: 0, x: -36 }, { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out' }, 0.35);
+      tl.fromTo('#f2-card-tubo', { opacity: 0, x: -36 }, { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out' }, 4.95);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f2-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 40,
+          presetCeu: 'mar'
+        });
+
+        var mar = M.criarFundoDoMar(THREE, palco, { abismo: false });
+        var caboObj = M.criarCaboSubmarino(THREE, { escala: 0.78 });
+        caboObj.raiz.position.set(0.32, 1.35, 0.0);
+        palco.cena.add(caboObj.raiz);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.78 });
+        M.capacete(menino, true);
+        menino.raiz.position.set(-0.92, 0.25, 0.3);
+        palco.cena.add(menino.raiz);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          mar.animarAmbiente(t);
+          M.resetPose(menino, t);
+
+          var progAcrilico = M.faixa(t, 0.35, 1.85);
+          var progTubo = M.faixa(t, 5.05, 6.65);
+
+          caboObj.atualizar(t, {
+            fibra: 1,
+            revestimento: progAcrilico,
+            tubo: progTubo,
+            cobre: 0,
+            vedacao: 0,
+            aco: 0,
+            jaqueta: 0
+          });
+          caboObj.raiz.rotation.y = Math.sin(t * 0.55) * 0.14;
+
+          if (t < 4.85) {
+            M.humor(menino, 'feliz');
+            M.apontar(menino, [0.2, 1.35, 0.0], 'D');
+            M.olharCamera(menino, palco.camera, 0.65);
+            M.plano(
+              palco.camera,
+              t,
+              0,
+              4.85,
+              { pos: [-0.8, 1.85, 5.8], alvo: [0.0, 1.15, 0.0] },
+              { pos: [0.45, 1.72, 5.2], alvo: [0.05, 1.18, 0.0] }
+            );
+          } else {
+            M.andar(menino, t, 4.85, 6.2, [-0.92, 0.25, 0.3], [-0.78, 0.25, 0.4]);
+            M.comemorar(menino, t, 6.8, 9.8);
+            M.olharCamera(menino, palco.camera, 0.7);
+            M.plano(
+              palco.camera,
+              t,
+              4.85,
+              DUR,
+              { pos: [0.45, 1.72, 5.2], alvo: [0.05, 1.18, 0.0] },
+              { pos: [0.95, 1.76, 5.1], alvo: [0.15, 1.18, 0.0] }
+            );
+          }
+        }, { duracao: DUR, offsetGlobal: 9.77 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-camadas-internas'] = tl;
+    })();
+  </script>
+</template>

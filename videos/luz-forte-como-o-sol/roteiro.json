@@ -1,0 +1,230 @@
+{
+  "id": "luz-forte-como-o-sol",
+  "titulo": "E Se a Luz Fosse Tão Forte Quanto o Sol?",
+  "subtitulo": "A engenharia de recriar a luz do sol numa sala: a lupa gigante, o metal que derrete, os 192 lasers e a mini-estrela de laboratório",
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "fps": 30,
+  "alvoPpm": 175,
+  "modo": "2d",
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.8,
+    "estilo": 0.4,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.22
+  },
+  "efeitos": {
+    "ganho": 1.12
+  },
+  "publicacao": {
+    "titulo": "E Se a Luz Fosse Tão Forte Quanto o Sol? ☀️ #shorts",
+    "descricao": "Uma lupa já torra uma folha. Então como a engenharia recria a luz do sol dentro de uma sala? Do metal que derrete aos 192 lasers que acendem uma mini-estrela por um instante. Curiorisando: engenharia invisível, 100% vida real.",
+    "tags": ["sol", "luz", "laser", "fusao nuclear", "energia", "ciencia", "curiosidades", "engenharia", "curiorisando"],
+    "tiktok_caption": "E se a gente acendesse uma luz tão forte quanto o sol... dentro de uma sala? ☀️ A lupa gigante, o metal que derrete e os 192 lasers que criam uma mini-estrela. #curiosidades #ciencia #sol #laser #engenharia #fyp #foryou",
+    "allow_comments": true,
+    "allow_duet": true,
+    "allow_stitch": true
+  },
+  "frames": [
+    {
+      "id": "frame-01-lupa",
+      "numero": "01",
+      "titulo": "A Lupa no Quintal",
+      "arquivo": "compositions/frames/01-lupa.html",
+      "kicker": "EXPERIMENTO // A LUPA NO QUINTAL",
+      "metrica": {
+        "rotulo": "LUZ DO SOL NA TERRA",
+        "valor": "1.000 W/m²"
+      },
+      "direcao2D": "Sol alto no céu, lupa gigante concentrando raios num ponto só e uma folha que começa a fumegar no quintal.",
+      "cauda": 0.3,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.4, "ganho": 0.45 },
+        { "nome": "brilho", "offset": 1.0, "ganho": 0.5 },
+        { "nome": "fogo", "offset": 3.4, "dur": 3.0, "ganho": 0.4 },
+        { "nome": "estalo", "offset": 6.2, "ganho": 0.5 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "gancho_lupa",
+          "gancho": true,
+          "texto": "E se a gente conseguisse acender uma *luz* tão forte quanto o sol... dentro de uma *sala?*"
+        },
+        {
+          "plano": "M",
+          "jogo": "lupa_folha",
+          "texto": "No quintal, uma lupa simples já *torra* uma folha em segundos. Agora imagina juntar a luz de *um milhão* de lupas num ponto só."
+        }
+      ]
+    },
+    {
+      "id": "frame-02-escala",
+      "numero": "02",
+      "titulo": "O Sol Entrega Mil Watts por Metro",
+      "arquivo": "compositions/frames/02-escala.html",
+      "kicker": "ESCALA // POTÊNCIA DO SOL",
+      "metrica": {
+        "rotulo": "CONCENTRAÇÃO DE LUZ",
+        "valor": "CENTENAS DE SÓIS"
+      },
+      "direcao2D": "Campo de espelhos heliostatos refletindo raios para uma torre receptora que brilha no centro do palco.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.5, "ganho": 0.45 },
+        { "nome": "zumbido", "offset": 1.4, "ganho": 0.35 },
+        { "nome": "brilho", "offset": 4.6, "ganho": 0.55 },
+        { "nome": "ding", "offset": 8.0, "ganho": 0.5 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "sol_watts",
+          "texto": "O detalhe é que o sol não é só brilho: cada metro quadrado que bate no seu quintal entrega mais de *mil watts* de potência. É um aquecedor ligado o *dia inteiro.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "espelhos_alvo",
+          "texto": "Para imitar isso num laboratório, não basta uma lâmpada forte: é preciso somar *centenas* de sóis de uma vez, com espelhos gigantes apontando pro mesmo *alvo.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-03-falha",
+      "numero": "03",
+      "titulo": "Nenhuma Lâmpada Aguenta o Sol",
+      "arquivo": "compositions/frames/03-falha.html",
+      "kicker": "FALHA // O LIMITE DO METAL",
+      "metrica": {
+        "rotulo": "SUPERFÍCIE DO SOL",
+        "valor": "5.500 °C"
+      },
+      "direcao2D": "Lâmpada de filamento incandescente rachando sob o calor, poça de metal derretido e termômetro cruzando a linha vermelha.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "zumbido", "offset": 0.4, "ganho": 0.45 },
+        { "nome": "racha", "offset": 2.6, "ganho": 0.6 },
+        { "nome": "estalo", "offset": 3.3, "ganho": 0.65 },
+        { "nome": "desliga", "offset": 4.1, "ganho": 0.55 },
+        { "nome": "errado", "offset": 7.4, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "lampada_derrete",
+          "texto": "O problema? Uma lâmpada comum *derrete* antes de chegar perto. O filamento de *tungstênio* aguenta uns três mil e quatrocentos graus."
+        },
+        {
+          "plano": "M",
+          "jogo": "sol_cinco_mil",
+          "texto": "A superfície do sol passa dos *cinco mil e quinhentos.* Qualquer vidro, metal ou plástico vira *poça* muito antes disso."
+        }
+      ]
+    },
+    {
+      "id": "frame-04-lasers",
+      "numero": "04",
+      "titulo": "Uma Estrela em Bilionésimos de Segundo",
+      "arquivo": "compositions/frames/04-lasers.html",
+      "kicker": "SOLUÇÃO // 192 LASERS",
+      "metrica": {
+        "rotulo": "ALVO MINÚSCULO",
+        "valor": "192 FEIXES"
+      },
+      "direcao2D": "Câmara esférica com 192 feixes de laser convergindo numa microesfera central que acende como uma mini-estrela.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "liga", "offset": 0.4, "ganho": 0.5 },
+        { "nome": "zap", "offset": 2.0, "ganho": 0.5 },
+        { "nome": "turbina", "offset": 3.6, "dur": 2.2, "ganho": 0.4 },
+        { "nome": "fissao", "offset": 4.8, "ganho": 0.55 },
+        { "nome": "brilho", "offset": 6.6, "ganho": 0.5 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "lasers_192",
+          "texto": "A solução? Trocar a lâmpada por *lasers.* No maior laboratório dos Estados Unidos, 192 feixes atacam uma microesfera do tamanho de um grão de pimenta."
+        },
+        {
+          "plano": "PA",
+          "jogo": "mini_estrela",
+          "texto": "Por uma fração de segundo, eles liberam mais potência do que a rede elétrica de um país inteiro. E acendem uma *mini-estrela* ali dentro."
+        }
+      ]
+    },
+    {
+      "id": "frame-05-conta",
+      "numero": "05",
+      "titulo": "O Sol de Laboratório Ainda Deve Energia",
+      "arquivo": "compositions/frames/05-conta.html",
+      "kicker": "A CONTA // ENERGIA DE VERDADE",
+      "metrica": {
+        "rotulo": "GANHO DE FUSÃO",
+        "valor": "1,5x"
+      },
+      "direcao2D": "Balança de energia com 2,05 MJ entrando e 3,15 MJ saindo, cercada por chips de aplicação: satélite, aço e painel solar.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.4, "ganho": 0.45 },
+        { "nome": "etiqueta", "offset": 1.2, "ganho": 0.45 },
+        { "nome": "clique", "offset": 3.4, "ganho": 0.4 },
+        { "nome": "certo", "offset": 8.4, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "balanca_energia",
+          "texto": "Em 2022, essa fusão devolveu mais energia do que recebeu. Mas a conta total ainda é *pesada:* o sistema inteiro consome muito mais do que *entrega.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "aplicacoes_luz",
+          "texto": "Mesmo assim, essa luz já *testa satélites,* derrete aço e aquece painéis solares antes de chegarem na sua *casa.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-06-fechamento",
+      "numero": "06",
+      "titulo": "Por Fora e Por Dentro",
+      "arquivo": "compositions/frames/06-fechamento.html",
+      "kicker": "POR DENTRO // UMA ESTRELA DOMADA",
+      "metrica": {
+        "rotulo": "CURIOSIDADE",
+        "valor": "100%"
+      },
+      "direcao2D": "Câmara de fusão em corte com uma mini-estrela girando no centro, quatro chamadas técnicas (lupa, espelhos, lasers, fusão) e o selo final do Curiorisando.",
+      "cauda": 0.8,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.35, "ganho": 0.5 },
+        { "nome": "rotulo", "offset": 2.4, "ganho": 0.5 },
+        { "nome": "etiqueta", "offset": 4.0, "ganho": 0.45 },
+        { "nome": "certo", "offset": 8.6, "ganho": 0.6 },
+        { "nome": "final", "offset": 12.8, "ganho": 0.65 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "estrela_domada",
+          "texto": "Por fora, é só uma sala cheia de *espelhos* e canos. Por dentro, é uma *estrela* sendo acesa e apagada no nosso comando."
+        },
+        {
+          "plano": "M",
+          "jogo": "fechamento_curiorisando",
+          "texto": "Pois é, o mundo é mais *curioso* do que parece! Se você é curioso, segue o *Curiorisando!*"
+        }
+      ]
+    }
+  ]
+}

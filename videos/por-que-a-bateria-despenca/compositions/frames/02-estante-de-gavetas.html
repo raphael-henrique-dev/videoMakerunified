@@ -1,0 +1,382 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f2-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    /* ── Palco 2D (SVG vetorial + mascote 2D + HUD) ── */
+    #f2-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 28%, #10264d 0%, #08142a 55%, #050a14 100%);
+    }
+    #f2-root .m2-piso {
+      position: absolute;
+      left: 0;
+      top: 1465px;
+      width: 1080px;
+      height: 455px;
+      z-index: 0;
+      background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%);
+      border-top: 2px solid rgba(56, 189, 248, 0.28);
+    }
+    #f2-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 340px;
+      width: 1080px;
+      height: 680px;
+      z-index: 1;
+    }
+    #f2-root .m2-mascote {
+      position: absolute;
+      left: 50px;
+      top: 1490px;
+      width: 300px;
+      height: 420px;
+      z-index: 2;
+    }
+    #f2-root .m2-hud {
+      position: absolute;
+      left: 400px;
+      top: 1510px;
+      width: 612px;
+      height: 300px;
+      z-index: 2;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 22px;
+    }
+
+    .f2-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(56, 189, 248, 0.05) 0%, rgba(5, 10, 20, 0.60) 75%),
+        linear-gradient(180deg, rgba(5, 10, 20, 0.88) 0%, rgba(5, 10, 20, 0.10) 26%, rgba(5, 10, 20, 0.12) 68%, rgba(5, 10, 20, 0.94) 100%);
+    }
+
+    .f2-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f2-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f2-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+
+    .f2-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f2-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f2-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .f2-title-accent {
+      color: #38bdf8;
+    }
+
+    .f2-subtitle {
+      font-size: 24px;
+      line-height: 1.38;
+      color: #cbd5e1;
+    }
+
+    .f2-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f2-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 16px;
+    }
+
+    .f2-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .f2-metric-val {
+      font-size: 36px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f2-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(6, 78, 59, 0.92);
+      border: 1.5px solid rgba(16, 185, 129, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f2-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fecaca;
+      letter-spacing: 0.04em;
+    }
+
+    .f2-banner-pill {
+      padding: 6px 16px;
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+  </style>
+
+  <div id="f2-root" data-composition-id="frame-02-estante-de-gavetas" data-width="1080" data-height="1920" data-start="0" data-duration="17.86">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f2-cena" class="m2-cena"></div>
+    <div id="f2-mascote" class="m2-mascote"></div>
+    <div id="f2-hud" class="m2-hud"></div>
+
+    <div class="f2-ui-layer">
+      <div id="f2-topbar" class="f2-topbar">
+        <span class="f2-kicker">COMO FUNCIONA // NÃO É UM BALDE</span>
+        <span class="f2-badge">GAVETAS QUÍMICAS</span>
+      </div>
+
+      <div id="f2-header" class="f2-header-card">
+        <h1 class="f2-title">A Estante de <span class="f2-title-accent">Gavetas</span></h1>
+        <p class="f2-subtitle">A bateria não é um balde de líquido: são milhares de pecinhas mudando de andar</p>
+      </div>
+
+      <div id="f2-telemetry" class="f2-telemetry-row">
+        <div class="f2-metric-box">
+          <div class="f2-metric-label">NA TOMADA (CARGA)</div>
+          <div class="f2-metric-val">Sobe de Andar</div>
+        </div>
+        <div class="f2-metric-box">
+          <div class="f2-metric-label">NO USO (DESCARGA)</div>
+          <div class="f2-metric-val">Desce e Alimenta</div>
+        </div>
+      </div>
+
+      <div id="f2-banner" class="f2-banner" style="opacity: 0;">
+        <span class="f2-banner-text">ENERGIA NÃO É LÍQUIDO, É TRÁFEGO DE ÍONS EM GAVETAS PERFEITAS</span>
+        <span class="f2-banner-pill">QUÍMICA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 17.86;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f2-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 6.20);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, clamp = M.clamp, mix = M.mixCor, f2 = M.f2;
+        
+              var svg = M.svgBase(1080, 680,
+                '<defs>' +
+                '<linearGradient id="s2-anodo" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#1e3a8a"/><stop offset="1" stop-color="#1e40af"/></linearGradient>' +
+                '<linearGradient id="s2-catodo" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#581c87"/><stop offset="1" stop-color="#6b21a8"/></linearGradient>' +
+                '<clipPath id="s2-clip"><rect x="30" y="30" width="1020" height="600" rx="26"/></clipPath>' +
+                '</defs>' +
+                G({ 'clip-path': 'url(#s2-clip)' },
+                  T('rect', { x: 30, y: 30, width: 1020, height: 600, fill: '#0a1428' }) +
+                  // Gabinete da bateria
+                  T('rect', { x: 120, y: 80, width: 840, height: 480, rx: 28, fill: '#0b162c', stroke: '#38bdf8', 'stroke-width': 5 }) +
+                  T('rect', { x: 960, y: 270, width: 22, height: 100, rx: 8, fill: '#38bdf8' }) +
+                  // Ânodo (lado esquerdo - estante de grafite)
+                  T('rect', { x: 160, y: 120, width: 330, height: 400, rx: 16, fill: 'url(#s2-anodo)', stroke: '#3b82f6', 'stroke-width': 3 }) +
+                  T('text', { x: 325, y: 155, 'text-anchor': 'middle', fill: '#93c5fd', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 20 }, 'GAVETAS SUPERIORES (ÂTODO)') +
+                  // Prateleiras do ânodo
+                  (function() {
+                    var s = '';
+                    for(var r=0; r<5; r++) {
+                      s += T('rect', { x: 180, y: 180 + r * 68, width: 290, height: 10, rx: 4, fill: '#1d4ed8' });
+                    }
+                    return s;
+                  })() +
+                  // Separador central (eletrólito)
+                  T('rect', { x: 505, y: 120, width: 70, height: 400, rx: 8, fill: '#064e3b', stroke: '#10b981', 'stroke-width': 3, 'stroke-dasharray': '8 8' }) +
+                  T('text', { x: 540, y: 330, 'text-anchor': 'middle', fill: '#6ee7b7', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 18, transform: 'rotate(-90 540 330)', 'data-layout-allow-overlap': 'true' }, 'MEMBRANA SEPARADORA') +
+                  // Cátodo (lado direito - estante de óxido)
+                  T('rect', { x: 590, y: 120, width: 330, height: 400, rx: 16, fill: 'url(#s2-catodo)', stroke: '#9333ea', 'stroke-width': 3 }) +
+                  T('text', { x: 755, y: 155, 'text-anchor': 'middle', fill: '#d8b4fe', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 20 }, 'GAVETAS DE USO (CÁTODO)') +
+                  // Prateleiras do cátodo
+                  (function() {
+                    var s = '';
+                    for(var r=0; r<5; r++) {
+                      s += T('rect', { x: 610, y: 180 + r * 68, width: 290, height: 10, rx: 4, fill: '#7e22ce' });
+                    }
+                    return s;
+                  })() +
+                  // Partículas de lítio (14 esferas)
+                  (function() {
+                    var s = '';
+                    for(var i=0; i<14; i++) {
+                      s += G({ id: 's2-ion' + i, 'data-layout-allow-overlap': 'true' },
+                        T('circle', { cx: 0, cy: 0, r: 18, fill: '#facc15', stroke: '#fef08a', 'stroke-width': 3 }),
+                        T('text', { x: 0, y: 6, 'text-anchor': 'middle', fill: '#0f172a', 'font-family': 'Inter', 'font-weight': 900, 'font-size': 16, 'data-layout-allow-overlap': 'true' }, 'Li⁺')
+                      );
+                    }
+                    return s;
+                  })() +
+                  // Cabo de tomada na base
+                  G({ id: 's2-plug', opacity: 0, transform: 'translate(540 590)' },
+                    T('rect', { x: -30, y: -20, width: 60, height: 40, rx: 8, fill: '#f8fafc' }),
+                    T('line', { x1: -14, y1: -32, x2: -14, y2: -20, stroke: '#facc15', 'stroke-width': 6, 'stroke-linecap': 'round' }),
+                    T('line', { x1: 14, y1: -32, x2: 14, y2: -20, stroke: '#facc15', 'stroke-width': 6, 'stroke-linecap': 'round' })
+                  )
+                ) +
+                T('rect', { x: 30, y: 30, width: 1020, height: 600, rx: 26, fill: 'none', stroke: '#3b5b8c', 'stroke-width': 4 })
+              );
+              M.montar('#f2-cena', svg);
+              var cena = M.pegar('#f2-cena');
+              var plug = M.pegar(cena, '#s2-plug');
+              var ions = [];
+              for(var i=0; i<14; i++) ions.push(M.pegar(cena, '#s2-ion' + i));
+              var boy = M.mascote('#f2-mascote');
+              var hud = M.medidorBateria('#f2-hud');
+        
+              M.conectar(tl, function (t, og) {
+                // Fase 1: 0 a 7.8s (visão geral)
+                // Fase 2: 7.9 a 13.4s ("coloca na tomada -> sobem")
+                // Fase 3: 13.5 a 17.8s ("usa o celular -> escorregam")
+                var carga = suave(faixa(t, 7.9, 13.0));
+                var descarga = suave(faixa(t, 13.5, 17.5));
+                var carregando = t >= 7.9 && t < 13.5;
+                plug.setAttribute('opacity', f2(carregando ? 1 : 0));
+        
+                for(var k=0; k<14; k++) {
+                  var row = k % 5;
+                  var col = Math.floor(k / 5);
+                  var yBase = 220 + row * 68;
+                  var xL = 220 + col * 90;
+                  var xR = 650 + col * 90;
+                  var u = carga * (1 - descarga);
+                  var xCur = lerp(xR, xL, u) + Math.sin(t * 3 + k) * 6;
+                  var yCur = yBase + Math.cos(t * 2.5 + k) * 5;
+                  ions[k].setAttribute('transform', 'translate(' + f2(xCur) + ' ' + f2(yCur) + ')');
+                }
+        
+                var pct = lerp(35, 98, carga) * (1 - 0.25 * descarga);
+                hud.atualizar(pct, 'TRÁFEGO DE ÍONS', carregando);
+        
+                boy.atualizar(t, og, {
+                  humor: 'feliz',
+                  bracoD: 95 + Math.sin(t * 3) * 12,
+                  bracoE: 20,
+                  olhar: [3, -2]
+                });
+              }, { duracao: DUR, offsetGlobal: 17.95 });
+        
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-estante-de-gavetas'] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,273 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f5-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    .f5-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f5-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 14px;
+    }
+
+    .f5-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #f87171;
+      text-transform: uppercase;
+    }
+
+    .f5-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #fca5a5;
+      letter-spacing: 0.06em;
+    }
+
+    .f5-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 24px 32px;
+      background: rgba(8, 14, 26, 0.88);
+      border-left: 5px solid #f87171;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f5-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 54px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .f5-title-accent {
+      color: #f87171;
+    }
+
+    .f5-subtitle {
+      font-size: 22px;
+      line-height: 1.34;
+      color: #cbd5e1;
+    }
+
+    .f5-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(28, 10, 10, 0.92);
+      border: 1.5px solid rgba(239, 68, 68, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f5-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fef2f2;
+      letter-spacing: 0.04em;
+    }
+
+    .f5-banner-pill {
+      padding: 6px 16px;
+      background: #f87171;
+      color: #050a14;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    #f5-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 30%, #2a1a1a 0%, #081426 55%, #050a14 100%);
+    }
+    #f5-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 380px;
+      width: 1080px;
+      height: 780px;
+      z-index: 1;
+    }
+  </style>
+
+  <div data-hf-id="hf-p5" id="f5-root" data-composition-id="frame-05-prejuizos-sem-sono" data-width="1080" data-height="1920" data-start="56.50" data-duration="13.14">
+    <div data-hf-id="hf-p5bg" class="m2-fundo"></div>
+    <div data-hf-id="hf-p5cn" id="f5-cena" class="m2-cena"></div>
+
+    <div data-hf-id="hf-p5ui" class="f5-ui-layer">
+      <div data-hf-id="hf-p5tb" id="f5-topbar" class="f5-topbar">
+        <span data-hf-id="hf-p5kk" class="f5-kicker">PRÉJUÍZOS // SEM SONO</span>
+        <span data-hf-id="hf-p5bd" class="f5-badge">MICRO-SONA</span>
+      </div>
+
+      <div data-hf-id="hf-p5hd" id="f5-header" class="f5-header-card">
+        <h1 data-hf-id="hf-p5tt" class="f5-title">O Que Acontece <span data-hf-id="hf-p5ac" class="f5-title-accent">Sem Sono</span></h1>
+        <p data-hf-id="hf-p5sb" class="f5-subtitle">Concentração desaba, irritação sobe e o cérebro desliga por segundos.</p>
+      </div>
+
+      <div data-hf-id="hf-p5bn" id="f5-banner" class="f5-banner" style="opacity: 0;">
+        <span data-hf-id="hf-p5bt" class="f5-banner-text">MICRO-SONECA COM OS OLHOS ABERTOS</span>
+        <span data-hf-id="hf-p5bp" class="f5-banner-pill">ALERTA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 13.14;
+      var DESLIGA = 1.60;
+      var MICRO = 7.00;
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f5-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f5-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f5-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 11.00);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var olhos = G({ id: 's5-olhos', transform: 'translate(540 340)' },
+          T('ellipse', { cx: -70, cy: 0, rx: 42, ry: 30, fill: '#f8fafc' }) +
+          T('circle', { cx: -70, cy: 0, r: 16, fill: '#2563eb' }) +
+          T('ellipse', { cx: 70, cy: 0, rx: 42, ry: 30, fill: '#f8fafc' }) +
+          T('circle', { cx: 70, cy: 0, r: 16, fill: '#2563eb' }) +
+          T('path', { id: 's5-palpebra-e', d: 'M-112 -30 Q-70 0 -112 30', fill: 'none', stroke: '#94a3b8', 'stroke-width': 10, 'stroke-linecap': 'round' }) +
+          T('path', { id: 's5-palpebra-d', d: 'M112 -30 Q70 0 112 30', fill: 'none', stroke: '#94a3b8', 'stroke-width': 10, 'stroke-linecap': 'round' })
+        );
+
+        var medidor =
+          T('text', { x: 540, y: 500, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter', 'font-size': 18, 'font-weight': 700, 'letter-spacing': 1.6 }, 'CONCENTRAÇÃO') +
+          T('rect', { x: 300, y: 520, width: 480, height: 18, rx: 9, fill: '#111827', stroke: '#334155', 'stroke-width': 1.5 }) +
+          T('rect', { id: 's5-concentracao', x: 303, y: 523, width: 474, height: 12, rx: 6, fill: '#f87171' });
+
+        var acucar = '';
+        for (var s = 0; s < 4; s++) {
+          var sx = 200 + s * 170;
+          acucar +=
+            T('rect', { id: 's5-aco' + s, x: sx, y: 640, width: 110, height: 100, rx: 16, fill: '#1e293b', stroke: '#334155', 'stroke-width': 2 }) +
+            T('rect', { x: sx + 35, y: 660, width: 40, height: 40, rx: 8, fill: '#fde047' }) +
+            T('text', { x: sx + 55, y: 760, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter', 'font-size': 14, 'font-weight': 700 }, 'AÇÚCAR');
+        }
+
+        var svg = M.svgBase(1080, 780,
+          '<defs>' +
+          '<radialGradient id="s5-alertaGrad"><stop offset="0" stop-color="#f87171" stop-opacity="0.35"/><stop offset="1" stop-color="#f87171" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: '#070d18', stroke: '#1f3350', 'stroke-width': 3 }) +
+          olhos +
+          medidor +
+          acucar +
+          G({ id: 's5-glow', opacity: 0 },
+            T('circle', { cx: 540, cy: 420, r: 300, fill: 'url(#s5-alertaGrad)' })
+          ) +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: 'none', stroke: '#2b4a6f', 'stroke-width': 3 })
+        );
+        M.montar('#f5-cena', svg);
+
+        var cena = M.pegar('#f5-cena');
+        var palpebraE = M.pegar(cena, '#s5-palpebra-e');
+        var palpebraD = M.pegar(cena, '#s5-palpebra-d');
+        var concentracao = M.pegar(cena, '#s5-concentracao');
+        var glow = M.pegar(cena, '#s5-glow');
+        var acoEls = [];
+        for (var s = 0; s < 4; s++) acoEls.push(M.pegar(cena, '#s5-aco' + s));
+
+        M.conectar(tl, function (t, og) {
+          var entra = suave(faixa(t, 0.3, 1.5));
+          glow.setAttribute('opacity', f2(entra * 0.5));
+
+          var desliga = suave(faixa(t, DESLIGA, DESLIGA + 1.2));
+          var fecha = Math.sin(t * 12) > 0.85 ? 1 : 0;
+          var fechar = suave(faixa(t, DESLIGA, DESLIGA + 0.6));
+          palpebraE.setAttribute('d', 'M-112 ' + (-30 + fechar * 30) + ' Q-70 ' + (fechar * 30) + ' -112 ' + (30 + fechar * 30));
+          palpebraD.setAttribute('d', 'M112 ' + (-30 + fechar * 30) + ' Q70 ' + (fechar * 30) + ' 112 ' + (30 + fechar * 30));
+
+          var micro = suave(faixa(t, MICRO, MICRO + 1.0));
+          var fechaForte = Math.abs(Math.sin(t * 18)) > 0.7 ? 1 : 0;
+          var fechando = suave(faixa(t, MICRO, MICRO + 0.5));
+          palpebraE.setAttribute('d', 'M-112 ' + (-30 + Math.max(fechar, fechando) * 30) + ' Q-70 ' + (Math.max(fechar, fechando) * 30) + ' -112 ' + (30 + Math.max(fechar, fechando) * 30));
+          palpebraD.setAttribute('d', 'M112 ' + (-30 + Math.max(fechar, fechando) * 30) + ' Q70 ' + (Math.max(fechar, fechando) * 30) + ' 112 ' + (30 + Math.max(fechar, fechando) * 30));
+
+          var cai = suave(faixa(t, DESLIGA, DESLIGA + 2.0));
+          concentracao.setAttribute('width', f2(474 * (1 - cai * 0.8)));
+          concentracao.setAttribute('fill', cai > 0.5 ? '#ef4444' : '#f87171');
+
+          for (var s = 0; s < 4; s++) {
+            var brilha = 0.5 + 0.5 * Math.sin(t * 6 + s * 2);
+            acoEls[s].setAttribute('stroke-opacity', f2(0.4 + 0.6 * brilha));
+          }
+        }, { duracao: DUR, offsetGlobal: 50.05 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-05-prejuizos-sem-sono'] = tl;
+    })();
+  </script>
+</template>

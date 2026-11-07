@@ -1,0 +1,102 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f2-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f2-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f2-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(239,68,68,0.38); border-radius:14px; }
+    .f2-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#fca5a5; text-transform:uppercase; }
+    .f2-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f2-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #ef4444; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f2-title { font-family:'EB Garamond',serif; font-size:58px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f2-title-accent { color:#ef4444; }
+    .f2-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    #f2-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 50% 40%, #3a1a1a 0%, #08111f 55%, #050a14 100%); }
+    #f2-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#1a2332 0%,#08111f 100%); border-top:2px solid rgba(239,68,68,0.22); }
+    #f2-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f2-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f2-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(239,68,68,0.32); border-radius:22px; }
+    .f2-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(28,8,14,0.92); border:1.5px solid rgba(239,68,68,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f2-banner-text { font-size:20px; font-weight:700; color:#fca5a5; letter-spacing:.04em; }
+    .f2-banner-pill { padding:6px 16px; background:#dc2626; color:#ffffff; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+  </style>
+
+  <div id="f2-root" data-composition-id="frame-02-solo-cimento" data-width="1080" data-height="1920" data-start="14.00" data-duration="9.35">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f2-cena" class="m2-cena"></div>
+    <div id="f2-mascote" class="m2-mascote"></div>
+    <div id="f2-hud" class="m2-hud"></div>
+
+    <div class="f2-ui-layer">
+      <div id="f2-topbar" class="f2-topbar">
+        <span class="f2-kicker">FALHA 01 // O CHAO NAO ABSORVE MAIS</span>
+        <span class="f2-badge">0% ABSORCAO</span>
+      </div>
+      <div id="f2-header" class="f2-header-card">
+        <h1 class="f2-title">O Solo Vira <span class="f2-title-accent">Cimento</span></h1>
+        <p class="f2-subtitle">Depois de horas, a terra nao aguenta mais uma gota.</p>
+      </div>
+      <div id="f2-banner" class="f2-banner" style="opacity: 0;">
+        <span class="f2-banner-text">A TERRA VIROU CIMENTO E NAO ABSORVE MAIS UMA GOTA</span>
+        <span class="f2-banner-pill">FALHA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 9.35;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 9.6);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2, mixCor = M.mixCor;
+        var secoes = '';
+        for (var i = 0; i < 5; i++) {
+          var y = 80 + i * 105;
+          secoes += T('rect', { x: 60, y: y, width: 960, height: 85, fill: i % 2 === 0 ? '#1e293b' : '#0f172a', rx: 6 });
+          secoes += T('line', { x1: 80, y1: y + 42, x2: 1000, y2: y + 42, stroke: '#334155', 'stroke-width': 2, 'stroke-dasharray': '10 8' });
+        }
+        var aguaSup = T('rect', { id: 'f2-aguaSup', x: 60, y: 80, width: 960, height: 40, fill: '#38bdf8', 'fill-opacity': 0.55, rx: 6 });
+        var soloSeco = T('path', { d: 'M60 165 L1020 165 L1000 200 L80 200 Z', fill: '#374151' });
+        var rachaduras = '';
+        for (var i = 0; i < 8; i++) {
+          rachaduras += T('path', { d: 'M' + f2(200 + i * 110) + ' 200 L' + f2(210 + i * 110 + M.ruido(i) * 20) + ' 245', stroke: '#1e293b', 'stroke-width': 4, 'stroke-linecap': 'round' });
+        }
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="f2-solo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e293b"/><stop offset="1" stop-color="#0b1220"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#f2-solo)' }) +
+          secoes +
+          aguaSup +
+          soloSeco +
+          rachaduras +
+          T('text', { x: 540, y: 320, 'text-anchor': 'middle', 'font-family': "'Inter',sans-serif", 'font-size': '34', 'font-weight': '700', fill: '#f8fafc', 'fill-opacity': 0.9 }, 'CORTE TRANSVERSAL DO SOLO')
+        );
+        M.montar('#f2-cena', svg);
+        var aguaSupEl = M.pegar('#f2-cena', '#f2-aguaSup');
+        var boy = M.mascote('#f2-mascote');
+        var hud = M.medidorBarra('#f2-hud', { rotulo: 'SAUDE DO SOLO', unidade: '%', max: 100, cor: '#ef4444', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.6, 11.0));
+          var absorcao = 100 * (1 - u);
+          hud.atualizar(absorcao, u > 0.7 ? 'CIMENTO: SEM ABSORCAO' : 'TERRA SATURADA', u > 0.7 ? '#dc2626' : '#f59e0b');
+          aguaSupEl.setAttribute('fill-opacity', f2(0.55 * (1 - u)));
+          boy.atualizar(t, og, { humor: t < 3.0 ? 'neutro' : 'triste', bracoD: t < 3 ? 40 : 130, bracoE: 8, olhar: [0, -10], inclinar: t > 5 ? 4 : 0 });
+        }, { duracao: DUR, offsetGlobal: 9.21 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-solo-cimento'] = tl;
+    })();
+  </script>
+</template>

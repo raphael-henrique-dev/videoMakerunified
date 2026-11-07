@@ -1,0 +1,207 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f3-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f3-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f3-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f3-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f3-badge { font-size:19px; font-weight:700; color:#f87171; letter-spacing:.06em; }
+    .f3-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #ef4444; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f3-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f3-title-accent { color:#f87171; }
+    .f3-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f3-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(248,113,113,0.6); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f3-banner-text { font-size:20px; font-weight:700; color:#fecaca; letter-spacing:.04em; }
+    .f3-banner-pill { padding:6px 16px; background:#f87171; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f3-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 40% 30%, #2a1210 0%, #0d1526 55%, #050a14 100%); }
+    #f3-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f3-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f3-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f3-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(248,113,113,0.4); border-radius:22px; }
+  </style>
+
+  <div id="f3-root" data-composition-id="frame-03-falha" data-width="1080" data-height="1920" data-start="0" data-duration="17.26">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f3-cena" class="m2-cena"></div>
+    <div id="f3-mascote" class="m2-mascote"></div>
+    <div id="f3-hud" class="m2-hud"></div>
+
+    <div class="f3-ui-layer">
+      <div id="f3-topbar" class="f3-topbar">
+        <span class="f3-kicker">FALHA // O LIMITE DO METAL</span>
+        <span class="f3-badge">5.500 °C</span>
+      </div>
+      <div id="f3-header" class="f3-header-card">
+        <h1 class="f3-title">Nenhuma Lâmpada <span class="f3-title-accent">Aguenta o Sol</span></h1>
+        <p class="f3-subtitle">O filamento de tungstênio resiste a 3.400 °C. A superfície do sol passa dos 5.500 °C.</p>
+      </div>
+      <div id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span class="f3-banner-text">O METAL DERRETE MUITO ANTES DE VIRAR SOL</span>
+        <span class="f3-banner-pill">FALHA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 17.26;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 14.8);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2, mixCor = M.mixCor;
+
+        // escala do termômetro: 0 °C em y=458; 6.000 °C em y=112
+        function tempY(temp) { return 458 - (temp / 6000) * 346; }
+
+        var fuma = '';
+        var fumaPos = [[392, 196], [410, 180], [430, 164], [386, 160]];
+        for (var i = 0; i < fumaPos.length; i++) {
+          fuma += T('circle', { id: 's3-fum' + i, cx: fumaPos[i][0], cy: fumaPos[i][1], r: f2(9 + i * 3), fill: '#94a3b8', 'fill-opacity': 0 });
+        }
+
+        var rachaduras = [
+          'M404 116 L418 154 L404 188 L422 224',
+          'M404 116 L372 140 L356 178',
+          'M404 116 L446 136 L470 168 L466 206',
+          'M418 154 L456 170 L478 198'
+        ];
+        var rachSvg = '';
+        for (var r = 0; r < rachaduras.length; r++) {
+          rachSvg += T('path', { id: 's3-rach' + r, d: rachaduras[r], fill: 'none', stroke: '#e2e8f0', 'stroke-width': 2.6, 'stroke-linecap': 'round', opacity: 0 });
+        }
+
+        var ticks = '';
+        for (var g = 0; g <= 6; g++) {
+          var ty = tempY(g * 1000);
+          ticks += T('line', { x1: 796, y1: f2(ty), x2: 812, y2: f2(ty), stroke: '#64748b', 'stroke-width': 2 }) +
+            T('text', { x: 820, y: f2(ty + 6), fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 17 }, (g * 1000).toLocaleString('pt-BR'));
+        }
+
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<radialGradient id="s3-labGrad" cx="50%" cy="20%" r="80%"><stop offset="0" stop-color="#1b2440"/><stop offset="1" stop-color="#050a14"/></radialGradient>' +
+          '<radialGradient id="s3-bulbGrad" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#fefce8" stop-opacity="0.95"/><stop offset="0.42" stop-color="#fde047" stop-opacity="0.6"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0.16"/></radialGradient>' +
+          '<radialGradient id="s3-hotGrad" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fffbeb" stop-opacity="0.7"/><stop offset="1" stop-color="#f97316" stop-opacity="0"/></radialGradient>' +
+          '<linearGradient id="s3-metalGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbd5e1"/><stop offset="1" stop-color="#475569"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s3-labGrad)' }) +
+          // bancada
+          T('rect', { x: 0, y: 502, width: 1080, height: 18, fill: '#1e293b' }) +
+          T('rect', { x: 0, y: 520, width: 1080, height: 110, fill: '#0b1220' }) +
+          T('rect', { x: 210, y: 520, width: 16, height: 110, fill: '#131c2e' }) +
+          T('rect', { x: 520, y: 520, width: 16, height: 110, fill: '#131c2e' }) +
+          // halo de calor
+          T('circle', { id: 's3-halo', cx: 400, cy: 230, r: 150, fill: 'url(#s3-hotGrad)', opacity: 0.5 }) +
+          // lâmpada
+          G({ id: 's3-lampada' },
+            T('rect', { x: 372, y: 330, width: 56, height: 68, rx: 8, fill: 'url(#s3-metalGrad)' }) +
+            T('line', { x1: 372, y1: 346, x2: 428, y2: 346, stroke: '#334155', 'stroke-width': 3 }) +
+            T('line', { x1: 372, y1: 360, x2: 428, y2: 360, stroke: '#334155', 'stroke-width': 3 }) +
+            T('line', { x1: 372, y1: 374, x2: 428, y2: 374, stroke: '#334155', 'stroke-width': 3 }) +
+            T('rect', { x: 386, y: 398, width: 28, height: 20, rx: 5, fill: '#334155' }) +
+            T('circle', { id: 's3-bulbo', cx: 400, cy: 228, r: 116, fill: 'url(#s3-bulbGrad)', stroke: '#f8fafc', 'stroke-width': 4, 'stroke-opacity': 0.75 }) +
+            T('path', { d: 'M330 176 Q356 142 402 136', fill: 'none', stroke: '#f8fafc', 'stroke-width': 7, 'stroke-linecap': 'round', 'stroke-opacity': 0.55 }) +
+            T('line', { x1: 388, y1: 330, x2: 388, y2: 268, stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('line', { x1: 412, y1: 330, x2: 412, y2: 268, stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('path', { id: 's3-filamento', d: 'M388 268 L388 240 L400 252 L412 228 L412 268', fill: 'none', stroke: '#fef08a', 'stroke-width': 5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })) +
+          rachSvg +
+          // poça de metal derretido
+          T('ellipse', { id: 's3-poca', cx: 400, cy: 408, rx: 62, ry: 10, fill: '#f59e0b', opacity: 0 }) +
+          T('circle', { id: 's3-gota0', cx: 356, cy: 392, r: 5, fill: '#fbbf24', opacity: 0 }) +
+          T('circle', { id: 's3-gota1', cx: 446, cy: 396, r: 4, fill: '#f59e0b', opacity: 0 }) +
+          fuma +
+          // termômetro
+          G({ id: 's3-termo' },
+            T('rect', { x: 740, y: 96, width: 44, height: 382, rx: 22, fill: '#0b1220', stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('rect', { x: 752, y: 112, width: 20, height: 350, rx: 10, fill: '#111c30' }) +
+            T('rect', { id: 's3-mercurio', x: 754, y: 420, width: 16, height: 40, rx: 8, fill: '#ef4444' }) +
+            T('circle', { cx: 762, cy: 480, r: 30, fill: '#ef4444', stroke: '#fca5a5', 'stroke-width': 3 }) +
+            T('circle', { cx: 762, cy: 480, r: 12, fill: '#fecaca', opacity: 0.5 }) +
+            ticks +
+            T('line', { x1: 736, y1: f2(tempY(3400)), x2: 832, y2: f2(tempY(3400)), stroke: '#f59e0b', 'stroke-width': 3, 'stroke-dasharray': '8 6' }) +
+            T('text', { x: 838, y: f2(tempY(3400) + 6), fill: '#fbbf24', 'font-family': 'Inter, sans-serif', 'font-size': 18, 'font-weight': 700 }, '3.400') +
+            T('line', { x1: 736, y1: f2(tempY(5500)), x2: 832, y2: f2(tempY(5500)), stroke: '#ef4444', 'stroke-width': 3, 'stroke-dasharray': '8 6' }) +
+            T('text', { x: 838, y: f2(tempY(5500) + 6), fill: '#f87171', 'font-family': 'Inter, sans-serif', 'font-size': 18, 'font-weight': 700 }, '5.500')) +
+          // rótulo do filamento
+          G({ id: 's3-lblFil' },
+            T('line', { x1: 476, y1: 252, x2: 620, y2: 208, stroke: '#38bdf8', 'stroke-width': 2.5, 'stroke-dasharray': '6 6' }) +
+            T('circle', { cx: 476, cy: 252, r: 5, fill: '#38bdf8' }) +
+            T('text', { x: 628, y: 214, fill: '#e2e8f0', 'font-family': 'Inter, sans-serif', 'font-size': 24, 'font-weight': 700, 'letter-spacing': 1 }, 'TUNGSTÊNIO'))
+        );
+        M.montar('#f3-cena', svg);
+        var cena = M.pegar('#f3-cena');
+        var halo = M.pegar(cena, '#s3-halo');
+        var bulbo = M.pegar(cena, '#s3-bulbo');
+        var filamento = M.pegar(cena, '#s3-filamento');
+        var mercurio = M.pegar(cena, '#s3-mercurio');
+        var lampada = M.pegar(cena, '#s3-lampada');
+        var poca = M.pegar(cena, '#s3-poca');
+        var gota0 = M.pegar(cena, '#s3-gota0');
+        var gota1 = M.pegar(cena, '#s3-gota1');
+        var rachEls = [0, 1, 2, 3].map(function (r) { return M.pegar(cena, '#s3-rach' + r); });
+        var fums = [0, 1, 2, 3].map(function (r) { return M.pegar(cena, '#s3-fum' + r); });
+        var boy = M.mascote('#f3-mascote');
+        var hud = M.medidorBarra('#f3-hud', { rotulo: 'TEMPERATURA', unidade: '°C', max: 6000, cor: '#38bdf8', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var temp = 800 + 2622 * suave(faixa(t, 0.5, 7.6));
+          if (t > 7.6) temp = 3422;
+          if (t > 6.2) temp = 3422 + (5500 - 3422) * suave(faixa(t, 9.2, 11.4));
+
+          var y = tempY(temp);
+          mercurio.setAttribute('y', f2(y));
+          mercurio.setAttribute('height', f2(458 - y));
+          var corTemp = temp < 1800 ? '#38bdf8' : temp < 3300 ? '#f59e0b' : '#ef4444';
+          mercurio.setAttribute('fill', corTemp);
+
+          var quente = suave(faixa(t, 0.6, 7.6));
+          halo.setAttribute('opacity', f2(t < 8.0 ? 0.18 + 0.6 * quente : 0.12));
+          halo.setAttribute('r', f2(120 + 42 * quente + Math.sin(t * 6) * 5));
+          filamento.setAttribute('stroke', t < 8.0 ? '#fffbeb' : '#334155');
+          bulbo.setAttribute('fill', t < 8.0 ? 'url(#s3-bulbGrad)' : '#111c30');
+          bulbo.setAttribute('fill-opacity', t < 8.0 ? 1 : 0.85);
+
+          for (var r = 0; r < rachEls.length; r++) {
+            rachEls[r].setAttribute('opacity', f2(suave(faixa(t, 6.9 + r * 0.18, 7.5 + r * 0.18)) * (t < 8.05 ? 1 : 0.6)));
+          }
+
+          var estourou = suave(faixa(t, 7.9, 8.4));
+          poca.setAttribute('opacity', f2(estourou * 0.85));
+          gota0.setAttribute('opacity', f2(estourou * 0.9));
+          gota1.setAttribute('opacity', f2(estourou * 0.9));
+          lampada.setAttribute('transform', 'rotate(' + f2(estourou * Math.sin(t * 30) * 1.2) + ' 400 300)');
+
+          for (var i = 0; i < fums.length; i++) {
+            var p = faixa(t, 8.0 + i * 0.3, 14.5 + i * 0.3);
+            var sobe = Math.sin(Math.PI * p);
+            fums[i].setAttribute('opacity', f2(sobe * 0.5));
+            fums[i].setAttribute('transform', 'translate(' + f2(Math.sin(t * 1.8 + i) * 10) + ' ' + f2(-p * 110) + ')');
+          }
+
+          var estado = temp < 3300 ? 'FILAMENTO SEGURANDO' : temp < 5000 ? 'TUNGSTÊNIO DERRETEU' : 'SOL: 5.500 °C';
+          hud.atualizar(temp, estado, corTemp);
+          boy.atualizar(t, og, {
+            humor: t < 7.8 ? 'surpreso' : (t < 14.0 ? 'triste' : 'surpreso'),
+            bracoD: t > 7.8 ? 148 : 40,
+            bracoE: t > 7.8 ? 120 : 8,
+            olhar: [6, 4],
+            inclinar: t > 8.0 ? 5 : 0,
+            tremer: t > 8.0 && t < 8.9 ? 2 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 37.82 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-falha'] = tl;
+    })();
+  </script>
+</template>

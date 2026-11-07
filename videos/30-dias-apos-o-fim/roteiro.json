@@ -1,0 +1,223 @@
+{
+  "id": "30-dias-apos-o-fim",
+  "titulo": "30 Dias Após o Fim",
+  "subtitulo": "O experimento mental de um planeta sem ninguém: a energia apaga, a água seca, a cidade vira selva e o céu volta a brilhar",
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "fps": 30,
+  "alvoPpm": 180,
+  "modo": "2d",
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.8,
+    "estilo": 0.4,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.22
+  },
+  "efeitos": {
+    "ganho": 1.12
+  },
+  "frames": [
+    {
+      "id": "frame-01-dia-1",
+      "numero": "01",
+      "titulo": "Dia 1: O Último Ruído",
+      "arquivo": "compositions/frames/01-dia-1.html",
+      "kicker": "EXPERIMENTO MENTAL // DIA 1",
+      "metrica": {
+        "rotulo": "O SILÊNCIO",
+        "valor": "DIA 1"
+      },
+      "direcao2D": "Skyline noturna com janelas acesas apagando uma a uma, relógio do dia 1, semáforo vermelho e uma linha de silêncio que morre no asfalto.",
+      "cauda": 0.3,
+      "sons": [
+        { "nome": "bip", "offset": 0.35, "ganho": 0.5 },
+        { "nome": "zumbido", "offset": 0.9, "ganho": 0.45 },
+        { "nome": "whoosh", "offset": 1.5, "ganho": 0.5 },
+        { "nome": "desliga", "offset": 7.4, "ganho": 0.6 },
+        { "nome": "baque", "offset": 8.2, "ganho": 0.5 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "gancho_estalo",
+          "gancho": true,
+          "texto": "E se, num *estalo,* toda a humanidade desaparecesse da Terra de uma vez?"
+        },
+        {
+          "plano": "M",
+          "jogo": "dia_1_maquinas",
+          "texto": "No *dia 1,* as luzes ainda brilham e as máquinas continuam rodando. Mas ninguém mais está no *comando.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-02-energia",
+      "numero": "02",
+      "titulo": "Horas 1–6: A Energia Desaba",
+      "arquivo": "compositions/frames/02-energia.html",
+      "kicker": "SISTEMA 01 // ENERGIA",
+      "metrica": {
+        "rotulo": "REDE ELÉTRICA",
+        "valor": "0 W"
+      },
+      "direcao2D": "Torre de transmissão com cabos tensionados, disjuntor abrindo, medidor de carga caindo a zero e quarteirões apagando em cascata.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "zumbido", "offset": 0.5, "ganho": 0.5 },
+        { "nome": "metal", "offset": 3.1, "ganho": 0.55 },
+        { "nome": "estalo", "offset": 3.35, "ganho": 0.7 },
+        { "nome": "desliga", "offset": 4.2, "ganho": 0.65 },
+        { "nome": "apito", "offset": 7.2, "ganho": 0.45 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "energia_turbinas",
+          "texto": "A primeira coisa a cair é a *energia.* Sem gente pra alimentar as turbinas, as usinas param uma atrás da outra."
+        },
+        {
+          "plano": "PA",
+          "jogo": "apagao_cascata",
+          "texto": "Em poucas horas, a rede inteira *apaga,* e o planeta mergulha num silêncio que não existe há *séculos.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-03-agua",
+      "numero": "03",
+      "titulo": "Dia 3: A Água Para de Subir",
+      "arquivo": "compositions/frames/03-agua.html",
+      "kicker": "SISTEMA 02 // ÁGUA",
+      "metrica": {
+        "rotulo": "BOMBAS DE ÁGUA",
+        "valor": "0 L/s"
+      },
+      "direcao2D": "Caixa d'água esvaziando, bomba com luz vermelha, torneira pingando até secar e o rio mudando de azul para um caldo esverdeado.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "torneira", "offset": 0.5, "ganho": 0.5 },
+        { "nome": "pingo", "offset": 1.1, "ganho": 0.55 },
+        { "nome": "bolhas", "offset": 3.4, "dur": 2.5, "ganho": 0.4 },
+        { "nome": "errado", "offset": 7.0, "ganho": 0.6 },
+        { "nome": "esguicho", "offset": 8.4, "ganho": 0.45 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "agua_bombas",
+          "texto": "Sem eletricidade, as *bombas* param de subir água. A torneira que jorrava na sua casa fica *seca.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "esgoto_rio",
+          "texto": "E o pior: sem as estações de *tratamento,* o esgoto volta pro rio, e a água que sobra vira um caldo *perigoso.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-04-natureza",
+      "numero": "04",
+      "titulo": "Semana 2: A Cidade Vira Selva",
+      "arquivo": "compositions/frames/04-natureza.html",
+      "kicker": "SISTEMA 03 // NATUREZA",
+      "metrica": {
+        "rotulo": "CIDADE TOMADA",
+        "valor": "SEMANA 2"
+      },
+      "direcao2D": "Rua rachada com plantas brotando do asfalto, trepadeiras subindo pelos prédios e uma capivara atravessando a avenida vazia.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "passo", "offset": 0.4, "ganho": 0.45 },
+        { "nome": "madeira", "offset": 2.4, "ganho": 0.5 },
+        { "nome": "ondas", "offset": 4.2, "dur": 3.5, "ganho": 0.35 },
+        { "nome": "certo", "offset": 8.6, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "animais_ruas",
+          "texto": "Na segunda semana, os *animais* percebem que o barulho sumiu. Capivaras, raposas e até *onças* voltam a circular pelas ruas."
+        },
+        {
+          "plano": "PA",
+          "jogo": "plantas_asfalto",
+          "texto": "As *plantas* brotam pelas rachaduras do asfalto, e a cidade começa a virar uma *floresta* de concreto tomada pelo verde."
+        }
+      ]
+    },
+    {
+      "id": "frame-05-ceu",
+      "numero": "05",
+      "titulo": "Dia 30: O Céu Volta a Brilhar",
+      "arquivo": "compositions/frames/05-ceu.html",
+      "kicker": "SISTEMA 04 // CÉU",
+      "metrica": {
+        "rotulo": "DIA 30",
+        "valor": "MILHARES DE ESTRELAS"
+      },
+      "direcao2D": "Céu noturno com estrelas reaparecendo, satélite girando vazio, data center fervendo servidores e o sinal de internet apagando.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "brilho", "offset": 0.6, "ganho": 0.5 },
+        { "nome": "whoosh", "offset": 1.8, "ganho": 0.45 },
+        { "nome": "zumbido", "offset": 3.8, "ganho": 0.45 },
+        { "nome": "desliga", "offset": 7.6, "ganho": 0.6 },
+        { "nome": "apito", "offset": 8.6, "ganho": 0.4 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "ceu_estrelas",
+          "texto": "No *dia 30,* sem luzes artificiais, o céu noturno volta a mostrar *milhares* de estrelas que a cidade escondia."
+        },
+        {
+          "plano": "M",
+          "jogo": "internet_apaga",
+          "texto": "Os *satélites* continuam girando vazios, e os data centers, sem refrigeração, cozinham *servidores* e apagam a internet."
+        }
+      ]
+    },
+    {
+      "id": "frame-06-fechamento",
+      "numero": "06",
+      "titulo": "Por Fora e Por Dentro",
+      "arquivo": "compositions/frames/06-fechamento.html",
+      "kicker": "RAIO-X FINAL // O PLANETA RESPIRA",
+      "metrica": {
+        "rotulo": "CURIORISANDO",
+        "valor": "SEGUE O CANAL"
+      },
+      "direcao2D": "Planeta em corte dividido entre cidade apagada e floresta viva, com quatro chamadas técnicas (energia, água, natureza, céu) e o selo final do Curiorisando.",
+      "cauda": 0.8,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.35, "ganho": 0.5 },
+        { "nome": "rotulo", "offset": 2.4, "ganho": 0.5 },
+        { "nome": "etiqueta", "offset": 4.0, "ganho": 0.45 },
+        { "nome": "certo", "offset": 8.2, "ganho": 0.6 },
+        { "nome": "final", "offset": 12.8, "ganho": 0.65 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "por_fora_por_dentro",
+          "texto": "Por fora, parece o *fim do mundo.* Por dentro, é só o planeta *respirando* de novo, sem a gente atrapalhando."
+        },
+        {
+          "plano": "M",
+          "jogo": "fechamento_curiorisando",
+          "texto": "Pois é, o mundo é mais *curioso* do que parece! Se você é curioso, segue o *Curiorisando!*"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #captions-comp {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .caption-bar {
+      position: absolute;
+      left: 64px;
+      right: 64px;
+      top: 1350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .caption-pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px 14px;
+      padding: 18px 30px;
+      background: rgba(6, 11, 22, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.32);
+      border-radius: 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65);
+      min-height: 76px;
+      max-width: 940px;
+    }
+
+    .cap-word {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #94a3b8;
+    }
+
+    .cap-word.is-spoken {
+      color: #f8fafc;
+    }
+
+    .cap-word.is-active {
+      color: #38bdf8;
+      text-shadow: 0 0 22px rgba(56, 189, 248, 0.55);
+    }
+
+    .cap-word.cap-brand.is-spoken {
+      color: #fbbf24;
+    }
+
+    .cap-word.cap-brand.is-active {
+      color: #facc15;
+      text-shadow: 0 0 24px rgba(250, 204, 21, 0.65);
+    }
+  </style>
+
+  <div id="captions-comp" data-composition-id="captions" data-width="1080" data-height="1920" data-start="0" data-duration="100.88">
+    <div class="caption-bar">
+      <div id="caption-pill" class="caption-pill" style="opacity: 0;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var GROUPS = [{"frameId":"frame-01-bolinha-girando","plano":"M","start":0.12,"end":1.002,"words":[{"word":"Você","start":0.12,"end":0.364,"brand":false},{"word":"deita","start":0.433,"end":0.608,"brand":false},{"word":"na","start":0.642,"end":0.712,"brand":false},{"word":"cama","start":0.77,"end":0.968,"brand":false}]},{"frameId":"frame-01-bolinha-girando","plano":"M","start":1.002,"end":1.941,"words":[{"word":"para","start":1.002,"end":1.107,"brand":false},{"word":"ver","start":1.142,"end":1.258,"brand":false},{"word":"um","start":1.316,"end":1.362,"brand":false},{"word":"vídeo,","start":1.432,"end":1.861,"brand":true}]},{"frameId":"frame-01-bolinha-girando","plano":"M","start":2.082,"end":2.976,"words":[{"word":"fecha","start":2.082,"end":2.419,"brand":false},{"word":"a","start":2.442,"end":2.465,"brand":false},{"word":"porta","start":2.535,"end":2.802,"brand":false},{"word":"do","start":2.848,"end":2.918,"brand":false}]},{"frameId":"frame-01-bolinha-girando","plano":"M","start":2.976,"end":4.218,"words":[{"word":"quarto","start":2.976,"end":3.417,"brand":false},{"word":"e","start":3.638,"end":3.8,"brand":false},{"word":"bem","start":3.882,"end":4.067,"brand":false},{"word":"na","start":4.102,"end":4.172,"brand":false}]},{"frameId":"frame-01-bolinha-girando","plano":"M","start":4.218,"end":5.519,"words":[{"word":"melhor","start":4.218,"end":4.52,"brand":false},{"word":"parte","start":4.578,"end":4.857,"brand":false},{"word":"aparece","start":4.88,"end":5.228,"brand":false},{"word":"aquela","start":5.252,"end":5.461,"brand":false}]},{"frameId":"frame-01-bolinha-girando","plano":"M","start":5.519,"end":7.398,"words":[{"word":"bolinha","start":5.519,"end":5.879,"brand":true},{"word":"girando","start":5.925,"end":6.273,"brand":false},{"word":"na","start":6.32,"end":6.389,"brand":false},{"word":"tela!","start":6.459,"end":7.318,"brand":false}]},{"frameId":"frame-01-bolinha-girando","plano":"PA","start":7.434,"end":8.456,"words":[{"word":"O","start":7.434,"end":7.538,"brand":false},{"word":"roteador","start":7.597,"end":8.061,"brand":false},{"word":"está","start":8.107,"end":8.27,"brand":false},{"word":"ali","start":8.293,"end":8.409,"brand":false}]},{"frameId":"frame-01-bolinha-girando","plano":"PA","start":8.456,"end":9.779,"words":[{"word":"na","start":8.456,"end":8.537,"brand":false},{"word":"sala,","start":8.607,"end":9.083,"brand":false},{"word":"você","start":9.245,"end":9.443,"brand":false},{"word":"paga","start":9.501,"end":9.721,"brand":false}]},{"frameId":"frame-01-bolinha-girando","plano":"PA","start":9.779,"end":11.033,"words":[{"word":"caro","start":9.779,"end":10.046,"brand":false},{"word":"todo","start":10.081,"end":10.278,"brand":false},{"word":"mês,","start":10.325,"end":10.685,"brand":true},{"word":"mas","start":10.824,"end":10.975,"brand":false}]},{"frameId":"frame-01-bolinha-girando","plano":"PA","start":11.033,"end":12.17,"words":[{"word":"parece","start":11.033,"end":11.405,"brand":false},{"word":"que","start":11.451,"end":11.521,"brand":false},{"word":"a","start":11.544,"end":11.567,"brand":false},{"word":"internet","start":11.602,"end":12.09,"brand":false}]},{"frameId":"frame-01-bolinha-girando","plano":"PA","start":12.171,"end":13.249,"words":[{"word":"tem","start":12.171,"end":12.299,"brand":false},{"word":"preguiça","start":12.345,"end":12.809,"brand":false},{"word":"de","start":12.844,"end":12.902,"brand":false},{"word":"andar","start":12.926,"end":13.169,"brand":false}]},{"frameId":"frame-01-bolinha-girando","plano":"PA","start":13.274,"end":15.409,"words":[{"word":"dez","start":13.274,"end":13.46,"brand":false},{"word":"passos","start":13.541,"end":13.854,"brand":true},{"word":"até","start":13.912,"end":14.052,"brand":false},{"word":"você!","start":14.098,"end":15.329,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"PA","start":16.04,"end":17.143,"words":[{"word":"O","start":16.04,"end":16.156,"brand":false},{"word":"primeiro","start":16.226,"end":16.586,"brand":false},{"word":"erro","start":16.655,"end":16.829,"brand":false},{"word":"mora","start":16.888,"end":17.097,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"PA","start":17.143,"end":18.85,"words":[{"word":"na","start":17.143,"end":17.224,"brand":false},{"word":"sala:","start":17.294,"end":17.805,"brand":true},{"word":"muita","start":18.165,"end":18.478,"brand":false},{"word":"gente","start":18.548,"end":18.826,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"PA","start":18.85,"end":20.103,"words":[{"word":"esconde","start":18.85,"end":19.198,"brand":false},{"word":"o","start":19.221,"end":19.244,"brand":false},{"word":"aparelho","start":19.291,"end":19.709,"brand":false},{"word":"atrás","start":19.755,"end":20.057,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"PA","start":20.103,"end":21.52,"words":[{"word":"da","start":20.103,"end":20.162,"brand":false},{"word":"televisão","start":20.196,"end":20.823,"brand":true},{"word":"ou","start":20.986,"end":21.125,"brand":false},{"word":"dentro","start":21.195,"end":21.473,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"PA","start":21.52,"end":22.275,"words":[{"word":"do","start":21.52,"end":21.601,"brand":false},{"word":"rack","start":21.659,"end":21.845,"brand":false},{"word":"para","start":21.926,"end":22.077,"brand":false},{"word":"não","start":22.124,"end":22.24,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"PA","start":22.275,"end":23.504,"words":[{"word":"ficar","start":22.275,"end":22.518,"brand":false},{"word":"feio.","start":22.588,"end":23.424,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"M","start":23.542,"end":24.39,"words":[{"word":"Só","start":23.542,"end":23.728,"brand":false},{"word":"que","start":23.774,"end":23.844,"brand":false},{"word":"o","start":23.879,"end":23.902,"brand":false},{"word":"Wi-Fi","start":23.96,"end":24.32,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"M","start":24.39,"end":25.783,"words":[{"word":"funciona","start":24.39,"end":24.773,"brand":false},{"word":"igualzinho","start":24.796,"end":25.434,"brand":false},{"word":"a","start":25.481,"end":25.504,"brand":false},{"word":"uma","start":25.539,"end":25.713,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"M","start":25.783,"end":27.513,"words":[{"word":"lâmpada:","start":25.783,"end":26.363,"brand":true},{"word":"se","start":26.77,"end":26.862,"brand":false},{"word":"você","start":26.909,"end":27.083,"brand":false},{"word":"tranca","start":27.153,"end":27.489,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"M","start":27.513,"end":28.325,"words":[{"word":"a","start":27.513,"end":27.536,"brand":false},{"word":"luz","start":27.582,"end":27.791,"brand":false},{"word":"dentro","start":27.861,"end":28.174,"brand":false},{"word":"da","start":28.209,"end":28.279,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"M","start":28.325,"end":29.684,"words":[{"word":"gaveta,","start":28.325,"end":28.964,"brand":true},{"word":"o","start":29.103,"end":29.184,"brand":false},{"word":"resto","start":29.254,"end":29.51,"brand":false},{"word":"da","start":29.556,"end":29.637,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"M","start":29.684,"end":30.821,"words":[{"word":"casa","start":29.684,"end":29.951,"brand":false},{"word":"inteira","start":30.02,"end":30.438,"brand":false},{"word":"fica","start":30.485,"end":30.682,"brand":false},{"word":"no","start":30.717,"end":30.775,"brand":false}]},{"frameId":"frame-02-lampada-no-armario","plano":"M","start":30.821,"end":32.074,"words":[{"word":"escuro!","start":30.821,"end":31.994,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PG","start":32.7,"end":33.803,"words":[{"word":"Para","start":32.7,"end":32.955,"brand":false},{"word":"chegar","start":32.99,"end":33.246,"brand":false},{"word":"no","start":33.292,"end":33.35,"brand":false},{"word":"quarto,","start":33.42,"end":33.768,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PG","start":33.803,"end":35.103,"words":[{"word":"o","start":33.803,"end":33.826,"brand":false},{"word":"sinal","start":33.873,"end":34.105,"brand":false},{"word":"precisa","start":34.14,"end":34.476,"brand":false},{"word":"atravessar","start":34.5,"end":35.057,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PG","start":35.103,"end":36.241,"words":[{"word":"a","start":35.103,"end":35.126,"brand":false},{"word":"casa,","start":35.185,"end":35.602,"brand":true},{"word":"e","start":35.742,"end":35.858,"brand":false},{"word":"cada","start":35.928,"end":36.183,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PG","start":36.241,"end":37.402,"words":[{"word":"parede","start":36.241,"end":36.601,"brand":false},{"word":"de","start":36.671,"end":36.752,"brand":false},{"word":"tijolo","start":36.798,"end":37.251,"brand":false},{"word":"no","start":37.286,"end":37.356,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PG","start":37.402,"end":38.284,"words":[{"word":"meio","start":37.402,"end":37.588,"brand":false},{"word":"do","start":37.611,"end":37.669,"brand":false},{"word":"caminho","start":37.704,"end":38.064,"brand":false},{"word":"já","start":38.11,"end":38.226,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PG","start":38.284,"end":40.443,"words":[{"word":"rouba","start":38.284,"end":38.517,"brand":false},{"word":"metade","start":38.563,"end":39.016,"brand":false},{"word":"da","start":39.062,"end":39.132,"brand":false},{"word":"força.","start":39.202,"end":40.363,"brand":true}]},{"frameId":"frame-03-espelho-e-agua","plano":"PA","start":40.473,"end":41.506,"words":[{"word":"Mas","start":40.473,"end":40.67,"brand":false},{"word":"o","start":40.74,"end":40.763,"brand":false},{"word":"pior","start":40.833,"end":41.123,"brand":false},{"word":"vilão","start":41.181,"end":41.46,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PA","start":41.506,"end":42.737,"words":[{"word":"é","start":41.506,"end":41.541,"brand":false},{"word":"o","start":41.576,"end":41.599,"brand":false},{"word":"banheiro:","start":41.657,"end":42.342,"brand":true},{"word":"o","start":42.644,"end":42.702,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PA","start":42.737,"end":44.095,"words":[{"word":"espelho","start":42.737,"end":43.12,"brand":false},{"word":"rebate","start":43.167,"end":43.643,"brand":false},{"word":"o","start":43.677,"end":43.701,"brand":false},{"word":"sinal","start":43.759,"end":44.037,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PA","start":44.095,"end":45.29,"words":[{"word":"igual","start":44.095,"end":44.362,"brand":false},{"word":"bola","start":44.42,"end":44.629,"brand":false},{"word":"no","start":44.676,"end":44.745,"brand":false},{"word":"muro,","start":44.804,"end":45.21,"brand":true}]},{"frameId":"frame-03-espelho-e-agua","plano":"PA","start":45.512,"end":46.835,"words":[{"word":"e","start":45.512,"end":45.616,"brand":false},{"word":"os","start":45.674,"end":45.767,"brand":false},{"word":"canos","start":45.848,"end":46.22,"brand":false},{"word":"cheios","start":46.382,"end":46.8,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PA","start":46.835,"end":47.927,"words":[{"word":"de","start":46.835,"end":46.893,"brand":false},{"word":"água","start":46.975,"end":47.242,"brand":false},{"word":"engolem","start":47.358,"end":47.799,"brand":false},{"word":"o","start":47.845,"end":47.869,"brand":false}]},{"frameId":"frame-03-espelho-e-agua","plano":"PA","start":47.927,"end":49.841,"words":[{"word":"resto","start":47.927,"end":48.217,"brand":false},{"word":"pelo","start":48.263,"end":48.461,"brand":false},{"word":"caminho!","start":48.495,"end":49.761,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"M","start":50.47,"end":51.457,"words":[{"word":"Já","start":50.47,"end":50.621,"brand":false},{"word":"reparou","start":50.667,"end":51.027,"brand":false},{"word":"que","start":51.074,"end":51.143,"brand":false},{"word":"alguém","start":51.167,"end":51.399,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"M","start":51.457,"end":52.42,"words":[{"word":"liga","start":51.457,"end":51.631,"brand":false},{"word":"o","start":51.654,"end":51.677,"brand":false},{"word":"micro-ondas","start":51.724,"end":52.258,"brand":true},{"word":"na","start":52.304,"end":52.362,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"M","start":52.42,"end":53.674,"words":[{"word":"cozinha","start":52.42,"end":52.908,"brand":false},{"word":"e","start":53.047,"end":53.152,"brand":false},{"word":"a","start":53.21,"end":53.233,"brand":false},{"word":"chamada","start":53.28,"end":53.616,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"M","start":53.674,"end":54.545,"words":[{"word":"de","start":53.674,"end":53.756,"brand":false},{"word":"vídeo","start":53.814,"end":54.046,"brand":false},{"word":"trava","start":54.104,"end":54.417,"brand":false},{"word":"na","start":54.452,"end":54.51,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"M","start":54.545,"end":55.404,"words":[{"word":"mesma","start":54.545,"end":54.801,"brand":false},{"word":"hora","start":54.847,"end":55.044,"brand":true},{"word":"lá","start":55.114,"end":55.242,"brand":false},{"word":"no","start":55.288,"end":55.358,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"M","start":55.404,"end":56.448,"words":[{"word":"sofá?","start":55.404,"end":56.368,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"PA","start":56.479,"end":58.046,"words":[{"word":"Não","start":56.479,"end":56.723,"brand":false},{"word":"é","start":56.769,"end":56.792,"brand":false},{"word":"coincidência:","start":56.839,"end":57.663,"brand":false},{"word":"ele","start":57.861,"end":58.023,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"PA","start":58.046,"end":59.602,"words":[{"word":"esquenta","start":58.046,"end":58.476,"brand":false},{"word":"a","start":58.499,"end":58.522,"brand":false},{"word":"comida","start":58.569,"end":58.905,"brand":false},{"word":"sacudindo","start":58.964,"end":59.579,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"PA","start":59.602,"end":60.554,"words":[{"word":"a","start":59.602,"end":59.625,"brand":false},{"word":"água","start":59.695,"end":59.916,"brand":false},{"word":"no","start":59.962,"end":60.043,"brand":false},{"word":"mesmo","start":60.148,"end":60.496,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"PA","start":60.554,"end":62.423,"words":[{"word":"ritmo","start":60.554,"end":60.879,"brand":true},{"word":"do","start":60.937,"end":61.019,"brand":false},{"word":"Wi-Fi,","start":61.077,"end":61.692,"brand":false},{"word":"igual","start":62.052,"end":62.377,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"PA","start":62.423,"end":63.654,"words":[{"word":"um","start":62.423,"end":62.47,"brand":false},{"word":"caminhão","start":62.516,"end":62.899,"brand":false},{"word":"buzinando","start":62.946,"end":63.445,"brand":true},{"word":"no","start":63.503,"end":63.584,"brand":false}]},{"frameId":"frame-04-vilao-microondas","plano":"PA","start":63.654,"end":65.197,"words":[{"word":"meio","start":63.654,"end":63.863,"brand":false},{"word":"da","start":63.898,"end":63.967,"brand":false},{"word":"sua","start":64.014,"end":64.165,"brand":false},{"word":"conversa!","start":64.2,"end":65.117,"brand":false}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PG","start":65.82,"end":66.668,"words":[{"word":"E","start":65.82,"end":65.959,"brand":false},{"word":"quando","start":66.041,"end":66.284,"brand":false},{"word":"chega","start":66.331,"end":66.575,"brand":false},{"word":"a","start":66.598,"end":66.621,"brand":false}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PG","start":66.668,"end":68.49,"words":[{"word":"noite,","start":66.668,"end":67.132,"brand":true},{"word":"entra","start":67.434,"end":67.759,"brand":false},{"word":"a","start":67.794,"end":67.817,"brand":false},{"word":"armadilha","start":67.875,"end":68.444,"brand":false}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PG","start":68.49,"end":70.545,"words":[{"word":"dos","start":68.49,"end":68.63,"brand":false},{"word":"vizinhos:","start":68.688,"end":69.303,"brand":false},{"word":"o","start":69.86,"end":69.907,"brand":false},{"word":"roteador","start":69.965,"end":70.476,"brand":false}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PG","start":70.545,"end":71.846,"words":[{"word":"da","start":70.545,"end":70.627,"brand":false},{"word":"rua","start":70.685,"end":70.859,"brand":false},{"word":"inteira","start":70.894,"end":71.312,"brand":false},{"word":"tenta","start":71.509,"end":71.799,"brand":false}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PG","start":71.846,"end":73.216,"words":[{"word":"passar","start":71.846,"end":72.182,"brand":false},{"word":"pelo","start":72.229,"end":72.403,"brand":false},{"word":"mesmo","start":72.473,"end":72.763,"brand":false},{"word":"corredor","start":72.809,"end":73.181,"brand":true}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PG","start":73.216,"end":74.909,"words":[{"word":"invisível","start":73.216,"end":73.692,"brand":false},{"word":"no","start":73.715,"end":73.819,"brand":false},{"word":"ar.","start":73.889,"end":74.829,"brand":false}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PA","start":74.947,"end":76.073,"words":[{"word":"Com","start":74.947,"end":75.121,"brand":false},{"word":"todo","start":75.168,"end":75.33,"brand":false},{"word":"mundo","start":75.365,"end":75.562,"brand":false},{"word":"assistindo","start":75.586,"end":76.004,"brand":false}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PA","start":76.073,"end":77.303,"words":[{"word":"filme","start":76.073,"end":76.352,"brand":false},{"word":"ao","start":76.375,"end":76.421,"brand":false},{"word":"mesmo","start":76.456,"end":76.735,"brand":false},{"word":"tempo,","start":76.805,"end":77.223,"brand":true}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PA","start":77.478,"end":78.14,"words":[{"word":"o","start":77.478,"end":77.582,"brand":false},{"word":"ar","start":77.629,"end":77.733,"brand":false},{"word":"da","start":77.791,"end":77.861,"brand":false},{"word":"sua","start":77.908,"end":78.082,"brand":false}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PA","start":78.14,"end":79.219,"words":[{"word":"sala","start":78.14,"end":78.372,"brand":false},{"word":"vira","start":78.418,"end":78.604,"brand":false},{"word":"um","start":78.627,"end":78.674,"brand":false},{"word":"trânsito","start":78.743,"end":79.173,"brand":false}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PA","start":79.219,"end":80.74,"words":[{"word":"travado","start":79.219,"end":79.835,"brand":true},{"word":"onde","start":80.032,"end":80.264,"brand":false},{"word":"um","start":80.311,"end":80.369,"brand":false},{"word":"sinal","start":80.427,"end":80.706,"brand":false}]},{"frameId":"frame-05-engarrafamento-vizinhos","plano":"PA","start":80.74,"end":82.55,"words":[{"word":"atropela","start":80.74,"end":81.17,"brand":false},{"word":"o","start":81.228,"end":81.263,"brand":false},{"word":"outro!","start":81.286,"end":82.47,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"PA","start":83.17,"end":84.168,"words":[{"word":"Por","start":83.17,"end":83.391,"brand":false},{"word":"fora,","start":83.46,"end":83.855,"brand":false},{"word":"é","start":83.89,"end":83.936,"brand":false},{"word":"só","start":84.006,"end":84.134,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"PA","start":84.168,"end":85.584,"words":[{"word":"uma","start":84.168,"end":84.285,"brand":false},{"word":"caixinha","start":84.319,"end":84.807,"brand":false},{"word":"piscando","start":84.853,"end":85.248,"brand":false},{"word":"luz","start":85.295,"end":85.504,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"PA","start":85.608,"end":87.21,"words":[{"word":"verde","start":85.608,"end":85.91,"brand":true},{"word":"na","start":85.956,"end":86.014,"brand":false},{"word":"estante;","start":86.049,"end":86.583,"brand":false},{"word":"por","start":86.99,"end":87.152,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"PA","start":87.21,"end":88.557,"words":[{"word":"dentro,","start":87.21,"end":87.64,"brand":false},{"word":"é","start":87.86,"end":87.93,"brand":false},{"word":"uma","start":87.977,"end":88.104,"brand":false},{"word":"corrida","start":88.151,"end":88.522,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"PA","start":88.557,"end":89.869,"words":[{"word":"de","start":88.557,"end":88.603,"brand":false},{"word":"obstáculos","start":88.627,"end":89.172,"brand":false},{"word":"desviando","start":89.219,"end":89.695,"brand":false},{"word":"de","start":89.753,"end":89.846,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"PA","start":89.869,"end":92.492,"words":[{"word":"espelhos,","start":89.869,"end":90.484,"brand":false},{"word":"canos","start":90.554,"end":90.925,"brand":false},{"word":"e","start":90.984,"end":91.007,"brand":false},{"word":"micro-ondas!","start":91.053,"end":92.412,"brand":true}]},{"frameId":"frame-06-raio-x-wifi","plano":"M","start":92.523,"end":93.951,"words":[{"word":"Pois","start":92.523,"end":92.86,"brand":false},{"word":"é,","start":92.929,"end":93.231,"brand":false},{"word":"o","start":93.533,"end":93.603,"brand":false},{"word":"mundo","start":93.672,"end":93.928,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"M","start":93.951,"end":94.926,"words":[{"word":"é","start":93.951,"end":93.974,"brand":false},{"word":"mais","start":94.044,"end":94.276,"brand":false},{"word":"curioso","start":94.334,"end":94.787,"brand":true},{"word":"do","start":94.822,"end":94.88,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"M","start":94.926,"end":96.33,"words":[{"word":"que","start":94.926,"end":95.008,"brand":false},{"word":"parece!","start":95.042,"end":95.623,"brand":false},{"word":"Se","start":95.878,"end":96.006,"brand":false},{"word":"você","start":96.052,"end":96.25,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"M","start":96.331,"end":97.62,"words":[{"word":"também","start":96.331,"end":96.691,"brand":false},{"word":"tinha","start":96.714,"end":96.946,"brand":false},{"word":"raiva","start":97.016,"end":97.318,"brand":false},{"word":"dessa","start":97.364,"end":97.562,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"M","start":97.62,"end":99.094,"words":[{"word":"bolinha","start":97.62,"end":97.922,"brand":false},{"word":"girando,","start":97.98,"end":98.491,"brand":false},{"word":"segue","start":98.688,"end":99.001,"brand":false},{"word":"o","start":99.025,"end":99.048,"brand":false}]},{"frameId":"frame-06-raio-x-wifi","plano":"M","start":99.094,"end":100.173,"words":[{"word":"Curiorisando!","start":99.094,"end":100.093,"brand":true}]}];
+      var DURACAO = 100.88;
+      var pill = document.getElementById('caption-pill');
+      var indiceGrupoAtual = -1;
+      var spansPalavras = [];
+
+      function montarGrupo(idx) {
+        if (idx === indiceGrupoAtual) return;
+        indiceGrupoAtual = idx;
+        spansPalavras = [];
+        if (idx < 0 || idx >= GROUPS.length) {
+          pill.style.opacity = '0';
+          pill.innerHTML = '';
+          return;
+        }
+        var g = GROUPS[idx];
+        pill.innerHTML = '';
+        for (var i = 0; i < g.words.length; i++) {
+          var w = g.words[i];
+          var span = document.createElement('span');
+          span.className = 'cap-word' + (w.brand ? ' cap-brand' : '');
+          span.textContent = w.word;
+          pill.appendChild(span);
+          spansPalavras.push(span);
+        }
+        pill.style.opacity = '1';
+      }
+
+      function renderizarLegenda(t) {
+        var idx = -1;
+        for (var i = 0; i < GROUPS.length; i++) {
+          if (t >= GROUPS[i].start && t <= GROUPS[i].end) {
+            idx = i;
+            break;
+          }
+        }
+        montarGrupo(idx);
+        if (idx < 0) return;
+        var g = GROUPS[idx];
+        for (var j = 0; j < g.words.length; j++) {
+          var w = g.words[j];
+          var sp = spansPalavras[j];
+          if (!sp) continue;
+          sp.classList.remove('is-active', 'is-spoken');
+          if (t >= w.start && t <= w.end + 0.04) {
+            sp.classList.add('is-active');
+          } else if (t > w.end + 0.04) {
+            sp.classList.add('is-spoken');
+          }
+        }
+      }
+
+      var tl = gsap.timeline({ paused: true });
+      var proxy = { t: 0 };
+      tl.to(proxy, {
+        t: DURACAO,
+        duration: DURACAO,
+        ease: 'none',
+        onUpdate: function () {
+          renderizarLegenda(proxy.t);
+        }
+      }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['captions'] = tl;
+
+      window.addEventListener('hf-seek', function (ev) {
+        if (ev && ev.detail && typeof ev.detail.time === 'number') {
+          renderizarLegenda(ev.detail.time);
+        }
+      });
+
+      renderizarLegenda(0);
+    })();
+  </script>
+</template>

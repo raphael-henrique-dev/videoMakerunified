@@ -1,0 +1,145 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f1-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f1-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f1-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f1-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f1-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f1-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f1-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f1-title-accent { color:#38bdf8; }
+    .f1-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f1-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f1-banner-text { font-size:20px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f1-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f1-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 62% 30%, #10264d 0%, #08142a 55%, #050a14 100%); }
+    #f1-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f1-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f1-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f1-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f1-root" data-composition-id="frame-01-dia-1" data-width="1080" data-height="1920" data-start="0" data-duration="12.52">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f1-cena" class="m2-cena"></div>
+    <div id="f1-mascote" class="m2-mascote"></div>
+    <div id="f1-hud" class="m2-hud"></div>
+
+    <div class="f1-ui-layer">
+      <div id="f1-topbar" class="f1-topbar">
+        <span class="f1-kicker">EXPERIMENTO MENTAL // DIA 1</span>
+        <span class="f1-badge">DIA 1</span>
+      </div>
+      <div id="f1-header" class="f1-header-card">
+        <h1 class="f1-title">Dia 1: O <span class="f1-title-accent">Último Ruído</span></h1>
+        <p class="f1-subtitle">As luzes ainda brilham, as máquinas ainda rodam — mas ninguém mais está no comando.</p>
+      </div>
+      <div id="f1-banner" class="f1-banner" style="opacity: 0;">
+        <span class="f1-banner-text">AS MÁQUINAS NÃO SABEM QUE NINGUÉM MAIS ESTÁ NO COMANDO</span>
+        <span class="f1-banner-pill">DIA 1</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 12.52;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f1-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f1-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f1-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 8.6);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2, mixCor = M.mixCor;
+        
+        var predios = [
+          { x: 320, w: 110, h: 250 }, { x: 445, w: 95, h: 330 }, { x: 555, w: 120, h: 290 },
+          { x: 690, w: 105, h: 380 }, { x: 810, w: 120, h: 300 }, { x: 945, w: 90, h: 250 }
+        ];
+        var janelas = [];
+        var buildSvg = '';
+        predios.forEach(function (b, bi) {
+          buildSvg += T('rect', { x: b.x, y: 520 - b.h, width: b.w, height: b.h, fill: 'url(#s1-buildGrad)', stroke: '#27406b', 'stroke-width': 2, rx: 4 });
+          if (bi === 3) buildSvg += T('line', { x1: b.x + b.w / 2, y1: 520 - b.h, x2: b.x + b.w / 2, y2: 520 - b.h - 34, stroke: '#64748b', 'stroke-width': 3 });
+          var cols = Math.floor((b.w - 20) / 26);
+          var rows = Math.floor((b.h - 30) / 34);
+          for (var r = 0; r < rows; r++) {
+            for (var c = 0; c < cols; c++) {
+              var wid = 's1-j' + bi + '-' + r + '-' + c;
+              buildSvg += T('rect', { id: wid, x: b.x + 12 + c * 26, y: 520 - b.h + 16 + r * 34, width: 14, height: 18, rx: 2, fill: '#facc15', 'fill-opacity': 0.9 });
+              janelas.push(wid);
+            }
+          }
+        });
+        var estrelas = '';
+        for (var si = 0; si < 26; si++) {
+          estrelas += T('circle', { cx: f2(300 + M.ruido(si * 3.1) * 720), cy: f2(20 + M.ruido(si * 7.7) * 220), r: f2(1.2 + M.ruido(si * 2.3) * 1.6), fill: '#e2e8f0', 'fill-opacity': f2(0.35 + M.ruido(si * 5.1) * 0.5) });
+        }
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s1-skyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1730"/><stop offset="1" stop-color="#050a14"/></linearGradient>' +
+          '<linearGradient id="s1-buildGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#152c4d"/><stop offset="1" stop-color="#0a172b"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s1-skyGrad)' }) +
+          estrelas +
+          T('circle', { cx: 880, cy: 92, r: 58, fill: '#e2e8f0', 'fill-opacity': 0.10 }) +
+          T('circle', { cx: 880, cy: 92, r: 40, fill: '#e2e8f0', 'fill-opacity': 0.92 }) +
+          buildSvg +
+          T('rect', { x: 0, y: 520, width: 1080, height: 110, fill: '#0b1220' }) +
+          T('line', { x1: 300, y1: 575, x2: 1000, y2: 575, stroke: '#334155', 'stroke-width': 5, 'stroke-dasharray': '26 22' }) +
+          G({ id: 's1-semaforo' },
+            T('rect', { x: 330, y: 430, width: 10, height: 100, fill: '#475569' }) +
+            T('rect', { x: 314, y: 392, width: 42, height: 88, rx: 8, fill: '#0b1220', stroke: '#475569', 'stroke-width': 3 }) +
+            T('circle', { id: 's1-luzR', cx: 335, cy: 414, r: 11, fill: '#ef4444' }) +
+            T('circle', { id: 's1-luzA', cx: 335, cy: 436, r: 11, fill: '#334155' }) +
+            T('circle', { id: 's1-luzV', cx: 335, cy: 458, r: 11, fill: '#334155' })) +
+          T('path', { id: 's1-silencio', d: 'M300 610 L470 610 L480 600 L492 620 L504 610 L700 610 L712 604 L724 616 L736 610 L1000 610', fill: 'none', stroke: '#38bdf8', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0.9 }) +
+          G({ id: 's1-fantasma', opacity: 0.7 },
+            T('circle', { cx: 790, cy: 455, r: 13, fill: '#cbd5e1' }) +
+            T('rect', { x: 775, y: 470, width: 30, height: 52, rx: 12, fill: '#94a3b8' }) +
+            T('rect', { x: 779, y: 518, width: 9, height: 22, rx: 4, fill: '#64748b' }) +
+            T('rect', { x: 793, y: 518, width: 9, height: 22, rx: 4, fill: '#64748b' }))
+        );
+        M.montar('#f1-cena', svg);
+        var cena = M.pegar('#f1-cena');
+        var jEls = janelas.map(function (jid) { return M.pegar(cena, '#' + jid); });
+        var silencio = M.pegar(cena, '#s1-silencio');
+        var fantasma = M.pegar(cena, '#s1-fantasma');
+        var luzR = M.pegar(cena, '#s1-luzR');
+        var boy = M.mascote('#f1-mascote');
+        var hud = M.medidorBarra('#f1-hud', { rotulo: 'PESSOAS NO PLANETA', unidade: 'BI', max: 8, cor: '#38bdf8', decimais: 1 });
+        
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.8, 7.0));
+          for (var i = 0; i < jEls.length; i++) {
+            var apaga = faixa(t, 1.2 + (i % 9) * 0.42, 2.1 + (i % 9) * 0.42);
+            var on = 1 - suave(apaga);
+            jEls[i].setAttribute('fill-opacity', f2(0.12 + 0.78 * on));
+            jEls[i].setAttribute('fill', on > 0.5 ? '#facc15' : '#334155');
+          }
+          silencio.setAttribute('opacity', f2(0.9 * (1 - suave(faixa(t, 4.5, 6.5)))));
+          fantasma.setAttribute('opacity', f2(0.7 * (1 - suave(faixa(t, 1.5, 4.0)))));
+          luzR.setAttribute('fill', t > 5.5 ? '#334155' : '#ef4444');
+          hud.atualizar(8 * (1 - u), u > 0.92 ? 'ZERO PESSOAS' : 'POPULAÇÃO CAINDO', u > 0.92 ? '#ef4444' : '#38bdf8');
+          boy.atualizar(t, og, {
+            humor: t < 2.2 ? 'surpreso' : (t > 6.0 ? 'triste' : 'neutro'),
+            bracoD: t < 3 ? 120 : 30,
+            bracoE: 8,
+            olhar: [6, -10],
+            inclinar: t > 6 ? 4 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 0.00 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-01-dia-1'] = tl;
+    })();
+  </script>
+</template>

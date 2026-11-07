@@ -1,0 +1,156 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #captions-comp {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .caption-bar {
+      position: absolute;
+      left: 64px;
+      right: 64px;
+      top: 1350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .caption-pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px 14px;
+      padding: 18px 30px;
+      background: rgba(6, 11, 22, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.32);
+      border-radius: 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65);
+      min-height: 76px;
+      max-width: 940px;
+    }
+
+    .cap-word {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #94a3b8;
+    }
+
+    .cap-word.is-spoken {
+      color: #f8fafc;
+    }
+
+    .cap-word.is-active {
+      color: #38bdf8;
+      text-shadow: 0 0 22px rgba(56, 189, 248, 0.55);
+    }
+
+    .cap-word.cap-brand.is-spoken {
+      color: #fbbf24;
+    }
+
+    .cap-word.cap-brand.is-active {
+      color: #facc15;
+      text-shadow: 0 0 24px rgba(250, 204, 21, 0.65);
+    }
+  </style>
+
+  <div id="captions-comp" data-composition-id="captions" data-width="1080" data-height="1920" data-start="0" data-duration="90.88">
+    <div class="caption-bar">
+      <div id="caption-pill" class="caption-pill" style="opacity: 0;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var GROUPS = [{"frameId":"frame-01-apocalipse-de-inseto","plano":"gancho","start":0.12,"end":1.664,"words":[{"word":"O","start":0.12,"end":0.213,"brand":false},{"word":"apocalipse","start":0.283,"end":0.886,"brand":false},{"word":"zumbi","start":0.956,"end":1.362,"brand":true},{"word":"já","start":1.467,"end":1.606,"brand":false}]},{"frameId":"frame-01-apocalipse-de-inseto","plano":"gancho","start":1.664,"end":3.29,"words":[{"word":"começou.","start":1.664,"end":2.291,"brand":false},{"word":"Só","start":2.848,"end":2.999,"brand":false},{"word":"que","start":3.057,"end":3.127,"brand":false},{"word":"ele","start":3.15,"end":3.255,"brand":false}]},{"frameId":"frame-01-apocalipse-de-inseto","plano":"gancho","start":3.29,"end":4.253,"words":[{"word":"tem","start":3.29,"end":3.406,"brand":false},{"word":"seis","start":3.475,"end":3.696,"brand":true},{"word":"patas","start":3.777,"end":4.114,"brand":true},{"word":"e","start":4.172,"end":4.195,"brand":false}]},{"frameId":"frame-01-apocalipse-de-inseto","plano":"gancho","start":4.253,"end":5.054,"words":[{"word":"cabe","start":4.253,"end":4.474,"brand":false},{"word":"na","start":4.509,"end":4.578,"brand":false},{"word":"palma","start":4.648,"end":4.892,"brand":false},{"word":"da","start":4.938,"end":5.008,"brand":false}]},{"frameId":"frame-01-apocalipse-de-inseto","plano":"gancho","start":5.054,"end":6.191,"words":[{"word":"sua","start":5.054,"end":5.205,"brand":false},{"word":"mão.","start":5.252,"end":6.111,"brand":false}]},{"frameId":"frame-01-apocalipse-de-inseto","plano":"quebra","start":6.224,"end":7.571,"words":[{"word":"Enquanto","start":6.224,"end":6.642,"brand":false},{"word":"o","start":6.665,"end":6.688,"brand":false},{"word":"cinema","start":6.723,"end":7.06,"brand":false},{"word":"imagina","start":7.106,"end":7.524,"brand":false}]},{"frameId":"frame-01-apocalipse-de-inseto","plano":"quebra","start":7.571,"end":9.208,"words":[{"word":"hordas","start":7.571,"end":7.965,"brand":false},{"word":"nas","start":8.024,"end":8.163,"brand":false},{"word":"ruas,","start":8.209,"end":8.616,"brand":false},{"word":"existe","start":8.836,"end":9.161,"brand":false}]},{"frameId":"frame-01-apocalipse-de-inseto","plano":"quebra","start":9.208,"end":10.195,"words":[{"word":"um","start":9.208,"end":9.277,"brand":false},{"word":"fungo","start":9.347,"end":9.707,"brand":true},{"word":"que","start":9.753,"end":9.835,"brand":false},{"word":"assume","start":9.87,"end":10.16,"brand":false}]},{"frameId":"frame-01-apocalipse-de-inseto","plano":"quebra","start":10.195,"end":10.949,"words":[{"word":"o","start":10.195,"end":10.241,"brand":false},{"word":"cérebro","start":10.287,"end":10.636,"brand":false},{"word":"de","start":10.682,"end":10.74,"brand":false},{"word":"uma","start":10.775,"end":10.891,"brand":false}]},{"frameId":"frame-01-apocalipse-de-inseto","plano":"quebra","start":10.949,"end":12.145,"words":[{"word":"formiga","start":10.949,"end":11.448,"brand":true},{"word":"e","start":11.588,"end":11.704,"brand":false},{"word":"passa","start":11.774,"end":12.041,"brand":false},{"word":"a","start":12.064,"end":12.087,"brand":false}]},{"frameId":"frame-01-apocalipse-de-inseto","plano":"quebra","start":12.145,"end":14.199,"words":[{"word":"comandar","start":12.145,"end":12.551,"brand":false},{"word":"o","start":12.598,"end":12.621,"brand":false},{"word":"corpo","start":12.656,"end":12.923,"brand":false},{"word":"dela.","start":12.981,"end":14.119,"brand":false}]},{"frameId":"frame-02-corpo-sem-combustivel","plano":"falha","start":14.57,"end":15.789,"words":[{"word":"A","start":14.57,"end":14.663,"brand":false},{"word":"primeira","start":14.733,"end":15.011,"brand":false},{"word":"notícia","start":15.058,"end":15.418,"brand":false},{"word":"ruim","start":15.476,"end":15.743,"brand":false}]},{"frameId":"frame-02-corpo-sem-combustivel","plano":"falha","start":15.789,"end":17.378,"words":[{"word":"pro","start":15.789,"end":15.882,"brand":false},{"word":"apocalipse","start":15.905,"end":16.486,"brand":false},{"word":"é","start":16.532,"end":16.555,"brand":false},{"word":"simples:","start":16.66,"end":17.298,"brand":false}]},{"frameId":"frame-02-corpo-sem-combustivel","plano":"falha","start":17.6,"end":18.575,"words":[{"word":"um","start":17.6,"end":17.681,"brand":false},{"word":"corpo","start":17.728,"end":17.995,"brand":false},{"word":"morto","start":18.053,"end":18.366,"brand":true},{"word":"não","start":18.425,"end":18.529,"brand":false}]},{"frameId":"frame-02-corpo-sem-combustivel","plano":"falha","start":18.575,"end":19.991,"words":[{"word":"tem","start":18.575,"end":18.703,"brand":false},{"word":"combustível.","start":18.75,"end":19.911,"brand":true}]},{"frameId":"frame-02-corpo-sem-combustivel","plano":"mecanismo","start":20.01,"end":21.657,"words":[{"word":"Sem","start":20.01,"end":20.219,"brand":false},{"word":"energia","start":20.277,"end":20.707,"brand":false},{"word":"nas","start":20.753,"end":20.892,"brand":false},{"word":"células,","start":20.927,"end":21.577,"brand":false}]},{"frameId":"frame-02-corpo-sem-combustivel","plano":"mecanismo","start":21.74,"end":22.831,"words":[{"word":"o","start":21.74,"end":21.81,"brand":false},{"word":"músculo","start":21.868,"end":22.216,"brand":true},{"word":"trava","start":22.274,"end":22.657,"brand":false},{"word":"e","start":22.704,"end":22.773,"brand":false}]},{"frameId":"frame-02-corpo-sem-combustivel","plano":"mecanismo","start":22.831,"end":24.631,"words":[{"word":"o","start":22.831,"end":22.866,"brand":false},{"word":"corpo","start":22.924,"end":23.191,"brand":false},{"word":"esfria.","start":23.214,"end":23.748,"brand":true},{"word":"Não","start":24.399,"end":24.584,"brand":false}]},{"frameId":"frame-02-corpo-sem-combustivel","plano":"mecanismo","start":24.631,"end":25.838,"words":[{"word":"sobra","start":24.631,"end":24.921,"brand":false},{"word":"força","start":24.991,"end":25.374,"brand":false},{"word":"nem","start":25.49,"end":25.641,"brand":false},{"word":"pra","start":25.687,"end":25.792,"brand":false}]},{"frameId":"frame-02-corpo-sem-combustivel","plano":"mecanismo","start":25.838,"end":26.777,"words":[{"word":"fechar","start":25.838,"end":26.14,"brand":false},{"word":"a","start":26.187,"end":26.21,"brand":false},{"word":"mão.","start":26.268,"end":26.697,"brand":false}]},{"frameId":"frame-03-a-conta-nao-fecha","plano":"decomposicao","start":27.15,"end":28.253,"words":[{"word":"E","start":27.15,"end":27.243,"brand":false},{"word":"tem","start":27.313,"end":27.452,"brand":false},{"word":"mais:","start":27.475,"end":27.916,"brand":false},{"word":"em","start":28.079,"end":28.183,"brand":false}]},{"frameId":"frame-03-a-conta-nao-fecha","plano":"decomposicao","start":28.253,"end":29.844,"words":[{"word":"poucos","start":28.253,"end":28.578,"brand":false},{"word":"dias,","start":28.624,"end":29.019,"brand":false},{"word":"bactérias","start":29.182,"end":29.693,"brand":true},{"word":"e","start":29.751,"end":29.774,"brand":false}]},{"frameId":"frame-03-a-conta-nao-fecha","plano":"decomposicao","start":29.844,"end":31.306,"words":[{"word":"fungos","start":29.844,"end":30.169,"brand":true},{"word":"começam","start":30.227,"end":30.656,"brand":false},{"word":"a","start":30.714,"end":30.737,"brand":false},{"word":"devolver","start":30.807,"end":31.26,"brand":false}]},{"frameId":"frame-03-a-conta-nao-fecha","plano":"decomposicao","start":31.306,"end":33.221,"words":[{"word":"o","start":31.306,"end":31.33,"brand":false},{"word":"corpo","start":31.388,"end":31.655,"brand":false},{"word":"pra","start":31.69,"end":31.806,"brand":false},{"word":"natureza.","start":31.852,"end":33.141,"brand":false}]},{"frameId":"frame-03-a-conta-nao-fecha","plano":"conta","start":33.252,"end":34.911,"words":[{"word":"Um","start":33.252,"end":33.38,"brand":false},{"word":"zumbi","start":33.426,"end":33.728,"brand":false},{"word":"precisaria","start":33.786,"end":34.297,"brand":false},{"word":"comer,","start":34.355,"end":34.831,"brand":true}]},{"frameId":"frame-03-a-conta-nao-fecha","plano":"conta","start":34.97,"end":37.362,"words":[{"word":"digerir","start":34.97,"end":35.47,"brand":true},{"word":"e","start":35.586,"end":35.725,"brand":false},{"word":"cicatrizar.","start":35.771,"end":36.596,"brand":true},{"word":"Só","start":37.153,"end":37.304,"brand":false}]},{"frameId":"frame-03-a-conta-nao-fecha","plano":"conta","start":37.362,"end":38,"words":[{"word":"que","start":37.362,"end":37.432,"brand":false},{"word":"um","start":37.466,"end":37.513,"brand":false},{"word":"corpo","start":37.583,"end":37.861,"brand":false},{"word":"em","start":37.884,"end":37.942,"brand":false}]},{"frameId":"frame-03-a-conta-nao-fecha","plano":"conta","start":38,"end":39.405,"words":[{"word":"decomposição","start":38,"end":38.79,"brand":false},{"word":"não","start":38.836,"end":38.941,"brand":false},{"word":"faz","start":38.987,"end":39.161,"brand":false},{"word":"nem","start":39.22,"end":39.336,"brand":false}]},{"frameId":"frame-03-a-conta-nao-fecha","plano":"conta","start":39.405,"end":41.087,"words":[{"word":"uma","start":39.405,"end":39.545,"brand":false},{"word":"dessas","start":39.591,"end":39.87,"brand":false},{"word":"três","start":39.916,"end":40.137,"brand":false},{"word":"coisas.","start":40.195,"end":41.007,"brand":false}]},{"frameId":"frame-04-zumbis-reais","plano":"virada","start":41.47,"end":42.468,"words":[{"word":"Mas","start":41.47,"end":41.679,"brand":false},{"word":"a","start":41.725,"end":41.749,"brand":false},{"word":"natureza","start":41.795,"end":42.248,"brand":false},{"word":"já","start":42.294,"end":42.41,"brand":false}]},{"frameId":"frame-04-zumbis-reais","plano":"virada","start":42.468,"end":43.768,"words":[{"word":"testou","start":42.468,"end":42.863,"brand":false},{"word":"esse","start":42.91,"end":43.049,"brand":false},{"word":"roteiro","start":43.095,"end":43.525,"brand":false},{"word":"—","start":43.641,"end":43.688,"brand":false}]},{"frameId":"frame-04-zumbis-reais","plano":"virada","start":43.943,"end":44.999,"words":[{"word":"e","start":43.943,"end":44.047,"brand":false},{"word":"aprovou","start":44.117,"end":44.535,"brand":false},{"word":"só","start":44.616,"end":44.79,"brand":true},{"word":"no","start":44.86,"end":44.941,"brand":false}]},{"frameId":"frame-04-zumbis-reais","plano":"virada","start":44.999,"end":46.844,"words":[{"word":"mundo","start":44.999,"end":45.232,"brand":false},{"word":"dos","start":45.266,"end":45.394,"brand":false},{"word":"insetos.","start":45.464,"end":46.764,"brand":true}]},{"frameId":"frame-04-zumbis-reais","plano":"exemplos","start":46.878,"end":48.619,"words":[{"word":"O","start":46.878,"end":47.029,"brand":false},{"word":"fungo","start":47.168,"end":47.505,"brand":false},{"word":"cordyceps,","start":47.551,"end":48.318,"brand":true},{"word":"o","start":48.48,"end":48.55,"brand":false}]},{"frameId":"frame-04-zumbis-reais","plano":"exemplos","start":48.619,"end":49.49,"words":[{"word":"vírus","start":48.619,"end":48.863,"brand":false},{"word":"da","start":48.91,"end":48.991,"brand":false},{"word":"raiva","start":49.061,"end":49.386,"brand":true},{"word":"e","start":49.421,"end":49.455,"brand":false}]},{"frameId":"frame-04-zumbis-reais","plano":"exemplos","start":49.49,"end":51.301,"words":[{"word":"o","start":49.49,"end":49.513,"brand":false},{"word":"toxoplasma","start":49.572,"end":50.373,"brand":true},{"word":"conseguem","start":50.535,"end":50.988,"brand":false},{"word":"mudar","start":51.011,"end":51.278,"brand":false}]},{"frameId":"frame-04-zumbis-reais","plano":"exemplos","start":51.301,"end":52.602,"words":[{"word":"o","start":51.301,"end":51.325,"brand":false},{"word":"comportamento","start":51.359,"end":51.94,"brand":false},{"word":"do","start":51.986,"end":52.044,"brand":false},{"word":"hospedeiro","start":52.068,"end":52.555,"brand":false}]},{"frameId":"frame-04-zumbis-reais","plano":"exemplos","start":52.602,"end":54.574,"words":[{"word":"pra","start":52.602,"end":52.729,"brand":false},{"word":"se","start":52.787,"end":52.892,"brand":false},{"word":"espalhar","start":52.938,"end":53.333,"brand":false},{"word":"melhor.","start":53.391,"end":54.494,"brand":false}]},{"frameId":"frame-05-tres-barreiras","plano":"barreiras","start":54.95,"end":56.528,"words":[{"word":"Pra","start":54.95,"end":55.171,"brand":false},{"word":"controlar","start":55.229,"end":55.728,"brand":false},{"word":"um","start":55.809,"end":55.89,"brand":false},{"word":"humano,","start":55.937,"end":56.448,"brand":false}]},{"frameId":"frame-05-tres-barreiras","plano":"barreiras","start":56.61,"end":57.76,"words":[{"word":"o","start":56.61,"end":56.68,"brand":false},{"word":"parasita","start":56.738,"end":57.249,"brand":false},{"word":"teria","start":57.295,"end":57.551,"brand":false},{"word":"que","start":57.609,"end":57.702,"brand":false}]},{"frameId":"frame-05-tres-barreiras","plano":"barreiras","start":57.76,"end":59.152,"words":[{"word":"vencer","start":57.76,"end":58.178,"brand":false},{"word":"o","start":58.212,"end":58.236,"brand":false},{"word":"nosso","start":58.294,"end":58.596,"brand":false},{"word":"calor,","start":58.63,"end":59.072,"brand":true}]},{"frameId":"frame-05-tres-barreiras","plano":"barreiras","start":59.431,"end":61.265,"words":[{"word":"o","start":59.431,"end":59.49,"brand":false},{"word":"nosso","start":59.559,"end":59.826,"brand":false},{"word":"sistema","start":59.873,"end":60.279,"brand":true},{"word":"imunológico","start":60.349,"end":61.185,"brand":true}]},{"frameId":"frame-05-tres-barreiras","plano":"barreiras","start":61.382,"end":62.52,"words":[{"word":"e","start":61.382,"end":61.544,"brand":false},{"word":"um","start":61.603,"end":61.684,"brand":false},{"word":"cérebro","start":61.742,"end":62.148,"brand":true},{"word":"caro","start":62.218,"end":62.473,"brand":false}]},{"frameId":"frame-05-tres-barreiras","plano":"barreiras","start":62.52,"end":63.482,"words":[{"word":"demais.","start":62.52,"end":63.402,"brand":false}]},{"frameId":"frame-05-tres-barreiras","plano":"limite","start":63.519,"end":64.204,"words":[{"word":"É","start":63.519,"end":63.623,"brand":false},{"word":"por","start":63.693,"end":63.844,"brand":false},{"word":"isso","start":63.891,"end":64.041,"brand":false},{"word":"que,","start":64.088,"end":64.181,"brand":false}]},{"frameId":"frame-05-tres-barreiras","plano":"limite","start":64.204,"end":65.956,"words":[{"word":"na","start":64.204,"end":64.285,"brand":false},{"word":"prática,","start":64.343,"end":64.854,"brand":false},{"word":"esses","start":65.052,"end":65.307,"brand":false},{"word":"micróbios","start":65.365,"end":65.876,"brand":false}]},{"frameId":"frame-05-tres-barreiras","plano":"limite","start":65.98,"end":66.966,"words":[{"word":"mexem","start":65.98,"end":66.317,"brand":false},{"word":"com","start":66.375,"end":66.503,"brand":false},{"word":"o","start":66.526,"end":66.549,"brand":false},{"word":"medo","start":66.584,"end":66.886,"brand":true}]},{"frameId":"frame-05-tres-barreiras","plano":"limite","start":66.99,"end":67.918,"words":[{"word":"e","start":66.99,"end":67.095,"brand":false},{"word":"com","start":67.165,"end":67.315,"brand":false},{"word":"o","start":67.35,"end":67.42,"brand":false},{"word":"humor","start":67.478,"end":67.838,"brand":true}]},{"frameId":"frame-05-tres-barreiras","plano":"limite","start":68,"end":69.161,"words":[{"word":"—","start":68,"end":68.059,"brand":false},{"word":"mas","start":68.198,"end":68.36,"brand":false},{"word":"não","start":68.418,"end":68.546,"brand":false},{"word":"transformam","start":68.581,"end":69.127,"brand":false}]},{"frameId":"frame-05-tres-barreiras","plano":"limite","start":69.161,"end":70.253,"words":[{"word":"ninguém","start":69.161,"end":69.521,"brand":false},{"word":"em","start":69.556,"end":69.614,"brand":false},{"word":"caçador","start":69.661,"end":70.055,"brand":false},{"word":"de","start":70.125,"end":70.195,"brand":false}]},{"frameId":"frame-05-tres-barreiras","plano":"limite","start":70.253,"end":71.633,"words":[{"word":"gente.","start":70.253,"end":71.553,"brand":false}]},{"frameId":"frame-06-quantos-dias","plano":"virada_final","start":72.01,"end":73.309,"words":[{"word":"O","start":72.01,"end":72.091,"brand":false},{"word":"apocalipse","start":72.149,"end":72.707,"brand":false},{"word":"zumbi","start":72.776,"end":73.078,"brand":false},{"word":"de","start":73.136,"end":73.229,"brand":false}]},{"frameId":"frame-06-quantos-dias","plano":"virada_final","start":73.31,"end":75.423,"words":[{"word":"filme","start":73.31,"end":73.693,"brand":false},{"word":"não","start":73.833,"end":74.053,"brand":false},{"word":"vem.","start":74.1,"end":74.413,"brand":false},{"word":"Mas","start":75.168,"end":75.365,"brand":false}]},{"frameId":"frame-06-quantos-dias","plano":"virada_final","start":75.423,"end":76.48,"words":[{"word":"a","start":75.423,"end":75.447,"brand":false},{"word":"pergunta","start":75.493,"end":75.876,"brand":false},{"word":"que","start":75.923,"end":76.015,"brand":false},{"word":"fica","start":76.097,"end":76.422,"brand":false}]},{"frameId":"frame-06-quantos-dias","plano":"virada_final","start":76.48,"end":78.384,"words":[{"word":"é","start":76.48,"end":76.538,"brand":false},{"word":"outra:","start":76.642,"end":77.06,"brand":false},{"word":"você","start":77.467,"end":77.78,"brand":false},{"word":"aguentaria","start":77.838,"end":78.326,"brand":false}]},{"frameId":"frame-06-quantos-dias","plano":"virada_final","start":78.384,"end":80.112,"words":[{"word":"ficar","start":78.384,"end":78.674,"brand":false},{"word":"sem","start":78.744,"end":78.918,"brand":false},{"word":"energia,","start":78.976,"end":79.649,"brand":true},{"word":"sem","start":79.812,"end":80.032,"brand":false}]},{"frameId":"frame-06-quantos-dias","plano":"virada_final","start":80.114,"end":81.6,"words":[{"word":"água","start":80.114,"end":80.427,"brand":true},{"word":"e","start":80.729,"end":80.845,"brand":false},{"word":"sem","start":80.915,"end":81.101,"brand":false},{"word":"remédio","start":81.147,"end":81.553,"brand":true}]},{"frameId":"frame-06-quantos-dias","plano":"virada_final","start":81.6,"end":83.375,"words":[{"word":"por","start":81.6,"end":81.739,"brand":false},{"word":"quanto","start":81.797,"end":82.053,"brand":false},{"word":"tempo?","start":82.111,"end":83.295,"brand":false}]},{"frameId":"frame-06-quantos-dias","plano":"segue","start":83.407,"end":84.58,"words":[{"word":"Quantos","start":83.407,"end":83.79,"brand":false},{"word":"dias","start":83.837,"end":84.046,"brand":true},{"word":"você","start":84.104,"end":84.301,"brand":false},{"word":"acha","start":84.382,"end":84.545,"brand":false}]},{"frameId":"frame-06-quantos-dias","plano":"segue","start":84.58,"end":86.89,"words":[{"word":"que","start":84.58,"end":84.649,"brand":false},{"word":"conseguiria","start":84.696,"end":85.265,"brand":false},{"word":"sobreviver?","start":85.311,"end":86.031,"brand":false},{"word":"Siga","start":86.588,"end":86.844,"brand":false}]},{"frameId":"frame-06-quantos-dias","plano":"segue","start":86.89,"end":88.248,"words":[{"word":"o","start":86.89,"end":86.925,"brand":false},{"word":"Curiorisando","start":86.971,"end":87.714,"brand":true},{"word":"e","start":87.819,"end":87.923,"brand":false},{"word":"veja","start":87.993,"end":88.214,"brand":false}]},{"frameId":"frame-06-quantos-dias","plano":"segue","start":88.248,"end":89.524,"words":[{"word":"no","start":88.248,"end":88.318,"brand":false},{"word":"próximo","start":88.388,"end":88.806,"brand":false},{"word":"vídeo!","start":88.864,"end":89.444,"brand":false}]}];
+      var DURACAO = 90.88;
+      var pill = document.getElementById('caption-pill');
+      var indiceGrupoAtual = -1;
+      var spansPalavras = [];
+
+      function montarGrupo(idx) {
+        if (idx === indiceGrupoAtual) return;
+        indiceGrupoAtual = idx;
+        spansPalavras = [];
+        if (idx < 0 || idx >= GROUPS.length) {
+          pill.style.opacity = '0';
+          pill.innerHTML = '';
+          return;
+        }
+        var g = GROUPS[idx];
+        pill.innerHTML = '';
+        for (var i = 0; i < g.words.length; i++) {
+          var w = g.words[i];
+          var span = document.createElement('span');
+          span.className = 'cap-word' + (w.brand ? ' cap-brand' : '');
+          span.textContent = w.word;
+          pill.appendChild(span);
+          spansPalavras.push(span);
+        }
+        pill.style.opacity = '1';
+      }
+
+      function renderizarLegenda(t) {
+        var idx = -1;
+        for (var i = 0; i < GROUPS.length; i++) {
+          if (t >= GROUPS[i].start && t <= GROUPS[i].end) {
+            idx = i;
+            break;
+          }
+        }
+        montarGrupo(idx);
+        if (idx < 0) return;
+        var g = GROUPS[idx];
+        for (var j = 0; j < g.words.length; j++) {
+          var w = g.words[j];
+          var sp = spansPalavras[j];
+          if (!sp) continue;
+          sp.classList.remove('is-active', 'is-spoken');
+          if (t >= w.start && t <= w.end + 0.04) {
+            sp.classList.add('is-active');
+          } else if (t > w.end + 0.04) {
+            sp.classList.add('is-spoken');
+          }
+        }
+      }
+
+      var tl = gsap.timeline({ paused: true });
+      var proxy = { t: 0 };
+      tl.to(proxy, {
+        t: DURACAO,
+        duration: DURACAO,
+        ease: 'none',
+        onUpdate: function () {
+          renderizarLegenda(proxy.t);
+        }
+      }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['captions'] = tl;
+
+      window.addEventListener('hf-seek', function (ev) {
+        if (ev && ev.detail && typeof ev.detail.time === 'number') {
+          renderizarLegenda(ev.detail.time);
+        }
+      });
+
+      renderizarLegenda(0);
+    })();
+  </script>
+</template>

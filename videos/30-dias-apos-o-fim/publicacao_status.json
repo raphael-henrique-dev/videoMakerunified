@@ -1,0 +1,27 @@
+[
+  {
+    "slug": "/home/raphael/codigos/projetos_javascript/videoMakerunified-main/videos/30-dias-apos-o-fim",
+    "data_upload": "2026-11-07T14:44:25.729Z",
+    "agendado_para": null,
+    "plataformas": {
+      "youtube": {
+        "plataforma": "youtube",
+        "sucesso": true,
+        "id": "I7ncMN_wtM0",
+        "url": "https://youtube.com/shorts/I7ncMN_wtM0",
+        "privacidade": "private",
+        "agendado_para": null,
+        "status": "uploaded",
+        "data": "2026-11-07T14:44:30.867Z"
+      },
+      "tiktok": {
+        "plataforma": "tiktok",
+        "sucesso": true,
+        "publish_id": "v_inbox_file~v2.7705439974661081109",
+        "status": "PROCESSING_UPLOAD",
+        "privacidade": "SELF_ONLY",
+        "data": "2026-11-07T14:44:36.087Z"
+      }
+    }
+  }
+]

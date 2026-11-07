@@ -1,0 +1,344 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f4-root {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #030914;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f4-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .f4-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(3, 9, 20, 0.88) 0%,
+        rgba(3, 9, 20, 0.20) 26%,
+        rgba(3, 9, 20, 0.20) 66%,
+        rgba(3, 9, 20, 0.92) 100%
+      );
+    }
+
+    #f4-svg-leaders {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f4-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .f4-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 26px;
+      background: rgba(6, 12, 24, 0.86);
+      border: 1px solid rgba(56, 189, 248, 0.36);
+      border-radius: 14px;
+    }
+
+    .f4-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #38bdf8;
+    }
+
+    .f4-cap-tag {
+      font-size: 19px;
+      font-weight: 700;
+      color: #4ade80;
+      letter-spacing: 0.08em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .f4-header-card {
+      position: absolute;
+      top: 168px;
+      left: 68px;
+      right: 68px;
+      padding: 24px 34px;
+      background: rgba(6, 12, 24, 0.84);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 16px 16px 0;
+    }
+
+    .f4-title {
+      margin: 0 0 6px 0;
+      font-family: 'EB Garamond', serif;
+      font-size: 60px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+    }
+
+    .f4-title-accent {
+      color: #38bdf8;
+    }
+
+    .f4-subtitle {
+      margin: 0;
+      font-size: 22px;
+      color: #cbd5e1;
+    }
+
+    .f4-labels-col {
+      position: absolute;
+      top: 390px;
+      right: 68px;
+      width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .f4-layer-chip {
+      padding: 14px 20px;
+      background: rgba(6, 14, 28, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .f4-chip-name {
+      font-size: 21px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f4-chip-role {
+      font-size: 17px;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.06em;
+    }
+
+    .f4-cta-banner {
+      position: absolute;
+      top: 1140px;
+      left: 68px;
+      right: 68px;
+      padding: 26px 34px;
+      background: rgba(8, 18, 38, 0.94);
+      border: 2px solid #facc15;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .f4-cta-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .f4-cta-kicker {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #facc15;
+    }
+
+    .f4-cta-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 46px;
+      font-weight: 700;
+      color: #f8fafc;
+      line-height: 1.05;
+    }
+
+    .f4-cta-btn {
+      padding: 16px 28px;
+      background: #facc15;
+      color: #090d16;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      border-radius: 12px;
+    }
+  </style>
+
+  <div id="f4-root" data-composition-id="frame-04-vista-explodida" data-width="1080" data-height="1920" data-start="0" data-duration="11.43">
+    <div id="f4-stage-3d"></div>
+    <div class="f4-vignette"></div>
+
+    <svg id="f4-svg-leaders" viewBox="0 0 1080 1920" fill="none">
+      <g id="f4-leaders-group"></g>
+    </svg>
+
+    <div class="f4-ui-layer">
+      <div id="f4-topbar" class="f4-topbar">
+        <span class="f4-kicker">SÍNTESE DE ENGENHARIA // 7 CAMADAS</span>
+        <span class="f4-cap-tag">CAPACIDADE: 400 Tbps</span>
+      </div>
+
+      <div id="f4-header" class="f4-header-card">
+        <h1 class="f4-title">Anatomia em <span class="f4-title-accent">Vista Explodida</span></h1>
+        <p class="f4-subtitle">Da sílica microscópica no centro até a blindagem abissal de aço e polietileno</p>
+      </div>
+
+      <div id="f4-labels-col" class="f4-labels-col">
+        <div class="f4-layer-chip" id="f4-chip-6"><span class="f4-chip-name">1. Fibra de Sílica</span><span class="f4-chip-role">LASER 400T</span></div>
+        <div class="f4-layer-chip" id="f4-chip-5"><span class="f4-chip-name">2. Acrílico Primário</span><span class="f4-chip-role">ELÁSTICO</span></div>
+        <div class="f4-layer-chip" id="f4-chip-4"><span class="f4-chip-name">3. Buffer Tube + Gel</span><span class="f4-chip-role">FLUTUAÇÃO</span></div>
+        <div class="f4-layer-chip" id="f4-chip-3"><span class="f4-chip-name">4. Tubo Cobre 10kV</span><span class="f4-chip-role">ENERGIA DC</span></div>
+        <div class="f4-layer-chip" id="f4-chip-2"><span class="f4-chip-name">5. Barreira Alumínio</span><span class="f4-chip-role">HERMÉTICO</span></div>
+        <div class="f4-layer-chip" id="f4-chip-1"><span class="f4-chip-name">6. Fios de Aço (18x)</span><span class="f4-chip-role">TRAÇÃO</span></div>
+        <div class="f4-layer-chip" id="f4-chip-0"><span class="f4-chip-name">7. Jaqueta PEAD</span><span class="f4-chip-role">PROTEÇÃO</span></div>
+      </div>
+
+      <div id="f4-cta" class="f4-cta-banner" style="opacity: 0;">
+        <div class="f4-cta-left">
+          <span class="f4-cta-kicker">ENGENHARIA DO MUNDO REAL</span>
+          <span class="f4-cta-title">Segue o Curiorisando!</span>
+        </div>
+        <span class="f4-cta-btn">SEGUIR +</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 11.43;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }, 0.05);
+      tl.fromTo('#f4-header', { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out' }, 0.15);
+      tl.fromTo('.f4-layer-chip', { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.45, stagger: 0.08, ease: 'power3.out' }, 0.35);
+      tl.fromTo('#f4-cta', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'back.out(1.5)' }, 4.65);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f4-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'abismo'
+        });
+
+        var mar = M.criarFundoDoMar(THREE, palco, { abismo: true });
+        var pilha = M.criarPilhaExplodidaCabo(THREE);
+        pilha.grupo.position.set(-0.78, 2.05, 0.0);
+        pilha.grupo.scale.setScalar(0.88);
+        palco.cena.add(pilha.grupo);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.72 });
+        M.capaceteEspacial(menino, true);
+        menino.raiz.position.set(-1.38, 0.15, 0.35);
+        palco.cena.add(menino.raiz);
+
+        var svgGroup = document.getElementById('f4-leaders-group');
+        var yAlvosChips = [837, 767, 697, 627, 557, 487, 417]; // centros Y exatos dos 7 chips na direita
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          mar.animarAmbiente(t);
+          pilha.atualizar(t, 0.15);
+          M.resetPose(menino, t);
+
+          if (t < 4.55) {
+            M.humor(menino, 'orgulhoso');
+            M.apontar(menino, [-0.78, 2.05, 0], 'D');
+          } else {
+            M.comemorar(menino, t, 4.55, 7.8);
+            M.acenar(menino, t, 7.8, DUR, 'D');
+          }
+          M.olharCamera(menino, palco.camera, 0.75);
+
+          M.plano(
+            palco.camera,
+            t,
+            0,
+            DUR,
+            { pos: [0.0, 1.95, 6.1], alvo: [-0.15, 1.65, 0.0] },
+            { pos: [0.15, 1.90, 5.8], alvo: [-0.15, 1.65, 0.0] }
+          );
+
+          // Projeção 3D -> 2D determinística das 7 camadas para desenhar as leader lines SVG
+          if (svgGroup && t > 0.45) {
+            var opacidadeLinhas = Math.min(1, (t - 0.45) / 0.6);
+            var htmlSvg = '';
+            var vecTemp = new THREE.Vector3();
+            for (var i = 0; i < pilha.pecas.length; i++) {
+              pilha.pecas[i].grp.getWorldPosition(vecTemp);
+              var p2d = M.tela(THREE, vecTemp, palco.camera, 1080, 1920);
+              var yChip = yAlvosChips[i];
+              var xChip = 566;
+              var xMeio = Math.round((p2d.x + xChip) * 0.56);
+              htmlSvg +=
+                '<circle cx="' + p2d.x.toFixed(1) + '" cy="' + p2d.y.toFixed(1) + '" r="5" fill="#38bdf8" fill-opacity="' + opacidadeLinhas.toFixed(2) + '"/>' +
+                '<polyline points="' +
+                p2d.x.toFixed(1) + ',' + p2d.y.toFixed(1) + ' ' +
+                xMeio + ',' + yChip + ' ' +
+                xChip + ',' + yChip +
+                '" stroke="#38bdf8" stroke-width="2" stroke-dasharray="5 5" stroke-opacity="' + (opacidadeLinhas * 0.82).toFixed(2) + '" fill="none"/>';
+            }
+            svgGroup.innerHTML = htmlSvg;
+          }
+        }, { duracao: DUR, offsetGlobal: 30.41 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-vista-explodida'] = tl;
+    })();
+  </script>
+</template>

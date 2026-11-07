@@ -1,0 +1,105 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f4-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f4-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f4-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(239,68,68,0.38); border-radius:14px; }
+    .f4-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#fca5a5; text-transform:uppercase; }
+    .f4-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f4-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #ef4444; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f4-title { font-family:'EB Garamond',serif; font-size:58px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f4-title-accent { color:#ef4444; }
+    .f4-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    #f4-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 50% 35%, #2e1a1a 0%, #08111f 55%, #050a14 100%); }
+    #f4-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#1a2332 0%,#08111f 100%); border-top:2px solid rgba(239,68,68,0.22); }
+    #f4-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f4-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f4-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(239,68,68,0.32); border-radius:22px; }
+    .f4-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(28,8,14,0.92); border:1.5px solid rgba(239,68,68,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f4-banner-text { font-size:20px; font-weight:700; color:#fca5a5; letter-spacing:.04em; }
+    .f4-banner-pill { padding:6px 16px; background:#dc2626; color:#ffffff; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+  </style>
+
+  <div id="f4-root" data-composition-id="frame-04-rua-rio" data-width="1080" data-height="1920" data-start="42.00" data-duration="9.82">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f4-cena" class="m2-cena"></div>
+    <div id="f4-mascote" class="m2-mascote"></div>
+    <div id="f4-hud" class="m2-hud"></div>
+
+    <div class="f4-ui-layer">
+      <div id="f4-topbar" class="f4-topbar">
+        <span class="f4-kicker">FALHA 03 // A RUA VIRA RIO</span>
+        <span class="f4-badge">10 MIN</span>
+      </div>
+      <div id="f4-header" class="f4-header-card">
+        <h1 class="f4-title">Enxurrada <span class="f4-title-accent">Sem Freio</span></h1>
+        <p class="f4-subtitle">Em minutos sua rua vira rio. A fonte nunca fecha.</p>
+      </div>
+      <div id="f4-banner" class="f4-banner" style="opacity: 0;">
+        <span class="f4-banner-text">A ENXURRADA NAO PARA PORQUE A FONTE NUNCA FECHA</span>
+        <span class="f4-banner-pill">FALHA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 9.82;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f4-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f4-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 10.2);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+        var rua = T('rect', { x: 60, y: 380, width: 960, height: 150, fill: '#0f172a', rx: 10 }) +
+          T('line', { x1: 60, y1: 440, x2: 1020, y2: 440, stroke: '#334155', 'stroke-width': 6, 'stroke-dasharray': '20 16' });
+        var agua = T('rect', { id: 'f4-agua', x: 60, y: 400, width: 960, height: 30, fill: '#38bdf8', 'fill-opacity': 0.7, rx: 6 });
+        var carro1 = G({ id: 'f4-carro1', transform: 'translate(200 410)' },
+          T('rect', { x: 0, y: 14, width: 70, height: 26, rx: 6, fill: '#ef4444' }) +
+          T('rect', { x: 8, y: 8, width: 16, height: 10, rx: 2, fill: '#ffffff', 'fill-opacity': 0.6 }) +
+          T('circle', { cx: 24, cy: 48, r: 8, fill: '#1e293b' }) +
+          T('circle', { cx: 56, cy: 48, r: 8, fill: '#1e293b' })
+        );
+        var carro2 = G({ id: 'f4-carro2', transform: 'translate(720 410)' },
+          T('rect', { x: 0, y: 14, width: 70, height: 26, rx: 6, fill: '#1e3a8a' }) +
+          T('rect', { x: 8, y: 8, width: 16, height: 10, rx: 2, fill: '#ffffff', 'fill-opacity': 0.6 }) +
+          T('circle', { cx: 24, cy: 48, r: 8, fill: '#1e293b' }) +
+          T('circle', { cx: 56, cy: 48, r: 8, fill: '#1e293b' })
+        );
+        var txt = T('text', { x: 540, y: 320, 'text-anchor': 'middle', 'font-family': "'Inter',sans-serif", 'font-size': '34', 'font-weight': '700', fill: '#f8fafc', 'fill-opacity': 0.9 }, 'RUA ALAGADA EM MINUTOS');
+        var svg = M.svgBase(1080, 630,
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: '#0b1220' }) +
+          T('circle', { cx: 540, cy: 400, r: 200, fill: '#38bdf8', 'fill-opacity': 0.10 }) +
+          rua + agua + carro1 + carro2 + txt
+        );
+        M.montar('#f4-cena', svg);
+        var aguaEl = M.pegar('#f4-cena', '#f4-agua');
+        var carro1El = M.pegar('#f4-cena', '#f4-carro1');
+        var carro2El = M.pegar('#f4-cena', '#f4-carro2');
+        var boy = M.mascote('#f4-mascote');
+        var hud = M.medidorBarra('#f4-hud', { rotulo: 'NIVEL DA ENXURRADA', unidade: 'CM', max: 100, cor: '#ef4444', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.6, 12.0));
+          var nivel = u * 100;
+          aguaEl.setAttribute('y', f2(400 - u * 60));
+          aguaEl.setAttribute('height', f2(30 + u * 100));
+          hud.atualizar(nivel, u > 0.7 ? 'RUA VIROU RIO' : 'AGUA SUBINDO', u > 0.7 ? '#dc2626' : '#f59e0b');
+          carro1El.setAttribute('transform', 'translate(200 ' + f2(410 + u * 30) + ')');
+          carro2El.setAttribute('transform', 'translate(720 ' + f2(410 + u * 30) + ')');
+          boy.atualizar(t, og, { humor: t < 3.0 ? 'surpreso' : 'preocupado', bracoD: t < 3 ? 40 : 130, bracoE: 8, olhar: [0, -20], inclinar: t > 6 ? 4 : 0 });
+        }, { duracao: DUR, offsetGlobal: 29.02 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-rua-rio'] = tl;
+    })();
+  </script>
+</template>

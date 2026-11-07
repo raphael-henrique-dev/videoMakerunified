@@ -1,0 +1,371 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f1-root {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #030914;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f1-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .f1-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(3, 9, 20, 0.88) 0%,
+        rgba(3, 9, 20, 0.25) 28%,
+        rgba(3, 9, 20, 0.15) 62%,
+        rgba(3, 9, 20, 0.92) 100%
+      );
+    }
+
+    .f1-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f1-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 26px;
+      background: rgba(6, 12, 24, 0.86);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 14px;
+    }
+
+    .f1-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+
+    .f1-badge {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #facc15;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .f1-header-card {
+      position: absolute;
+      top: 168px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(6, 12, 24, 0.84);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 16px 16px 0;
+    }
+
+    .f1-title {
+      margin: 0 0 10px 0;
+      font-family: 'EB Garamond', serif;
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 1.06;
+      color: #f8fafc;
+    }
+
+    .f1-title-accent {
+      color: #38bdf8;
+    }
+
+    .f1-subtitle {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: #cbd5e1;
+    }
+
+    .f1-telemetry-row {
+      position: absolute;
+      top: 1050px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 22px;
+    }
+
+    .f1-metric-box {
+      flex: 1;
+      padding: 22px 26px;
+      background: rgba(6, 12, 24, 0.88);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 16px;
+    }
+
+    .f1-metric-label {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .f1-metric-val {
+      font-size: 44px;
+      font-weight: 700;
+      color: #f8fafc;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .f1-alert-card {
+      position: absolute;
+      top: 1215px;
+      left: 68px;
+      right: 68px;
+      padding: 20px 28px;
+      background: rgba(28, 8, 14, 0.92);
+      border: 1.5px solid #ef4444;
+      border-radius: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .f1-alert-title {
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #fca5a5;
+    }
+
+    .f1-alert-tag {
+      padding: 8px 16px;
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 19px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.08em;
+    }
+  </style>
+
+  <div data-hf-id="hf-uzi7" id="f1-root" data-composition-id="frame-01-gancho-abismo" data-width="1080" data-height="1920" data-start="0" data-duration="9.77">
+    <div data-hf-id="hf-o0pd" id="f1-stage-3d"></div>
+    <div data-hf-id="hf-vx8a" class="f1-vignette"></div>
+
+    <div data-hf-id="hf-x5l2" class="f1-ui-layer">
+      <div data-hf-id="hf-hxh6" id="f1-topbar" class="f1-topbar">
+        <span data-hf-id="hf-rm6a" class="f1-kicker">INFRAESTRUTURA GLOBAL // 99% DOS DADOS</span>
+        <span data-hf-id="hf-i3px" class="f1-badge">PROFUNDIDADE: -8.000 m</span>
+      </div>
+
+      <div data-hf-id="hf-8n3z" id="f1-header" class="f1-header-card">
+        <h1 data-hf-id="hf-3334" class="f1-title">Um Fio de <span data-hf-id="hf-k5la" class="f1-title-accent">Cabelo</span> no Fundo do Oceano</h1>
+        <p data-hf-id="hf-vu1r" class="f1-subtitle">Núcleo de sílica ultrapura (125 µm) guiando pulsos de laser intercontinentais</p>
+      </div>
+
+      <div data-hf-id="hf-woex" id="f1-telemetry" class="f1-telemetry-row">
+        <div data-hf-id="hf-xftc" class="f1-metric-box">
+          <div data-hf-id="hf-jha9" class="f1-metric-label">ESPESSURA DA FIBRA</div>
+          <div data-hf-id="hf-cspy" class="f1-metric-val">0,125 mm</div>
+        </div>
+        <div data-hf-id="hf-kroo" class="f1-metric-box">
+          <div data-hf-id="hf-2i8b" class="f1-metric-label">TRÁFEGO MUNDIAL</div>
+          <div data-hf-id="hf-8ruf" class="f1-metric-val">99,4%</div>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-ef4b" id="f1-alert" class="f1-alert-card" style="opacity: 0;">
+        <span data-hf-id="hf-l261" class="f1-alert-title">TESTE DE TRAÇÃO: VIDRO PURO RACHA NO PRIMEIRO PASSO</span>
+        <span data-hf-id="hf-q9g7" class="f1-alert-tag">FALHA CRÍTICA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 9.77;
+      var tl = gsap.timeline({ paused: true });
+
+      // Animações 2D Code Editorial
+      tl.fromTo('#f1-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f1-header', { opacity: 0, x: -32 }, { opacity: 1, x: 0, duration: 0.65, ease: 'power3.out' }, 0.22);
+      tl.fromTo('#f1-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f1-alert', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 4.55);
+
+      // Palco 3D Three.js + Kit Modular Motor3D
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f1-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'abismo'
+        });
+
+        var mar = M.criarFundoDoMar(THREE, palco, { abismo: true });
+        var caboObj = M.criarCaboSubmarino(THREE, { escala: 0.78 });
+        caboObj.raiz.position.set(0.35, 1.35, 0.0);
+        palco.cena.add(caboObj.raiz);
+
+        // Mascote com capacete de mergulho abissal
+        var menino = M.criarBoneco(THREE, { escala: 0.78 });
+        M.capaceteEspacial(menino, true);
+        menino.raiz.position.set(-0.95, 0.25, 0.25);
+        palco.cena.add(menino.raiz);
+
+        // Fio de vidro separado para demonstração da quebra ("falha -> corrige")
+        var fioTesteEsq = M.malha(
+          THREE,
+          new THREE.CylinderGeometry(0.04, 0.04, 0.9, 20),
+          M.mat(THREE, 0x7dd3fc, { emissive: 0x00f0ff, emissiveIntensity: 0.9 })
+        );
+        fioTesteEsq.rotation.z = Math.PI / 2;
+        var fioTesteDir = M.malha(
+          THREE,
+          new THREE.CylinderGeometry(0.04, 0.04, 0.9, 20),
+          M.mat(THREE, 0x7dd3fc, { emissive: 0x00f0ff, emissiveIntensity: 0.9 })
+        );
+        fioTesteDir.rotation.z = Math.PI / 2;
+        palco.cena.add(fioTesteEsq, fioTesteDir);
+
+        // Luz vermelha de alerta quando a fibra racha
+        var luzFalha = new THREE.PointLight(0xef4444, 0, 5.5);
+        luzFalha.position.set(0, 1.5, 1.5);
+        palco.cena.add(luzFalha);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          mar.animarAmbiente(t);
+          M.resetPose(menino, t);
+
+          if (t < 4.35) {
+            // Ato 1: Gancho — foco no núcleo óptico brilhando no abismo
+            caboObj.raiz.visible = true;
+            caboObj.atualizar(t, {
+              fibra: 1,
+              revestimento: 0,
+              tubo: 0,
+              cobre: 0,
+              vedacao: 0,
+              aco: 0,
+              jaqueta: 0
+            });
+            fioTesteEsq.visible = false;
+            fioTesteDir.visible = false;
+            luzFalha.intensity = 0;
+
+            M.andar(menino, t, 0.1, 2.2, [-1.15, 0.25, 0.3], [-0.75, 0.25, 0.25]);
+            M.humor(menino, 'surpreso');
+            M.apontar(menino, [0.35, 1.35, 0.0], 'D');
+            M.olharCamera(menino, palco.camera, 0.65);
+
+            M.plano(
+              palco.camera,
+              t,
+              0,
+              4.35,
+              { pos: [-0.9, 2.0, 6.6], alvo: [0.0, 1.15, 0.0] },
+              { pos: [0.2, 1.75, 5.6], alvo: [-0.1, 1.15, 0.0] }
+            );
+          } else {
+            // Ato 2: Falha — o menino tenta esticar o fio de vidro puro e ele se parte ao meio
+            caboObj.raiz.visible = false;
+            fioTesteEsq.visible = true;
+            fioTesteDir.visible = true;
+
+            menino.raiz.position.set(0, 0.25, 0.15);
+            menino.raiz.rotation.y = 0;
+
+            var tQuebra = 5.65;
+            if (t < tQuebra) {
+              M.humor(menino, 'esforco');
+              var tensao = M.faixa(t, 4.35, tQuebra);
+              var vib = Math.sin(t * 55) * 0.022 * tensao;
+              fioTesteEsq.position.set(-0.42 - tensao * 0.05, 1.15 + vib, 0.65);
+              fioTesteDir.position.set(0.42 + tensao * 0.05, 1.15 - vib, 0.65);
+              fioTesteEsq.rotation.z = Math.PI / 2 + tensao * 0.12;
+              fioTesteDir.rotation.z = Math.PI / 2 - tensao * 0.12;
+              menino.bracoE.rotation.set(-1.2, 0, 0.45);
+              menino.bracoD.rotation.set(-1.2, 0, -0.45);
+              luzFalha.intensity = tensao * 1.5;
+            } else {
+              // O vidro rachou!
+              var uPos = M.suave(M.faixa(t, tQuebra, tQuebra + 0.8));
+              M.humor(menino, 'assustado');
+              M.suar(menino, t, tQuebra, DUR);
+              fioTesteEsq.position.set(-0.52 - uPos * 0.35, 1.15 - uPos * 0.45, 0.65);
+              fioTesteDir.position.set(0.52 + uPos * 0.35, 1.15 - uPos * 0.45, 0.65);
+              fioTesteEsq.rotation.z = Math.PI / 2 + 0.65 * uPos;
+              fioTesteDir.rotation.z = Math.PI / 2 - 0.65 * uPos;
+              menino.bracoE.rotation.set(-0.8, 0, 1.1);
+              menino.bracoD.rotation.set(-0.8, 0, -1.1);
+              luzFalha.intensity = 2.4 * (0.6 + 0.4 * Math.sin(t * 14));
+            }
+
+            M.plano(
+              palco.camera,
+              t,
+              4.35,
+              DUR,
+              { pos: [0.0, 1.75, 5.5], alvo: [0.0, 1.15, 0.2] },
+              { pos: [0.1, 1.68, 5.1], alvo: [0.0, 1.15, 0.2] }
+            );
+            M.tremer(palco.camera, t, tQuebra, 0.45, 0.10);
+          }
+        }, { duracao: DUR, offsetGlobal: 0.00 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-01-gancho-abismo'] = tl;
+    })();
+  </script>
+</template>

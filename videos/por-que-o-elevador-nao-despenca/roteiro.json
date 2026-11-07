@@ -1,0 +1,228 @@
+{
+  "id": "por-que-o-elevador-nao-despenca",
+  "titulo": "Por Que o Elevador Não Despenca?",
+  "subtitulo": "O peso escondido no poço, os cabos de aço redundantes e o freio que abraça o trilho quando tudo dá errado",
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "fps": 30,
+  "alvoPpm": 180,
+  "modo": "2d",
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.8,
+    "estilo": 0.4,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.22
+  },
+  "efeitos": {
+    "ganho": 1.12
+  },
+  "frames": [
+    {
+      "id": "frame-01-caixa-suspensa",
+      "numero": "01",
+      "titulo": "A Caixa Que Não Cai",
+      "arquivo": "compositions/frames/01-caixa-suspensa.html",
+      "kicker": "NOSSO DIA A DIA // A CAIXA QUE SOBE",
+      "metrica": {
+        "rotulo": "PESO SUSPENSO",
+        "valor": "1 TONELADA"
+      },
+      "direcao2D": "Corte do prédio com a cabine subindo pelo poço, cabos de aço tensionados, indicador de andar e um ponto de interrogação pulsando sobre o vão.",
+      "cauda": 0.3,
+      "sons": [
+        { "nome": "bip", "offset": 0.35, "ganho": 0.55 },
+        { "nome": "zumbido", "offset": 0.8, "ganho": 0.5 },
+        { "nome": "whoosh", "offset": 1.4, "ganho": 0.5 },
+        { "nome": "ding", "offset": 7.6, "ganho": 0.65 },
+        { "nome": "baque-1", "offset": 8.3, "ganho": 0.55 },
+        { "nome": "brilho", "offset": 12.7, "ganho": 0.45 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "gancho_caixa",
+          "gancho": true,
+          "texto": "Você entra numa *caixa* de metal suspensa por cabos, aperta o botão do décimo andar e sente o estômago *subir.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "pergunta_seguranca",
+          "texto": "Ela para certinho, a porta abre, e você nem pensa no que segura tudo isso. Mas o que impede essa caixa de *despencar?*"
+        }
+      ]
+    },
+    {
+      "id": "frame-02-socio-invisivel",
+      "numero": "02",
+      "titulo": "O Sócio Invisível",
+      "arquivo": "compositions/frames/02-socio-invisivel.html",
+      "kicker": "SEGREDO 01 // O PESO ESCONDIDO",
+      "metrica": {
+        "rotulo": "CONTRAPESO",
+        "valor": "QUASE O MESMO PESO"
+      },
+      "direcao2D": "Corte vertical do poço mostrando cabine e contrapeso em lados opostos, polia no topo girando e etiquetas de peso com uma balança gigante equilibrando os dois.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "metal-1", "offset": 0.4, "ganho": 0.55 },
+        { "nome": "whoosh", "offset": 7.3, "ganho": 0.5 },
+        { "nome": "range-1", "offset": 10.5, "ganho": 0.5 },
+        { "nome": "trava", "offset": 12.4, "ganho": 0.55 },
+        { "nome": "certo", "offset": 12.6, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "contrapeso",
+          "texto": "O primeiro segredo é um *sócio* invisível: no fundo do poço existe um bloco de concreto chamado *contrapeso.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "balanca_gigante",
+          "texto": "Quando a cabine desce, ele *sobe* na mesma hora, e os dois ficam quase *empatados* numa balança gigante."
+        }
+      ]
+    },
+    {
+      "id": "frame-03-cabos-redundantes",
+      "numero": "03",
+      "titulo": "Nunca Um Cabo Só",
+      "arquivo": "compositions/frames/03-cabos-redundantes.html",
+      "kicker": "SEGREDO 02 // NUNCA UM CABO SÓ",
+      "metrica": {
+        "rotulo": "CABOS DE AÇO",
+        "valor": "4 A 8 POR CABINE"
+      },
+      "direcao2D": "Corte transversal de um cabo de aço trançado à esquerda e a cabine sustentada por quatro cabos à direita, com barras de carga que se redistribuem quando um cabo rompe.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "metal-2", "offset": 0.4, "ganho": 0.55 },
+        { "nome": "range-2", "offset": 2.7, "ganho": 0.5 },
+        { "nome": "estalo", "offset": 9.05, "ganho": 0.65 },
+        { "nome": "metal-3", "offset": 9.25, "ganho": 0.55 },
+        { "nome": "certo", "offset": 13.8, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "cabos_multiplos",
+          "texto": "E não é um *cabo* só: cada elevador usa vários cabos de *aço* trançado, e cada um deles sozinho já aguentaria a cabine *cheia.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "redundancia",
+          "texto": "Se um *arrebenta,* os outros dividem o peso e seguram o tranco. É a engenharia da *redundância* trabalhando calada."
+        }
+      ]
+    },
+    {
+      "id": "frame-04-freio-de-mola",
+      "numero": "04",
+      "titulo": "O Freio Que Segura",
+      "arquivo": "compositions/frames/04-freio-de-mola.html",
+      "kicker": "SEGREDO 03 // O FREIO QUE SEGURA",
+      "metrica": {
+        "rotulo": "FREIO DE MOLA",
+        "valor": "100% TRAVADO"
+      },
+      "direcao2D": "Corte da casa de máquinas com a polia de tração, as sapatas do freio, a mola que aperta e o eletroímã que solta, além do indicador de energia que apaga.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "zumbido", "offset": 0.8, "ganho": 0.5 },
+        { "nome": "trava", "offset": 4.3, "ganho": 0.65 },
+        { "nome": "metal-1", "offset": 4.55, "ganho": 0.5 },
+        { "nome": "desliga", "offset": 9.9, "ganho": 0.6 },
+        { "nome": "baque-2", "offset": 10.25, "ganho": 0.55 },
+        { "nome": "certo", "offset": 12.4, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "freio_parada",
+          "texto": "Quando você chega no andar, um *freio* de sapata morde a polia do motor e trava a cabine *parada* no lugar."
+        },
+        {
+          "plano": "PA",
+          "jogo": "freio_falha_segura",
+          "texto": "E ele é esperto: quem aperta a sapata é uma *mola,* então se faltar *energia,* o elevador freia em vez de soltar."
+        }
+      ]
+    },
+    {
+      "id": "frame-05-freio-de-emergencia",
+      "numero": "05",
+      "titulo": "O Freio de Emergência",
+      "arquivo": "compositions/frames/05-freio-de-emergencia.html",
+      "kicker": "SEGREDO 04 // SE TUDO FALHAR",
+      "metrica": {
+        "rotulo": "VELOCIDADE DE DISPARO",
+        "valor": "1,3x O NORMAL"
+      },
+      "direcao2D": "Corte do poço com a cabine nos trilhos, o limitador de velocidade girando, o velocímetro subindo e as cunhas laterais disparando contra o trilho com faíscas.",
+      "cauda": 0.3,
+      "sons": [
+        { "nome": "estalo", "offset": 0.9, "ganho": 0.7 },
+        { "nome": "whoosh", "offset": 1.2, "ganho": 0.55 },
+        { "nome": "apito", "offset": 6.0, "ganho": 0.5 },
+        { "nome": "metal-3", "offset": 9.4, "ganho": 0.6 },
+        { "nome": "estrondo", "offset": 9.55, "ganho": 0.6 },
+        { "nome": "trava", "offset": 9.75, "ganho": 0.65 },
+        { "nome": "certo", "offset": 12.0, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "PG",
+          "jogo": "limitador_velocidade",
+          "texto": "E se os cabos *arrebentarem* e a cabine começar a cair? Entra em cena o *limitador de velocidade.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "cunhas_trilho",
+          "texto": "Se ele gira rápido demais, dispara umas *cunhas* que agarram os trilhos laterais e seguram a cabine *na marra.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-06-raio-x-elevador",
+      "numero": "06",
+      "titulo": "Por Fora e Por Dentro",
+      "arquivo": "compositions/frames/06-raio-x-elevador.html",
+      "kicker": "RAIO-X COMPLETO // 5 PEÇAS",
+      "metrica": {
+        "rotulo": "CURIORISANDO",
+        "valor": "SEGUE O CANAL"
+      },
+      "direcao2D": "Vista em corte do sistema inteiro com cinco chamadas técnicas numeradas e linhas SVG ligando contrapeso, cabos, freio, limitador e cunhas ao cartão final do Curiorisando.",
+      "cauda": 0.7,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.35, "ganho": 0.5 },
+        { "nome": "metal-1", "offset": 3.9, "ganho": 0.5 },
+        { "nome": "trava", "offset": 6.3, "ganho": 0.5 },
+        { "nome": "certo", "offset": 9.9, "ganho": 0.6 },
+        { "nome": "final", "offset": 15.9, "ganho": 0.65 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "por_fora_por_dentro",
+          "texto": "Por fora, é só uma caixa que sobe e desce; por dentro, é um *contrapeso,* vários *cabos,* um freio de *mola* e cunhas que agarram o *trilho.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "fechamento_curiorisando",
+          "texto": "Pois é, o mundo é mais *curioso* do que parece! Se você também olha diferente para o elevador, segue o *Curiorisando!*"
+        }
+      ]
+    }
+  ]
+}

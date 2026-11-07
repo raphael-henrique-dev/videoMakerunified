@@ -1,0 +1,155 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f4-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f4-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f4-topbar { position:absolute; top:76px; left:68px; right:140px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f4-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f4-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f4-header-card { position:absolute; top:164px; left:68px; right:140px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f4-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f4-title-accent { color:#38bdf8; }
+    .f4-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f4-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f4-banner-text { font-size:19px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f4-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; white-space:nowrap; }
+    #f4-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 62% 28%, #17284a 0%, #091226 58%, #050a14 100%); }
+    #f4-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f4-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f4-root .m2-mascote { position:absolute; left:20px; top:624px; width:250px; height:350px; z-index:2; }
+    #f4-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f4-root" data-composition-id="frame-04-gasto" data-width="1080" data-height="1920" data-start="0" data-duration="12.90">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f4-cena" class="m2-cena"></div>
+    <div id="f4-mascote" class="m2-mascote"></div>
+    <div id="f4-hud" class="m2-hud"></div>
+
+    <div class="f4-ui-layer">
+      <div id="f4-topbar" class="f4-topbar">
+        <span class="f4-kicker">CONTA 03 // GASTO</span>
+        <span class="f4-badge">1.000 DIAS</span>
+      </div>
+      <div id="f4-header" class="f4-header-card">
+        <h1 class="f4-title">Gastar <span class="f4-title-accent">1 milhão</span> por dia</h1>
+        <p class="f4-subtitle">O bilhão vira um cronômetro: cada dia que passa leva um milhão embora.</p>
+      </div>
+      <div id="f4-banner" class="f4-banner" style="opacity: 0;">
+        <span class="f4-banner-text">1 MILHÃO POR DIA = 1.000 DIAS = 2,7 ANOS</span>
+        <span class="f4-banner-pill">SALDO ZERADO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 12.90;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f4-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f4-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 6.4);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2, arco = M.arco, lerp = M.lerp, ruido = M.ruido;
+
+        var TX = 300, TY = 96, TW = 320, TH = 380;
+        var niveis = [0, 1, 2, 3, 4, 5, 6, 7];
+
+        var notas = '';
+        for (var i = 0; i < 14; i++) {
+          var nx = 318 + ruido(i * 4.3) * 262;
+          var ny = 150 + ruido(i * 8.1) * 280;
+          notas += T('rect', { x: f2(nx), y: f2(ny), width: 54, height: 30, rx: 4, fill: '#b45309', stroke: '#f59e0b', 'stroke-width': 1.4, 'stroke-opacity': 0.7, transform: 'rotate(' + f2((ruido(i * 2.9) - 0.5) * 40) + ' ' + f2(nx + 27) + ' ' + f2(ny + 15) + ')' }) +
+            T('line', { x1: f2(nx + 8), y1: f2(ny + 22), x2: f2(nx + 46), y2: f2(ny + 22), stroke: '#fde68a', 'stroke-width': 2, 'stroke-opacity': 0.7, transform: 'rotate(' + f2((ruido(i * 2.9) - 0.5) * 40) + ' ' + f2(nx + 27) + ' ' + f2(ny + 15) + ')' });
+        }
+
+        var moedas = '';
+        for (var c = 0; c < 5; c++) {
+          moedas += T('circle', { id: 's4-moeda' + c, cx: 660, cy: 500, r: 9, fill: '#facc15', stroke: '#b45309', 'stroke-width': 2, opacity: 0 });
+        }
+
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s4-ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#152542"/><stop offset="1" stop-color="#050a14"/></linearGradient>' +
+          '<linearGradient id="s4-carga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22c55e"/><stop offset="0.6" stop-color="#f59e0b"/><stop offset="1" stop-color="#ef4444"/></linearGradient>' +
+          '<clipPath id="s4-tanque"><rect x="' + (TX + 8) + '" y="' + (TY + 8) + '" width="' + (TW - 16) + '" height="' + (TH - 16) + '" rx="14"/></clipPath>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s4-ceu)' }) +
+          T('text', { x: TX + TW / 2, y: 62, 'text-anchor': 'middle', fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 21, 'font-weight': 700, 'letter-spacing': 2 }, 'O BILHÃO INTEIRO') +
+          T('rect', { x: TX, y: TY, width: TW, height: TH, rx: 22, fill: 'rgba(8,14,26,0.72)', stroke: 'rgba(56,189,248,0.45)', 'stroke-width': 3 }) +
+          G({ 'clip-path': 'url(#s4-tanque)' },
+            T('rect', { id: 's4-nivel', x: TX + 8, y: TY + 8, width: TW - 16, height: TH - 16, fill: 'url(#s4-carga)', 'fill-opacity': 0.32 }) +
+            notas) +
+          T('line', { id: 's4-linha', x1: TX + 8, y1: TY + 8, x2: TX + TW - 8, y2: TY + 8, stroke: '#86efac', 'stroke-width': 3 }) +
+          T('rect', { x: TX + 8, y: TY + 8, width: TW - 16, height: TH - 16, rx: 14, fill: 'none', stroke: '#0b1220', 'stroke-width': 2, 'stroke-opacity': 0.5 }) +
+          T('rect', { x: TX + 26, y: TY + 14, width: 10, height: TH - 40, rx: 5, fill: '#e0f2fe', 'fill-opacity': 0.14 }) +
+          T('rect', { x: TX + TW - 40, y: TY + 14, width: 6, height: TH - 40, rx: 3, fill: '#e0f2fe', 'fill-opacity': 0.10 }) +
+          // torneira
+          T('rect', { x: TX + TW - 6, y: TY + TH - 60, width: 54, height: 26, rx: 8, fill: '#1e293b', stroke: '#64748b', 'stroke-width': 2 }) +
+          T('rect', { x: TX + TW + 32, y: TY + TH - 60, width: 22, height: 54, rx: 8, fill: '#1e293b', stroke: '#64748b', 'stroke-width': 2 }) +
+          T('circle', { cx: TX + TW + 12, cy: TY + TH - 47, r: 13, fill: '#ef4444' }) +
+          moedas +
+          // mostrador circular de dias
+          T('circle', { cx: 790, cy: 286, r: 118, fill: '#0b1220', stroke: 'rgba(56,189,248,0.35)', 'stroke-width': 3 }) +
+          T('path', { d: arco(790, 286, 98, 0, 359.9), fill: 'none', stroke: '#1e3a5f', 'stroke-width': 14, 'stroke-linecap': 'round' }) +
+          T('path', { id: 's4-arcoDias', d: arco(790, 286, 98, -90, -90.1), fill: 'none', stroke: '#f59e0b', 'stroke-width': 14, 'stroke-linecap': 'round' }) +
+          T('text', { id: 's4-dias', x: 790, y: 288, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 56, 'font-weight': 700 }, '0') +
+          T('text', { x: 790, y: 326, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700, 'letter-spacing': 2 }, 'DIAS') +
+          T('text', { x: 790, y: 430, 'text-anchor': 'middle', fill: '#fbbf24', 'font-family': 'Inter, sans-serif', 'font-size': 21, 'font-weight': 700 }, 'R$ 1 MILHÃO / DIA') +
+          T('rect', { x: 0, y: 546, width: 1080, height: 84, fill: '#0b1220' }) +
+          T('line', { x1: 0, y1: 546, x2: 1080, y2: 546, stroke: '#38bdf8', 'stroke-width': 2, 'stroke-opacity': 0.4 }) +
+          T('text', { x: 900, y: 596, 'text-anchor': 'end', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 600 }, '100% do bilhão = 1.000 dias de gasto')
+        );
+        M.montar('#f4-cena', svg);
+        var cena = M.pegar('#f4-cena');
+        var nivel = M.pegar(cena, '#s4-nivel');
+        var linha = M.pegar(cena, '#s4-linha');
+        var arcoDias = M.pegar(cena, '#s4-arcoDias');
+        var diasEl = M.pegar(cena, '#s4-dias');
+        var moedasEls = [];
+        for (var m2 = 0; m2 < 5; m2++) moedasEls.push(M.pegar(cena, '#s4-moeda' + m2));
+        var boy = M.mascote('#f4-mascote');
+        var hud = M.medidorBarra('#f4-hud', { rotulo: 'SALDO DO BILHÃO', unidade: '%', max: 100, cor: '#22c55e', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.9, 8.6));
+          var altura = (TH - 16) * (1 - u);
+          nivel.setAttribute('y', f2(TY + 8 + (TH - 16) - altura));
+          nivel.setAttribute('height', f2(altura));
+          linha.setAttribute('y1', f2(TY + 8 + (TH - 16) - altura));
+          linha.setAttribute('y2', f2(TY + 8 + (TH - 16) - altura));
+          linha.setAttribute('opacity', u > 0.99 ? 0 : 1);
+          var ang = -90 + 359.9 * u;
+          arcoDias.setAttribute('d', arco(790, 286, 98, -90, Math.max(-89.9, ang)));
+          diasEl.textContent = Math.round(1000 * u).toLocaleString('pt-BR');
+          for (var k = 0; k < moedasEls.length; k++) {
+            var fase = (t * 0.7 + k * 0.2) % 1;
+            var visivel = u > 0.04 && u < 0.985;
+            moedasEls[k].setAttribute('opacity', visivel ? f2(1 - fase * 0.8) : 0);
+            moedasEls[k].setAttribute('cy', f2(430 + fase * 100));
+            moedasEls[k].setAttribute('cx', f2(660 + Math.sin(fase * 6 + k) * 4));
+          }
+          hud.atualizar(Math.round(100 * (1 - u)), u > 0.99 ? 'ZERADO' : 'DRENANDO', u > 0.6 ? '#ef4444' : u > 0.3 ? '#f59e0b' : '#22c55e');
+          boy.atualizar(t, og, {
+            humor: t > 4 ? 'surpreso' : 'bravo',
+            bracoD: 130,
+            bracoE: 20,
+            olhar: [8, -2],
+            inclinar: -4,
+            tremer: t > 6 ? 1.6 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 43.14 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-gasto'] = tl;
+    })();
+  </script>
+</template>

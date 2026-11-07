@@ -1,0 +1,303 @@
+<template>
+  <style>
+    @font-face { font-family: 'EB Garamond'; font-style: normal; font-weight: 700; font-display: swap; src: url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f3-root {
+      position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: hidden;
+      background-color: #050a14; font-family: 'Inter', sans-serif; color: #f8fafc;
+    }
+
+    .f3-ui-layer { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+
+    .f3-topbar {
+      position: absolute; top: 76px; left: 68px; right: 68px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88); border: 1px solid rgba(56, 189, 248, 0.38); border-radius: 14px;
+    }
+    .f3-kicker { font-size: 20px; font-weight: 700; letter-spacing: 0.12em; color: #38bdf8; text-transform: uppercase; }
+    .f3-badge { font-size: 19px; font-weight: 700; color: #86efac; letter-spacing: 0.06em; }
+
+    .f3-header-card {
+      position: absolute; top: 164px; left: 68px; right: 68px; padding: 24px 32px;
+      background: rgba(8, 14, 26, 0.88); border-left: 5px solid #22c55e;
+      border-radius: 0 18px 18px 0; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+    .f3-title { font-family: 'EB Garamond', serif; font-size: 58px; font-weight: 700; line-height: 1.05; color: #f8fafc; margin-bottom: 8px; }
+    .f3-title-accent { color: #4ade80; }
+    .f3-subtitle { font-size: 22px; line-height: 1.34; color: #cbd5e1; }
+
+    .f3-banner {
+      position: absolute; top: 1185px; left: 68px; right: 68px; padding: 18px 26px;
+      background: rgba(10, 26, 16, 0.92); border: 1.5px solid rgba(74, 222, 128, 0.5);
+      border-radius: 14px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .f3-banner-text { font-size: 21px; font-weight: 700; color: #dcfce7; letter-spacing: 0.04em; }
+    .f3-banner-pill { padding: 6px 16px; background: #4ade80; color: #052e16; font-size: 17px; font-weight: 700; border-radius: 8px; letter-spacing: 0.06em; }
+
+    #f3-root .m2-fundo {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(circle at 30% 35%, #14241c 0%, #0a1614 55%, #050a14 100%);
+    }
+    #f3-root .m2-cena { position: absolute; left: 0; top: 380px; width: 1080px; height: 780px; z-index: 1; }
+  </style>
+
+  <div data-hf-id="hf-f3rt" id="f3-root" data-composition-id="frame-03-a-conta-nao-fecha" data-width="1080" data-height="1920" data-start="0" data-duration="14.32">
+    <div data-hf-id="hf-f3bg" class="m2-fundo"></div>
+    <div data-hf-id="hf-f3cn" id="f3-cena" class="m2-cena"></div>
+
+    <div data-hf-id="hf-f3ui" class="f3-ui-layer">
+      <div data-hf-id="hf-f3tb" id="f3-topbar" class="f3-topbar">
+        <span data-hf-id="hf-f3kk" class="f3-kicker">DECOMPOSIÇÃO // A CONTA NÃO FECHA</span>
+        <span data-hf-id="hf-f3bd" class="f3-badge">SEM METABOLISMO</span>
+      </div>
+
+      <div data-hf-id="hf-f3hd" id="f3-header" class="f3-header-card">
+        <h1 data-hf-id="hf-f3tt" class="f3-title">A Conta Que <span data-hf-id="hf-f3ac" class="f3-title-accent">Não Fecha</span></h1>
+        <p data-hf-id="hf-f3sb" class="f3-subtitle">Bactérias e fungos devolvem o corpo à natureza antes de qualquer zumbi levantar.</p>
+      </div>
+
+      <div data-hf-id="hf-f3bn" id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span data-hf-id="hf-f3bt" class="f3-banner-text">SEM METABOLISMO, NÃO EXISTE ZUMBI</span>
+        <span data-hf-id="hf-f3bp" class="f3-banner-pill">CONTA FECHADA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 14.32;
+      var BAC = 2.15;   // "bactérias"
+      var FUN = 2.81;   // "fungos"
+      var P2 = 6.22;    // 2ª frase
+      var COMER = 7.32;
+      var DIGERIR = 7.94;
+      var CICATRIZAR = 8.74;
+      var FALHA = 10.60;
+      var BAN = 12.20;
+
+      var tl = gsap.timeline({ paused: true });
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, BAN);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        // ── corpo em decomposição (silhueta deitada) ─────────────────────
+        var corpo = G({ id: 's3-corpo' },
+          T('circle', { cx: 268, cy: 206, r: 42, fill: '#334155', stroke: '#64748b', 'stroke-width': 3 }) +
+          T('path', { d: 'M244 244 L292 244 L304 300 L296 392 L240 392 L232 300 Z', fill: '#334155', stroke: '#64748b', 'stroke-width': 3 }) +
+          T('path', { d: 'M240 300 L196 386 L182 470', fill: 'none', stroke: '#334155', 'stroke-width': 24, 'stroke-linecap': 'round' }) +
+          T('path', { d: 'M296 300 L336 388 L352 470', fill: 'none', stroke: '#334155', 'stroke-width': 24, 'stroke-linecap': 'round' }) +
+          T('path', { d: 'M252 392 L244 508 L238 606', fill: 'none', stroke: '#334155', 'stroke-width': 30, 'stroke-linecap': 'round' }) +
+          T('path', { d: 'M284 392 L296 508 L304 606', fill: 'none', stroke: '#334155', 'stroke-width': 30, 'stroke-linecap': 'round' }) +
+          T('circle', { cx: 252, cy: 200, r: 7, fill: '#0b1220' }) +
+          T('circle', { cx: 282, cy: 200, r: 7, fill: '#0b1220' }) +
+          T('path', { d: 'M254 226 L280 226', fill: 'none', stroke: '#0b1220', 'stroke-width': 3, 'stroke-linecap': 'round' }));
+
+        // manchas / estágios de decomposição
+        var manchas = '';
+        for (var m = 0; m < 12; m++) {
+          manchas += T('circle', {
+            id: 's3-man' + m,
+            cx: 200 + M.ruido(m * 4.3) * 150,
+            cy: 210 + M.ruido(m * 7.1) * 390,
+            r: 8 + M.ruido(m * 2.7) * 16,
+            fill: '#166534', opacity: 0
+          });
+        }
+
+        // pontos de bactérias / fungos
+        var pontos = '';
+        for (var b = 0; b < 46; b++) {
+          pontos += T('circle', { id: 's3-bac' + b, cx: 0, cy: 0, r: 3.2, fill: '#4ade80', opacity: 0 });
+        }
+        var hifas = '';
+        for (var h = 0; h < 10; h++) {
+          hifas += T('path', {
+            id: 's3-hif' + h,
+            d: 'M0 0 Q0 0 0 0',
+            fill: 'none', stroke: '#86efac', 'stroke-width': 2.4, opacity: 0, 'stroke-linecap': 'round'
+          });
+        }
+
+        // ── trilha de estágios ───────────────────────────────────────────
+        var est = [
+          { x: 160, rot: '24 H', cor: '#f59e0b' },
+          { x: 279, rot: '3 DIAS', cor: '#f97316' },
+          { x: 398, rot: '7 DIAS', cor: '#22c55e' }
+        ];
+        var estagios = '';
+        for (var e = 0; e < est.length; e++) {
+          estagios += G({ id: 's3-est' + e },
+            T('rect', { x: est[e].x - 50, y: 640, width: 100, height: 52, rx: 10, fill: '#0b1220', stroke: '#334155', 'stroke-width': 2 }) +
+            T('text', { x: est[e].x, y: 674, 'text-anchor': 'middle', fill: '#64748b', 'font-family': 'Inter, sans-serif', 'font-size': 19, 'font-weight': 700, 'letter-spacing': 1.4 }, est[e].rot));
+        }
+
+        // ── checklist da conta ───────────────────────────────────────────
+        var linhas = [
+          { y: 128, nome: 'COMER', req: 'exige sistema digestivo funcionando' },
+          { y: 296, nome: 'DIGERIR', req: 'exige ácido e enzimas vivas' },
+          { y: 464, nome: 'CICATRIZAR', req: 'exige células se multiplicando' }
+        ];
+        var check = '';
+        for (var l = 0; l < linhas.length; l++) {
+          var y0 = linhas[l].y;
+          check += G({ id: 's3-row' + l },
+            T('rect', { x: 524, y: y0, width: 482, height: 148, rx: 14, fill: '#080f18', stroke: '#1e2c3d', 'stroke-width': 2 }) +
+            T('text', { x: 550, y: y0 + 44, fill: '#e2e8f0', 'font-family': 'Inter, sans-serif', 'font-size': 28, 'font-weight': 700, 'letter-spacing': 1.4 }, linhas[l].nome) +
+            T('text', { x: 550, y: y0 + 76, fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 400 }, linhas[l].req) +
+            T('rect', { x: 550, y: y0 + 94, width: 356, height: 16, rx: 8, fill: '#111827', stroke: '#334155', 'stroke-width': 1.5 }) +
+            T('rect', { id: 's3-bar' + l, x: 553, y: y0 + 97, width: 0, height: 10, rx: 5, fill: '#f59e0b' }) +
+            T('text', { id: 's3-pct' + l, x: 992, y: y0 + 108, 'text-anchor': 'end', fill: '#f59e0b', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700 }, '0%') +
+            T('text', { id: 's3-st' + l, x: 992, y: y0 + 44, 'text-anchor': 'end', fill: '#64748b', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 1.6 }, 'AGUARDANDO'));
+        }
+
+        var svg = M.svgBase(1080, 780,
+          '<defs>' +
+          '<radialGradient id="s3-luz"><stop offset="0" stop-color="#22c55e" stop-opacity="0.24"/><stop offset="1" stop-color="#22c55e" stop-opacity="0"/></radialGradient>' +
+          '<linearGradient id="s3-tumulo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c2f26"/><stop offset="1" stop-color="#0d1714"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: '#060d12', stroke: '#1e3a30', 'stroke-width': 3 }) +
+
+          // painel esquerdo
+          T('rect', { x: 64, y: 44, width: 430, height: 700, rx: 20, fill: '#070f12', stroke: '#1b3329', 'stroke-width': 2 }) +
+          T('text', { x: 96, y: 96, fill: '#4ade80', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 2.4 }, 'O CORPO VOLTA PRA NATUREZA') +
+          T('circle', { cx: 278, cy: 430, r: 240, fill: 'url(#s3-luz)' }) +
+          T('rect', { x: 132, y: 610, width: 296, height: 26, rx: 8, fill: 'url(#s3-tumulo)', stroke: '#2f4f3f', 'stroke-width': 2 }) +
+          T('path', { d: 'M120 610 L436 610', stroke: '#3f6b55', 'stroke-width': 2, opacity: 0.6 }) +
+          manchas + corpo + pontos + hifas + estagios +
+
+          // painel direito
+          T('text', { x: 524, y: 96, fill: '#f59e0b', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 2.4 }, 'A CONTA DO ZUMBI') +
+          check +
+          T('text', { id: 's3-resumo', x: 524, y: 690, fill: '#475569', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700, 'letter-spacing': 1.4 }, '0 DE 3 REQUISITOS FALHARAM') +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: 'none', stroke: '#26483a', 'stroke-width': 3 })
+        );
+        M.montar('#f3-cena', svg);
+
+        var cena = M.pegar('#f3-cena');
+        var elCorpo = M.pegar(cena, '#s3-corpo');
+        var resumo = M.pegar(cena, '#s3-resumo');
+        var mancha = [], bac = [], hifa = [], bar = [], pct = [], st = [], estG = [];
+        for (var i = 0; i < 12; i++) mancha.push(M.pegar(cena, '#s3-man' + i));
+        for (var j = 0; j < 46; j++) bac.push(M.pegar(cena, '#s3-bac' + j));
+        for (var k = 0; k < 10; k++) hifa.push(M.pegar(cena, '#s3-hif' + k));
+        for (var q = 0; q < 3; q++) {
+          bar.push(M.pegar(cena, '#s3-bar' + q));
+          pct.push(M.pegar(cena, '#s3-pct' + q));
+          st.push(M.pegar(cena, '#s3-st' + q));
+          estG.push(M.pegar(cena, '#s3-est' + q));
+        }
+
+        var inicios = [COMER, DIGERIR, CICATRIZAR];
+        var falhas = [FALHA, FALHA + 0.45, FALHA + 0.95];
+        var estTempos = [0.9, 3.2, 5.1];
+
+        M.conectar(tl, function (t, og) {
+          // estágios acendem em sequência
+          for (var e = 0; e < 3; e++) {
+            var on = suave(faixa(t, estTempos[e], estTempos[e] + 0.45));
+            var ativo = t >= estTempos[e];
+            var txt = estG[e].querySelector('text');
+            var box = estG[e].querySelector('rect');
+            txt.setAttribute('fill', ativo ? est[e].cor : '#64748b');
+            box.setAttribute('stroke', ativo ? est[e].cor : '#334155');
+            box.setAttribute('fill', ativo ? 'rgba(20,40,28,0.9)' : '#0b1220');
+            estG[e].setAttribute('opacity', f2(0.45 + 0.55 * on));
+          }
+
+          // bactérias entram e circulam o corpo
+          var bacOn = suave(faixa(t, BAC, BAC + 1.2));
+          for (var b = 0; b < 46; b++) {
+            var ang = b * 2.399 + t * (0.5 + M.ruido(b) * 0.8);
+            var raio = 26 + M.ruido(b * 3.1) * 150;
+            var px = 272 + Math.cos(ang) * raio * 0.72;
+            var py = 410 + Math.sin(ang) * raio * 1.35;
+            if (py < 176) py = 176;
+            if (py > 640) py = 640;
+            bac[b].setAttribute('cx', f2(px));
+            bac[b].setAttribute('cy', f2(py));
+            bac[b].setAttribute('r', f2(2.4 + M.ruido(b * 5.7) * 2.4));
+            bac[b].setAttribute('opacity', f2(bacOn * (0.35 + 0.55 * M.ruido(b * 9.3))));
+          }
+
+          // fungos: hifas crescem a partir do ponto de entrada
+          var funOn = suave(faixa(t, FUN, FUN + 1.6));
+          for (var hh = 0; hh < 10; hh++) {
+            var a0 = 2.399 * hh;
+            var comp = 34 + M.ruido(hh * 4.4) * 58;
+            var x0 = 268, y0 = 300 + M.ruido(hh) * 190;
+            var x1 = x0 + Math.cos(a0) * comp;
+            var y1 = y0 + Math.sin(a0) * comp * 1.4;
+            var cx1 = x0 + Math.cos(a0 + 0.5) * comp * 0.55;
+            var cy1 = y0 + Math.sin(a0 + 0.5) * comp * 0.55;
+            hifa[hh].setAttribute('d', 'M' + f2(x0) + ' ' + f2(y0) + ' Q' + f2(cx1) + ' ' + f2(cy1) + ' ' + f2(x1) + ' ' + f2(y1));
+            hifa[hh].setAttribute('opacity', f2(funOn * 0.6));
+            hifa[hh].setAttribute('stroke-dasharray', '160');
+            hifa[hh].setAttribute('stroke-dashoffset', f2(160 * (1 - funOn)));
+          }
+
+          // manchas de decomposição
+          var decompoe = suave(faixa(t, FUN + 0.6, FUN + 3.4));
+          for (var mm = 0; mm < 12; mm++) {
+            var nasce = faixa(t, FUN + 0.4 + mm * 0.09, FUN + 1.0 + mm * 0.09);
+            mancha[mm].setAttribute('opacity', f2(nasce * 0.5 * decompoe));
+            mancha[mm].setAttribute('r', f2(8 + M.ruido(mm * 2.7) * 16));
+          }
+
+          // corpo perde cor conforme a decomposição avança
+          var grau = suave(faixa(t, FUN, 11.6));
+          elCorpo.setAttribute('opacity', f2(1 - 0.55 * grau));
+          elCorpo.setAttribute('fill', M.mixCor('#334155', '#14532d', grau));
+          var partes = elCorpo.querySelectorAll('path, circle');
+          for (var pp = 0; pp < partes.length; pp++) {
+            if (partes[pp].getAttribute('stroke') === '#64748b') {
+              partes[pp].setAttribute('stroke', M.mixCor('#64748b', '#4ade80', grau * 0.7));
+            }
+            if (partes[pp].getAttribute('fill') === '#334155') {
+              partes[pp].setAttribute('fill', M.mixCor('#334155', '#14532d', grau));
+            }
+          }
+
+          // checklist: tenta preencher e falha
+          for (var r = 0; r < 3; r++) {
+            var ini = inicios[r];
+            var fal = falhas[r];
+            var tenta = suave(faixa(t, ini, ini + 0.75));
+            var cai = suave(faixa(t, fal, fal + 0.45));
+            var p = tenta * (1 - cai);
+            var larg = 350 * p;
+
+            bar[r].setAttribute('width', f2(larg));
+            bar[r].setAttribute('fill', cai > 0.4 ? '#ef4444' : '#f59e0b');
+            pct[r].textContent = Math.round(p * 100) + '%';
+            pct[r].setAttribute('fill', cai > 0.4 ? '#f87171' : '#f59e0b');
+
+            if (t < ini) {
+              st[r].textContent = 'AGUARDANDO';
+              st[r].setAttribute('fill', '#64748b');
+            } else if (cai < 0.5) {
+              st[r].textContent = 'TESTANDO';
+              st[r].setAttribute('fill', '#facc15');
+            } else {
+              st[r].textContent = 'FALHA';
+              st[r].setAttribute('fill', '#f87171');
+            }
+          }
+
+          // resumo
+          var falhasOn = t >= FALHA + 0.95 ? 3 : (t >= FALHA + 0.45 ? 2 : (t >= FALHA ? 1 : 0));
+          resumo.textContent = falhasOn + ' DE 3 REQUISITOS FALHARAM';
+          resumo.setAttribute('fill', falhasOn === 3 ? '#f87171' : '#475569');
+        }, { duracao: DUR, offsetGlobal: 27.03 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-a-conta-nao-fecha'] = tl;
+    })();
+  </script>
+</template>

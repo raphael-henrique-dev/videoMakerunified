@@ -1,0 +1,379 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f4-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #060916;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f4-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 1;
+    }
+
+    .f4-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(6, 9, 22, 0.88) 0%,
+        rgba(6, 9, 22, 0.16) 28%,
+        rgba(6, 9, 22, 0.18) 64%,
+        rgba(6, 9, 22, 0.94) 100%
+      );
+    }
+
+    .f4-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f4-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(12, 14, 30, 0.88);
+      border: 1px solid rgba(249, 115, 22, 0.42);
+      border-radius: 14px;
+    }
+
+    .f4-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #fb923c;
+    }
+
+    .f4-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #f87171;
+      letter-spacing: 0.06em;
+    }
+
+    .f4-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(12, 14, 30, 0.86);
+      border-left: 5px solid #f97316;
+      border-radius: 0 18px 18px 0;
+    }
+
+    .f4-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .f4-title-accent {
+      color: #fb923c;
+    }
+
+    .f4-subtitle {
+      font-size: 24px;
+      line-height: 1.38;
+      color: #cbd5e1;
+    }
+
+    .f4-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f4-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(12, 14, 30, 0.90);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      border-radius: 16px;
+    }
+
+    .f4-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #fb923c;
+      margin-bottom: 6px;
+    }
+
+    .f4-metric-val {
+      font-size: 36px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f4-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(40, 12, 10, 0.92);
+      border: 1.5px solid rgba(249, 115, 22, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f4-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fed7aa;
+      letter-spacing: 0.04em;
+    }
+
+    .f4-banner-pill {
+      padding: 6px 16px;
+      background: #fb923c;
+      color: #090d16;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+  
+    /* ── Palco 2D (SVG vetorial + mascote 2D + medidor de sinal) ── */
+    #f4-root .m2-fundo { position: absolute; inset: 0; z-index: 0; background: radial-gradient(circle at 50% 28%, #10264d 0%, #08142a 55%, #050a14 100%); }
+    #f4-root .m2-piso { position: absolute; left: 0; top: 1465px; width: 1080px; height: 455px; z-index: 0; background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%); border-top: 2px solid rgba(56, 189, 248, 0.28); }
+    #f4-root .m2-cena { position: absolute; left: 0; top: 340px; width: 1080px; height: 680px; z-index: 1; }
+    #f4-root .m2-mascote { position: absolute; left: 50px; top: 1490px; width: 300px; height: 420px; z-index: 2; }
+    #f4-root .m2-hud { position: absolute; left: 400px; top: 1510px; width: 612px; height: 300px; z-index: 2; background: rgba(8, 14, 26, 0.9); border: 1px solid rgba(56, 189, 248, 0.32); border-radius: 22px; }
+    </style>
+
+  <div id="f4-root" data-composition-id="frame-04-vilao-microondas" data-width="1080" data-height="1920" data-start="0" data-duration="15.35">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f4-cena" class="m2-cena"></div>
+    <div id="f4-mascote" class="m2-mascote"></div>
+    <div id="f4-hud" class="m2-hud"></div>
+
+    <div class="f4-ui-layer">
+      <div id="f4-topbar" class="f4-topbar">
+        <span class="f4-kicker">ERRO 03 // QUANDO ESQUENTA O PRATO</span>
+        <span class="f4-badge">MESMO RITMO</span>
+      </div>
+
+      <div id="f4-header" class="f4-header-card">
+        <h1 class="f4-title">O Vilão do <span class="f4-title-accent">Micro-ondas</span></h1>
+        <p class="f4-subtitle">Ele esquenta a comida sacudindo a água no mesmo ritmo que o roteador usa para mandar internet</p>
+      </div>
+
+      <div id="f4-telemetry" class="f4-telemetry-row">
+        <div class="f4-metric-box">
+          <div class="f4-metric-label">QUANDO LIGA NA COZINHA</div>
+          <div class="f4-metric-val">Buzina no Ar</div>
+        </div>
+        <div class="f4-metric-box">
+          <div class="f4-metric-label">NA CHAMADA DE VÍDEO</div>
+          <div class="f4-metric-val">Voz Cortando</div>
+        </div>
+      </div>
+
+      <div id="f4-banner" class="f4-banner" style="opacity: 0;">
+        <span class="f4-banner-text">É IGUAL CONVERSAR COM UM CAMINHÃO BUZINANDO DO SEU LADO</span>
+        <span class="f4-banner-pill">RUÍDO FORTE</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 15.35;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f4-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f4-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f4-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 5.50);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, clamp = M.clamp, mix = M.mixCor, f2 = M.f2;
+        // Cena 4 — O vilão do micro-ondas (anéis vermelhos colidem com o Wi-Fi; chamada de vídeo trava)
+        function caminhao() {
+          return G({ id: 's4-truck' },
+            T('rect', { x: 0, y: -84, width: 130, height: 84, rx: 8, fill: '#f59e0b', stroke: '#b45309', 'stroke-width': 4 }) +
+            T('rect', { x: -66, y: -62, width: 66, height: 62, rx: 10, fill: '#ef4444', stroke: '#991b1b', 'stroke-width': 4 }) +
+            T('rect', { x: -56, y: -52, width: 34, height: 26, rx: 5, fill: '#bae6fd' }) +
+            T('circle', { cx: -34, cy: 0, r: 17, fill: '#0f172a' }) + T('circle', { cx: -34, cy: 0, r: 7, fill: '#94a3b8' }) +
+            T('circle', { cx: 24, cy: 0, r: 17, fill: '#0f172a' }) + T('circle', { cx: 24, cy: 0, r: 7, fill: '#94a3b8' }) +
+            T('circle', { cx: 96, cy: 0, r: 17, fill: '#0f172a' }) + T('circle', { cx: 96, cy: 0, r: 7, fill: '#94a3b8' }) +
+            G({ id: 's4-buzina' }, T('path', { d: M.arco(-70, -40, 26, 150, 210), stroke: '#fde047', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }) +
+              T('path', { d: M.arco(-70, -40, 46, 150, 210), stroke: '#fde047', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }) +
+              T('path', { d: M.arco(-70, -40, 66, 150, 210), stroke: '#fde047', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' })));
+        }
+        var svg = M.svgBase(1080, 680,
+          '<defs>' +
+          '<clipPath id="s4-casa"><rect x="30" y="30" width="1020" height="600" rx="26"/></clipPath>' +
+          '<linearGradient id="s4-cozinha" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2236"/><stop offset="1" stop-color="#2a1a2c"/></linearGradient>' +
+          '</defs>' +
+          G({ 'clip-path': 'url(#s4-casa)' },
+            T('rect', { x: 30, y: 30, width: 460, height: 600, fill: 'url(#s4-cozinha)' }) +
+            T('rect', { x: 490, y: 30, width: 560, height: 600, fill: '#14233f' }) +
+            T('rect', { x: 30, y: 600, width: 1020, height: 30, fill: '#0c1a33' }) +
+            // azulejos da cozinha
+            (function () { var s = ''; for (var i = 0; i < 6; i++) s += T('line', { x1: 30 + i * 80, y1: 40, x2: 30 + i * 80, y2: 300, stroke: '#ffffff', 'stroke-opacity': 0.06, 'stroke-width': 2 }); return s; })() +
+            T('rect', { x: 30, y: 496, width: 460, height: 16, fill: '#d6b98c' }) +
+            T('rect', { x: 30, y: 512, width: 460, height: 90, fill: '#92400e' }) +
+            T('line', { x1: 260, y1: 512, x2: 260, y2: 602, stroke: '#451a03', 'stroke-width': 4 }) +
+            T('rect', { x: 540, y: 236, width: 190, height: 12, rx: 5, fill: '#a16207' }) +
+            M.roteadorSVG(635, 236, 0.7, 's4-r')
+          ) +
+          G({ 'clip-path': 'url(#s4-casa)' }, M.criarOndas('s4-azul', 5, false) + M.criarOndas('s4-vermelho', 6, true)) +
+          // micro-ondas
+          G({ id: 's4-micro' },
+            T('rect', { x: 80, y: 300, width: 340, height: 196, rx: 18, fill: '#cbd5e1', stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('rect', { x: 100, y: 322, width: 210, height: 152, rx: 12, fill: '#0f172a', stroke: '#475569', 'stroke-width': 4 }) +
+            T('rect', { id: 's4-brilho', x: 106, y: 328, width: 198, height: 140, rx: 8, fill: '#fb923c', opacity: 0 }) +
+            T('ellipse', { cx: 205, cy: 452, rx: 80, ry: 12, fill: '#94a3b8' }) +
+            T('path', { d: 'M160 450 Q205 380 250 450 Z', fill: '#f8fafc', 'fill-opacity': 0.9 }) +
+            T('circle', { id: 's4-orb0', r: 5, fill: '#fde047' }) + T('circle', { id: 's4-orb1', r: 5, fill: '#fde047' }) + T('circle', { id: 's4-orb2', r: 5, fill: '#fde047' }) +
+            T('rect', { x: 328, y: 324, width: 78, height: 44, rx: 6, fill: '#0b1220' }) +
+            T('text', { id: 's4-timer', x: 367, y: 356, 'text-anchor': 'middle', fill: '#fb923c', 'font-family': 'Inter, sans-serif', 'font-weight': 700, 'font-size': 26 }, '0:59') +
+            (function () { var s = ''; for (var i = 0; i < 4; i++) s += T('circle', { cx: 367, cy: 396 + i * 24, r: 8, fill: '#64748b' }); return s; })()
+          ) +
+          // celular com chamada de vídeo
+          M.celularSVG(850, 90, 180, 320, 's4-cel',
+            T('rect', { x: 24, y: 40, width: 132, height: 170, rx: 14, fill: '#1e3a8a' }) +
+            G({ id: 's4-rosto' }, T('circle', { cx: 90, cy: 108, r: 36, fill: '#fcd34d' }) + T('circle', { cx: 77, cy: 102, r: 4.5, fill: '#0f172a' }) + T('circle', { cx: 103, cy: 102, r: 4.5, fill: '#0f172a' }) + T('path', { d: 'M76 122 Q90 134 104 122', stroke: '#0f172a', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }) + T('rect', { x: 52, y: 146, width: 76, height: 64, rx: 24, fill: '#38bdf8' })) +
+            (function () { var s = ''; for (var i = 0; i < 6; i++) s += T('rect', { id: 's4-gl' + i, x: 24, y: 60 + i * 24, width: 132, height: 9, fill: i % 2 ? '#22d3ee' : '#f472b6', opacity: 0 }); return s; })() +
+            T('rect', { x: 24, y: 224, width: 52, height: 42, rx: 8, fill: '#334155' }) +
+            T('circle', { cx: 112, cy: 260, r: 16, fill: '#ef4444' }) +
+            G({ id: 's4-spinw', opacity: 0 }, T('circle', { cx: 90, cy: 125, r: 44, fill: '#000', 'fill-opacity': 0.5 }) + T('circle', { id: 's4-spin', cx: 90, cy: 125, r: 26, fill: 'none', stroke: '#fff', 'stroke-width': 8, 'stroke-linecap': 'round', 'stroke-dasharray': '96 68' }))
+          ) +
+          // colisão
+          G({ id: 's4-boom', opacity: 0 }, T('path', { d: 'M0 -62 L16 -22 L58 -30 L28 0 L58 30 L16 22 L0 62 L-16 22 L-58 30 L-28 0 L-58 -30 L-16 -22 Z', fill: '#fde047', stroke: '#f97316', 'stroke-width': 5 })) +
+          G({ id: 's4-truckg', opacity: 0 }, caminhao()) +
+          T('rect', { x: 30, y: 30, width: 1020, height: 600, rx: 26, fill: 'none', stroke: '#3b5b8c', 'stroke-width': 4 })
+        );
+        M.montar('#f4-cena', svg);
+        var cena = M.pegar('#f4-cena');
+        var azul = M.pegarLista(cena, 's4-azul', 5), verm = M.pegarLista(cena, 's4-vermelho', 6);
+        var micro = M.pegar(cena, '#s4-micro'), brilho = M.pegar(cena, '#s4-brilho'), timer = M.pegar(cena, '#s4-timer');
+        var orb = [M.pegar(cena, '#s4-orb0'), M.pegar(cena, '#s4-orb1'), M.pegar(cena, '#s4-orb2')];
+        var rosto = M.pegar(cena, '#s4-rosto'), spinW = M.pegar(cena, '#s4-spinw'), spin = M.pegar(cena, '#s4-spin');
+        var boom = M.pegar(cena, '#s4-boom'), truck = M.pegar(cena, '#s4-truckg'), truckInner = M.pegar(cena, '#s4-truck'), buzina = M.pegar(cena, '#s4-buzina');
+        var gl = []; for (var gi = 0; gi < 6; gi++) gl.push(M.pegar(cena, '#s4-gl' + gi));
+        var boy = M.mascote('#f4-mascote');
+        var hud = M.medidor('#f4-hud');
+
+        M.conectar(tl, function (t, og) {
+          var on = suave(faixa(t, 1.1, 1.6));       // micro-ondas liga em "liga o micro-ondas"
+          var tx = Math.sin(t * 72) * 2.4 * on, ty = Math.cos(t * 83) * 1.6 * on;
+          micro.setAttribute('transform', 'translate(' + f2(tx) + ' ' + f2(ty) + ')');
+          brilho.setAttribute('opacity', f2(on * (0.55 + 0.25 * Math.sin(t * 9))));
+          var seg = Math.max(0, 59 - Math.floor(Math.max(0, t - 1.4)));
+          timer.textContent = '0:' + (seg < 10 ? '0' : '') + seg;
+          for (var i = 0; i < 3; i++) {
+            var a = t * 3.2 + i * 2.094;
+            orb[i].setAttribute('cx', f2(205 + 66 * Math.cos(a))); orb[i].setAttribute('cy', f2(438 + 9 * Math.sin(a)));
+            orb[i].setAttribute('opacity', f2(on));
+          }
+          // anéis vermelhos do micro-ondas
+          M.animarOndas(verm, 250, 400, t, {
+            periodo: 1.6, r0: 40, rMax: 760, circulo: true, largura: 8,
+            cor: function (r, ph) { return mix('#ef4444', '#f97316', ph); },
+            opac: function (r, ph) { return 0.9 * Math.pow(1 - ph, 0.7) * on; }
+          });
+          // Wi-Fi azul do roteador
+          M.animarOndas(azul, 635, 200, t, {
+            periodo: 2.2, r0: 30, rMax: 380, a0: -38, a1: 38, largura: 7, cor: '#38bdf8',
+            opac: function (r, ph) { return 0.95 * (1 - ph); }
+          });
+          M.piscarLeds(cena, 's4-r', t, on > 0.5 ? '#ef4444' : '#22c55e');
+          // colisão
+          var pulso = 0.75 + 0.25 * Math.sin(t * 14);
+          boom.setAttribute('opacity', f2(on * pulso));
+          boom.setAttribute('transform', 'translate(' + f2(682 + Math.sin(t * 31) * 3) + ' 310) scale(' + f2(0.65 + 0.35 * pulso) + ') rotate(' + f2(t * 40) + ')');
+          // chamada trava (glitch)
+          var q = Math.floor(t * 14);
+          for (var g = 0; g < 6; g++) {
+            var vis = M.ruido(q * 7 + g * 3) > 0.45 ? 1 : 0;
+            gl[g].setAttribute('opacity', f2(vis * 0.75 * on));
+            gl[g].setAttribute('transform', 'translate(' + f2((M.ruido(q + g) - 0.5) * 34 * on) + ' 0)');
+          }
+          rosto.setAttribute('transform', 'translate(' + f2((M.ruido(q * 3) - 0.5) * 12 * on) + ' ' + f2((M.ruido(q * 5) - 0.5) * 6 * on) + ')');
+          var trava = suave(faixa(t, 3.7, 4.2));
+          spinW.setAttribute('opacity', f2(trava));
+          spin.setAttribute('transform', 'rotate(' + f2(t * 430) + ' 90 125)');
+          // caminhão buzinando (segunda frase)
+          var ent = suave(faixa(t, 6.1, 7.4));
+          truck.setAttribute('opacity', f2(ent > 0.01 ? 1 : 0));
+          truck.setAttribute('transform', 'translate(' + f2(lerp(1260, 700, ent)) + ' 604) scale(0.95)');
+          truckInner.setAttribute('transform', 'translate(0 ' + f2(Math.sin(t * 24) * 1.6 * ent) + ')');
+          buzina.setAttribute('opacity', f2(ent * (Math.sin(t * 9) > -0.2 ? 1 : 0.15)));
+          var nivel = 3.8 - 2.6 * suave(faixa(t, 1.6, 2.7)) - 0.4 * suave(faixa(t, 3.7, 4.4));
+          hud.atualizar(nivel, 'QUALIDADE DA CHAMADA');
+          var fase2 = t >= 6.1;
+          boy.atualizar(t, og, {
+            humor: fase2 ? 'bravo' : 'surpreso',
+            bracoD: fase2 ? 168 : 70, bracoE: fase2 ? 168 : 12,
+            inclinar: fase2 ? -5 : 0, tremer: fase2 ? 0.9 : 0, olhar: [4, -3]
+          });
+        }, { duracao: DUR, offsetGlobal: 50.35 });
+
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-vilao-microondas'] = tl;
+    })();
+  </script>
+</template>

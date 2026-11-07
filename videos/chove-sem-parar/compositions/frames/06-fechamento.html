@@ -1,0 +1,98 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f6-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f6-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f6-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f6-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f6-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f6-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f6-title { font-family:'EB Garamond',serif; font-size:52px; font-weight:700; line-height:1.08; color:#f8fafc; margin-bottom:8px; }
+    .f6-title-accent { color:#38bdf8; }
+    .f6-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    #f6-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 50% 30%, #1b3a5c 0%, #08142a 55%, #050a14 100%); }
+    #f6-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f6-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f6-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f6-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+    .f6-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f6-banner-text { font-size:20px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f6-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+  </style>
+
+  <div id="f6-root" data-composition-id="frame-06-fechamento" data-width="1080" data-height="1920" data-start="72.00" data-duration="15.70">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f6-cena" class="m2-cena"></div>
+    <div id="f6-mascote" class="m2-mascote"></div>
+    <div id="f6-hud" class="m2-hud"></div>
+
+    <div class="f6-ui-layer">
+      <div id="f6-topbar" class="f6-topbar">
+        <span class="f6-kicker">POR FORA E POR DENTRO // CURIORISANDO</span>
+        <span class="f6-badge">SEGUE O CANAL</span>
+      </div>
+      <div id="f6-header" class="f6-header-card">
+        <h1 class="f6-title">Por Fora, Parece So Chuva. Por Dentro, e...</h1>
+        <p class="f6-subtitle">A cidade inteira testando o limite do escoamento.</p>
+      </div>
+      <div id="f6-banner" class="f6-banner" style="opacity: 0;">
+        <span class="f6-banner-text">POR FORA E SO CHUVA. POR DENTRO E O LIMITE DO ESCOAMENTO.</span>
+        <span class="f6-banner-pill">CURIORISANDO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 15.70;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f6-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f6-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f6-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 11.2);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+        var cidade = '';
+        var predios = [120, 260, 420, 600, 760, 920];
+        predios.forEach(function (x, i) {
+          var h = 180 + M.ruido(i) * 140;
+          cidade += T('rect', { x: x, y: 440 - h, width: 100, height: h, fill: '#0f172a', stroke: '#1e293b', 'stroke-width': 2, rx: 4 });
+          var janelas = '';
+          for (var r = 0; r < 4; r++) {
+            for (var c = 0; c < 3; c++) {
+              janelas += T('rect', { x: x + 12 + c * 32, y: 440 - h + 14 + r * 26, width: 20, height: 14, rx: 2, fill: '#facc15', 'fill-opacity': M.ruido(i * 7 + r) > 0.5 ? 0.9 : 0.25 });
+            }
+          }
+          cidade += janelas;
+        });
+        var chuva = '';
+        for (var i = 0; i < 15; i++) {
+          chuva += T('line', { x1: f2(M.ruido(i) * 1080), y1: f2(-20 + i * 40), x2: f2(M.ruido(i) * 1080 + 6), y2: f2(20 + i * 40), stroke: '#7dd3fc', 'stroke-width': 2, 'stroke-opacity': 0.5 });
+        }
+        var txt = T('text', { x: 540, y: 320, 'text-anchor': 'middle', 'font-family': "'Inter',sans-serif", 'font-size': '34', 'font-weight': '700', fill: '#f8fafc', 'fill-opacity': 0.9 }, 'ESCOAMENTO FUNCIONANDO');
+        var svg = M.svgBase(1080, 630,
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: '#0b1220' }) +
+          chuva + cidade + txt
+        );
+        M.montar('#f6-cena', svg);
+        var boy = M.mascote('#f6-mascote');
+        var hud = M.medidorBarra('#f6-hud', { rotulo: 'SEGUE O CANAL', unidade: '', max: 100, cor: '#38bdf8', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.6, 13.0));
+          hud.atualizar(100, u > 0.7 ? 'CURIORISANDO' : 'O LIMITE DO ESCOAMENTO', u > 0.7 ? '#f59e0b' : '#38bdf8');
+          boy.atualizar(t, og, { humor: t < 4.0 ? 'neutro' : 'feliz', bracoD: t < 3 ? 40 : 120, bracoE: 8, olhar: [0, -10], inclinar: 0 });
+        }, { duracao: DUR, offsetGlobal: 51.86 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-06-fechamento'] = tl;
+    })();
+  </script>
+</template>

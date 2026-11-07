@@ -1,0 +1,156 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #captions-comp {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .caption-bar {
+      position: absolute;
+      left: 64px;
+      right: 64px;
+      top: 1350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .caption-pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px 14px;
+      padding: 18px 30px;
+      background: rgba(6, 11, 22, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.32);
+      border-radius: 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65);
+      min-height: 76px;
+      max-width: 940px;
+    }
+
+    .cap-word {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #94a3b8;
+    }
+
+    .cap-word.is-spoken {
+      color: #f8fafc;
+    }
+
+    .cap-word.is-active {
+      color: #38bdf8;
+      text-shadow: 0 0 22px rgba(56, 189, 248, 0.55);
+    }
+
+    .cap-word.cap-brand.is-spoken {
+      color: #fbbf24;
+    }
+
+    .cap-word.cap-brand.is-active {
+      color: #facc15;
+      text-shadow: 0 0 24px rgba(250, 204, 21, 0.65);
+    }
+  </style>
+
+  <div id="captions-comp" data-composition-id="captions" data-width="1080" data-height="1920" data-start="0" data-duration="89.13">
+    <div class="caption-bar">
+      <div id="caption-pill" class="caption-pill" style="opacity: 0;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var GROUPS = [{"frameId":"frame-01-dia-1","plano":"PA","start":0.12,"end":1.374,"words":[{"word":"E","start":0.12,"end":0.201,"brand":false},{"word":"se,","start":0.306,"end":0.561,"brand":false},{"word":"num","start":0.619,"end":0.782,"brand":false},{"word":"estalo,","start":0.851,"end":1.327,"brand":true}]},{"frameId":"frame-01-dia-1","plano":"PA","start":1.374,"end":3.197,"words":[{"word":"toda","start":1.374,"end":1.664,"brand":false},{"word":"a","start":1.687,"end":1.711,"brand":false},{"word":"humanidade","start":1.78,"end":2.326,"brand":false},{"word":"desaparecesse","start":2.372,"end":3.15,"brand":false}]},{"frameId":"frame-01-dia-1","plano":"PA","start":3.197,"end":3.893,"words":[{"word":"da","start":3.197,"end":3.29,"brand":false},{"word":"Terra","start":3.359,"end":3.591,"brand":false},{"word":"de","start":3.638,"end":3.684,"brand":false},{"word":"uma","start":3.707,"end":3.835,"brand":false}]},{"frameId":"frame-01-dia-1","plano":"PA","start":3.893,"end":4.983,"words":[{"word":"vez?","start":3.893,"end":4.903,"brand":false}]},{"frameId":"frame-01-dia-1","plano":"M","start":5.02,"end":6.239,"words":[{"word":"No","start":5.02,"end":5.206,"brand":false},{"word":"dia","start":5.264,"end":5.473,"brand":true},{"word":"1,","start":5.496,"end":5.833,"brand":true},{"word":"as","start":6.03,"end":6.169,"brand":false}]},{"frameId":"frame-01-dia-1","plano":"M","start":6.239,"end":7.493,"words":[{"word":"luzes","start":6.239,"end":6.506,"brand":false},{"word":"ainda","start":6.564,"end":6.831,"brand":false},{"word":"brilham","start":6.901,"end":7.307,"brand":false},{"word":"e","start":7.377,"end":7.446,"brand":false}]},{"frameId":"frame-01-dia-1","plano":"M","start":7.493,"end":9.338,"words":[{"word":"as","start":7.493,"end":7.597,"brand":false},{"word":"máquinas","start":7.667,"end":8.073,"brand":false},{"word":"continuam","start":8.143,"end":8.689,"brand":false},{"word":"rodando.","start":8.747,"end":9.258,"brand":false}]},{"frameId":"frame-01-dia-1","plano":"M","start":9.618,"end":10.871,"words":[{"word":"Mas","start":9.618,"end":9.827,"brand":false},{"word":"ninguém","start":9.885,"end":10.291,"brand":false},{"word":"mais","start":10.361,"end":10.57,"brand":false},{"word":"está","start":10.628,"end":10.813,"brand":false}]},{"frameId":"frame-01-dia-1","plano":"M","start":10.871,"end":11.973,"words":[{"word":"no","start":10.871,"end":10.929,"brand":false},{"word":"comando.","start":10.976,"end":11.893,"brand":true}]},{"frameId":"frame-02-energia","plano":"M","start":12.64,"end":13.464,"words":[{"word":"A","start":12.64,"end":12.698,"brand":false},{"word":"primeira","start":12.756,"end":13.046,"brand":false},{"word":"coisa","start":13.104,"end":13.36,"brand":false},{"word":"a","start":13.395,"end":13.418,"brand":false}]},{"frameId":"frame-02-energia","plano":"M","start":13.464,"end":14.659,"words":[{"word":"cair","start":13.464,"end":13.778,"brand":false},{"word":"é","start":13.813,"end":13.836,"brand":false},{"word":"a","start":13.859,"end":13.894,"brand":false},{"word":"energia.","start":13.94,"end":14.579,"brand":true}]},{"frameId":"frame-02-energia","plano":"M","start":14.985,"end":16.123,"words":[{"word":"Sem","start":14.985,"end":15.194,"brand":false},{"word":"gente","start":15.252,"end":15.519,"brand":false},{"word":"pra","start":15.554,"end":15.659,"brand":false},{"word":"alimentar","start":15.682,"end":16.077,"brand":false}]},{"frameId":"frame-02-energia","plano":"M","start":16.123,"end":17.596,"words":[{"word":"as","start":16.123,"end":16.169,"brand":false},{"word":"turbinas,","start":16.216,"end":16.866,"brand":false},{"word":"as","start":17.005,"end":17.11,"brand":false},{"word":"usinas","start":17.18,"end":17.516,"brand":false}]},{"frameId":"frame-02-energia","plano":"M","start":17.597,"end":18.677,"words":[{"word":"param","start":17.597,"end":17.899,"brand":false},{"word":"uma","start":17.981,"end":18.19,"brand":false},{"word":"atrás","start":18.213,"end":18.491,"brand":false},{"word":"da","start":18.538,"end":18.608,"brand":false}]},{"frameId":"frame-02-energia","plano":"M","start":18.677,"end":19.454,"words":[{"word":"outra.","start":18.677,"end":19.374,"brand":false}]},{"frameId":"frame-02-energia","plano":"PA","start":19.489,"end":20.882,"words":[{"word":"Em","start":19.489,"end":19.64,"brand":false},{"word":"poucas","start":19.698,"end":20.023,"brand":false},{"word":"horas,","start":20.093,"end":20.546,"brand":false},{"word":"a","start":20.743,"end":20.813,"brand":false}]},{"frameId":"frame-02-energia","plano":"PA","start":20.882,"end":22.542,"words":[{"word":"rede","start":20.882,"end":21.091,"brand":false},{"word":"inteira","start":21.114,"end":21.532,"brand":false},{"word":"apaga,","start":21.602,"end":22.194,"brand":true},{"word":"e","start":22.391,"end":22.496,"brand":false}]},{"frameId":"frame-02-energia","plano":"PA","start":22.542,"end":23.634,"words":[{"word":"o","start":22.542,"end":22.566,"brand":false},{"word":"planeta","start":22.612,"end":22.984,"brand":false},{"word":"mergulha","start":23.03,"end":23.425,"brand":false},{"word":"num","start":23.46,"end":23.576,"brand":false}]},{"frameId":"frame-02-energia","plano":"PA","start":23.634,"end":24.888,"words":[{"word":"silêncio","start":23.634,"end":24.133,"brand":false},{"word":"que","start":24.272,"end":24.365,"brand":false},{"word":"não","start":24.412,"end":24.516,"brand":false},{"word":"existe","start":24.551,"end":24.864,"brand":false}]},{"frameId":"frame-02-energia","plano":"PA","start":24.888,"end":26.442,"words":[{"word":"há","start":24.888,"end":24.934,"brand":false},{"word":"séculos.","start":25.039,"end":26.362,"brand":true}]},{"frameId":"frame-03-agua","plano":"PA","start":27.06,"end":29.079,"words":[{"word":"Sem","start":27.06,"end":27.304,"brand":false},{"word":"eletricidade,","start":27.362,"end":28.267,"brand":false},{"word":"as","start":28.43,"end":28.569,"brand":false},{"word":"bombas","start":28.639,"end":28.999,"brand":true}]},{"frameId":"frame-03-agua","plano":"PA","start":29.103,"end":30.24,"words":[{"word":"param","start":29.103,"end":29.37,"brand":false},{"word":"de","start":29.417,"end":29.475,"brand":false},{"word":"subir","start":29.521,"end":29.777,"brand":false},{"word":"água.","start":29.823,"end":30.16,"brand":false}]},{"frameId":"frame-03-agua","plano":"PA","start":30.52,"end":31.611,"words":[{"word":"A","start":30.52,"end":30.578,"brand":false},{"word":"torneira","start":30.647,"end":31.007,"brand":false},{"word":"que","start":31.054,"end":31.123,"brand":false},{"word":"jorrava","start":31.182,"end":31.576,"brand":false}]},{"frameId":"frame-03-agua","plano":"PA","start":31.611,"end":32.54,"words":[{"word":"na","start":31.611,"end":31.681,"brand":false},{"word":"sua","start":31.727,"end":31.901,"brand":false},{"word":"casa","start":31.948,"end":32.215,"brand":false},{"word":"fica","start":32.261,"end":32.482,"brand":false}]},{"frameId":"frame-03-agua","plano":"PA","start":32.54,"end":33.409,"words":[{"word":"seca.","start":32.54,"end":33.329,"brand":true}]},{"frameId":"frame-03-agua","plano":"M","start":33.443,"end":34.65,"words":[{"word":"E","start":33.443,"end":33.571,"brand":false},{"word":"o","start":33.617,"end":33.64,"brand":false},{"word":"pior:","start":33.698,"end":34.116,"brand":false},{"word":"sem","start":34.372,"end":34.592,"brand":false}]},{"frameId":"frame-03-agua","plano":"M","start":34.65,"end":36.205,"words":[{"word":"as","start":34.65,"end":34.732,"brand":false},{"word":"estações","start":34.801,"end":35.277,"brand":false},{"word":"de","start":35.301,"end":35.359,"brand":false},{"word":"tratamento,","start":35.393,"end":36.125,"brand":true}]},{"frameId":"frame-03-agua","plano":"M","start":36.206,"end":37.274,"words":[{"word":"o","start":36.206,"end":36.276,"brand":false},{"word":"esgoto","start":36.322,"end":36.694,"brand":false},{"word":"volta","start":36.763,"end":37.054,"brand":false},{"word":"pro","start":37.089,"end":37.228,"brand":false}]},{"frameId":"frame-03-agua","plano":"M","start":37.274,"end":38.261,"words":[{"word":"rio,","start":37.274,"end":37.588,"brand":false},{"word":"e","start":37.75,"end":37.866,"brand":false},{"word":"a","start":37.936,"end":37.971,"brand":false},{"word":"água","start":38.017,"end":38.226,"brand":false}]},{"frameId":"frame-03-agua","plano":"M","start":38.261,"end":39.12,"words":[{"word":"que","start":38.261,"end":38.354,"brand":false},{"word":"sobra","start":38.424,"end":38.749,"brand":false},{"word":"vira","start":38.795,"end":38.969,"brand":false},{"word":"um","start":38.993,"end":39.051,"brand":false}]},{"frameId":"frame-03-agua","plano":"M","start":39.12,"end":40.814,"words":[{"word":"caldo","start":39.12,"end":39.399,"brand":false},{"word":"perigoso.","start":39.445,"end":40.734,"brand":true}]},{"frameId":"frame-04-natureza","plano":"M","start":41.44,"end":42.961,"words":[{"word":"Na","start":41.44,"end":41.626,"brand":false},{"word":"segunda","start":41.684,"end":42.044,"brand":false},{"word":"semana,","start":42.09,"end":42.705,"brand":false},{"word":"os","start":42.81,"end":42.914,"brand":false}]},{"frameId":"frame-04-natureza","plano":"M","start":42.961,"end":43.936,"words":[{"word":"animais","start":42.961,"end":43.24,"brand":true},{"word":"percebem","start":43.298,"end":43.739,"brand":false},{"word":"que","start":43.785,"end":43.855,"brand":false},{"word":"o","start":43.878,"end":43.901,"brand":false}]},{"frameId":"frame-04-natureza","plano":"M","start":43.936,"end":47.07,"words":[{"word":"barulho","start":43.936,"end":44.296,"brand":false},{"word":"sumiu.","start":44.354,"end":44.807,"brand":false},{"word":"Capivaras,","start":45.283,"end":46.177,"brand":false},{"word":"raposas","start":46.258,"end":46.99,"brand":false}]},{"frameId":"frame-04-natureza","plano":"M","start":47.187,"end":48.522,"words":[{"word":"e","start":47.187,"end":47.349,"brand":false},{"word":"até","start":47.396,"end":47.593,"brand":false},{"word":"onças","start":47.698,"end":48.093,"brand":true},{"word":"voltam","start":48.162,"end":48.464,"brand":false}]},{"frameId":"frame-04-natureza","plano":"M","start":48.522,"end":50.483,"words":[{"word":"a","start":48.522,"end":48.545,"brand":false},{"word":"circular","start":48.592,"end":49.01,"brand":false},{"word":"pelas","start":49.056,"end":49.277,"brand":false},{"word":"ruas.","start":49.323,"end":50.403,"brand":false}]},{"frameId":"frame-04-natureza","plano":"PA","start":50.514,"end":51.907,"words":[{"word":"As","start":50.514,"end":50.688,"brand":false},{"word":"plantas","start":50.758,"end":51.106,"brand":true},{"word":"brotam","start":51.176,"end":51.547,"brand":false},{"word":"pelas","start":51.594,"end":51.838,"brand":false}]},{"frameId":"frame-04-natureza","plano":"PA","start":51.907,"end":53.475,"words":[{"word":"rachaduras","start":51.907,"end":52.453,"brand":false},{"word":"do","start":52.499,"end":52.557,"brand":false},{"word":"asfalto,","start":52.605,"end":53.103,"brand":false},{"word":"e","start":53.325,"end":53.428,"brand":false}]},{"frameId":"frame-04-natureza","plano":"PA","start":53.475,"end":54.474,"words":[{"word":"a","start":53.475,"end":53.498,"brand":false},{"word":"cidade","start":53.533,"end":53.916,"brand":false},{"word":"começa","start":53.974,"end":54.369,"brand":false},{"word":"a","start":54.404,"end":54.427,"brand":false}]},{"frameId":"frame-04-natureza","plano":"PA","start":54.474,"end":55.518,"words":[{"word":"virar","start":54.474,"end":54.74,"brand":false},{"word":"uma","start":54.776,"end":54.88,"brand":false},{"word":"floresta","start":54.926,"end":55.367,"brand":true},{"word":"de","start":55.402,"end":55.471,"brand":false}]},{"frameId":"frame-04-natureza","plano":"PA","start":55.518,"end":57.885,"words":[{"word":"concreto","start":55.518,"end":55.959,"brand":false},{"word":"tomada","start":55.995,"end":56.343,"brand":false},{"word":"pelo","start":56.377,"end":56.54,"brand":false},{"word":"verde.","start":56.599,"end":57.805,"brand":false}]},{"frameId":"frame-05-ceu","plano":"PA","start":58.51,"end":60.066,"words":[{"word":"No","start":58.51,"end":58.696,"brand":false},{"word":"dia","start":58.765,"end":58.963,"brand":true},{"word":"30,","start":59.067,"end":59.532,"brand":true},{"word":"sem","start":59.752,"end":59.996,"brand":false}]},{"frameId":"frame-05-ceu","plano":"PA","start":60.066,"end":61.935,"words":[{"word":"luzes","start":60.066,"end":60.356,"brand":false},{"word":"artificiais,","start":60.426,"end":61.308,"brand":false},{"word":"o","start":61.61,"end":61.691,"brand":false},{"word":"céu","start":61.726,"end":61.9,"brand":false}]},{"frameId":"frame-05-ceu","plano":"PA","start":61.935,"end":63.247,"words":[{"word":"noturno","start":61.935,"end":62.341,"brand":false},{"word":"volta","start":62.411,"end":62.748,"brand":false},{"word":"a","start":62.771,"end":62.794,"brand":false},{"word":"mostrar","start":62.841,"end":63.189,"brand":false}]},{"frameId":"frame-05-ceu","plano":"PA","start":63.247,"end":64.303,"words":[{"word":"milhares","start":63.247,"end":63.653,"brand":true},{"word":"de","start":63.688,"end":63.734,"brand":false},{"word":"estrelas","start":63.758,"end":64.152,"brand":false},{"word":"que","start":64.21,"end":64.28,"brand":false}]},{"frameId":"frame-05-ceu","plano":"PA","start":64.303,"end":66.299,"words":[{"word":"a","start":64.303,"end":64.338,"brand":false},{"word":"cidade","start":64.373,"end":64.698,"brand":false},{"word":"escondia.","start":64.721,"end":66.219,"brand":false}]},{"frameId":"frame-05-ceu","plano":"M","start":66.333,"end":67.924,"words":[{"word":"Os","start":66.333,"end":66.507,"brand":false},{"word":"satélites","start":66.53,"end":67.064,"brand":true},{"word":"continuam","start":67.122,"end":67.494,"brand":false},{"word":"girando","start":67.564,"end":67.877,"brand":false}]},{"frameId":"frame-05-ceu","plano":"M","start":67.924,"end":69.584,"words":[{"word":"vazios,","start":67.924,"end":68.736,"brand":false},{"word":"e","start":68.957,"end":69.061,"brand":false},{"word":"os","start":69.108,"end":69.212,"brand":false},{"word":"data","start":69.27,"end":69.526,"brand":false}]},{"frameId":"frame-05-ceu","plano":"M","start":69.584,"end":72.022,"words":[{"word":"centers,","start":69.584,"end":70.071,"brand":false},{"word":"sem","start":70.141,"end":70.35,"brand":false},{"word":"refrigeração,","start":70.408,"end":71.325,"brand":false},{"word":"cozinham","start":71.546,"end":71.975,"brand":false}]},{"frameId":"frame-05-ceu","plano":"M","start":72.022,"end":73.369,"words":[{"word":"servidores","start":72.022,"end":72.649,"brand":true},{"word":"e","start":72.753,"end":72.811,"brand":false},{"word":"apagam","start":72.869,"end":73.276,"brand":false},{"word":"a","start":73.311,"end":73.334,"brand":false}]},{"frameId":"frame-05-ceu","plano":"M","start":73.369,"end":74.772,"words":[{"word":"internet.","start":73.369,"end":74.692,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":75.39,"end":76.447,"words":[{"word":"Por","start":75.39,"end":75.599,"brand":false},{"word":"fora,","start":75.669,"end":75.97,"brand":false},{"word":"parece","start":76.005,"end":76.33,"brand":false},{"word":"o","start":76.354,"end":76.377,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":76.447,"end":77.828,"words":[{"word":"fim","start":76.447,"end":76.621,"brand":true},{"word":"do","start":76.667,"end":76.737,"brand":true},{"word":"mundo.","start":76.795,"end":77.224,"brand":true},{"word":"Por","start":77.584,"end":77.758,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":77.828,"end":78.838,"words":[{"word":"dentro,","start":77.828,"end":78.246,"brand":false},{"word":"é","start":78.443,"end":78.525,"brand":false},{"word":"só","start":78.594,"end":78.757,"brand":false},{"word":"o","start":78.78,"end":78.803,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":78.838,"end":80.3,"words":[{"word":"planeta","start":78.838,"end":79.175,"brand":false},{"word":"respirando","start":79.221,"end":79.674,"brand":true},{"word":"de","start":79.721,"end":79.779,"brand":false},{"word":"novo,","start":79.825,"end":80.22,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":80.382,"end":82.529,"words":[{"word":"sem","start":80.382,"end":80.614,"brand":false},{"word":"a","start":80.673,"end":80.696,"brand":false},{"word":"gente","start":80.765,"end":80.986,"brand":false},{"word":"atrapalhando.","start":81.009,"end":82.449,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"M","start":82.564,"end":83.702,"words":[{"word":"Pois","start":82.564,"end":82.808,"brand":false},{"word":"é,","start":82.866,"end":83.11,"brand":false},{"word":"o","start":83.33,"end":83.4,"brand":false},{"word":"mundo","start":83.458,"end":83.679,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"M","start":83.702,"end":84.677,"words":[{"word":"é","start":83.702,"end":83.725,"brand":false},{"word":"mais","start":83.806,"end":84.05,"brand":false},{"word":"curioso","start":84.108,"end":84.538,"brand":true},{"word":"do","start":84.573,"end":84.631,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"M","start":84.677,"end":85.873,"words":[{"word":"que","start":84.677,"end":84.747,"brand":false},{"word":"parece!","start":84.793,"end":85.327,"brand":false},{"word":"Se","start":85.49,"end":85.606,"brand":false},{"word":"você","start":85.641,"end":85.838,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"M","start":85.873,"end":86.987,"words":[{"word":"é","start":85.873,"end":85.896,"brand":false},{"word":"curioso,","start":85.943,"end":86.43,"brand":false},{"word":"segue","start":86.569,"end":86.883,"brand":false},{"word":"o","start":86.906,"end":86.941,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"M","start":86.987,"end":88.077,"words":[{"word":"Curiorisando!","start":86.987,"end":87.997,"brand":true}]}];
+      var DURACAO = 89.13;
+      var pill = document.getElementById('caption-pill');
+      var indiceGrupoAtual = -1;
+      var spansPalavras = [];
+
+      function montarGrupo(idx) {
+        if (idx === indiceGrupoAtual) return;
+        indiceGrupoAtual = idx;
+        spansPalavras = [];
+        if (idx < 0 || idx >= GROUPS.length) {
+          pill.style.opacity = '0';
+          pill.innerHTML = '';
+          return;
+        }
+        var g = GROUPS[idx];
+        pill.innerHTML = '';
+        for (var i = 0; i < g.words.length; i++) {
+          var w = g.words[i];
+          var span = document.createElement('span');
+          span.className = 'cap-word' + (w.brand ? ' cap-brand' : '');
+          span.textContent = w.word;
+          pill.appendChild(span);
+          spansPalavras.push(span);
+        }
+        pill.style.opacity = '1';
+      }
+
+      function renderizarLegenda(t) {
+        var idx = -1;
+        for (var i = 0; i < GROUPS.length; i++) {
+          if (t >= GROUPS[i].start && t <= GROUPS[i].end) {
+            idx = i;
+            break;
+          }
+        }
+        montarGrupo(idx);
+        if (idx < 0) return;
+        var g = GROUPS[idx];
+        for (var j = 0; j < g.words.length; j++) {
+          var w = g.words[j];
+          var sp = spansPalavras[j];
+          if (!sp) continue;
+          sp.classList.remove('is-active', 'is-spoken');
+          if (t >= w.start && t <= w.end + 0.04) {
+            sp.classList.add('is-active');
+          } else if (t > w.end + 0.04) {
+            sp.classList.add('is-spoken');
+          }
+        }
+      }
+
+      var tl = gsap.timeline({ paused: true });
+      var proxy = { t: 0 };
+      tl.to(proxy, {
+        t: DURACAO,
+        duration: DURACAO,
+        ease: 'none',
+        onUpdate: function () {
+          renderizarLegenda(proxy.t);
+        }
+      }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['captions'] = tl;
+
+      window.addEventListener('hf-seek', function (ev) {
+        if (ev && ev.detail && typeof ev.detail.time === 'number') {
+          renderizarLegenda(ev.detail.time);
+        }
+      });
+
+      renderizarLegenda(0);
+    })();
+  </script>
+</template>

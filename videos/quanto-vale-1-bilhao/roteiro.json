@@ -1,0 +1,233 @@
+{
+  "id": "quanto-vale-1-bilhao",
+  "titulo": "Quanto Dinheiro Realmente É 1 Bilhão de Reais?",
+  "subtitulo": "A pilha de 1 km, os 8 mil anos de salário e a máquina que rende sozinha: a escala real de um bilhão",
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "fps": 30,
+  "alvoPpm": 180,
+  "modo": "2d",
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.8,
+    "estilo": 0.4,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.22
+  },
+  "efeitos": {
+    "ganho": 1.12
+  },
+  "publicacao": {
+    "titulo": "Quanto dinheiro realmente é 1 bilhão de reais? 💰 #shorts",
+    "descricao": "1 bilhão parece só um número com nove zeros. Mas empilhado em notas de 100, ele passa de 1 km de altura. E o salário? Mais de 8 mil anos guardando. Entenda a escala real de 1 bilhão de reais.",
+    "tags": ["dinheiro", "bilhao", "curiosidades", "economia", "matematica", "financas"],
+    "tiktok_caption": "Quanto é 1 bilhão de reais, de verdade? 💰 A pilha passa de 1 km de altura e o salário levaria 8 mil anos. #curiosidades #dinheiro #bilhao #economia #fyp",
+    "allow_comments": true,
+    "allow_duet": true,
+    "allow_stitch": true
+  },
+  "frames": [
+    {
+      "id": "frame-01-torre",
+      "numero": "01",
+      "titulo": "A Torre de 1 Quilômetro",
+      "arquivo": "compositions/frames/01-torre.html",
+      "kicker": "ESCALA 01 // A PILHA",
+      "metrica": {
+        "rotulo": "ALTURA DA PILHA",
+        "valor": "1.000 m"
+      },
+      "direcao2D": "Torre de cédulas de R$ 100 crescendo ao lado de um arranha-céu, com régua de altura, callout de 10 milhões de notas e o mascote olhando para cima.",
+      "cauda": 0.35,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.4, "ganho": 0.45 },
+        { "nome": "etiqueta", "offset": 1.2, "ganho": 0.45 },
+        { "nome": "baque", "offset": 3.2, "ganho": 0.4 },
+        { "nome": "zap", "offset": 5.4, "ganho": 0.35 },
+        { "nome": "certo", "offset": 8.6, "ganho": 0.5 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "gancho_numero",
+          "gancho": true,
+          "texto": "Quanto é, de verdade, *1 bilhão* de reais? Parece só um número grande com nove *zeros.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "torre_1km",
+          "texto": "Mas empilhe 1 bilhão em notas de *100,* e a torre chega a *1 quilômetro* de altura. Mais alta que o maior prédio do *mundo.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-02-salario",
+      "numero": "02",
+      "titulo": "8.333 Anos de Salário",
+      "arquivo": "compositions/frames/02-salario.html",
+      "kicker": "CONTA 01 // SALÁRIO",
+      "metrica": {
+        "rotulo": "ANOS GUARDANDO",
+        "valor": "8.333"
+      },
+      "direcao2D": "Régua do tempo de 8.333 anos com pirâmides do Egito marcadas no meio, barra de 1 bilhão que só chega a 54% e o mascote apontando para o trecho que falta.",
+      "cauda": 0.3,
+      "sons": [
+        { "nome": "etiqueta", "offset": 0.5, "ganho": 0.45 },
+        { "nome": "clique", "offset": 1.0, "ganho": 0.35 },
+        { "nome": "pedra", "offset": 3.6, "ganho": 0.45 },
+        { "nome": "errado", "offset": 7.4, "ganho": 0.5 },
+        { "nome": "apito", "offset": 9.2, "ganho": 0.35 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "conta_salario",
+          "texto": "Agora tente *juntar* isso com salário. Guardando *10 mil* por mês, sem gastar *nada,* você levaria mais de *8 mil anos.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "piramides",
+          "texto": "Seria preciso começar a poupar quase *4 mil anos* antes das pirâmides do Egito. E só *hoje* você teria o primeiro *bilhão.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-03-contagem",
+      "numero": "03",
+      "titulo": "31 Anos Contando 1 Real por Segundo",
+      "arquivo": "compositions/frames/03-contagem.html",
+      "kicker": "CONTA 02 // CONTAGEM",
+      "metrica": {
+        "rotulo": "ANOS CONTANDO",
+        "valor": "31,7"
+      },
+      "direcao2D": "Relógio gigante com ponteiro varrendo os segundos, contador de cédulas pulsando 1 real por segundo e uma barra de vida de 0 a 80 anos com o trecho dos 10 aos 41 destacado.",
+      "cauda": 0.3,
+      "sons": [
+        { "nome": "clique", "offset": 0.2, "ganho": 0.4 },
+        { "nome": "bip", "offset": 1.4, "ganho": 0.4 },
+        { "nome": "clique", "offset": 2.8, "ganho": 0.35 },
+        { "nome": "zumbido", "offset": 4.6, "dur": 3.2, "ganho": 0.3 },
+        { "nome": "certo", "offset": 8.0, "ganho": 0.45 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "contagem_segundos",
+          "texto": "E se você *contasse* esse dinheiro, um real por segundo, sem parar nem pra *dormir?*"
+        },
+        {
+          "plano": "M",
+          "jogo": "vida_contagem",
+          "texto": "Um bilhão de *segundos* é mais de *31 anos* contando. Você começaria aos *10* e terminaria com mais de *40.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-04-gasto",
+      "numero": "04",
+      "titulo": "1 Milhão por Dia: 1.000 Dias",
+      "arquivo": "compositions/frames/04-gasto.html",
+      "kicker": "CONTA 03 // GASTO",
+      "metrica": {
+        "rotulo": "SALDO DO BILHÃO",
+        "valor": "0"
+      },
+      "direcao2D": "Reservatório de dinheiro esvaziando por uma torneira, cédulas caindo pelo ralo e um mostrador circular marcando 1.000 dias até o saldo zerar.",
+      "cauda": 0.3,
+      "sons": [
+        { "nome": "torneira", "offset": 0.4, "ganho": 0.45 },
+        { "nome": "tampa", "offset": 1.2, "ganho": 0.35 },
+        { "nome": "esguicho", "offset": 3.8, "dur": 2.6, "ganho": 0.35 },
+        { "nome": "desliga", "offset": 7.6, "ganho": 0.55 },
+        { "nome": "errado", "offset": 9.4, "ganho": 0.45 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "gasto_diario",
+          "texto": "Vire a conta do *outro* lado: gastar. Que tal *1 milhão* de reais por dia, todos os dias?"
+        },
+        {
+          "plano": "PA",
+          "jogo": "saldo_zero",
+          "texto": "O bilhão *acaba* em *1.000 dias.* Menos de *três anos* de farra, e a conta volta pro *zero.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-05-maquina",
+      "numero": "05",
+      "titulo": "A Máquina de Dinheiro",
+      "arquivo": "compositions/frames/05-maquina.html",
+      "kicker": "POR DENTRO // RENDIMENTO",
+      "metrica": {
+        "rotulo": "RENDIMENTO MENSAL",
+        "valor": "R$ 10 mi"
+      },
+      "direcao2D": "Máquina com engrenagens girando, cédulas entrando pela esteira e moedas caindo na saída, com selo de 1% ao mês e o valor de 10 milhões por mês.",
+      "cauda": 0.4,
+      "sons": [
+        { "nome": "liga", "offset": 0.3, "ganho": 0.5 },
+        { "nome": "metal", "offset": 1.6, "ganho": 0.45 },
+        { "nome": "turbina", "offset": 2.4, "dur": 4.5, "ganho": 0.3 },
+        { "nome": "ding", "offset": 5.0, "ganho": 0.45 },
+        { "nome": "festa", "offset": 8.6, "ganho": 0.5 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "maquina_engrenagens",
+          "texto": "E aqui está a parte que *muda tudo:* um bilhão parado não é dinheiro grande. É uma *máquina* de dinheiro."
+        },
+        {
+          "plano": "M",
+          "jogo": "rendimento_mensal",
+          "texto": "A *1%* ao mês, ele rende *10 milhões* por mês. Mais do que muita gente junta a vida inteira, *sem* ninguém trabalhar."
+        }
+      ]
+    },
+    {
+      "id": "frame-06-fechamento",
+      "numero": "06",
+      "titulo": "A Escala Real",
+      "arquivo": "compositions/frames/06-fechamento.html",
+      "kicker": "FECHAMENTO // A ESCALA REAL",
+      "metrica": {
+        "rotulo": "CURIORISANDO",
+        "valor": "SEGUE O CANAL"
+      },
+      "direcao2D": "Painel-resumo com quatro cartões (1 km, 8.333 anos, 31,7 anos contando, 1.000 dias gastando), o número 1 bilhão em destaque e o selo final do Curiorisando.",
+      "cauda": 0.9,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.3, "ganho": 0.45 },
+        { "nome": "rotulo", "offset": 1.8, "ganho": 0.45 },
+        { "nome": "etiqueta", "offset": 3.4, "ganho": 0.4 },
+        { "nome": "certo", "offset": 7.8, "ganho": 0.55 },
+        { "nome": "final", "offset": 11.4, "ganho": 0.6 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "resumo_escala",
+          "texto": "Por fora, um bilhão é só *um número* numa tela. Por dentro, é uma *torre* de 1 km, *8 mil anos* de salário e uma máquina que rende *sozinha.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "fechamento_curiorisando",
+          "texto": "Pois é, o mundo é mais *curioso* do que parece! Se você é curioso, segue o *Curiorisando!*"
+        }
+      ]
+    }
+  ]
+}

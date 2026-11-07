@@ -1,0 +1,367 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f5-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    /* ── Palco 2D (SVG vetorial + mascote 2D + HUD) ── */
+    #f5-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 28%, #10264d 0%, #08142a 55%, #050a14 100%);
+    }
+    #f5-root .m2-piso {
+      position: absolute;
+      left: 0;
+      top: 1465px;
+      width: 1080px;
+      height: 455px;
+      z-index: 0;
+      background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%);
+      border-top: 2px solid rgba(56, 189, 248, 0.28);
+    }
+    #f5-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 340px;
+      width: 1080px;
+      height: 680px;
+      z-index: 1;
+    }
+    #f5-root .m2-mascote {
+      position: absolute;
+      left: 50px;
+      top: 1490px;
+      width: 300px;
+      height: 420px;
+      z-index: 2;
+    }
+    #f5-root .m2-hud {
+      position: absolute;
+      left: 400px;
+      top: 1510px;
+      width: 612px;
+      height: 300px;
+      z-index: 2;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 22px;
+    }
+
+    .f5-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(56, 189, 248, 0.05) 0%, rgba(5, 10, 20, 0.60) 75%),
+        linear-gradient(180deg, rgba(5, 10, 20, 0.88) 0%, rgba(5, 10, 20, 0.10) 26%, rgba(5, 10, 20, 0.12) 68%, rgba(5, 10, 20, 0.94) 100%);
+    }
+
+    .f5-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f5-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f5-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+
+    .f5-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f5-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f5-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .f5-title-accent {
+      color: #38bdf8;
+    }
+
+    .f5-subtitle {
+      font-size: 24px;
+      line-height: 1.38;
+      color: #cbd5e1;
+    }
+
+    .f5-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f5-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 16px;
+    }
+
+    .f5-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .f5-metric-val {
+      font-size: 36px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f5-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(40, 10, 14, 0.92);
+      border: 1.5px solid rgba(239, 68, 68, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f5-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fecaca;
+      letter-spacing: 0.04em;
+    }
+
+    .f5-banner-pill {
+      padding: 6px 16px;
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+  </style>
+
+  <div id="f5-root" data-composition-id="frame-05-queda-de-pressao" data-width="1080" data-height="1920" data-start="0" data-duration="17.81">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f5-cena" class="m2-cena"></div>
+    <div id="f5-mascote" class="m2-mascote"></div>
+    <div id="f5-hud" class="m2-hud"></div>
+
+    <div class="f5-ui-layer">
+      <div id="f5-topbar" class="f5-topbar">
+        <span class="f5-kicker">A MENTIRA DA BARRA // MEDIR PRESSÃO</span>
+        <span class="f5-badge">DESPENCA EM 1s</span>
+      </div>
+
+      <div id="f5-header" class="f5-header-card">
+        <h1 class="f5-title">Por Que Apaga nos <span class="f5-title-accent">20%</span>?</h1>
+        <p class="f5-subtitle">O celular não conta energia: ele mede a pressão elétrica. Se você exige muito, ela despenca</p>
+      </div>
+
+      <div id="f5-telemetry" class="f5-telemetry-row">
+        <div class="f5-metric-box">
+          <div class="f5-metric-label">ABRIR CÂMERA OU MAPA</div>
+          <div class="f5-metric-val">Consumo Máximo</div>
+        </div>
+        <div class="f5-metric-box">
+          <div class="f5-metric-label">PRESSÃO ELÉTRICA</div>
+          <div class="f5-metric-val">Corte de Pânico</div>
+        </div>
+      </div>
+
+      <div id="f5-banner" class="f5-banner" style="opacity: 0;">
+        <span class="f5-banner-text">O CHIP DESLIGA O CELULAR PARA EVITAR QUE A PLACA QUEIME</span>
+        <span class="f5-banner-pill">PROTEÇÃO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 17.81;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f5-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f5-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f5-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f5-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 6.20);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, clamp = M.clamp, mix = M.mixCor, f2 = M.f2;
+        
+              var svg = M.svgBase(1080, 680,
+                '<defs>' +
+                '<clipPath id="s5-clip"><rect x="30" y="30" width="1020" height="600" rx="26"/></clipPath>' +
+                '</defs>' +
+                G({ 'clip-path': 'url(#s5-clip)' },
+                  T('rect', { x: 30, y: 30, width: 1020, height: 600, fill: '#0c152a' }) +
+                  // Manômetro grande de voltagem no centro
+                  G({ transform: 'translate(360 330)' },
+                    T('circle', { cx: 0, cy: 0, r: 180, fill: '#0f172a', stroke: '#38bdf8', 'stroke-width': 8 }),
+                    T('circle', { cx: 0, cy: 0, r: 155, fill: '#020617' }),
+                    // Faixas de cor no arco
+                    T('path', { d: M.arco(0, 0, 135, -150, -60), fill: 'none', stroke: '#ef4444', 'stroke-width': 18, 'stroke-linecap': 'round' }),
+                    T('path', { d: M.arco(0, 0, 135, -60, -10), fill: 'none', stroke: '#facc15', 'stroke-width': 18 }),
+                    T('path', { d: M.arco(0, 0, 135, -10, 30), fill: 'none', stroke: '#22c55e', 'stroke-width': 18, 'stroke-linecap': 'round' }),
+                    // Marcadores de voltagem
+                    T('text', { x: -110, y: 30, fill: '#ef4444', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 20 }, '3.0V'),
+                    T('text', { x: -60, y: -70, fill: '#facc15', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 20 }, '3.7V'),
+                    T('text', { x: 60, y: -40, fill: '#22c55e', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 20 }, '4.2V'),
+                    T('text', { x: 0, y: 80, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter', 'font-weight': 600, 'font-size': 18 }, 'PRESSÃO (VOLTS)'),
+                    // Ponteiro
+                    G({ id: 's5-ponteiro' },
+                      T('line', { x1: 0, y1: 15, x2: 0, y2: -125, stroke: '#ef4444', 'stroke-width': 8, 'stroke-linecap': 'round' }),
+                      T('circle', { cx: 0, cy: 0, r: 16, fill: '#cbd5e1' })
+                    )
+                  ) +
+                  // Lado direito: disparo de consumo (Câmera 4K / GPS)
+                  G({ transform: 'translate(660 120)' },
+                    T('rect', { x: 0, y: 0, width: 330, height: 420, rx: 20, fill: '#0f172a', stroke: '#475569', 'stroke-width': 3 }),
+                    T('text', { x: 165, y: 44, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 18 }, 'DEMANDA INSTANTÂNEA'),
+                    // Card Câmera
+                    G({ id: 's5-camera', transform: 'translate(25 70)' },
+                      T('rect', { x: 0, y: 0, width: 280, height: 110, rx: 14, fill: '#1e293b', stroke: '#ef4444', 'stroke-width': 3 }),
+                      T('circle', { cx: 55, cy: 55, r: 30, fill: '#0f172a', stroke: '#ef4444', 'stroke-width': 3 }),
+                      T('circle', { cx: 55, cy: 55, r: 14, fill: '#0284c7' }),
+                      T('text', { x: 105, y: 50, fill: '#f8fafc', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 18 }, 'CÂMERA 4K ATIVA'),
+                      T('text', { x: 105, y: 75, fill: '#ef4444', 'font-family': 'Inter', 'font-weight': 600, 'font-size': 14 }, 'Pico: 3.5 Amperes!')
+                    ),
+                    // Alerta de proteção
+                    G({ id: 's5-shutdown', opacity: 0, transform: 'translate(25 210)' },
+                      T('rect', { x: 0, y: 0, width: 280, height: 170, rx: 14, fill: '#450a0a', stroke: '#ef4444', 'stroke-width': 3 }),
+                      T('polygon', { points: '140,24 165,65 115,65', fill: '#facc15' }),
+                      T('text', { x: 140, y: 58, 'text-anchor': 'middle', fill: '#000', 'font-family': 'Inter', 'font-weight': 900, 'font-size': 18 }, '!'),
+                      T('text', { x: 140, y: 100, 'text-anchor': 'middle', fill: '#fecaca', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 16 }, 'CORTE DE SEGURANÇA'),
+                      T('text', { x: 140, y: 130, 'text-anchor': 'middle', fill: '#fca5a5', 'font-family': 'Inter', 'font-weight': 500, 'font-size': 13 }, 'Evitou queimar a placa')
+                    )
+                  )
+                ) +
+                T('rect', { x: 30, y: 30, width: 1020, height: 600, rx: 26, fill: 'none', stroke: '#3b5b8c', 'stroke-width': 4 })
+              );
+              M.montar('#f5-cena', svg);
+              var cena = M.pegar('#f5-cena');
+              var ponteiro = M.pegar(cena, '#s5-ponteiro');
+              var camera = M.pegar(cena, '#s5-camera');
+              var shutdown = M.pegar(cena, '#s5-shutdown');
+              var boy = M.mascote('#f5-mascote');
+              var hud = M.medidorBarra('#f5-hud', { rotulo: 'PRESSÃO (VOLTS)', unidade: 'V', max: 4.2, decimais: 2, cor: '#22c55e' });
+        
+              M.conectar(tl, function (t, og) {
+                var abreCam = suave(faixa(t, 9.8, 11.2));
+                var queda = suave(faixa(t, 12.0, 13.5));
+        
+                // Rotação do ponteiro: 0° = topo (-60°), -120° = vermelho
+                var rot = lerp(-15, -125, queda);
+                ponteiro.setAttribute('transform', 'rotate(' + f2(rot) + ')');
+        
+                camera.setAttribute('opacity', f2(abreCam));
+                shutdown.setAttribute('opacity', f2(queda));
+        
+                var volts = lerp(3.72, 3.02, queda);
+                hud.atualizar(volts, queda > 0.5 ? 'CORTE DE SEGURANÇA' : 'ESTÁVEL', queda > 0.5 ? '#ef4444' : '#22c55e');
+        
+                var corte = t >= 12.5;
+                boy.atualizar(t, og, {
+                  humor: corte ? 'bravo' : 'surpreso',
+                  bracoD: corte ? 160 : 70,
+                  bracoE: corte ? 160 : 20,
+                  tremer: corte ? 1.0 : 0,
+                  olhar: [3, -3]
+                });
+              }, { duracao: DUR, offsetGlobal: 69.41 });
+        
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-05-queda-de-pressao'] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,32 @@
+{
+  "name": "motor-v2",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Motor Unificado de Geração de Vídeos 2.0 (Fábrica Atômica Multi-Vídeo + HyperFrames + Três.js 3D + Pipeline de Áudio)",
+  "scripts": {
+    "build:3d": "node scripts/build-3d-global.js",
+    "build:2d": "cp motor/2d/motor2d.global.js assets/vendor/motor2d.global.js",
+    "video:novo": "node motor/cli/orchestrator.js novo",
+    "video:listar": "node motor/cli/orchestrator.js list",
+    "video:audio": "node motor/cli/orchestrator.js audio",
+    "video:storyboard": "node motor/cli/orchestrator.js storyboard",
+    "video:check": "node motor/cli/orchestrator.js check",
+    "video:audit": "node motor/cli/orchestrator.js audit",
+    "video:audit:fast": "node motor/cli/orchestrator.js audit:fast",
+    "video:dev": "node motor/cli/orchestrator.js dev",
+    "video:snapshot": "node motor/cli/orchestrator.js snapshot",
+    "video:render": "node motor/cli/orchestrator.js render",
+    "video:upload": "node motor/cli/orchestrator.js upload",
+    "video:agendados": "node motor/publish/scheduler.js",
+    "video:status": "node motor/publish/status.js",
+    "video:pipeline": "node motor/cli/orchestrator.js pipeline",
+    "video:ai": "node motor/cli/agent.js",
+    "auth:youtube": "node motor/publish/auth-cli.js youtube",
+    "auth:tiktok": "node motor/publish/auth-cli.js tiktok",
+    "auth:status": "node motor/publish/status.js",
+    "dev": "npm run video:dev -- cabo-submarino",
+    "check": "npm run video:check -- cabo-submarino",
+    "render": "npm run video:render -- cabo-submarino"
+  }
+}

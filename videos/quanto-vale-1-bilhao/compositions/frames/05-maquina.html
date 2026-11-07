@@ -1,0 +1,170 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f5-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f5-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f5-topbar { position:absolute; top:76px; left:68px; right:140px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f5-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f5-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f5-header-card { position:absolute; top:164px; left:68px; right:140px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f5-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f5-title-accent { color:#38bdf8; }
+    .f5-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f5-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f5-banner-text { font-size:19px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f5-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; white-space:nowrap; }
+    #f5-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 46% 30%, #1b2a4d 0%, #0a1326 58%, #050a14 100%); }
+    #f5-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f5-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f5-root .m2-mascote { position:absolute; left:20px; top:624px; width:250px; height:350px; z-index:2; }
+    #f5-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f5-root" data-composition-id="frame-05-maquina" data-width="1080" data-height="1920" data-start="0" data-duration="15.36">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f5-cena" class="m2-cena"></div>
+    <div id="f5-mascote" class="m2-mascote"></div>
+    <div id="f5-hud" class="m2-hud"></div>
+
+    <div class="f5-ui-layer">
+      <div id="f5-topbar" class="f5-topbar">
+        <span class="f5-kicker">POR DENTRO // RENDIMENTO</span>
+        <span class="f5-badge">R$ 10 MI</span>
+      </div>
+      <div id="f5-header" class="f5-header-card">
+        <h1 class="f5-title">A <span class="f5-title-accent">máquina</span> de dinheiro</h1>
+        <p class="f5-subtitle">Parado, um bilhão não fica parado: ele trabalha todos os meses — sem folga e sem salário.</p>
+      </div>
+      <div id="f5-banner" class="f5-banner" style="opacity: 0;">
+        <span class="f5-banner-text">O DINHEIRO TRABALHA MAIS QUE QUALQUER PESSOA</span>
+        <span class="f5-banner-pill">R$ 10 MI/MÊS</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 15.36;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f5-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f5-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f5-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 6.6);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2, lerp = M.lerp, ruido = M.ruido;
+
+        function engrenagem(id, cx, cy, r, dentes, cor) {
+          var s = T('circle', { cx: cx, cy: cy, r: r, fill: '#0f172a', stroke: cor, 'stroke-width': 3 });
+          for (var d = 0; d < dentes; d++) {
+            s += T('rect', {
+              x: cx - 6, y: cy - r - 11, width: 12, height: 20, rx: 3, fill: cor,
+              transform: 'rotate(' + f2((360 / dentes) * d) + ' ' + cx + ' ' + cy + ')'
+            });
+          }
+          s += T('circle', { cx: cx, cy: cy, r: r * 0.42, fill: '#0b1220', stroke: cor, 'stroke-width': 2 });
+          for (var a = 0; a < 4; a++) {
+            s += T('line', {
+              x1: cx, y1: cy, x2: cx + Math.cos(a * Math.PI / 2) * r * 0.38, y2: cy + Math.sin(a * Math.PI / 2) * r * 0.38,
+              stroke: cor, 'stroke-width': 3, 'stroke-opacity': 0.7
+            });
+          }
+          return G({ id: id }, s);
+        }
+
+        var notasEntrada = '';
+        for (var i = 0; i < 4; i++) {
+          notasEntrada += T('rect', { id: 's5-nota' + i, x: 0, y: 0, width: 58, height: 30, rx: 4, fill: '#b45309', stroke: '#f59e0b', 'stroke-width': 1.6 });
+        }
+        var moedasSaida = '';
+        for (var c = 0; c < 5; c++) {
+          moedasSaida += T('circle', { id: 's5-moeda' + c, cx: 700, cy: 420, r: 9, fill: '#facc15', stroke: '#b45309', 'stroke-width': 2, opacity: 0 });
+        }
+
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s5-ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#152542"/><stop offset="1" stop-color="#050a14"/></linearGradient>' +
+          '<linearGradient id="s5-metal" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e293b"/><stop offset="0.55" stop-color="#0f172a"/><stop offset="1" stop-color="#0b1220"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s5-ceu)' }) +
+          // esteira de entrada
+          T('rect', { x: 40, y: 246, width: 210, height: 12, rx: 6, fill: '#334155' }) +
+          T('line', { x1: 40, y1: 262, x2: 250, y2: 262, stroke: '#1e3a5f', 'stroke-width': 2 }) +
+          notasEntrada +
+          // máquina
+          T('rect', { x: 210, y: 176, width: 392, height: 268, rx: 26, fill: 'url(#s5-metal)', stroke: 'rgba(56,189,248,0.55)', 'stroke-width': 3 }) +
+          T('rect', { x: 232, y: 198, width: 348, height: 12, rx: 6, fill: '#38bdf8', 'fill-opacity': 0.25 }) +
+          T('rect', { x: 258, y: 158, width: 90, height: 22, rx: 8, fill: '#1e293b', stroke: '#64748b', 'stroke-width': 2 }) +
+          engrenagem('s5-gearA', 320, 320, 58, 12, '#38bdf8') +
+          engrenagem('s5-gearB', 462, 352, 40, 9, '#f59e0b') +
+          engrenagem('s5-gearC', 476, 262, 30, 8, '#7dd3fc') +
+          T('rect', { x: 236, y: 392, width: 340, height: 40, rx: 12, fill: 'rgba(8,14,26,0.9)', stroke: '#facc15', 'stroke-width': 2 }) +
+          T('text', { x: 406, y: 420, 'text-anchor': 'middle', fill: '#facc15', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700, 'letter-spacing': 2 }, '1% AO MÊS') +
+          // saída
+          T('rect', { x: 598, y: 356, width: 64, height: 34, rx: 8, fill: '#1e293b', stroke: '#64748b', 'stroke-width': 2 }) +
+          T('path', { d: 'M662 340 L716 340 L700 470 L678 470 Z', fill: '#0f172a', stroke: '#64748b', 'stroke-width': 2 }) +
+          moedasSaida +
+          // cartão de rendimento
+          T('rect', { x: 720, y: 168, width: 210, height: 196, rx: 20, fill: 'rgba(8,14,26,0.92)', stroke: 'rgba(250,204,21,0.6)', 'stroke-width': 2 }) +
+          T('text', { x: 825, y: 208, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 1.5 }, 'RENDE POR MÊS') +
+          T('text', { id: 's5-valor', x: 825, y: 282, 'text-anchor': 'middle', fill: '#facc15', 'font-family': 'Inter, sans-serif', 'font-size': 54, 'font-weight': 700 }, 'R$ 0') +
+          T('text', { x: 825, y: 320, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 1.5 }, 'SEM NINGUÉM') +
+          T('rect', { x: 726, y: 424, width: 128, height: 44, rx: 12, fill: 'rgba(8,14,26,0.94)', stroke: '#f59e0b', 'stroke-width': 2 }) +
+          T('text', { x: 790, y: 453, 'text-anchor': 'middle', fill: '#fbbf24', 'font-family': 'Inter, sans-serif', 'font-size': 21, 'font-weight': 700 }, 'R$ 10 MI') +
+          T('rect', { x: 0, y: 546, width: 1080, height: 84, fill: '#0b1220' }) +
+          T('line', { x1: 0, y1: 546, x2: 1080, y2: 546, stroke: '#38bdf8', 'stroke-width': 2, 'stroke-opacity': 0.4 }) +
+          T('text', { x: 900, y: 596, 'text-anchor': 'end', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 600 }, '1% de R$ 1 bilhão = R$ 10 milhões por mês')
+        );
+        M.montar('#f5-cena', svg);
+        var cena = M.pegar('#f5-cena');
+        var gearA = M.pegar(cena, '#s5-gearA');
+        var gearB = M.pegar(cena, '#s5-gearB');
+        var gearC = M.pegar(cena, '#s5-gearC');
+        var valorEl = M.pegar(cena, '#s5-valor');
+        var notasEls = [];
+        for (var n = 0; n < 4; n++) notasEls.push(M.pegar(cena, '#s5-nota' + n));
+        var moedasEls = [];
+        for (var mm = 0; mm < 5; mm++) moedasEls.push(M.pegar(cena, '#s5-moeda' + mm));
+        var boy = M.mascote('#f5-mascote');
+        var hud = M.medidorBarra('#f5-hud', { rotulo: 'RENDIMENTO MENSAL', unidade: 'R$ mi', max: 10, cor: '#f59e0b', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          gearA.setAttribute('transform', 'rotate(' + f2(t * 62) + ' 320 320)');
+          gearB.setAttribute('transform', 'rotate(' + f2(-t * 92) + ' 462 352)');
+          gearC.setAttribute('transform', 'rotate(' + f2(t * 118) + ' 476 262)');
+          for (var k = 0; k < notasEls.length; k++) {
+            var fa = (t * 0.55 + k * 0.25) % 1;
+            notasEls[k].setAttribute('x', f2(30 + fa * 200));
+            notasEls[k].setAttribute('y', f2(212 + Math.sin(fa * Math.PI) * -8));
+            notasEls[k].setAttribute('opacity', f2(fa < 0.88 ? 1 : (1 - fa) / 0.12));
+          }
+          for (var j = 0; j < moedasEls.length; j++) {
+            var fm = (t * 0.8 + j * 0.2) % 1;
+            moedasEls[j].setAttribute('cy', f2(392 + fm * 96));
+            moedasEls[j].setAttribute('cx', f2(690 + Math.sin(fm * 7 + j) * 5));
+            moedasEls[j].setAttribute('opacity', f2(fm < 0.9 ? 1 : (1 - fm) / 0.1));
+          }
+          var u = suave(faixa(t, 1.2, 6.4));
+          valorEl.textContent = 'R$ ' + Math.round(10 * u);
+          hud.atualizar(10 * u, u > 0.99 ? 'RENDE SOZINHO' : 'TRABALHANDO', u > 0.99 ? '#f59e0b' : '#38bdf8');
+          boy.atualizar(t, og, {
+            humor: 'feliz',
+            bracoD: t > 2 ? 104 : 92,
+            bracoE: 14,
+            olhar: [10, -8],
+            inclinar: -3,
+            pulo: t > 3 ? Math.abs(Math.sin(t * 2.8)) * 9 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 56.04 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-05-maquina'] = tl;
+    })();
+  </script>
+</template>

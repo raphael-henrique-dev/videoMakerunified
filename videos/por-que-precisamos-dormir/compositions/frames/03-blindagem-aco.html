@@ -1,0 +1,314 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f3-root {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #030914;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f3-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .f3-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(3, 9, 20, 0.88) 0%,
+        rgba(3, 9, 20, 0.22) 30%,
+        rgba(3, 9, 20, 0.18) 64%,
+        rgba(3, 9, 20, 0.92) 100%
+      );
+    }
+
+    .f3-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f3-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 26px;
+      background: rgba(6, 12, 24, 0.86);
+      border: 1px solid rgba(245, 158, 11, 0.38);
+      border-radius: 14px;
+    }
+
+    .f3-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: #fbbf24;
+    }
+
+    .f3-voltage-tag {
+      font-size: 19px;
+      font-weight: 700;
+      color: #38bdf8;
+      letter-spacing: 0.08em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .f3-header-card {
+      position: absolute;
+      top: 168px;
+      left: 68px;
+      right: 68px;
+      padding: 26px 34px;
+      background: rgba(6, 12, 24, 0.84);
+      border-left: 5px solid #f59e0b;
+      border-radius: 0 16px 16px 0;
+    }
+
+    .f3-title {
+      margin: 0 0 8px 0;
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.06;
+      color: #f8fafc;
+    }
+
+    .f3-title-accent {
+      color: #fbbf24;
+    }
+
+    .f3-subtitle {
+      margin: 0;
+      font-size: 23px;
+      color: #cbd5e1;
+    }
+
+    .f3-cards-stack {
+      position: absolute;
+      top: 990px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .f3-spec-card {
+      padding: 22px 28px;
+      background: rgba(6, 14, 28, 0.90);
+      border: 1.5px solid rgba(251, 191, 36, 0.35);
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .f3-spec-left {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .f3-spec-num {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #fbbf24;
+    }
+
+    .f3-spec-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f3-spec-desc {
+      font-size: 20px;
+      color: #cbd5e1;
+    }
+
+    .f3-spec-pill {
+      padding: 10px 18px;
+      background: rgba(245, 158, 11, 0.18);
+      border: 1px solid #f59e0b;
+      color: #fde68a;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      border-radius: 10px;
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+
+  <div id="f3-root" data-composition-id="frame-03-blindagem-aco" data-width="1080" data-height="1920" data-start="0" data-duration="9.91">
+    <div id="f3-stage-3d"></div>
+    <div class="f3-vignette"></div>
+
+    <div class="f3-ui-layer">
+      <div id="f3-topbar" class="f3-topbar">
+        <span class="f3-kicker">CAMADAS 04–07 // BLINDAGEM PESADA</span>
+        <span class="f3-voltage-tag">ALIMENTAÇÃO: 10.000 V DC</span>
+      </div>
+
+      <div id="f3-header" class="f3-header-card">
+        <h1 class="f3-title">Tubo de <span class="f3-title-accent">Cobre</span> &amp; Armadura de Aço</h1>
+        <p class="f3-subtitle">Corrente contínua para repetidores ópticos e 18 fios de aço contra tração abissal</p>
+      </div>
+
+      <div class="f3-cards-stack">
+        <div id="f3-card-cobre" class="f3-spec-card" style="opacity: 0;">
+          <div class="f3-spec-left">
+            <span class="f3-spec-num">CAMADAS 04 &amp; 05 // ENERGIA + VEDAÇÃO</span>
+            <span class="f3-spec-name">Condutor de Cobre + Barreira Hermética</span>
+            <span class="f3-spec-desc">Alimenta amplificadores ópticos a cada 80 km no oceano</span>
+          </div>
+          <span class="f3-spec-pill">10 kV ATIVO</span>
+        </div>
+
+        <div id="f3-card-aco" class="f3-spec-card" style="opacity: 0;">
+          <div class="f3-spec-left">
+            <span class="f3-spec-num">CAMADAS 06 &amp; 07 // ARMADURA + PEAD</span>
+            <span class="f3-spec-name">18 Fios de Aço Trançados + Jaqueta Externa</span>
+            <span class="f3-spec-desc">Suporta toneladas de tração sem esticar o núcleo de vidro</span>
+          </div>
+          <span class="f3-spec-pill">18x AÇO OK</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 9.91;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power3.out' }, 0.05);
+      tl.fromTo('#f3-header', { opacity: 0, x: -28 }, { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out' }, 0.15);
+      tl.fromTo('#f3-card-cobre', { opacity: 0, x: -36 }, { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out' }, 0.30);
+      tl.fromTo('#f3-card-aco', { opacity: 0, x: -36 }, { opacity: 1, x: 0, duration: 0.55, ease: 'power3.out' }, 4.70);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f3-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 40,
+          presetCeu: 'mar'
+        });
+
+        var mar = M.criarFundoDoMar(THREE, palco, { abismo: false });
+        var caboObj = M.criarCaboSubmarino(THREE, { escala: 0.78 });
+        caboObj.raiz.position.set(0.42, 1.35, 0.0);
+        palco.cena.add(caboObj.raiz);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.78 });
+        M.capacete(menino, true);
+        menino.raiz.position.set(-0.92, 0.25, 0.35);
+        palco.cena.add(menino.raiz);
+
+        var luzCobre = new THREE.PointLight(0xf59e0b, 0, 5.0);
+        luzCobre.position.set(-0.3, 1.6, 1.2);
+        palco.cena.add(luzCobre);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          mar.animarAmbiente(t);
+          M.resetPose(menino, t);
+
+          var progCobre = M.faixa(t, 0.25, 1.65);
+          var progVedacao = M.faixa(t, 1.75, 3.10);
+          var progAco = M.faixa(t, 4.70, 6.20);
+          var progJaqueta = M.faixa(t, 6.30, 7.75);
+
+          caboObj.atualizar(t, {
+            fibra: 1,
+            revestimento: 1,
+            tubo: 1,
+            cobre: progCobre,
+            vedacao: progVedacao,
+            aco: progAco,
+            jaqueta: progJaqueta
+          });
+
+          caboObj.raiz.rotation.y = -0.12 + Math.sin(t * 0.6) * 0.14;
+          luzCobre.intensity = t < 4.6 ? 1.8 * Math.sin(progCobre * Math.PI) : 0.6;
+
+          if (t < 4.65) {
+            M.humor(menino, 'orgulhoso');
+            M.apontar(menino, [-0.2, 1.35, 0.0], 'D');
+            M.olharCamera(menino, palco.camera, 0.65);
+            M.plano(
+              palco.camera,
+              t,
+              0,
+              4.65,
+              { pos: [0.85, 1.80, 5.4], alvo: [-0.05, 1.18, 0.0] },
+              { pos: [-0.55, 1.75, 5.4], alvo: [-0.15, 1.18, 0.0] }
+            );
+          } else {
+            M.comemorar(menino, t, 6.4, 9.6);
+            M.olharCamera(menino, palco.camera, 0.7);
+            M.plano(
+              palco.camera,
+              t,
+              4.65,
+              DUR,
+              { pos: [-0.55, 1.75, 5.4], alvo: [-0.15, 1.18, 0.0] },
+              { pos: [-0.95, 1.82, 5.6], alvo: [-0.2, 1.18, 0.0] }
+            );
+            M.tremer(palco.camera, t, 5.8, 0.35, 0.08);
+          }
+        }, { duracao: DUR, offsetGlobal: 20.50 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-blindagem-aco'] = tl;
+    })();
+  </script>
+</template>

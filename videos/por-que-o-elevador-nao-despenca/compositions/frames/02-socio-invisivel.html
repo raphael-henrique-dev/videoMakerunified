@@ -1,0 +1,394 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f2-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #070a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    .f2-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f2-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(14, 12, 24, 0.88);
+      border: 1px solid rgba(245, 158, 11, 0.42);
+      border-radius: 14px;
+    }
+
+    .f2-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #f59e0b;
+      text-transform: uppercase;
+    }
+
+    .f2-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #fcd34d;
+      letter-spacing: 0.06em;
+    }
+
+    .f2-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 26px 32px;
+      background: rgba(14, 12, 24, 0.88);
+      border-left: 5px solid #f59e0b;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f2-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .f2-title-accent {
+      color: #fbbf24;
+    }
+
+    .f2-subtitle {
+      font-size: 23px;
+      line-height: 1.36;
+      color: #cbd5e1;
+    }
+
+    .f2-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f2-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(14, 12, 24, 0.90);
+      border: 1px solid rgba(245, 158, 11, 0.34);
+      border-radius: 16px;
+    }
+
+    .f2-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #f59e0b;
+      margin-bottom: 6px;
+    }
+
+    .f2-metric-val {
+      font-size: 34px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f2-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(28, 20, 8, 0.92);
+      border: 1.5px solid rgba(245, 158, 11, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f2-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fef3c7;
+      letter-spacing: 0.04em;
+    }
+
+    .f2-banner-pill {
+      padding: 6px 16px;
+      background: #f59e0b;
+      color: #070a14;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    #f2-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 46% 30%, #2b2410 0%, #141322 48%, #070a14 100%);
+    }
+    #f2-root .m2-piso {
+      position: absolute;
+      left: 0;
+      top: 1465px;
+      width: 1080px;
+      height: 455px;
+      z-index: 0;
+      background: linear-gradient(180deg, #171a2b 0%, #080b16 100%);
+      border-top: 2px solid rgba(245, 158, 11, 0.28);
+    }
+    #f2-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 340px;
+      width: 1080px;
+      height: 680px;
+      z-index: 1;
+    }
+    #f2-root .m2-mascote {
+      position: absolute;
+      left: 50px;
+      top: 1490px;
+      width: 300px;
+      height: 420px;
+      z-index: 2;
+    }
+    #f2-root .m2-hud {
+      position: absolute;
+      left: 400px;
+      top: 1510px;
+      width: 612px;
+      height: 300px;
+      z-index: 2;
+      background: rgba(16, 13, 26, 0.9);
+      border: 1px solid rgba(245, 158, 11, 0.34);
+      border-radius: 22px;
+    }
+  </style>
+
+  <div data-hf-id="hf-u72w" id="f2-root" data-composition-id="frame-02-socio-invisivel" data-width="1080" data-height="1920" data-start="0" data-duration="13.82">
+    <div data-hf-id="hf-z1ui" class="m2-fundo"></div>
+    <div data-hf-id="hf-n4f5" class="m2-piso"></div>
+    <div data-hf-id="hf-5aqn" id="f2-cena" class="m2-cena"></div>
+    <div data-hf-id="hf-e2lb" id="f2-mascote" class="m2-mascote"></div>
+    <div data-hf-id="hf-xfhv" id="f2-hud" class="m2-hud"></div>
+
+    <div data-hf-id="hf-uesv" class="f2-ui-layer">
+      <div data-hf-id="hf-z8gw" id="f2-topbar" class="f2-topbar">
+        <span data-hf-id="hf-6kqb" class="f2-kicker">SEGREDO 01 // O PESO ESCONDIDO</span>
+        <span data-hf-id="hf-uit7" class="f2-badge">QUASE O MESMO PESO</span>
+      </div>
+
+      <div data-hf-id="hf-peyv" id="f2-header" class="f2-header-card">
+        <h1 data-hf-id="hf-kh2r" class="f2-title">O Sócio <span data-hf-id="hf-fc8c" class="f2-title-accent">Invisível</span></h1>
+        <p data-hf-id="hf-ekve" class="f2-subtitle">Um bloco de concreto sobe quando a cabine desce e quase empata a balança</p>
+      </div>
+
+      <div data-hf-id="hf-sjh1" id="f2-telemetry" class="f2-telemetry-row">
+        <div data-hf-id="hf-9wmt" class="f2-metric-box">
+          <div data-hf-id="hf-5xdk" class="f2-metric-label">CABINE + GENTE</div>
+          <div data-hf-id="hf-7j9y" class="f2-metric-val">~1.000 kg</div>
+        </div>
+        <div data-hf-id="hf-o33d" class="f2-metric-box">
+          <div data-hf-id="hf-f25c" class="f2-metric-label">CONTRAPESO</div>
+          <div data-hf-id="hf-dtfy" class="f2-metric-val">Calibrado</div>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-4oaa" id="f2-banner" class="f2-banner" style="opacity: 0;">
+        <span data-hf-id="hf-2owx" class="f2-banner-text">A CABINE NUNCA ESTÁ SOZINHA NO POÇO</span>
+        <span data-hf-id="hf-rwc5" class="f2-banner-pill">QUASE EMPATADOS</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 13.82;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f2-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 11.60);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var setaD = G({ id: 's2-arrD', opacity: 0 },
+          T('path', { d: 'M228 210 L228 300 M210 280 L228 304 L246 280', fill: 'none', stroke: '#22c55e', 'stroke-width': 7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+        var setaU = G({ id: 's2-arrU', opacity: 0 },
+          T('path', { d: 'M548 584 L548 494 M530 514 L548 490 L566 514', fill: 'none', stroke: '#f59e0b', 'stroke-width': 7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }));
+
+        var svg = M.svgBase(1080, 680,
+          '<defs>' +
+          '<linearGradient id="s2-poco" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1426"/><stop offset="1" stop-color="#060e1b"/></linearGradient>' +
+          '<linearGradient id="s2-gradCab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a2c48"/><stop offset="1" stop-color="#102036"/></linearGradient>' +
+          '<linearGradient id="s2-gradCw" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5b6474"/><stop offset="1" stop-color="#3b4454"/></linearGradient>' +
+          '</defs>' +
+          // prédio / poço
+          T('rect', { x: 28, y: 10, width: 716, height: 650, rx: 24, fill: '#0a1322', stroke: '#2b3f5c', 'stroke-width': 4 }) +
+          T('rect', { x: 250, y: 30, width: 470, height: 620, fill: 'url(#s2-poco)', stroke: '#1e3a5f', 'stroke-width': 3 }) +
+          T('line', { x1: 280, y1: 34, x2: 280, y2: 646, stroke: '#475569', 'stroke-width': 7, 'stroke-linecap': 'round' }) +
+          T('line', { x1: 690, y1: 34, x2: 690, y2: 646, stroke: '#475569', 'stroke-width': 7, 'stroke-linecap': 'round' }) +
+          // polia
+          G({ id: 's2-sheave' },
+            T('circle', { cx: 545, cy: 58, r: 33, fill: '#1e293b', stroke: '#cbd5e1', 'stroke-width': 5 }) +
+            T('circle', { cx: 545, cy: 58, r: 9, fill: '#f59e0b' }) +
+            T('line', { x1: 516, y1: 58, x2: 574, y2: 58, stroke: '#64748b', 'stroke-width': 4 }) +
+            T('line', { x1: 545, y1: 29, x2: 545, y2: 87, stroke: '#64748b', 'stroke-width': 4 })) +
+          // cabos da cabine e do contrapeso
+          T('line', { id: 's2-cb0', x1: 330, y1: 160, x2: 519, y2: 62, stroke: '#e2e8f0', 'stroke-width': 3 }) +
+          T('line', { id: 's2-cb1', x1: 470, y1: 160, x2: 550, y2: 62, stroke: '#e2e8f0', 'stroke-width': 3 }) +
+          T('line', { id: 's2-cc0', x1: 540, y1: 62, x2: 614, y2: 470, stroke: '#e2e8f0', 'stroke-width': 3 }) +
+          T('line', { id: 's2-cc1', x1: 552, y1: 62, x2: 668, y2: 470, stroke: '#cbd5e1', 'stroke-width': 3 }) +
+          // cabine
+          G({ id: 's2-cab' },
+            T('rect', { x: 300, y: 160, width: 200, height: 170, rx: 8, fill: 'url(#s2-gradCab)', stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('rect', { x: 312, y: 172, width: 176, height: 146, rx: 4, fill: 'none', stroke: '#27406b', 'stroke-width': 2 }) +
+            T('rect', { x: 320, y: 180, width: 72, height: 104, rx: 6, fill: '#0e1b2e', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('rect', { x: 402, y: 180, width: 72, height: 104, rx: 6, fill: '#0e1b2e', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('circle', { cx: 400, cy: 232, r: 3, fill: '#38bdf8' }) +
+            T('text', { x: 400, y: 300, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700 }, 'CABINE') +
+            T('rect', { x: 300, y: 316, width: 200, height: 14, rx: 3, fill: '#475569' }) +
+            setaD) +
+          // contrapeso
+          G({ id: 's2-cw' },
+            T('rect', { x: 590, y: 470, width: 100, height: 150, rx: 8, fill: 'url(#s2-gradCw)', stroke: '#cbd5e1', 'stroke-width': 4 }) +
+            T('line', { x1: 600, y1: 492, x2: 680, y2: 492, stroke: '#94a3b8', 'stroke-width': 3 }) +
+            T('line', { x1: 600, y1: 588, x2: 680, y2: 588, stroke: '#94a3b8', 'stroke-width': 3 }) +
+            T('text', { x: 640, y: 552, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 32, 'font-weight': 700 }, '≈') +
+            T('text', { x: 640, y: 611, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 10, 'font-weight': 700, 'letter-spacing': 0.5 }, 'CONTRAPESO') +
+            setaU) +
+          // etiqueta da cabine
+          G({ id: 's2-card', opacity: 0 },
+            T('rect', { x: 40, y: 180, width: 192, height: 96, rx: 14, fill: 'rgba(8,14,26,0.94)', stroke: 'rgba(56,189,248,0.45)', 'stroke-width': 2 }) +
+            T('text', { x: 60, y: 212, fill: '#38bdf8', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 1.5 }, 'CABINE + GENTE') +
+            T('text', { x: 60, y: 248, fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 30, 'font-weight': 700 }, '≈ 1.000 kg')) +
+          // balança gigante (painel direito)
+          G({ id: 's2-bal', opacity: 0 },
+            T('rect', { x: 762, y: 84, width: 286, height: 540, rx: 22, fill: 'rgba(14,12,24,0.92)', stroke: 'rgba(245,158,11,0.38)', 'stroke-width': 2 }) +
+            T('text', { x: 905, y: 126, 'text-anchor': 'middle', fill: '#f59e0b', 'font-family': 'Inter, sans-serif', 'font-size': 16, 'font-weight': 700, 'letter-spacing': 2 }, 'BALANÇA GIGANTE') +
+            T('line', { x1: 905, y1: 316, x2: 905, y2: 552, stroke: '#64748b', 'stroke-width': 8, 'stroke-linecap': 'round' }) +
+            T('rect', { x: 830, y: 552, width: 150, height: 12, rx: 6, fill: '#475569' }) +
+            G({ id: 's2-beam' },
+              T('line', { x1: 812, y1: 300, x2: 998, y2: 300, stroke: '#fcd34d', 'stroke-width': 7, 'stroke-linecap': 'round' }) +
+              T('line', { x1: 812, y1: 300, x2: 812, y2: 360, stroke: '#94a3b8', 'stroke-width': 3 }) +
+              T('line', { x1: 998, y1: 300, x2: 998, y2: 360, stroke: '#94a3b8', 'stroke-width': 3 }) +
+              T('path', { d: 'M762 360 Q812 404 862 360 Z', fill: '#1e3a5f', stroke: '#94a3b8', 'stroke-width': 2 }) +
+              T('path', { d: 'M948 360 Q998 404 1048 360 Z', fill: '#3f2f13', stroke: '#f59e0b', 'stroke-width': 2 }) +
+              T('text', { x: 812, y: 396, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700 }, 'CABINE') +
+              T('text', { x: 998, y: 396, 'text-anchor': 'middle', fill: '#fcd34d', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700 }, 'CONTRAP.')) +
+            T('circle', { cx: 905, cy: 300, r: 11, fill: '#f59e0b', stroke: '#78350f', 'stroke-width': 3 }) +
+            T('text', { x: 905, y: 472, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'EB Garamond, serif', 'font-size': 44, 'font-weight': 700 }, '≈') +
+            T('text', { x: 905, y: 512, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 1.2 }, 'MOTOR VENCE A DIFERENÇA')) +
+          T('rect', { x: 28, y: 10, width: 716, height: 650, rx: 24, fill: 'none', stroke: '#3b4d6b', 'stroke-width': 4 })
+        );
+        M.montar('#f2-cena', svg);
+
+        var cena = M.pegar('#f2-cena');
+        var cab = M.pegar(cena, '#s2-cab');
+        var cw = M.pegar(cena, '#s2-cw');
+        var sheave = M.pegar(cena, '#s2-sheave');
+        var cb0 = M.pegar(cena, '#s2-cb0'), cb1 = M.pegar(cena, '#s2-cb1');
+        var cc0 = M.pegar(cena, '#s2-cc0'), cc1 = M.pegar(cena, '#s2-cc1');
+        var beam = M.pegar(cena, '#s2-beam');
+        var card = M.pegar(cena, '#s2-card');
+        var bal = M.pegar(cena, '#s2-bal');
+        var arrD = M.pegar(cena, '#s2-arrD'), arrU = M.pegar(cena, '#s2-arrU');
+        var boy = M.mascote('#f2-mascote');
+        var hud = M.medidorBarra('#f2-hud', { rotulo: 'CARGA NO MOTOR', unidade: '%', max: 100, cor: '#f59e0b', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 7.3, 12.6));
+          var dy = lerp(0, 250, u);
+          var cabY = 160 + dy;
+          var cwY = 470 - dy;
+
+          cab.setAttribute('transform', 'translate(0 ' + f2(dy) + ')');
+          cw.setAttribute('transform', 'translate(0 ' + f2(-dy) + ')');
+          cb0.setAttribute('y1', f2(cabY));
+          cb1.setAttribute('y1', f2(cabY));
+          cc0.setAttribute('y2', f2(cwY));
+          cc1.setAttribute('y2', f2(cwY));
+          sheave.setAttribute('transform', 'rotate(' + f2(-dy * 1.9) + ' 545 58)');
+
+          var eq = suave(faixa(t, 7.6, 12.6));
+          var ang = lerp(-9, 0, eq) + Math.sin(t * 1.6) * 1.4 * (1 - eq);
+          beam.setAttribute('transform', 'rotate(' + f2(ang) + ' 905 300)');
+
+          card.setAttribute('opacity', f2(suave(faixa(t, 4.3, 5.0))));
+          bal.setAttribute('opacity', f2(suave(faixa(t, 5.4, 6.4))));
+          arrD.setAttribute('opacity', f2(u * 0.9));
+          arrU.setAttribute('opacity', f2(u * 0.9));
+
+          var carga = lerp(100, 11, eq);
+          hud.atualizar(carga, eq > 0.8 ? 'QUASE EQUILIBRADO' : 'MOTOR SEGURANDO', eq > 0.8 ? '#22c55e' : '#f59e0b');
+
+          var comemora = t >= 12.5;
+          boy.atualizar(t, og, {
+            humor: comemora ? 'feliz' : (t > 3.6 ? 'surpreso' : 'neutro'),
+            bracoD: comemora ? 118 : 74,
+            bracoE: comemora ? 60 : 8,
+            olhar: [7, -2],
+            inclinar: comemora ? 0 : -3,
+            pulo: comemora ? Math.abs(Math.sin((t - 12.5) * 4.5)) * 12 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 16.61 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-socio-invisivel'] = tl;
+    })();
+  </script>
+</template>

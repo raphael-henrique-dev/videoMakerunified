@@ -1,0 +1,156 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #captions-comp {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .caption-bar {
+      position: absolute;
+      left: 64px;
+      right: 64px;
+      top: 1350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .caption-pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px 14px;
+      padding: 18px 30px;
+      background: rgba(6, 11, 22, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.32);
+      border-radius: 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65);
+      min-height: 76px;
+      max-width: 940px;
+    }
+
+    .cap-word {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #94a3b8;
+    }
+
+    .cap-word.is-spoken {
+      color: #f8fafc;
+    }
+
+    .cap-word.is-active {
+      color: #38bdf8;
+      text-shadow: 0 0 22px rgba(56, 189, 248, 0.55);
+    }
+
+    .cap-word.cap-brand.is-spoken {
+      color: #fbbf24;
+    }
+
+    .cap-word.cap-brand.is-active {
+      color: #facc15;
+      text-shadow: 0 0 24px rgba(250, 204, 21, 0.65);
+    }
+  </style>
+
+  <div id="captions-comp" data-composition-id="captions" data-width="1080" data-height="1920" data-start="0" data-duration="83.61">
+    <div class="caption-bar">
+      <div id="caption-pill" class="caption-pill" style="opacity: 0;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var GROUPS = [{"frameId":"frame-01-sono-nao-e-perda","plano":"gancho","start":0.12,"end":1.274,"words":[{"word":"Você","start":0.12,"end":0.487,"brand":false},{"word":"já","start":0.487,"end":0.697,"brand":false},{"word":"passou","start":0.697,"end":1.064,"brand":false},{"word":"um","start":1.064,"end":1.274,"brand":false}]},{"frameId":"frame-01-sono-nao-e-perda","plano":"gancho","start":1.274,"end":2.585,"words":[{"word":"dia","start":1.274,"end":1.485,"brand":false},{"word":"inteiro","start":1.485,"end":2.008,"brand":false},{"word":"sem","start":2.008,"end":2.218,"brand":false},{"word":"dormir?","start":2.218,"end":2.585,"brand":false}]},{"frameId":"frame-01-sono-nao-e-perda","plano":"gancho","start":2.585,"end":4.051,"words":[{"word":"O","start":2.585,"end":2.795,"brand":false},{"word":"cérebro","start":2.795,"end":3.318,"brand":false},{"word":"começa","start":3.318,"end":3.84,"brand":false},{"word":"a","start":3.84,"end":4.051,"brand":false}]},{"frameId":"frame-01-sono-nao-e-perda","plano":"gancho","start":4.051,"end":5.205,"words":[{"word":"falhar","start":4.051,"end":4.418,"brand":false},{"word":"nas","start":4.418,"end":4.628,"brand":false},{"word":"coisas","start":4.628,"end":4.995,"brand":false},{"word":"mais","start":4.995,"end":5.205,"brand":false}]},{"frameId":"frame-01-sono-nao-e-perda","plano":"gancho","start":5.205,"end":5.652,"words":[{"word":"simples.","start":5.205,"end":5.572,"brand":false}]},{"frameId":"frame-01-sono-nao-e-perda","plano":"quebra","start":6.017,"end":7.196,"words":[{"word":"Dormir","start":6.017,"end":6.347,"brand":false},{"word":"não","start":6.347,"end":6.536,"brand":false},{"word":"é","start":6.536,"end":6.726,"brand":false},{"word":"desligar","start":6.726,"end":7.196,"brand":false}]},{"frameId":"frame-01-sono-nao-e-perda","plano":"quebra","start":7.196,"end":8.376,"words":[{"word":"o","start":7.196,"end":7.386,"brand":false},{"word":"interruptor.","start":7.386,"end":7.997,"brand":false},{"word":"É","start":7.997,"end":8.186,"brand":false},{"word":"a","start":8.186,"end":8.376,"brand":false}]},{"frameId":"frame-01-sono-nao-e-perda","plano":"quebra","start":8.376,"end":9.836,"words":[{"word":"fábrica","start":8.376,"end":8.846,"brand":false},{"word":"do","start":8.846,"end":9.036,"brand":false},{"word":"corpo","start":9.036,"end":9.366,"brand":false},{"word":"entrando","start":9.366,"end":9.836,"brand":false}]},{"frameId":"frame-01-sono-nao-e-perda","plano":"quebra","start":9.836,"end":10.956,"words":[{"word":"no","start":9.836,"end":10.026,"brand":false},{"word":"turno","start":10.026,"end":10.356,"brand":false},{"word":"da","start":10.356,"end":10.546,"brand":false},{"word":"noite.","start":10.546,"end":10.876,"brand":false}]},{"frameId":"frame-02-lava-jato-cerebro","plano":"falha","start":11.62,"end":13.32,"words":[{"word":"Enquanto","start":11.62,"end":12.079,"brand":false},{"word":"você","start":12.079,"end":12.401,"brand":false},{"word":"está","start":12.401,"end":12.724,"brand":false},{"word":"acordado,","start":12.724,"end":13.32,"brand":false}]},{"frameId":"frame-02-lava-jato-cerebro","plano":"falha","start":13.32,"end":14.745,"words":[{"word":"o","start":13.32,"end":13.505,"brand":false},{"word":"cérebro","start":13.505,"end":13.964,"brand":false},{"word":"produz","start":13.964,"end":14.286,"brand":false},{"word":"resíduo","start":14.286,"end":14.745,"brand":false}]},{"frameId":"frame-02-lava-jato-cerebro","plano":"falha","start":14.745,"end":15.76,"words":[{"word":"o","start":14.745,"end":14.931,"brand":false},{"word":"tempo","start":14.931,"end":15.253,"brand":false},{"word":"todo.","start":15.253,"end":15.575,"brand":false},{"word":"É","start":15.575,"end":15.76,"brand":false}]},{"frameId":"frame-02-lava-jato-cerebro","plano":"falha","start":15.76,"end":17.46,"words":[{"word":"lixo","start":15.76,"end":16.082,"brand":false},{"word":"metabólico","start":16.082,"end":16.815,"brand":false},{"word":"que","start":16.815,"end":17,"brand":false},{"word":"ocupa","start":17,"end":17.46,"brand":false}]},{"frameId":"frame-02-lava-jato-cerebro","plano":"falha","start":17.46,"end":17.999,"words":[{"word":"espaço.","start":17.46,"end":17.919,"brand":false}]},{"frameId":"frame-02-lava-jato-cerebro","plano":"corrige","start":18.418,"end":19.607,"words":[{"word":"Quando","start":18.418,"end":18.75,"brand":false},{"word":"você","start":18.75,"end":19.083,"brand":false},{"word":"dorme,","start":19.083,"end":19.416,"brand":false},{"word":"os","start":19.416,"end":19.607,"brand":false}]},{"frameId":"frame-02-lava-jato-cerebro","plano":"corrige","start":19.607,"end":21.079,"words":[{"word":"neurônios","start":19.607,"end":20.081,"brand":false},{"word":"encolhem","start":20.081,"end":20.555,"brand":false},{"word":"e","start":20.555,"end":20.746,"brand":false},{"word":"abrem","start":20.746,"end":21.079,"brand":false}]},{"frameId":"frame-02-lava-jato-cerebro","plano":"corrige","start":21.079,"end":22.41,"words":[{"word":"canais.","start":21.079,"end":21.412,"brand":false},{"word":"Um","start":21.412,"end":21.603,"brand":false},{"word":"líquido","start":21.603,"end":22.077,"brand":false},{"word":"lava","start":22.077,"end":22.41,"brand":false}]},{"frameId":"frame-02-lava-jato-cerebro","plano":"corrige","start":22.41,"end":23.457,"words":[{"word":"tudo","start":22.41,"end":22.742,"brand":false},{"word":"e","start":22.742,"end":22.934,"brand":false},{"word":"leva","start":22.934,"end":23.266,"brand":false},{"word":"o","start":23.266,"end":23.457,"brand":false}]},{"frameId":"frame-02-lava-jato-cerebro","plano":"corrige","start":23.457,"end":24.344,"words":[{"word":"lixo","start":23.457,"end":23.79,"brand":false},{"word":"embora.","start":23.79,"end":24.264,"brand":false}]},{"frameId":"frame-03-memoria-aprendizado","plano":"falha","start":25.07,"end":26.958,"words":[{"word":"Você","start":25.07,"end":25.428,"brand":false},{"word":"estuda,","start":25.428,"end":25.938,"brand":false},{"word":"trabalha,","start":25.938,"end":26.448,"brand":false},{"word":"aprende","start":26.448,"end":26.958,"brand":false}]},{"frameId":"frame-03-memoria-aprendizado","plano":"falha","start":26.958,"end":28.237,"words":[{"word":"um","start":26.958,"end":27.164,"brand":false},{"word":"caminho","start":27.164,"end":27.674,"brand":false},{"word":"novo.","start":27.674,"end":28.032,"brand":false},{"word":"Se","start":28.032,"end":28.237,"brand":false}]},{"frameId":"frame-03-memoria-aprendizado","plano":"falha","start":28.237,"end":29.973,"words":[{"word":"não","start":28.237,"end":28.443,"brand":false},{"word":"dormir,","start":28.443,"end":28.8,"brand":false},{"word":"esse","start":28.8,"end":29.158,"brand":false},{"word":"aprendizado","start":29.158,"end":29.973,"brand":false}]},{"frameId":"frame-03-memoria-aprendizado","plano":"falha","start":29.973,"end":31.484,"words":[{"word":"some","start":29.973,"end":30.331,"brand":false},{"word":"na","start":30.331,"end":30.536,"brand":false},{"word":"manhã","start":30.536,"end":30.894,"brand":false},{"word":"seguinte.","start":30.894,"end":31.404,"brand":false}]},{"frameId":"frame-03-memoria-aprendizado","plano":"corrige","start":31.905,"end":32.996,"words":[{"word":"No","start":31.905,"end":32.08,"brand":false},{"word":"sono","start":32.08,"end":32.385,"brand":false},{"word":"profundo,","start":32.385,"end":32.821,"brand":false},{"word":"o","start":32.821,"end":32.996,"brand":false}]},{"frameId":"frame-03-memoria-aprendizado","plano":"corrige","start":32.996,"end":34.607,"words":[{"word":"cérebro","start":32.996,"end":33.431,"brand":false},{"word":"revisa","start":33.431,"end":33.866,"brand":false},{"word":"cada","start":33.866,"end":34.172,"brand":false},{"word":"arquivo","start":34.172,"end":34.607,"brand":false}]},{"frameId":"frame-03-memoria-aprendizado","plano":"corrige","start":34.607,"end":35.438,"words":[{"word":"do","start":34.607,"end":34.782,"brand":false},{"word":"dia","start":34.782,"end":34.958,"brand":false},{"word":"e","start":34.958,"end":35.133,"brand":false},{"word":"grava","start":35.133,"end":35.438,"brand":false}]},{"frameId":"frame-03-memoria-aprendizado","plano":"corrige","start":35.438,"end":36.529,"words":[{"word":"no","start":35.438,"end":35.614,"brand":false},{"word":"disco","start":35.614,"end":35.919,"brand":false},{"word":"rígido","start":35.919,"end":36.354,"brand":false},{"word":"de","start":36.354,"end":36.529,"brand":false}]},{"frameId":"frame-03-memoria-aprendizado","plano":"corrige","start":36.529,"end":37.22,"words":[{"word":"longo","start":36.529,"end":36.835,"brand":false},{"word":"prazo.","start":36.835,"end":37.14,"brand":false}]},{"frameId":"frame-04-defesa-corpo","plano":"falha","start":37.91,"end":39.227,"words":[{"word":"Noite","start":37.91,"end":38.278,"brand":false},{"word":"mal","start":38.278,"end":38.49,"brand":false},{"word":"dormida","start":38.49,"end":39.015,"brand":false},{"word":"e","start":39.015,"end":39.227,"brand":false}]},{"frameId":"frame-04-defesa-corpo","plano":"falha","start":39.227,"end":40.7,"words":[{"word":"você","start":39.227,"end":39.595,"brand":false},{"word":"fica","start":39.595,"end":39.964,"brand":false},{"word":"mais","start":39.964,"end":40.175,"brand":false},{"word":"gripado.","start":40.175,"end":40.7,"brand":false}]},{"frameId":"frame-04-defesa-corpo","plano":"falha","start":40.7,"end":42.017,"words":[{"word":"Não","start":40.7,"end":40.912,"brand":false},{"word":"é","start":40.912,"end":41.124,"brand":false},{"word":"coincidência:","start":41.124,"end":41.806,"brand":false},{"word":"a","start":41.806,"end":42.017,"brand":false}]},{"frameId":"frame-04-defesa-corpo","plano":"falha","start":42.017,"end":43.414,"words":[{"word":"defesa","start":42.017,"end":42.542,"brand":false},{"word":"do","start":42.542,"end":42.754,"brand":false},{"word":"corpo","start":42.754,"end":43.122,"brand":false},{"word":"cai.","start":43.122,"end":43.334,"brand":false}]},{"frameId":"frame-04-defesa-corpo","plano":"corrige","start":43.777,"end":44.764,"words":[{"word":"Dormir","start":43.777,"end":44.09,"brand":false},{"word":"é","start":44.09,"end":44.27,"brand":false},{"word":"quando","start":44.27,"end":44.584,"brand":false},{"word":"o","start":44.584,"end":44.764,"brand":false}]},{"frameId":"frame-04-defesa-corpo","plano":"corrige","start":44.764,"end":46.552,"words":[{"word":"sistema","start":44.764,"end":45.211,"brand":false},{"word":"imunológico","start":45.211,"end":46.058,"brand":false},{"word":"treina","start":46.058,"end":46.372,"brand":false},{"word":"e","start":46.372,"end":46.552,"brand":false}]},{"frameId":"frame-04-defesa-corpo","plano":"corrige","start":46.552,"end":47.806,"words":[{"word":"produz","start":46.552,"end":46.865,"brand":false},{"word":"os","start":46.865,"end":47.046,"brand":false},{"word":"anticorpos","start":47.046,"end":47.626,"brand":false},{"word":"que","start":47.626,"end":47.806,"brand":false}]},{"frameId":"frame-04-defesa-corpo","plano":"corrige","start":47.806,"end":48.927,"words":[{"word":"protegem","start":47.806,"end":48.253,"brand":false},{"word":"você","start":48.253,"end":48.567,"brand":false},{"word":"no","start":48.567,"end":48.747,"brand":false},{"word":"dia","start":48.747,"end":48.927,"brand":false}]},{"frameId":"frame-04-defesa-corpo","plano":"corrige","start":48.927,"end":49.454,"words":[{"word":"seguinte.","start":48.927,"end":49.374,"brand":false}]},{"frameId":"frame-05-prejuizos-sem-sono","plano":"falha","start":50.17,"end":51.446,"words":[{"word":"Sem","start":50.17,"end":50.353,"brand":false},{"word":"sono,","start":50.353,"end":50.672,"brand":false},{"word":"a","start":50.672,"end":50.856,"brand":false},{"word":"concentração","start":50.856,"end":51.446,"brand":false}]},{"frameId":"frame-05-prejuizos-sem-sono","plano":"falha","start":51.446,"end":52.994,"words":[{"word":"desaba,","start":51.446,"end":51.901,"brand":false},{"word":"a","start":51.901,"end":52.085,"brand":false},{"word":"irritação","start":52.085,"end":52.675,"brand":false},{"word":"sobe","start":52.675,"end":52.994,"brand":false}]},{"frameId":"frame-05-prejuizos-sem-sono","plano":"falha","start":52.994,"end":53.999,"words":[{"word":"e","start":52.994,"end":53.178,"brand":false},{"word":"o","start":53.178,"end":53.361,"brand":false},{"word":"corpo","start":53.361,"end":53.68,"brand":false},{"word":"pede","start":53.68,"end":53.999,"brand":false}]},{"frameId":"frame-05-prejuizos-sem-sono","plano":"falha","start":53.999,"end":55.276,"words":[{"word":"açúcar","start":53.999,"end":54.454,"brand":false},{"word":"e","start":54.454,"end":54.637,"brand":false},{"word":"gordura","start":54.637,"end":55.092,"brand":false},{"word":"a","start":55.092,"end":55.276,"brand":false}]},{"frameId":"frame-05-prejuizos-sem-sono","plano":"falha","start":55.276,"end":56.13,"words":[{"word":"todo","start":55.276,"end":55.595,"brand":false},{"word":"momento.","start":55.595,"end":56.05,"brand":false}]},{"frameId":"frame-05-prejuizos-sem-sono","plano":"mecanismo","start":56.522,"end":58.446,"words":[{"word":"Até","start":56.522,"end":56.859,"brand":false},{"word":"micro-sonecas","start":56.859,"end":57.628,"brand":false},{"word":"acontecem","start":57.628,"end":58.252,"brand":false},{"word":"com","start":58.252,"end":58.446,"brand":false}]},{"frameId":"frame-05-prejuizos-sem-sono","plano":"mecanismo","start":58.446,"end":59.653,"words":[{"word":"os","start":58.446,"end":58.64,"brand":false},{"word":"olhos","start":58.64,"end":58.978,"brand":false},{"word":"abertos:","start":58.978,"end":59.459,"brand":false},{"word":"o","start":59.459,"end":59.653,"brand":false}]},{"frameId":"frame-05-prejuizos-sem-sono","plano":"mecanismo","start":59.653,"end":61.29,"words":[{"word":"cérebro","start":59.653,"end":60.134,"brand":false},{"word":"desliga","start":60.134,"end":60.615,"brand":false},{"word":"por","start":60.615,"end":60.809,"brand":false},{"word":"segundos","start":60.809,"end":61.29,"brand":false}]},{"frameId":"frame-05-prejuizos-sem-sono","plano":"mecanismo","start":61.29,"end":62.577,"words":[{"word":"e","start":61.29,"end":61.484,"brand":false},{"word":"você","start":61.484,"end":61.822,"brand":false},{"word":"nem","start":61.822,"end":62.016,"brand":false},{"word":"percebe.","start":62.016,"end":62.497,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"virada_final","start":63.31,"end":64.309,"words":[{"word":"Dormir","start":63.31,"end":63.677,"brand":false},{"word":"bem","start":63.677,"end":63.887,"brand":false},{"word":"não","start":63.887,"end":64.098,"brand":false},{"word":"é","start":64.098,"end":64.309,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"virada_final","start":64.309,"end":66.4,"words":[{"word":"luxo.","start":64.309,"end":64.675,"brand":false},{"word":"É","start":64.675,"end":64.886,"brand":false},{"word":"manutenção","start":64.886,"end":65.565,"brand":false},{"word":"obrigatória","start":65.565,"end":66.4,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"virada_final","start":66.4,"end":67.554,"words":[{"word":"do","start":66.4,"end":66.61,"brand":false},{"word":"corpo","start":66.61,"end":66.977,"brand":false},{"word":"que","start":66.977,"end":67.188,"brand":false},{"word":"você","start":67.188,"end":67.554,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"virada_final","start":67.554,"end":68.709,"words":[{"word":"usa","start":67.554,"end":67.921,"brand":false},{"word":"24","start":67.921,"end":68.132,"brand":false},{"word":"horas","start":68.132,"end":68.499,"brand":false},{"word":"por","start":68.499,"end":68.709,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"virada_final","start":68.709,"end":69,"words":[{"word":"dia.","start":68.709,"end":68.92,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"segue","start":69.375,"end":70.823,"words":[{"word":"Quantas","start":69.375,"end":69.737,"brand":false},{"word":"horas","start":69.737,"end":70.099,"brand":false},{"word":"você","start":70.099,"end":70.461,"brand":false},{"word":"dormiu","start":70.461,"end":70.823,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"segue","start":70.823,"end":71.963,"words":[{"word":"ontem?","start":70.823,"end":71.185,"brand":false},{"word":"Por","start":71.185,"end":71.393,"brand":false},{"word":"fora,","start":71.393,"end":71.755,"brand":false},{"word":"é","start":71.755,"end":71.963,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"segue","start":71.963,"end":73.257,"words":[{"word":"só","start":71.963,"end":72.171,"brand":false},{"word":"você","start":72.171,"end":72.533,"brand":false},{"word":"deitado.","start":72.533,"end":73.049,"brand":false},{"word":"Por","start":73.049,"end":73.257,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"segue","start":73.257,"end":74.705,"words":[{"word":"dentro,","start":73.257,"end":73.619,"brand":false},{"word":"é","start":73.619,"end":73.827,"brand":false},{"word":"uma","start":73.827,"end":74.189,"brand":false},{"word":"fábrica","start":74.189,"end":74.705,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"segue","start":74.705,"end":76.307,"words":[{"word":"inteira","start":74.705,"end":75.221,"brand":false},{"word":"trabalhando.","start":75.221,"end":75.891,"brand":false},{"word":"Pois","start":75.891,"end":76.099,"brand":false},{"word":"é,","start":76.099,"end":76.307,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"segue","start":76.307,"end":77.293,"words":[{"word":"o","start":76.307,"end":76.515,"brand":false},{"word":"mundo","start":76.515,"end":76.877,"brand":false},{"word":"é","start":76.877,"end":77.085,"brand":false},{"word":"mais","start":77.085,"end":77.293,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"segue","start":77.293,"end":78.741,"words":[{"word":"curioso","start":77.293,"end":77.809,"brand":false},{"word":"do","start":77.809,"end":78.017,"brand":false},{"word":"que","start":78.017,"end":78.224,"brand":false},{"word":"parece.","start":78.224,"end":78.741,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"segue","start":78.741,"end":80.034,"words":[{"word":"Se","start":78.741,"end":78.948,"brand":false},{"word":"você","start":78.948,"end":79.31,"brand":false},{"word":"é","start":79.31,"end":79.518,"brand":false},{"word":"curioso,","start":79.518,"end":80.034,"brand":false}]},{"frameId":"frame-06-quanto-voce-dorme","plano":"segue","start":80.034,"end":81.509,"words":[{"word":"segue","start":80.034,"end":80.396,"brand":false},{"word":"o","start":80.396,"end":80.604,"brand":false},{"word":"Curiorisando!","start":80.604,"end":81.429,"brand":false}]}];
+      var DURACAO = 83.61;
+      var pill = document.getElementById('caption-pill');
+      var indiceGrupoAtual = -1;
+      var spansPalavras = [];
+
+      function montarGrupo(idx) {
+        if (idx === indiceGrupoAtual) return;
+        indiceGrupoAtual = idx;
+        spansPalavras = [];
+        if (idx < 0 || idx >= GROUPS.length) {
+          pill.style.opacity = '0';
+          pill.innerHTML = '';
+          return;
+        }
+        var g = GROUPS[idx];
+        pill.innerHTML = '';
+        for (var i = 0; i < g.words.length; i++) {
+          var w = g.words[i];
+          var span = document.createElement('span');
+          span.className = 'cap-word' + (w.brand ? ' cap-brand' : '');
+          span.textContent = w.word;
+          pill.appendChild(span);
+          spansPalavras.push(span);
+        }
+        pill.style.opacity = '1';
+      }
+
+      function renderizarLegenda(t) {
+        var idx = -1;
+        for (var i = 0; i < GROUPS.length; i++) {
+          if (t >= GROUPS[i].start && t <= GROUPS[i].end) {
+            idx = i;
+            break;
+          }
+        }
+        montarGrupo(idx);
+        if (idx < 0) return;
+        var g = GROUPS[idx];
+        for (var j = 0; j < g.words.length; j++) {
+          var w = g.words[j];
+          var sp = spansPalavras[j];
+          if (!sp) continue;
+          sp.classList.remove('is-active', 'is-spoken');
+          if (t >= w.start && t <= w.end + 0.04) {
+            sp.classList.add('is-active');
+          } else if (t > w.end + 0.04) {
+            sp.classList.add('is-spoken');
+          }
+        }
+      }
+
+      var tl = gsap.timeline({ paused: true });
+      var proxy = { t: 0 };
+      tl.to(proxy, {
+        t: DURACAO,
+        duration: DURACAO,
+        ease: 'none',
+        onUpdate: function () {
+          renderizarLegenda(proxy.t);
+        }
+      }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['captions'] = tl;
+
+      window.addEventListener('hf-seek', function (ev) {
+        if (ev && ev.detail && typeof ev.detail.time === 'number') {
+          renderizarLegenda(ev.detail.time);
+        }
+      });
+
+      renderizarLegenda(0);
+    })();
+  </script>
+</template>

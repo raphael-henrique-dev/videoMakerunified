@@ -1,0 +1,405 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f1-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    /* ── Palco 2D (SVG vetorial + mascote 2D + HUD) ── */
+    #f1-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 28%, #10264d 0%, #08142a 55%, #050a14 100%);
+    }
+    #f1-root .m2-piso {
+      position: absolute;
+      left: 0;
+      top: 1465px;
+      width: 1080px;
+      height: 455px;
+      z-index: 0;
+      background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%);
+      border-top: 2px solid rgba(56, 189, 248, 0.28);
+    }
+    #f1-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 340px;
+      width: 1080px;
+      height: 680px;
+      z-index: 1;
+    }
+    #f1-root .m2-mascote {
+      position: absolute;
+      left: 50px;
+      top: 1490px;
+      width: 300px;
+      height: 420px;
+      z-index: 2;
+    }
+    #f1-root .m2-hud {
+      position: absolute;
+      left: 400px;
+      top: 1510px;
+      width: 612px;
+      height: 300px;
+      z-index: 2;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 22px;
+    }
+
+    .f1-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(56, 189, 248, 0.05) 0%, rgba(5, 10, 20, 0.60) 75%),
+        linear-gradient(180deg, rgba(5, 10, 20, 0.88) 0%, rgba(5, 10, 20, 0.10) 26%, rgba(5, 10, 20, 0.12) 68%, rgba(5, 10, 20, 0.94) 100%);
+    }
+
+    .f1-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f1-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f1-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+
+    .f1-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f1-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f1-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .f1-title-accent {
+      color: #38bdf8;
+    }
+
+    .f1-subtitle {
+      font-size: 24px;
+      line-height: 1.38;
+      color: #cbd5e1;
+    }
+
+    .f1-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f1-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 16px;
+    }
+
+    .f1-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .f1-metric-val {
+      font-size: 36px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f1-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(40, 10, 14, 0.92);
+      border: 1.5px solid rgba(239, 68, 68, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f1-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fecaca;
+      letter-spacing: 0.04em;
+    }
+
+    .f1-banner-pill {
+      padding: 6px 16px;
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+  </style>
+
+  <div id="f1-root" data-composition-id="frame-01-apaga-na-rua" data-width="1080" data-height="1920" data-start="0" data-duration="17.95">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f1-cena" class="m2-cena"></div>
+    <div id="f1-mascote" class="m2-mascote"></div>
+    <div id="f1-hud" class="m2-hud"></div>
+
+    <div class="f1-ui-layer">
+      <div id="f1-topbar" class="f1-topbar">
+        <span class="f1-kicker">NOSSO DIA A DIA // O APAGÃO NA RUA</span>
+        <span class="f1-badge">20% → 0%</span>
+      </div>
+
+      <div id="f1-header" class="f1-header-card">
+        <h1 class="f1-title">O Susto dos <span class="f1-title-accent">20%</span> na Rua</h1>
+        <p class="f1-subtitle">Você precisa pedir um carro, a barra marca vinte por cento e o celular apaga na sua cara</p>
+      </div>
+
+      <div id="f1-telemetry" class="f1-telemetry-row">
+        <div class="f1-metric-box">
+          <div class="f1-metric-label">DE 100% ATÉ 50%</div>
+          <div class="f1-metric-val">Demora Horas</div>
+        </div>
+        <div class="f1-metric-box">
+          <div class="f1-metric-label">DOS 20% ATÉ ZERO</div>
+          <div class="f1-metric-val">Escorre no Ralo</div>
+        </div>
+      </div>
+
+      <div id="f1-banner" class="f1-banner" style="opacity: 0;">
+        <span class="f1-banner-text">DEPOIS DOS 20%, PARECE QUE A BATERIA TEM PRESSA DE MORRER</span>
+        <span class="f1-banner-pill">APAGOU</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 17.95;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f1-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f1-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f1-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f1-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 6.20);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, clamp = M.clamp, mix = M.mixCor, f2 = M.f2;
+        
+              var svg = M.svgBase(1080, 680,
+                '<defs>' +
+                '<linearGradient id="s1-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1329"/><stop offset="1" stop-color="#182344"/></linearGradient>' +
+                '<linearGradient id="s1-map" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e293b"/><stop offset="1" stop-color="#0f172a"/></linearGradient>' +
+                '<clipPath id="s1-clip"><rect x="30" y="30" width="1020" height="600" rx="26"/></clipPath>' +
+                '</defs>' +
+                G({ 'clip-path': 'url(#s1-clip)' },
+                  T('rect', { x: 30, y: 30, width: 1020, height: 600, fill: 'url(#s1-sky)' }) +
+                  // prédios silhueta no fundo
+                  T('rect', { x: 60, y: 220, width: 110, height: 350, fill: '#0e1a38' }) +
+                  T('rect', { x: 190, y: 160, width: 130, height: 410, fill: '#0c1630' }) +
+                  T('rect', { x: 340, y: 240, width: 90, height: 330, fill: '#0e1a38' }) +
+                  // calçada e rua
+                  T('rect', { x: 30, y: 560, width: 1020, height: 70, fill: '#1e293b' }) +
+                  T('rect', { x: 30, y: 556, width: 1020, height: 5, fill: '#475569' }) +
+                  // poste de luz
+                  T('rect', { x: 140, y: 120, width: 12, height: 440, rx: 6, fill: '#64748b' }) +
+                  T('path', { d: 'M146 120 Q146 70 200 70 L230 70', fill: 'none', stroke: '#64748b', 'stroke-width': 10, 'stroke-linecap': 'round' }) +
+                  T('ellipse', { cx: 230, cy: 75, rx: 24, ry: 10, fill: '#cbd5e1' }) +
+                  T('polygon', { points: '180,85 280,85 410,560 50,560', fill: '#fef08a', 'fill-opacity': 0.08 }) +
+                  // placa de ponto
+                  T('rect', { x: 880, y: 280, width: 10, height: 280, rx: 5, fill: '#94a3b8' }) +
+                  T('circle', { cx: 885, cy: 270, r: 36, fill: '#0284c7', stroke: '#38bdf8', 'stroke-width': 4 }) +
+                  T('text', { x: 885, y: 278, 'text-anchor': 'middle', fill: '#fff', 'font-family': 'Inter, sans-serif', 'font-weight': 700, 'font-size': 24 }, 'BUS')
+                ) +
+                // Smartphone central
+                G({ transform: 'translate(410 70)' },
+                  T('rect', { x: 0, y: 0, width: 260, height: 500, rx: 34, fill: '#020617', stroke: '#94a3b8', 'stroke-width': 8 }) +
+                  T('rect', { id: 's1-telafull', x: 12, y: 16, width: 236, height: 468, rx: 24, fill: 'url(#s1-map)' }) +
+                  T('rect', { x: 96, y: 6, width: 68, height: 7, rx: 3, fill: '#334155' }) +
+                  // Interface do app
+                  G({ id: 's1-app' },
+                    // Barra superior com bateria
+                    T('text', { x: 30, y: 46, fill: '#94a3b8', 'font-family': 'Inter', 'font-weight': 600, 'font-size': 15 }, '19:42') +
+                    T('rect', { x: 180, y: 34, width: 38, height: 18, rx: 5, fill: 'none', stroke: '#94a3b8', 'stroke-width': 2.5 }) +
+                    T('rect', { x: 219, y: 40, width: 3, height: 6, rx: 1, fill: '#94a3b8' }) +
+                    T('rect', { id: 's1-batfill', x: 183, y: 37, width: 7.5, height: 12, rx: 2, fill: '#f97316' }) +
+                    T('text', { id: 's1-battxt', x: 172, y: 47, 'text-anchor': 'end', fill: '#f97316', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 13 }, '20%') +
+                    // Mapa estilizado
+                    T('path', { d: 'M30 140 Q80 200 130 170 T210 240', fill: 'none', stroke: '#0284c7', 'stroke-width': 8, 'stroke-linecap': 'round' }) +
+                    T('circle', { cx: 40, cy: 145, r: 8, fill: '#22c55e' }) +
+                    T('circle', { cx: 200, cy: 235, r: 10, fill: '#ef4444' }) +
+                    T('rect', { x: 105, y: 172, width: 30, height: 18, rx: 5, fill: '#facc15' }) +
+                    // Card de confirmação de corrida
+                    T('rect', { x: 24, y: 320, width: 212, height: 140, rx: 18, fill: '#1e293b', stroke: '#334155', 'stroke-width': 2 }) +
+                    T('text', { x: 40, y: 354, fill: '#f8fafc', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 19 }, 'UberX // R$ 24,90') +
+                    T('text', { x: 40, y: 380, fill: '#94a3b8', 'font-family': 'Inter', 'font-weight': 500, 'font-size': 14 }, 'Chega em 3 minutos') +
+                    T('rect', { id: 's1-btn', x: 36, y: 404, width: 188, height: 42, rx: 10, fill: '#38bdf8' }) +
+                    T('text', { x: 130, y: 431, 'text-anchor': 'middle', fill: '#040a17', 'font-family': 'Inter', 'font-weight': 800, 'font-size': 15 }, 'CONFIRMAR AGORA')
+                  ) +
+                  // Tela de celular morto (surge ao apagar)
+                  G({ id: 's1-morto', opacity: 0 },
+                    T('rect', { x: 12, y: 16, width: 236, height: 468, rx: 24, fill: '#050a14' }) +
+                    T('rect', { x: 74, y: 200, width: 112, height: 56, rx: 12, fill: 'none', stroke: '#ef4444', 'stroke-width': 5 }) +
+                    T('rect', { x: 187, y: 216, width: 8, height: 24, rx: 3, fill: '#ef4444' }) +
+                    T('line', { x1: 84, y1: 210, x2: 84, y2: 246, stroke: '#ef4444', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+                    T('path', { d: 'M130 290 L130 330 M116 344 L130 330 L144 344', stroke: '#94a3b8', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }) +
+                    T('text', { x: 130, y: 380, 'text-anchor': 'middle', fill: '#ef4444', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 18 }, 'BATERIA ESGOTADA')
+                  )
+                ) +
+                // Ralo de energia (segunda frase)
+                G({ id: 's1-ralo', opacity: 0, transform: 'translate(830 340)' },
+                  T('ellipse', { cx: 0, cy: 0, rx: 90, ry: 40, fill: '#020617', stroke: '#ef4444', 'stroke-width': 4, 'stroke-dasharray': '8 8' }) +
+                  T('ellipse', { cx: 0, cy: 0, rx: 55, ry: 24, fill: '#0f172a', stroke: '#f97316', 'stroke-width': 3 }) +
+                  (function() {
+                    var s = '';
+                    for(var i=0; i<8; i++) {
+                      var a = i * 45;
+                      s += T('circle', { class: 's1-part', r: 5, fill: '#facc15' });
+                    }
+                    return s;
+                  })()
+                ) +
+                T('rect', { x: 30, y: 30, width: 1020, height: 600, rx: 26, fill: 'none', stroke: '#3b5b8c', 'stroke-width': 4 })
+              );
+              M.montar('#f1-cena', svg);
+              var cena = M.pegar('#f1-cena');
+              var app = M.pegar(cena, '#s1-app');
+              var morto = M.pegar(cena, '#s1-morto');
+              var ralo = M.pegar(cena, '#s1-ralo');
+              var batTxt = M.pegar(cena, '#s1-battxt');
+              var batFill = M.pegar(cena, '#s1-batfill');
+              var parts = cena.querySelectorAll('.s1-part');
+              var boy = M.mascote('#f1-mascote');
+              var hud = M.medidorBateria('#f1-hud');
+        
+              M.conectar(tl, function (t, og) {
+                // Apagão: aos 6.6s ("o celular apaga na sua cara")
+                var apagou = t >= 6.6;
+                var pisca = (t >= 6.3 && t < 6.6) ? (Math.sin(t * 36) > 0 ? 0.2 : 1) : (apagou ? 0 : 1);
+                app.setAttribute('opacity', f2(pisca));
+                morto.setAttribute('opacity', f2(apagou ? 1 : 0));
+        
+                // Ralo a partir de 13s
+                var raloOn = suave(faixa(t, 13.0, 14.5));
+                ralo.setAttribute('opacity', f2(raloOn));
+                for (var p = 0; p < parts.length; p++) {
+                  var ang = t * 6 + p * (Math.PI / 4);
+                  var rad = 25 + 50 * (1 - ((t * 2 + p * 0.3) % 1));
+                  parts[p].setAttribute('cx', f2(rad * Math.cos(ang)));
+                  parts[p].setAttribute('cy', f2(rad * 0.45 * Math.sin(ang)));
+                }
+        
+                // Bateria caindo
+                var pct = t < 6.6 ? 20 - faixa(t, 0, 6.6) * 5 : lerp(15, 0, suave(faixa(t, 6.6, 7.8)));
+                hud.atualizar(pct, 'BATERIA NO BOLSO', false);
+                batTxt.textContent = Math.round(pct) + '%';
+                batFill.setAttribute('width', f2((pct / 100) * 35));
+        
+                // Mascote
+                boy.atualizar(t, og, {
+                  humor: apagou ? 'bravo' : 'surpreso',
+                  bracoD: apagou ? 168 : 80,
+                  bracoE: apagou ? 168 : 20,
+                  tremer: apagou ? 1.2 : 0,
+                  olhar: [4, -3]
+                });
+              }, { duracao: DUR, offsetGlobal: 0.00 });
+        
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-01-apaga-na-rua'] = tl;
+    })();
+  </script>
+</template>

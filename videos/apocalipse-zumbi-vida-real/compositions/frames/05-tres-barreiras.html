@@ -1,0 +1,209 @@
+<template>
+  <style>
+    @font-face { font-family: 'EB Garamond'; font-style: normal; font-weight: 700; font-display: swap; src: url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f5-root {
+      position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: hidden;
+      background-color: #050a14; font-family: 'Inter', sans-serif; color: #f8fafc;
+    }
+
+    .f5-ui-layer { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+
+    .f5-topbar {
+      position: absolute; top: 76px; left: 68px; right: 68px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88); border: 1px solid rgba(56, 189, 248, 0.38); border-radius: 14px;
+    }
+    .f5-kicker { font-size: 20px; font-weight: 700; letter-spacing: 0.12em; color: #38bdf8; text-transform: uppercase; }
+    .f5-badge { font-size: 19px; font-weight: 700; color: #86efac; letter-spacing: 0.06em; }
+
+    .f5-header-card {
+      position: absolute; top: 164px; left: 68px; right: 68px; padding: 24px 32px;
+      background: rgba(8, 14, 26, 0.88); border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+    .f5-title { font-family: 'EB Garamond', serif; font-size: 58px; font-weight: 700; line-height: 1.05; color: #f8fafc; margin-bottom: 8px; }
+    .f5-title-accent { color: #7dd3fc; }
+    .f5-subtitle { font-size: 22px; line-height: 1.34; color: #cbd5e1; }
+
+    .f5-banner {
+      position: absolute; top: 1185px; left: 68px; right: 68px; padding: 18px 26px;
+      background: rgba(10, 22, 32, 0.92); border: 1.5px solid rgba(56, 189, 248, 0.5);
+      border-radius: 14px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .f5-banner-text { font-size: 21px; font-weight: 700; color: #e0f2fe; letter-spacing: 0.04em; }
+    .f5-banner-pill { padding: 6px 16px; background: #38bdf8; color: #082f49; font-size: 17px; font-weight: 700; border-radius: 8px; letter-spacing: 0.06em; }
+
+    #f5-root .m2-fundo {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(circle at 50% 28%, #101e33 0%, #0a1220 55%, #050a14 100%);
+    }
+    #f5-root .m2-cena { position: absolute; left: 0; top: 380px; width: 1080px; height: 780px; z-index: 1; }
+  </style>
+
+  <div data-hf-id="hf-f5rt" id="f5-root" data-composition-id="frame-05-tres-barreiras" data-width="1080" data-height="1920" data-start="0" data-duration="17.06">
+    <div data-hf-id="hf-f5bg" class="m2-fundo"></div>
+    <div data-hf-id="hf-f5cn" id="f5-cena" class="m2-cena"></div>
+
+    <div data-hf-id="hf-f5ui" class="f5-ui-layer">
+      <div data-hf-id="hf-f5tb" id="f5-topbar" class="f5-topbar">
+        <span data-hf-id="hf-f5kk" class="f5-kicker">NOSSO CORPO // TRÊS BARREIRAS</span>
+        <span data-hf-id="hf-f5bd" class="f5-badge">HUMANO ≠ INSETO</span>
+      </div>
+
+      <div data-hf-id="hf-f5hd" id="f5-header" class="f5-header-card">
+        <h1 data-hf-id="hf-f5tt" class="f5-title">Por Que Não Funciona <span data-hf-id="hf-f5ac" class="f5-title-accent">Em Nós</span></h1>
+        <p data-hf-id="hf-f5sb" class="f5-subtitle">Para controlar um humano, o parasita teria que vencer três barreiras que nenhum fungo de inseto vence.</p>
+      </div>
+
+      <div data-hf-id="hf-f5bn" id="f5-banner" class="f5-banner" style="opacity: 0;">
+        <span data-hf-id="hf-f5bt" class="f5-banner-text">MEDO E HUMOR MUDAM. CAÇADOR DE GENTE, NÃO.</span>
+        <span data-hf-id="hf-f5bp" class="f5-banner-pill">LIMITE REAL</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 17.06;
+      var CALOR = 3.80;   // "calor"
+      var IMUNE = 4.95;   // "sistema imunológico"
+      var CEREBRO = 6.90; // "cérebro"
+      var CARO = 7.39;    // "caro demais"
+      var MEDO = 11.75;   // "medo"
+      var HUMOR = 12.65;  // "humor"
+      var BAN = 14.00;
+
+      var tl = gsap.timeline({ paused: true });
+      tl.fromTo('#f5-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f5-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f5-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, BAN);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        // ── ícones das barreiras ─────────────────────────────────────────
+        function termometro(cx, cy) {
+          return G({ id: 's5-ico0' },
+            T('rect', { x: cx - 13, y: cy - 78, width: 26, height: 104, rx: 13, fill: '#0b1220', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('circle', { cx: cx, cy: cy + 34, r: 26, fill: '#0b1220', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('circle', { id: 's5-merc', cx: cx, cy: cy + 34, r: 18, fill: '#ef4444' }) +
+            T('rect', { id: 's5-col', x: cx - 5, y: cy - 52, width: 10, height: 86, rx: 5, fill: '#ef4444' }) +
+            T('path', { d: 'M' + (cx + 16) + ' ' + (cy - 44) + ' h16 M' + (cx + 16) + ' ' + (cy - 22) + ' h10 M' + (cx + 16) + ' ' + (cy) + ' h16', stroke: '#7dd3fc', 'stroke-width': 2.5, 'stroke-linecap': 'round' }));
+        }
+        function escudo(cx, cy) {
+          var celulas = '';
+          for (var i = 0; i < 4; i++) {
+            celulas += T('circle', { id: 's5-cel' + i, cx: cx - 18 + (i % 2) * 36, cy: cy - 18 + Math.floor(i / 2) * 32, r: 8, fill: '#a7f3d0', stroke: '#34d399', 'stroke-width': 2 });
+          }
+          return G({ id: 's5-ico1' },
+            T('path', { d: 'M' + cx + ' ' + (cy - 74) + ' L' + (cx + 54) + ' ' + (cy - 52) + ' L' + (cx + 54) + ' ' + (cy + 2) + ' Q' + (cx + 54) + ' ' + (cy + 46) + ' ' + cx + ' ' + (cy + 66) + ' Q' + (cx - 54) + ' ' + (cy + 46) + ' ' + (cx - 54) + ' ' + (cy + 2) + ' L' + (cx - 54) + ' ' + (cy - 52) + ' Z', fill: '#062a24', stroke: '#34d399', 'stroke-width': 3 }) +
+            celulas);
+        }
+        function cerebro(cx, cy) {
+          return G({ id: 's5-ico2' },
+            T('path', { d: 'M' + cx + ' ' + (cy - 62) + ' Q' + (cx + 52) + ' ' + (cy - 66) + ' ' + (cx + 56) + ' ' + (cy - 18) + ' Q' + (cx + 76) + ' ' + (cy + 16) + ' ' + (cx + 40) + ' ' + (cy + 36) + ' Q' + (cx + 26) + ' ' + (cy + 66) + ' ' + cx + ' ' + (cy + 50) + ' Q' + (cx - 26) + ' ' + (cy + 66) + ' ' + (cx - 40) + ' ' + (cy + 36) + ' Q' + (cx - 76) + ' ' + (cy + 16) + ' ' + (cx - 56) + ' ' + (cy - 18) + ' Q' + (cx - 52) + ' ' + (cy - 66) + ' ' + cx + ' ' + (cy - 62) + ' Z', fill: '#2a1f3d', stroke: '#c4b5fd', 'stroke-width': 3 }) +
+            T('path', { d: 'M' + cx + ' ' + (cy - 54) + ' L' + cx + ' ' + (cy + 44) + ' M' + cx + ' ' + (cy - 20) + ' Q' + (cx + 20) + ' ' + (cy - 30) + ' ' + (cx + 34) + ' ' + (cy - 10) + ' M' + cx + ' ' + (cy + 8) + ' Q' + (cx - 20) + ' ' + (cy) + ' ' + (cx - 34) + ' ' + (cy + 20) + ' M' + cx + ' ' + (cy - 34) + ' Q' + (cx - 18) + ' ' + (cy - 42) + ' ' + (cx - 30) + ' ' + (cy - 26), fill: 'none', stroke: '#c4b5fd', 'stroke-width': 2.4, 'stroke-linecap': 'round', opacity: 0.8 }));
+        }
+
+        var cols = [
+          { x: 60, n: '01', nome: 'CALOR', valor: '37 °C', desc1: 'fungo de inseto não', desc2: 'sobrevive ao nosso corpo', cor: '#f87171', ico: termometro(210, 244) },
+          { x: 390, n: '02', nome: 'IMUNOLÓGICO', valor: 'EM HORAS', desc1: 'o corpo reconhece e', desc2: 'ataca o invasor', cor: '#34d399', ico: escudo(540, 244) },
+          { x: 720, n: '03', nome: 'CÉREBRO', valor: '20%', desc1: 'da energia do corpo', desc2: 'e não obedece a fungo', cor: '#c4b5fd', ico: cerebro(870, 244) }
+        ];
+
+        var cards = '';
+        for (var c = 0; c < cols.length; c++) {
+          var o = cols[c];
+          cards += G({ id: 's5-card' + c },
+            T('rect', { x: o.x, y: 60, width: 300, height: 410, rx: 18, fill: '#080e1a', stroke: '#22304a', 'stroke-width': 2 }) +
+            T('rect', { id: 's5-luz' + c, x: o.x, y: 60, width: 300, height: 410, rx: 18, fill: o.cor, opacity: 0 }) +
+            T('rect', { x: o.x, y: 60, width: 300, height: 6, rx: 3, fill: o.cor, opacity: 0.85 }) +
+            T('text', { x: o.x + 22, y: 100, fill: '#94a3b8', 'font-family': 'Inter', 'font-size': 16, 'font-weight': 700, 'letter-spacing': 2 }, 'BARREIRA ' + o.n) +
+            o.ico +
+            T('text', { x: o.x + 150, y: 372, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter', 'font-size': 30, 'font-weight': 700, 'letter-spacing': 1.6 }, o.nome) +
+            T('text', { x: o.x + 150, y: 402, 'text-anchor': 'middle', fill: o.cor, 'font-family': 'Inter', 'font-size': 19, 'font-weight': 700, 'letter-spacing': 1.6 }, o.valor) +
+            T('text', { x: o.x + 150, y: 430, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter', 'font-size': 16 }, o.desc1) +
+            T('text', { x: o.x + 150, y: 450, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter', 'font-size': 16 }, o.desc2));
+        }
+
+        // ── painel medo / humor ─────────────────────────────────────────
+        var painel =
+          T('rect', { id: 's5-painel', x: 60, y: 506, width: 960, height: 214, rx: 18, fill: '#070d16', stroke: '#1f3350', 'stroke-width': 2, opacity: 0 }) +
+          T('text', { id: 's5-pTit', x: 90, y: 556, fill: '#7dd3fc', 'font-family': 'Inter', 'font-size': 18, 'font-weight': 700, 'letter-spacing': 2.4, opacity: 0 }, 'NO MÁXIMO, ELES MEXEM COM:') +
+          G({ id: 's5-chipM', opacity: 0 },
+            T('rect', { x: 90, y: 584, width: 196, height: 62, rx: 12, fill: 'rgba(30,10,16,0.9)', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('text', { x: 188, y: 624, 'text-anchor': 'middle', fill: '#fca5a5', 'font-family': 'Inter', 'font-size': 25, 'font-weight': 700, 'letter-spacing': 2 }, 'MEDO')) +
+          G({ id: 's5-chipH', opacity: 0 },
+            T('rect', { x: 304, y: 584, width: 196, height: 62, rx: 12, fill: 'rgba(30,24,8,0.9)', stroke: '#facc15', 'stroke-width': 2 }) +
+            T('text', { x: 402, y: 624, 'text-anchor': 'middle', fill: '#fde68a', 'font-family': 'Inter', 'font-size': 25, 'font-weight': 700, 'letter-spacing': 2 }, 'HUMOR')) +
+          T('text', { id: 's5-pNota', x: 534, y: 608, fill: '#cbd5e1', 'font-family': 'Inter', 'font-size': 20, opacity: 0 }, 'mas não transformam ninguém') +
+          T('text', { id: 's5-pNota2', x: 534, y: 638, fill: '#cbd5e1', 'font-family': 'Inter', 'font-size': 20, opacity: 0 }, 'em caçador de gente.') +
+          T('text', { id: 's5-pSelo', x: 534, y: 682, fill: '#64748b', 'font-family': 'Inter', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 2, opacity: 0 }, 'COMPORTAMENTO ≠ CONTROLE MOTOR');
+
+        var svg = M.svgBase(1080, 780,
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: '#060b14', stroke: '#1b2c45', 'stroke-width': 3 }) +
+          cards + painel +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: 'none', stroke: '#243a58', 'stroke-width': 3 })
+        );
+        M.montar('#f5-cena', svg);
+
+        var cena = M.pegar('#f5-cena');
+        var luz = [], merc = [], col = [];
+        for (var i = 0; i < 3; i++) luz.push(M.pegar(cena, '#s5-luz' + i));
+        merc.push(M.pegar(cena, '#s5-merc'));
+        col.push(M.pegar(cena, '#s5-col'));
+        var painelEl = M.pegar(cena, '#s5-painel');
+        var pTit = M.pegar(cena, '#s5-pTit');
+        var chipM = M.pegar(cena, '#s5-chipM');
+        var chipH = M.pegar(cena, '#s5-chipH');
+        var pNota = M.pegar(cena, '#s5-pNota');
+        var pNota2 = M.pegar(cena, '#s5-pNota2');
+        var pSelo = M.pegar(cena, '#s5-pSelo');
+
+        var tempos = [CALOR, IMUNE, CEREBRO];
+
+        M.conectar(tl, function (t, og) {
+          for (var i = 0; i < 3; i++) {
+            var entra = suave(faixa(t, 0.3 + i * 0.18, 0.9 + i * 0.18));
+            var ativa = suave(faixa(t, tempos[i], tempos[i] + 0.5));
+            var card = M.pegar(cena, '#s5-card' + i);
+            card.setAttribute('opacity', f2(entra));
+            card.setAttribute('transform', 'translate(0 ' + f2(16 * (1 - entra)) + ')');
+            luz[i].setAttribute('opacity', f2(0.10 * ativa));
+            var topo = card.querySelector('rect');
+            topo.setAttribute('opacity', f2(0.35 + 0.65 * ativa));
+          }
+
+          // termômetro sobe até 37 °C
+          var sobe = suave(faixa(t, CALOR - 0.3, CALOR + 0.9));
+          col[0].setAttribute('y', f2(lerp(274, 192, sobe)));
+          col[0].setAttribute('height', f2(lerp(4, 86, sobe)));
+          merc[0].setAttribute('r', f2(lerp(10, 18, sobe)));
+
+          // painel medo / humor
+          var pOn = suave(faixa(t, 1.30, 2.20));
+          painelEl.setAttribute('opacity', f2(pOn));
+          pTit.setAttribute('opacity', f2(suave(faixa(t, 1.60, 2.30))));
+          pNota.setAttribute('opacity', f2(suave(faixa(t, MEDO, MEDO + 0.6)) * 0.95));
+          pNota2.setAttribute('opacity', f2(suave(faixa(t, MEDO + 0.2, MEDO + 0.8)) * 0.95));
+          pSelo.setAttribute('opacity', f2(suave(faixa(t, HUMOR + 0.3, HUMOR + 0.8))));
+
+          var cm = suave(faixa(t, MEDO, MEDO + 0.5));
+          chipM.setAttribute('opacity', f2(0.26 + 0.74 * cm));
+          chipM.setAttribute('transform', 'translate(' + f2((1 - cm) * -10) + ' 0)');
+
+          var ch = suave(faixa(t, HUMOR, HUMOR + 0.5));
+          chipH.setAttribute('opacity', f2(0.26 + 0.74 * ch));
+          chipH.setAttribute('transform', 'translate(' + f2((1 - ch) * -10) + ' 0)');
+        }, { duracao: DUR, offsetGlobal: 54.83 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-05-tres-barreiras'] = tl;
+    })();
+  </script>
+</template>

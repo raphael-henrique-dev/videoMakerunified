@@ -1,0 +1,176 @@
+{
+  "id": "por-que-precisamos-dormir",
+  "titulo": "Por Que Precisamos Dormir?",
+  "subtitulo": "O cérebro não desliga à noite — ele entra no turno da manutenção",
+  "fps": 30,
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "alvoPpm": 180,
+  "modo": "2d",
+  "estiloGrafico": "padrao",
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.8,
+    "estilo": 0.4,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.24
+  },
+  "efeitos": {
+    "abaixa": true,
+    "ganho": 1.15
+  },
+  "frames": [
+    {
+      "id": "frame-01-sono-nao-e-perda",
+      "numero": "01",
+      "titulo": "Sono Não É Perda de Tempo",
+      "arquivo": "compositions/frames/01-sono-nao-e-perda.html",
+      "kicker": "SONO // NÃO É PERDA DE TEMPO",
+      "frases": [
+        {
+          "texto": "Você já passou um dia inteiro sem dormir? O cérebro começa a falhar nas coisas mais simples.",
+          "plano": "gancho",
+          "gancho": true
+        },
+        {
+          "texto": "Dormir não é desligar o interruptor. É a fábrica do corpo entrando no turno da noite.",
+          "plano": "quebra",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "whoosh", "offset": 0.15, "ganho": 0.5 },
+        { "nome": "zumbido", "offset": 0.0, "dur": 5.0, "ganho": 0.25 },
+        { "nome": "errado", "offset": 6.2, "ganho": 0.6 }
+      ]
+    },
+    {
+      "id": "frame-02-lava-jato-cerebro",
+      "numero": "02",
+      "titulo": "O Lava-Jato do Cérebro",
+      "arquivo": "compositions/frames/02-lava-jato-cerebro.html",
+      "kicker": "LIMPEZA CEREBRAL // O LAVA-JATO",
+      "frases": [
+        {
+          "texto": "Enquanto você está acordado, o cérebro produz resíduo o tempo todo. É lixo metabólico que ocupa espaço.",
+          "plano": "falha",
+          "jogo": "falha"
+        },
+        {
+          "texto": "Quando você dorme, os neurônios encolhem e abrem canais. Um líquido lava tudo e leva o lixo embora.",
+          "plano": "corrige",
+          "jogo": "corrige"
+        }
+      ],
+      "sons": [
+        { "nome": "agua", "offset": 0.5, "dur": 3.5, "ganho": 0.35 },
+        { "nome": "pingo", "offset": 1.2, "ganho": 0.4 },
+        { "nome": "certo", "offset": 8.0, "ganho": 0.55 }
+      ]
+    },
+    {
+      "id": "frame-03-memoria-aprendizado",
+      "numero": "03",
+      "titulo": "Memória e Aprendizado",
+      "arquivo": "compositions/frames/03-memoria-aprendizado.html",
+      "kicker": "MEMÓRIA // ARQUIVANDO O DIA",
+      "frases": [
+        {
+          "texto": "Você estuda, trabalha, aprende um caminho novo. Se não dormir, esse aprendizado some na manhã seguinte.",
+          "plano": "falha",
+          "jogo": "falha"
+        },
+        {
+          "texto": "No sono profundo, o cérebro revisa cada arquivo do dia e grava no disco rígido de longo prazo.",
+          "plano": "corrige",
+          "jogo": "corrige"
+        }
+      ],
+      "sons": [
+        { "nome": "clique-1", "offset": 0.3, "ganho": 0.5 },
+        { "nome": "clique-2", "offset": 2.2, "ganho": 0.5 },
+        { "nome": "certo", "offset": 7.2, "ganho": 0.55 }
+      ]
+    },
+    {
+      "id": "frame-04-defesa-corpo",
+      "numero": "04",
+      "titulo": "Defesa do Corpo",
+      "arquivo": "compositions/frames/04-defesa-corpo.html",
+      "kicker": "IMUNIDADE // DEFESA NOTURNA",
+      "frases": [
+        {
+          "texto": "Noite mal dormida e você fica mais gripado. Não é coincidência: a defesa do corpo cai.",
+          "plano": "falha",
+          "jogo": "falha"
+        },
+        {
+          "texto": "Dormir é quando o sistema imunológico treina e produz os anticorpos que protegem você no dia seguinte.",
+          "plano": "corrige",
+          "jogo": "corrige"
+        }
+      ],
+      "sons": [
+        { "nome": "trava", "offset": 1.0, "ganho": 0.55 },
+        { "nome": "bip", "offset": 3.2, "ganho": 0.45 },
+        { "nome": "certo", "offset": 9.0, "ganho": 0.55 }
+      ]
+    },
+    {
+      "id": "frame-05-prejuizos-sem-sono",
+      "numero": "05",
+      "titulo": "O Que Acontece Sem Sono",
+      "arquivo": "compositions/frames/05-prejuizos-sem-sono.html",
+      "kicker": "PRÉJUÍZOS // SEM SONO",
+      "frases": [
+        {
+          "texto": "Sem sono, a concentração desaba, a irritação sobe e o corpo pede açúcar e gordura a todo momento.",
+          "plano": "falha",
+          "jogo": "falha"
+        },
+        {
+          "texto": "Até micro-sonecas acontecem com os olhos abertos: o cérebro desliga por segundos e você nem percebe.",
+          "plano": "mecanismo",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "errado", "offset": 0.8, "ganho": 0.6 },
+        { "nome": "desliga", "offset": 1.6, "ganho": 0.5 },
+        { "nome": "congela", "offset": 7.0, "ganho": 0.55 }
+      ]
+    },
+    {
+      "id": "frame-06-quanto-voce-dorme",
+      "numero": "06",
+      "titulo": "Quanto Você Dorme?",
+      "arquivo": "compositions/frames/06-quanto-voce-dorme.html",
+      "kicker": "CONCLUSÃO // QUANTO VOCÊ DORME?",
+      "cauda": 1.1,
+      "frases": [
+        {
+          "texto": "Dormir bem não é luxo. É manutenção obrigatória do corpo que você usa 24 horas por dia.",
+          "plano": "virada_final",
+          "jogo": "corrige"
+        },
+        {
+          "texto": "Quantas horas você dormiu ontem? Por fora, é só você deitado. Por dentro, é uma fábrica inteira trabalhando. Pois é, o mundo é mais curioso do que parece. Se você é curioso, segue o Curiorisando!",
+          "plano": "segue"
+        }
+      ],
+      "sons": [
+        { "nome": "whoosh", "offset": 0.3, "ganho": 0.5 },
+        { "nome": "final", "offset": 8.4, "ganho": 0.6 }
+      ]
+    }
+  ]
+}

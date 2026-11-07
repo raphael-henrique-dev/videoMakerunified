@@ -1,0 +1,288 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f4-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #060916;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f4-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 1;
+    }
+
+    .f4-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(6, 9, 22, 0.88) 0%,
+        rgba(6, 9, 22, 0.16) 28%,
+        rgba(6, 9, 22, 0.18) 64%,
+        rgba(6, 9, 22, 0.94) 100%
+      );
+    }
+
+    .f4-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f4-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(12, 14, 30, 0.88);
+      border: 1px solid rgba(249, 115, 22, 0.42);
+      border-radius: 14px;
+    }
+
+    .f4-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #fb923c;
+    }
+
+    .f4-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #f87171;
+      letter-spacing: 0.06em;
+    }
+
+    .f4-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(12, 14, 30, 0.86);
+      border-left: 5px solid #f97316;
+      border-radius: 0 18px 18px 0;
+    }
+
+    .f4-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .f4-title-accent {
+      color: #fb923c;
+    }
+
+    .f4-subtitle {
+      font-size: 24px;
+      line-height: 1.38;
+      color: #cbd5e1;
+    }
+
+    .f4-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f4-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(12, 14, 30, 0.90);
+      border: 1px solid rgba(249, 115, 22, 0.35);
+      border-radius: 16px;
+    }
+
+    .f4-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #fb923c;
+      margin-bottom: 6px;
+    }
+
+    .f4-metric-val {
+      font-size: 36px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f4-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(40, 12, 10, 0.92);
+      border: 1.5px solid rgba(249, 115, 22, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f4-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fed7aa;
+      letter-spacing: 0.04em;
+    }
+
+    .f4-banner-pill {
+      padding: 6px 16px;
+      background: #fb923c;
+      color: #090d16;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+  </style>
+
+  <div id="f4-root" data-composition-id="frame-04-vilao-microondas" data-width="1080" data-height="1920" data-start="0" data-duration="15.35">
+    <div id="f4-stage-3d"></div>
+    <div class="f4-vignette"></div>
+
+    <div class="f4-ui-layer">
+      <div id="f4-topbar" class="f4-topbar">
+        <span class="f4-kicker">ERRO 03 // QUANDO ESQUENTA O PRATO</span>
+        <span class="f4-badge">MESMO RITMO</span>
+      </div>
+
+      <div id="f4-header" class="f4-header-card">
+        <h1 class="f4-title">O Vilão do <span class="f4-title-accent">Micro-ondas</span></h1>
+        <p class="f4-subtitle">Ele esquenta a comida sacudindo a água no mesmo ritmo que o roteador usa para mandar internet</p>
+      </div>
+
+      <div id="f4-telemetry" class="f4-telemetry-row">
+        <div class="f4-metric-box">
+          <div class="f4-metric-label">QUANDO LIGA NA COZINHA</div>
+          <div class="f4-metric-val">Buzina no Ar</div>
+        </div>
+        <div class="f4-metric-box">
+          <div class="f4-metric-label">NA CHAMADA DE VÍDEO</div>
+          <div class="f4-metric-val">Voz Cortando</div>
+        </div>
+      </div>
+
+      <div id="f4-banner" class="f4-banner" style="opacity: 0;">
+        <span class="f4-banner-text">É IGUAL CONVERSAR COM UM CAMINHÃO BUZINANDO DO SEU LADO</span>
+        <span class="f4-banner-pill">RUÍDO FORTE</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 15.35;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f4-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f4-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f4-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 5.50);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f4-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'calor'
+        });
+
+        var micro = M.criarMicroondasInterferencia(THREE);
+        micro.raiz.position.set(0.28, 0.35, -0.05);
+        micro.raiz.scale.setScalar(0.68);
+        palco.cena.add(micro.raiz);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.72 });
+        menino.raiz.position.set(-0.78, 0.35, 0.45);
+        palco.cena.add(menino.raiz);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          M.resetPose(menino, t);
+
+          var ligado = M.suave(M.faixa(t, 0.3, 4.5));
+          micro.atualizar(t, ligado);
+
+          if (t < 5.5) {
+            M.humor(menino, 'surpreso');
+            M.apontar(menino, [0.28, 1.25, 0.0], 'D');
+          } else {
+            M.humor(menino, 'assustado');
+            M.suar(menino, t, 5.5, DUR);
+            M.tremer(palco.camera, t, 5.8, 0.35, 0.05);
+          }
+          M.olharCamera(menino, palco.camera, 0.72);
+
+          M.plano(
+            palco.camera,
+            t,
+            0,
+            DUR,
+            { pos: [-0.2, 1.85, 7.5], alvo: [0.0, 1.38, 0.0] },
+            { pos: [0.15, 1.78, 7.1], alvo: [0.05, 1.38, 0.0] }
+          );
+        }, { duracao: DUR, offsetGlobal: 50.35 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-vilao-microondas'] = tl;
+    })();
+  </script>
+</template>

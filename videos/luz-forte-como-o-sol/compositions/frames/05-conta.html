@@ -1,0 +1,180 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f5-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f5-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f5-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f5-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f5-badge { font-size:19px; font-weight:700; color:#4ade80; letter-spacing:.06em; }
+    .f5-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #22c55e; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f5-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f5-title-accent { color:#4ade80; }
+    .f5-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f5-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(34,197,94,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f5-banner-text { font-size:20px; font-weight:700; color:#dcfce7; letter-spacing:.04em; }
+    .f5-banner-pill { padding:6px 16px; background:#22c55e; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f5-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 50% 30%, #0d2a21 0%, #08142a 55%, #050a14 100%); }
+    #f5-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f5-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f5-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f5-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(34,197,94,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f5-root" data-composition-id="frame-05-conta" data-width="1080" data-height="1920" data-start="0" data-duration="19.54">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f5-cena" class="m2-cena"></div>
+    <div id="f5-mascote" class="m2-mascote"></div>
+    <div id="f5-hud" class="m2-hud"></div>
+
+    <div class="f5-ui-layer">
+      <div id="f5-topbar" class="f5-topbar">
+        <span class="f5-kicker">A CONTA // ENERGIA DE VERDADE</span>
+        <span class="f5-badge">1,5x</span>
+      </div>
+      <div id="f5-header" class="f5-header-card">
+        <h1 class="f5-title">O Sol de Laboratório <span class="f5-title-accent">Ainda Deve Energia</span></h1>
+        <p class="f5-subtitle">A fusão devolveu mais do que recebeu. Mas o sistema inteiro ainda consome muito mais do que entrega.</p>
+      </div>
+      <div id="f5-banner" class="f5-banner" style="opacity: 0;">
+        <span class="f5-banner-text">A CONTA TOTAL AINDA CONSOME MAIS DO QUE ENTREGA</span>
+        <span class="f5-banner-pill">1,5x</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 19.54;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f5-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f5-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f5-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 16.2);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var chips = [
+          { id: 's5-chip0', x: 300, txt: 'SATÉLITES' },
+          { id: 's5-chip1', x: 520, txt: 'AÇO' },
+          { id: 's5-chip2', x: 740, txt: 'PAINÉIS' }
+        ];
+        var chipsSvg = '';
+        chips.forEach(function (ch, i) {
+          var icon = '';
+          if (i === 0) {
+            icon = T('rect', { x: ch.x + 18, y: 566, width: 26, height: 26, rx: 3, fill: '#1d4ed8', stroke: '#7dd3fc', 'stroke-width': 2 }) +
+              T('rect', { x: ch.x + 48, y: 574, width: 16, height: 10, rx: 2, fill: '#94a3b8' }) +
+              T('line', { x1: ch.x + 48, y1: 579, x2: ch.x + 16, y2: 579, stroke: '#7dd3fc', 'stroke-width': 2 }) +
+              T('line', { x1: ch.x + 64, y1: 579, x2: ch.x + 78, y2: 579, stroke: '#7dd3fc', 'stroke-width': 2 });
+          } else if (i === 1) {
+            icon = T('path', { d: 'M' + (ch.x + 18) + ' 574 L' + (ch.x + 50) + ' 574 L' + (ch.x + 50) + ' 586 L' + (ch.x + 18) + ' 586 Z', fill: '#64748b', stroke: '#cbd5e1', 'stroke-width': 2 }) +
+              T('rect', { x: ch.x + 26, y: 582, width: 16, height: 8, fill: '#94a3b8' }) +
+              T('path', { d: 'M' + (ch.x + 58) + ' 586 L' + (ch.x + 78) + ' 586 L' + (ch.x + 70) + ' 570 Z', fill: '#f59e0b', 'fill-opacity': 0.8 });
+          } else {
+            icon = T('path', { d: 'M' + (ch.x + 18) + ' 578 L' + (ch.x + 30) + ' 566 L' + (ch.x + 66) + ' 566 L' + (ch.x + 54) + ' 578 Z', fill: '#0ea5e9', stroke: '#bae6fd', 'stroke-width': 2 }) +
+              T('line', { x1: ch.x + 30, y1: 572, x2: ch.x + 66, y2: 572, stroke: '#e0f2fe', 'stroke-width': 1.5 }) +
+              T('line', { x1: ch.x + 42, y1: 566, x2: ch.x + 42, y2: 578, stroke: '#e0f2fe', 'stroke-width': 1.5 }) +
+              T('line', { x1: ch.x + 54, y1: 566, x2: ch.x + 54, y2: 578, stroke: '#e0f2fe', 'stroke-width': 1.5 });
+          }
+          chipsSvg += G({ id: ch.id, opacity: 0 },
+            T('rect', { x: ch.x, y: 548, width: 200, height: 62, rx: 14, fill: 'rgba(8,14,26,0.94)', stroke: 'rgba(56,189,248,0.35)', 'stroke-width': 2 }) +
+            icon +
+            T('text', { x: ch.x + 92, y: 586, fill: '#e2e8f0', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700, 'letter-spacing': 1 }, ch.txt));
+        });
+
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<radialGradient id="s5-bgGrad" cx="50%" cy="35%" r="75%"><stop offset="0" stop-color="#0d2a21"/><stop offset="1" stop-color="#050a14"/></radialGradient>' +
+          '<linearGradient id="s5-colGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#334155"/><stop offset="0.5" stop-color="#94a3b8"/><stop offset="1" stop-color="#334155"/></linearGradient>' +
+          '<linearGradient id="s5-cubeIn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7dd3fc"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient>' +
+          '<linearGradient id="s5-cubeOut" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>' +
+          '<radialGradient id="s5-glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#4ade80" stop-opacity="0.45"/><stop offset="1" stop-color="#22c55e" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s5-bgGrad)' }) +
+          T('ellipse', { cx: 540, cy: 474, rx: 250, ry: 26, fill: '#000', 'fill-opacity': 0.35 }) +
+          // base e coluna
+          T('rect', { x: 470, y: 458, width: 140, height: 16, rx: 8, fill: '#1e293b', stroke: '#64748b', 'stroke-width': 2 }) +
+          T('rect', { x: 528, y: 250, width: 24, height: 210, rx: 6, fill: 'url(#s5-colGrad)' }) +
+          T('circle', { cx: 540, cy: 250, r: 15, fill: '#cbd5e1', stroke: '#475569', 'stroke-width': 3 }) +
+          // balança inclinada
+          G({ id: 's5-balanca' },
+            T('line', { x1: 340, y1: 250, x2: 740, y2: 250, stroke: '#94a3b8', 'stroke-width': 12, 'stroke-linecap': 'round' }) +
+            T('line', { x1: 340, y1: 250, x2: 340, y2: 330, stroke: '#64748b', 'stroke-width': 5 }) +
+            T('line', { x1: 740, y1: 250, x2: 740, y2: 330, stroke: '#64748b', 'stroke-width': 5 }) +
+            T('path', { d: 'M268 330 L412 330 L396 352 L284 352 Z', fill: '#1e293b', stroke: '#94a3b8', 'stroke-width': 3 }) +
+            T('path', { d: 'M668 330 L812 330 L796 352 L684 352 Z', fill: '#1e293b', stroke: '#94a3b8', 'stroke-width': 3 }) +
+            // cubos de energia
+            G({ id: 's5-cuboIn' },
+              T('rect', { x: 310, y: 262, width: 60, height: 60, rx: 10, fill: 'url(#s5-cubeIn)', stroke: '#bae6fd', 'stroke-width': 3 }) +
+              T('text', { x: 340, y: 298, 'text-anchor': 'middle', fill: '#0b1220', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700 }, '2,05')) +
+            G({ id: 's5-cuboOut' },
+              T('rect', { x: 700, y: 246, width: 76, height: 76, rx: 12, fill: 'url(#s5-cubeOut)', stroke: '#fef3c7', 'stroke-width': 3 }) +
+              T('text', { x: 738, y: 292, 'text-anchor': 'middle', fill: '#3b2503', 'font-family': 'Inter, sans-serif', 'font-size': 18, 'font-weight': 700 }, '3,15'))) +
+          // rótulos entra/sai
+          T('text', { x: 340, y: 218, 'text-anchor': 'middle', fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700, 'letter-spacing': 2 }, 'ENTRA') +
+          T('text', { x: 738, y: 206, 'text-anchor': 'middle', fill: '#fbbf24', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700, 'letter-spacing': 2 }, 'SAI') +
+          T('text', { x: 340, y: 386, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 18, 'font-weight': 700 }, '2,05 MJ DE LASER') +
+          T('text', { x: 738, y: 386, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 18, 'font-weight': 700 }, '3,15 MJ DE FUSÃO') +
+          // selo de ganho
+          G({ id: 's5-selo', opacity: 0 },
+            T('circle', { cx: 540, cy: 150, r: 74, fill: 'url(#s5-glow)' }) +
+            T('rect', { x: 448, y: 116, width: 184, height: 68, rx: 18, fill: 'rgba(8,14,26,0.96)', stroke: '#22c55e', 'stroke-width': 3 }) +
+            T('text', { x: 540, y: 163, 'text-anchor': 'middle', fill: '#4ade80', 'font-family': 'EB Garamond, serif', 'font-size': 42, 'font-weight': 700 }, '+1,5x')) +
+          // chips de aplicação
+          chipsSvg +
+          T('text', { x: 300, y: 528, fill: '#e2e8f0', 'font-family': 'Inter, sans-serif', 'font-size': 18, 'font-weight': 700, 'letter-spacing': 1 }, 'ESSA LUZ JÁ SERVE PARA')
+        );
+        M.montar('#f5-cena', svg);
+        var cena = M.pegar('#f5-cena');
+        var balanca = M.pegar(cena, '#s5-balanca');
+        var selo = M.pegar(cena, '#s5-selo');
+        var cuboIn = M.pegar(cena, '#s5-cuboIn');
+        var cuboOut = M.pegar(cena, '#s5-cuboOut');
+        var chipsEls = chips.map(function (ch) { return M.pegar(cena, '#' + ch.id); });
+        var boy = M.mascote('#f5-mascote');
+        var hud = M.medidorBarra('#f5-hud', { rotulo: 'GANHO DE FUSÃO', unidade: 'x', max: 2, cor: '#22c55e', decimais: 1 });
+
+        M.conectar(tl, function (t, og) {
+          var inclina = 4.2 * suave(faixa(t, 0.6, 3.2));
+          balanca.setAttribute('transform', 'rotate(' + f2(inclina) + ' 540 250)');
+
+          var caiIn = suave(faixa(t, 0.5, 1.6));
+          cuboIn.setAttribute('transform', 'translate(0 ' + f2(-46 * (1 - caiIn)) + ')');
+          cuboIn.setAttribute('opacity', f2(caiIn));
+          var caiOut = suave(faixa(t, 1.0, 2.2));
+          cuboOut.setAttribute('transform', 'translate(0 ' + f2(-56 * (1 - caiOut)) + ')');
+          cuboOut.setAttribute('opacity', f2(caiOut));
+
+          var pop = suave(faixa(t, 2.8, 3.5));
+          selo.setAttribute('opacity', f2(pop));
+          selo.setAttribute('transform', 'translate(540 150) scale(' + f2(0.7 + 0.3 * pop) + ') translate(-540 -150)');
+
+          for (var i = 0; i < chipsEls.length; i++) {
+            var entra = suave(faixa(t, 10.8 + i * 0.55, 11.6 + i * 0.55));
+            chipsEls[i].setAttribute('opacity', f2(entra));
+            chipsEls[i].setAttribute('transform', 'translate(0 ' + f2(18 * (1 - entra)) + ')');
+          }
+
+          hud.atualizar(1.5 * suave(faixa(t, 0.8, 3.4)), 'SAI MAIS QUE ENTRA', '#22c55e');
+          boy.atualizar(t, og, {
+            humor: t < 3.4 ? 'neutro' : 'feliz',
+            bracoD: t < 3.4 ? 30 : 118,
+            bracoE: t < 3.4 ? 14 : 24,
+            olhar: [8, -2],
+            inclinar: t < 3.4 ? 3 : -2,
+            pulo: t > 11.8 ? Math.abs(Math.sin(t * 2.3)) * 5 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 76.15 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-05-conta'] = tl;
+    })();
+  </script>
+</template>

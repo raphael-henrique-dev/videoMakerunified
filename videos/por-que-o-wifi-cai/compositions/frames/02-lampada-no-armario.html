@@ -1,0 +1,259 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f2-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f2-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 1;
+    }
+
+    .f2-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(
+        180deg,
+        rgba(5, 10, 20, 0.88) 0%,
+        rgba(5, 10, 20, 0.20) 28%,
+        rgba(5, 10, 20, 0.16) 64%,
+        rgba(5, 10, 20, 0.92) 100%
+      );
+    }
+
+    .f2-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f2-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(250, 204, 21, 0.38);
+      border-radius: 14px;
+    }
+
+    .f2-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #facc15;
+    }
+
+    .f2-badge {
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #38bdf8;
+    }
+
+    .f2-header-card {
+      position: absolute;
+      top: 168px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #facc15;
+      border-radius: 0 16px 16px 0;
+    }
+
+    .f2-title {
+      margin: 0 0 10px 0;
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.06;
+      color: #f8fafc;
+    }
+
+    .f2-title-accent {
+      color: #facc15;
+    }
+
+    .f2-subtitle {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.4;
+      color: #cbd5e1;
+    }
+
+    .f2-cards-grid {
+      position: absolute;
+      top: 1030px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f2-card {
+      flex: 1;
+      padding: 22px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(250, 204, 21, 0.32);
+      border-radius: 16px;
+    }
+
+    .f2-card-step {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #facc15;
+      margin-bottom: 6px;
+    }
+
+    .f2-card-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 6px;
+    }
+
+    .f2-card-desc {
+      font-size: 20px;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+  </style>
+
+  <div id="f2-root" data-composition-id="frame-02-lampada-no-armario" data-width="1080" data-height="1920" data-start="0" data-duration="16.66">
+    <div id="f2-stage-3d"></div>
+    <div class="f2-vignette"></div>
+
+    <div class="f2-ui-layer">
+      <div id="f2-topbar" class="f2-topbar">
+        <span class="f2-kicker">ERRO 01 // ESCONDER ATRÁS DA TV</span>
+        <span class="f2-badge">METADE PERDIDA</span>
+      </div>
+
+      <div id="f2-header" class="f2-header-card">
+        <h1 class="f2-title">Igual Lâmpada na <span class="f2-title-accent">Gaveta</span></h1>
+        <p class="f2-subtitle">Esconder o roteador dentro do móvel ou atrás da televisão apaga o sinal na casa toda</p>
+      </div>
+
+      <div id="f2-cards" class="f2-cards-grid">
+        <div class="f2-card" id="f2-c1">
+          <div class="f2-card-step">DENTRO DO RACK</div>
+          <div class="f2-card-title">Sinal Abafado</div>
+          <div class="f2-card-desc">A madeira e a chapa da TV seguram a onda logo na saída</div>
+        </div>
+        <div class="f2-card" id="f2-c2">
+          <div class="f2-card-step">NO ALTO E LIVRE</div>
+          <div class="f2-card-title">Casa Iluminada</div>
+          <div class="f2-card-desc">Quanto mais alto e visível, mais longe o Wi-Fi alcança</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 16.66;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-c1', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f2-c2', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 5.80);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f2-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'noite'
+        });
+
+        var armario = M.criarRoteadorArmario(THREE);
+        armario.raiz.position.set(0.28, 0.35, 0.0);
+        armario.raiz.scale.setScalar(0.68);
+        palco.cena.add(armario.raiz);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.72 });
+        menino.raiz.position.set(-0.76, 0.35, 0.45);
+        palco.cena.add(menino.raiz);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          M.resetPose(menino, t);
+
+          var abafado = 1.0 - M.suave(M.faixa(t, 6.2, 8.8));
+          armario.atualizar(t, abafado);
+
+          if (t < 6.2) {
+            M.pensar(menino, t, 0.2, 6.2);
+          } else {
+            M.humor(menino, 'feliz');
+            M.apontar(menino, [0.28, 1.35, 0.0], 'D');
+          }
+          M.olharCamera(menino, palco.camera, 0.7);
+
+          M.plano(
+            palco.camera,
+            t,
+            0,
+            DUR,
+            { pos: [-0.2, 1.85, 7.5], alvo: [0.0, 1.38, 0.0] },
+            { pos: [0.15, 1.75, 7.1], alvo: [0.05, 1.38, 0.0] }
+          );
+        }, { duracao: DUR, offsetGlobal: 15.92 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-lampada-no-armario'] = tl;
+    })();
+  </script>
+</template>

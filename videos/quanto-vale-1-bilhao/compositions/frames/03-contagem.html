@@ -1,0 +1,156 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f3-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f3-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f3-topbar { position:absolute; top:76px; left:68px; right:140px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f3-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f3-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f3-header-card { position:absolute; top:164px; left:68px; right:140px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f3-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f3-title-accent { color:#38bdf8; }
+    .f3-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f3-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f3-banner-text { font-size:19px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f3-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; white-space:nowrap; }
+    #f3-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 32% 26%, #17284a 0%, #091226 58%, #050a14 100%); }
+    #f3-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f3-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f3-root .m2-mascote { position:absolute; left:20px; top:624px; width:250px; height:350px; z-index:2; }
+    #f3-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f3-root" data-composition-id="frame-03-contagem" data-width="1080" data-height="1920" data-start="0" data-duration="13.17">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f3-cena" class="m2-cena"></div>
+    <div id="f3-mascote" class="m2-mascote"></div>
+    <div id="f3-hud" class="m2-hud"></div>
+
+    <div class="f3-ui-layer">
+      <div id="f3-topbar" class="f3-topbar">
+        <span class="f3-kicker">CONTA 02 // CONTAGEM</span>
+        <span class="f3-badge">31,7 ANOS</span>
+      </div>
+      <div id="f3-header" class="f3-header-card">
+        <h1 class="f3-title">Contar <span class="f3-title-accent">1 real</span> por segundo</h1>
+        <p class="f3-subtitle">Sem parar, sem dormir, sem pausa: quanto tempo até o último centavo?</p>
+      </div>
+      <div id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span class="f3-banner-text">1 BILHÃO DE SEGUNDOS = 31 ANOS E 8 MESES</span>
+        <span class="f3-banner-pill">31,7 ANOS</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 13.17;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 5.6);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2, arco = M.arco, lerp = M.lerp;
+
+        var CX = 410, CY = 262, R = 138;
+        var marcas = '';
+        for (var k = 0; k < 60; k++) {
+          var a = (k / 60) * Math.PI * 2 - Math.PI / 2;
+          var r1 = R - (k % 5 === 0 ? 22 : 10);
+          marcas += T('line', {
+            x1: f2(CX + Math.cos(a) * r1), y1: f2(CY + Math.sin(a) * r1),
+            x2: f2(CX + Math.cos(a) * (R - 4)), y2: f2(CY + Math.sin(a) * (R - 4)),
+            stroke: k % 5 === 0 ? '#7dd3fc' : '#334155', 'stroke-width': k % 5 === 0 ? 4 : 2, 'stroke-linecap': 'round'
+          });
+        }
+
+        // barra de vida 0–80 anos
+        var LX = 300, LW = 600, LY = 470, LH = 44, MAXA = 80;
+        var xa = function (a) { return LX + (a / MAXA) * LW; };
+        var x10 = xa(10), x41 = xa(41.7);
+
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s3-ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#132340"/><stop offset="1" stop-color="#050a14"/></linearGradient>' +
+          '<radialGradient id="s3-brilho"><stop offset="0" stop-color="#38bdf8" stop-opacity="0.30"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s3-ceu)' }) +
+          T('circle', { cx: CX, cy: CY, r: 210, fill: 'url(#s3-brilho)' }) +
+          T('circle', { cx: CX, cy: CY, r: R + 14, fill: '#0b1220', stroke: 'rgba(56,189,248,0.45)', 'stroke-width': 3 }) +
+          marcas +
+          T('circle', { id: 's3-pulso', cx: CX, cy: CY, r: R - 6, fill: 'none', stroke: '#38bdf8', 'stroke-width': 3, opacity: 0 }) +
+          T('path', { id: 's3-sweep', d: '', fill: 'none', stroke: '#38bdf8', 'stroke-width': 12, 'stroke-linecap': 'round', 'stroke-opacity': 0.55 }) +
+          T('circle', { id: 's3-bead', cx: CX, cy: CY - (R - 14), r: 7, fill: '#f8fafc' }) +
+          G({ id: 's3-ponteiroSeg' },
+            T('line', { x1: CX, y1: CY - (R - 56), x2: CX, y2: CY - (R - 28), stroke: '#38bdf8', 'stroke-width': 5, 'stroke-linecap': 'round' })) +
+          T('text', { x: CX, y: CY - 34, 'text-anchor': 'middle', fill: '#facc15', 'font-family': 'Inter, sans-serif', 'font-size': 54, 'font-weight': 700 }, 'R$ 1') +
+          T('text', { x: CX, y: CY + 8, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700, 'letter-spacing': 2 }, 'POR SEGUNDO') +
+          T('text', { id: 's3-digital', x: CX, y: CY + 62, 'text-anchor': 'middle', fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 26, 'font-weight': 700 }, '00:00:00') +
+          T('text', { id: 's3-big', x: 630, y: 268, fill: '#f59e0b', 'font-family': 'Inter, sans-serif', 'font-size': 118, 'font-weight': 700, 'letter-spacing': -3 }, '0,0') +
+          T('text', { x: 636, y: 322, fill: '#fbbf24', 'font-family': 'Inter, sans-serif', 'font-size': 48, 'font-weight': 700, 'letter-spacing': 2 }, 'ANOS') +
+          T('text', { x: 636, y: 370, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 600 }, 'CONTANDO SEM PARAR') +
+          T('text', { x: LX, y: LY - 24, fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700, 'letter-spacing': 2 }, 'UMA VIDA DE 80 ANOS') +
+          T('rect', { x: LX, y: LY, width: LW, height: LH, rx: 12, fill: '#0b1220', stroke: 'rgba(56,189,248,0.40)', 'stroke-width': 2 }) +
+          T('rect', { x: x10, y: LY + 2, width: 2, height: LH - 4, fill: '#64748b' }) +
+          T('text', { x: x10, y: LY + LH + 34, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700 }, '10') +
+          T('text', { x: xa(80), y: LY + LH + 34, 'text-anchor': 'end', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700 }, '80 ANOS') +
+          T('rect', { id: 's3-faixa', x: x10, y: LY + 2, width: 0, height: LH - 4, rx: 9, fill: '#f59e0b' }) +
+          G({ id: 's3-flag41', opacity: 0 },
+            T('line', { x1: x41, y1: LY - 12, x2: x41, y2: LY + LH + 10, stroke: '#facc15', 'stroke-width': 3 }) +
+            T('text', { x: x41 + 10, y: LY - 16, fill: '#facc15', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700 }, '41 ANOS')) +
+          T('rect', { x: 0, y: 576, width: 1080, height: 54, fill: '#0b1220' }) +
+          T('line', { x1: 0, y1: 576, x2: 1080, y2: 576, stroke: '#38bdf8', 'stroke-width': 2, 'stroke-opacity': 0.4 })
+        );
+        M.montar('#f3-cena', svg);
+        var cena = M.pegar('#f3-cena');
+        var sweep = M.pegar(cena, '#s3-sweep');
+        var bead = M.pegar(cena, '#s3-bead');
+        var ponteiroSeg = M.pegar(cena, '#s3-ponteiroSeg');
+        var pulso = M.pegar(cena, '#s3-pulso');
+        var digital = M.pegar(cena, '#s3-digital');
+        var big = M.pegar(cena, '#s3-big');
+        var faixaEl = M.pegar(cena, '#s3-faixa');
+        var flag41 = M.pegar(cena, '#s3-flag41');
+        var boy = M.mascote('#f3-mascote');
+        var hud = M.medidorBarra('#f3-hud', { rotulo: 'ANOS CONTANDO', unidade: 'anos', max: 32, cor: '#f59e0b', decimais: 1 });
+
+        M.conectar(tl, function (t, og) {
+          var ang = t * 48;
+          sweep.setAttribute('d', arco(CX, CY, R - 14, ang - 34, ang));
+          bead.setAttribute('cx', f2(CX + Math.cos(ang * Math.PI / 180) * (R - 14)));
+          bead.setAttribute('cy', f2(CY + Math.sin(ang * Math.PI / 180) * (R - 14)));
+          ponteiroSeg.setAttribute('transform', 'rotate(' + f2(t * 360) + ' ' + CX + ' ' + CY + ')');
+          var frac = t % 1;
+          pulso.setAttribute('opacity', f2((1 - frac) * 0.55));
+          pulso.setAttribute('r', f2(R - 6 + frac * 16));
+          var seg = Math.floor(t);
+          digital.textContent = '00:00:' + (seg < 10 ? '0' + seg : seg);
+          var u = suave(faixa(t, 1.2, 7.8));
+          var anos = 31.7 * u;
+          big.textContent = anos.toFixed(1).replace('.', ',');
+          hud.atualizar(anos, u > 0.99 ? 'AINDA CONTANDO' : 'CONTANDO', u > 0.99 ? '#f59e0b' : '#38bdf8');
+          var larg = (x41 - x10) * suave(faixa(t, 1.6, 8.2));
+          faixaEl.setAttribute('width', f2(larg));
+          flag41.setAttribute('opacity', f2(suave(faixa(t, 7.8, 8.4))));
+          boy.atualizar(t, og, {
+            humor: t > 4 ? 'triste' : 'surpreso',
+            bracoD: 24,
+            bracoE: 10,
+            olhar: [10, 2],
+            inclinar: t > 4 ? 6 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 29.97 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-contagem'] = tl;
+    })();
+  </script>
+</template>

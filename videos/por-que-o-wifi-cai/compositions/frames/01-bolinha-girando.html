@@ -1,0 +1,286 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f1-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    #f1-stage-3d {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      z-index: 1;
+    }
+
+    .f1-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(56, 189, 248, 0.08) 0%, rgba(5, 10, 20, 0.65) 75%),
+        linear-gradient(180deg, rgba(5, 10, 20, 0.88) 0%, rgba(5, 10, 20, 0.12) 26%, rgba(5, 10, 20, 0.15) 68%, rgba(5, 10, 20, 0.94) 100%);
+    }
+
+    .f1-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f1-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f1-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+
+    .f1-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f1-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f1-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .f1-title-accent {
+      color: #38bdf8;
+    }
+
+    .f1-subtitle {
+      font-size: 24px;
+      line-height: 1.38;
+      color: #cbd5e1;
+    }
+
+    .f1-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f1-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 16px;
+    }
+
+    .f1-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .f1-metric-val {
+      font-size: 36px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f1-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(40, 10, 14, 0.92);
+      border: 1.5px solid rgba(239, 68, 68, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f1-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fecaca;
+      letter-spacing: 0.04em;
+    }
+
+    .f1-banner-pill {
+      padding: 6px 16px;
+      background: #ef4444;
+      color: #ffffff;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+  </style>
+
+  <div id="f1-root" data-composition-id="frame-01-bolinha-girando" data-width="1080" data-height="1920" data-start="0" data-duration="15.92">
+    <div id="f1-stage-3d"></div>
+    <div class="f1-vignette"></div>
+
+    <div class="f1-ui-layer">
+      <div id="f1-topbar" class="f1-topbar">
+        <span class="f1-kicker">NOSSO DIA A DIA // A BOLINHA DA RAIVA</span>
+        <span class="f1-badge">SÓ 10 PASSOS</span>
+      </div>
+
+      <div id="f1-header" class="f1-header-card">
+        <h1 class="f1-title">Por Que o <span class="f1-title-accent">Wi-Fi</span> Cai no Quarto?</h1>
+        <p class="f1-subtitle">O roteador está logo ali na sala, mas fecha a porta e o vídeo trava na melhor parte</p>
+      </div>
+
+      <div id="f1-telemetry" class="f1-telemetry-row">
+        <div class="f1-metric-box">
+          <div class="f1-metric-label">NO SOFÁ DA SALA</div>
+          <div class="f1-metric-val">Voa Tudo</div>
+        </div>
+        <div class="f1-metric-box">
+          <div class="f1-metric-label">NA CAMA DO QUARTO</div>
+          <div class="f1-metric-val">Só Carregando</div>
+        </div>
+      </div>
+
+      <div id="f1-banner" class="f1-banner" style="opacity: 0;">
+        <span class="f1-banner-text">PARECE QUE A INTERNET TEM PREGUIÇA DE ANDAR ATÉ VOCÊ</span>
+        <span class="f1-banner-pill">TRAVOU</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 15.92;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f1-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f1-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f1-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f1-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 5.60);
+
+      if (window.THREE && window.Motor3D) {
+        var THREE = window.THREE;
+        var M = window.Motor3D;
+        var palco = M.criarPalco3D(THREE, {
+          container: '#f1-stage-3d',
+          largura: 1080,
+          altura: 1920,
+          fov: 42,
+          presetCeu: 'noite'
+        });
+
+        var wifi = M.criarRoteadorSinalFraco(THREE);
+        wifi.raiz.position.set(0.24, 0.35, -0.1);
+        wifi.raiz.scale.setScalar(0.68);
+        palco.cena.add(wifi.raiz);
+
+        var menino = M.criarBoneco(THREE, { escala: 0.72 });
+        menino.raiz.position.set(-0.78, 0.35, 0.45);
+        palco.cena.add(menino.raiz);
+
+        M.conectarHyperFrames(palco, tl, function (t) {
+          M.resetPose(menino, t);
+
+          var queda = M.suave(M.faixa(t, 0.4, 8.5));
+          wifi.atualizar(t, queda);
+
+          if (t < 5.5) {
+            M.humor(menino, 'surpreso');
+            M.apontar(menino, [0.45, 1.4, 0.0], 'D');
+          } else {
+            M.humor(menino, 'bravo');
+            M.suar(menino, t, 5.5, DUR);
+            M.apontar(menino, [0.85, 1.35, 0.1], 'D');
+          }
+          M.olharCamera(menino, palco.camera, 0.75);
+
+          M.plano(
+            palco.camera,
+            t,
+            0,
+            DUR,
+            { pos: [-0.15, 1.85, 7.4], alvo: [0.0, 1.38, 0.0] },
+            { pos: [0.15, 1.75, 7.0], alvo: [0.05, 1.38, 0.0] }
+          );
+        }, { duracao: DUR, offsetGlobal: 0.00 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-01-bolinha-girando'] = tl;
+    })();
+  </script>
+</template>

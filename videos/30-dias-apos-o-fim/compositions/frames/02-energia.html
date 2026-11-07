@@ -1,0 +1,152 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f2-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f2-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f2-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f2-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f2-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f2-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f2-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f2-title-accent { color:#38bdf8; }
+    .f2-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f2-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f2-banner-text { font-size:20px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f2-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f2-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 55% 26%, #1a2340 0%, #0a1224 55%, #050a14 100%); }
+    #f2-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f2-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f2-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f2-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f2-root" data-composition-id="frame-02-energia" data-width="1080" data-height="1920" data-start="0" data-duration="14.42">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f2-cena" class="m2-cena"></div>
+    <div id="f2-mascote" class="m2-mascote"></div>
+    <div id="f2-hud" class="m2-hud"></div>
+
+    <div class="f2-ui-layer">
+      <div id="f2-topbar" class="f2-topbar">
+        <span class="f2-kicker">SISTEMA 01 // ENERGIA</span>
+        <span class="f2-badge">0 W</span>
+      </div>
+      <div id="f2-header" class="f2-header-card">
+        <h1 class="f2-title">Horas 1–6: A <span class="f2-title-accent">Energia Desaba</span></h1>
+        <p class="f2-subtitle">Sem gente para alimentar as turbinas, a rede inteira apaga uma usina de cada vez.</p>
+      </div>
+      <div id="f2-banner" class="f2-banner" style="opacity: 0;">
+        <span class="f2-banner-text">A REDE NÃO CAI DE UMA VEZ: ELA CAI EM CASCATA</span>
+        <span class="f2-banner-pill">APAGÃO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 14.42;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 8);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2, mixCor = M.mixCor;
+        
+        var predios = [{ x: 720, w: 120, h: 250 }, { x: 850, w: 150, h: 330 }, { x: 1010, w: 70, h: 280 }];
+        var janelas = [];
+        var buildSvg = '';
+        predios.forEach(function (b, bi) {
+          buildSvg += T('rect', { x: b.x, y: 560 - b.h, width: b.w, height: b.h, fill: '#0e1c33', stroke: '#27406b', 'stroke-width': 2, rx: 4 });
+          var cols = Math.floor((b.w - 18) / 26);
+          var rows = Math.floor((b.h - 30) / 34);
+          for (var r = 0; r < rows; r++) {
+            for (var c = 0; c < cols; c++) {
+              var wid = 's2-j' + bi + '-' + r + '-' + c;
+              buildSvg += T('rect', { id: wid, x: b.x + 10 + c * 26, y: 560 - b.h + 16 + r * 34, width: 14, height: 18, rx: 2, fill: '#facc15', 'fill-opacity': 0.9 });
+              janelas.push(wid);
+            }
+          }
+        });
+        var torre =
+          T('line', { x1: 380, y1: 560, x2: 340, y2: 250, stroke: '#94a3b8', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+          T('line', { x1: 420, y1: 560, x2: 460, y2: 250, stroke: '#94a3b8', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+          T('line', { x1: 340, y1: 250, x2: 460, y2: 250, stroke: '#cbd5e1', 'stroke-width': 7 }) +
+          T('line', { x1: 350, y1: 330, x2: 450, y2: 330, stroke: '#64748b', 'stroke-width': 4 }) +
+          T('line', { x1: 360, y1: 410, x2: 440, y2: 410, stroke: '#64748b', 'stroke-width': 4 }) +
+          T('line', { x1: 372, y1: 490, x2: 428, y2: 490, stroke: '#64748b', 'stroke-width': 4 }) +
+          T('line', { x1: 350, y1: 330, x2: 440, y2: 410, stroke: '#475569', 'stroke-width': 3 }) +
+          T('line', { x1: 450, y1: 330, x2: 360, y2: 410, stroke: '#475569', 'stroke-width': 3 }) +
+          T('line', { x1: 360, y1: 410, x2: 428, y2: 490, stroke: '#475569', 'stroke-width': 3 }) +
+          T('line', { x1: 440, y1: 410, x2: 372, y2: 490, stroke: '#475569', 'stroke-width': 3 });
+        var cabos =
+          T('path', { id: 's2-cabo1', d: 'M452 250 Q600 330 720 300', fill: 'none', stroke: '#cbd5e1', 'stroke-width': 4 }) +
+          T('path', { id: 's2-cabo2', d: 'M452 268 Q600 348 850 330', fill: 'none', stroke: '#e2e8f0', 'stroke-width': 4 }) +
+          T('path', { id: 's2-cabo3', d: 'M452 286 Q620 366 1010 350', fill: 'none', stroke: '#94a3b8', 'stroke-width': 4 });
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s2-skyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#141c33"/><stop offset="1" stop-color="#050a14"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s2-skyGrad)' }) +
+          T('circle', { cx: 610, cy: 120, r: 54, fill: '#1e3a5f', 'fill-opacity': 0.5 }) +
+          torre + cabos + buildSvg +
+          T('rect', { x: 0, y: 560, width: 1080, height: 70, fill: '#0b1220' }) +
+          G({ id: 's2-alavanca' },
+            T('rect', { x: 500, y: 500, width: 120, height: 34, rx: 8, fill: '#1e293b', stroke: '#64748b', 'stroke-width': 3 }) +
+            T('line', { x1: 560, y1: 517, x2: 560, y2: 430, stroke: '#cbd5e1', 'stroke-width': 9, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 560, cy: 425, r: 13, fill: '#ef4444' })) +
+          T('circle', { id: 's2-faisca', cx: 560, cy: 517, r: 26, fill: '#facc15', opacity: 0 }) +
+          T('path', { id: 's2-raio', d: 'M640 90 L604 168 L636 168 L596 252 L664 154 L630 154 Z', fill: '#facc15', 'fill-opacity': 0.9 }) +
+          G({ id: 's2-medidor' },
+            T('path', { d: M.arco(880, 130, 62, 180, 360), fill: 'none', stroke: '#1e3a5f', 'stroke-width': 12, 'stroke-linecap': 'round' }) +
+            T('path', { d: M.arco(880, 130, 62, 180, 270), fill: 'none', stroke: '#22c55e', 'stroke-width': 12, 'stroke-linecap': 'round' }) +
+            G({ id: 's2-ponteiro' },
+              T('line', { x1: 880, y1: 130, x2: 822, y2: 130, stroke: '#f8fafc', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+              T('circle', { cx: 880, cy: 130, r: 8, fill: '#f8fafc' })))
+        );
+        M.montar('#f2-cena', svg);
+        var cena = M.pegar('#f2-cena');
+        var jEls = janelas.map(function (jid) { return M.pegar(cena, '#' + jid); });
+        var alavanca = M.pegar(cena, '#s2-alavanca');
+        var faisca = M.pegar(cena, '#s2-faisca');
+        var raio = M.pegar(cena, '#s2-raio');
+        var ponteiro = M.pegar(cena, '#s2-ponteiro');
+        var boy = M.mascote('#f2-mascote');
+        var hud = M.medidorBarra('#f2-hud', { rotulo: 'CARGA NA REDE', unidade: '%', max: 100, cor: '#f59e0b', decimais: 0 });
+        
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.6, 6.2));
+          for (var i = 0; i < jEls.length; i++) {
+            var off = faixa(t, 0.8 + (i % 11) * 0.38, 1.6 + (i % 11) * 0.38);
+            var on = 1 - suave(off);
+            jEls[i].setAttribute('fill-opacity', f2(0.10 + 0.80 * on));
+            jEls[i].setAttribute('fill', on > 0.5 ? '#facc15' : '#334155');
+          }
+          var desarma = suave(faixa(t, 3.0, 3.6));
+          alavanca.setAttribute('transform', 'rotate(' + f2(-26 * desarma) + ' 560 517)');
+          var pisca = Math.sin(t * 26) * 0.5 + 0.5;
+          faisca.setAttribute('opacity', f2((t > 3.0 && t < 3.9) ? 0.35 + 0.55 * pisca : 0));
+          raio.setAttribute('opacity', f2(1 - u));
+          ponteiro.setAttribute('transform', 'rotate(' + f2(u * 180) + ' 880 130)');
+          hud.atualizar(100 * (1 - u), u > 0.9 ? 'REDE MORTA' : 'CARGA CAINDO', u > 0.9 ? '#ef4444' : '#f59e0b');
+          boy.atualizar(t, og, {
+            humor: t > 3 ? 'surpreso' : 'bravo',
+            bracoD: t > 3 ? 150 : 70,
+            bracoE: 14,
+            olhar: [8, -6],
+            inclinar: t > 3 ? -5 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 12.52 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-energia'] = tl;
+    })();
+  </script>
+</template>

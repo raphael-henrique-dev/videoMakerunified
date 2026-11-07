@@ -1,0 +1,138 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f3-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f3-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f3-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f3-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f3-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f3-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f3-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f3-title-accent { color:#38bdf8; }
+    .f3-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f3-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f3-banner-text { font-size:20px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f3-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f3-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 60% 28%, #0f2a4a 0%, #081526 55%, #050a14 100%); }
+    #f3-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f3-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f3-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f3-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f3-root" data-composition-id="frame-03-agua" data-width="1080" data-height="1920" data-start="0" data-duration="14.38">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f3-cena" class="m2-cena"></div>
+    <div id="f3-mascote" class="m2-mascote"></div>
+    <div id="f3-hud" class="m2-hud"></div>
+
+    <div class="f3-ui-layer">
+      <div id="f3-topbar" class="f3-topbar">
+        <span class="f3-kicker">SISTEMA 02 // ÁGUA</span>
+        <span class="f3-badge">0 L/s</span>
+      </div>
+      <div id="f3-header" class="f3-header-card">
+        <h1 class="f3-title">Dia 3: A Água <span class="f3-title-accent">Para de Subir</span></h1>
+        <p class="f3-subtitle">Sem bombas, a torneira seca. Sem tratamento, o esgoto volta para o rio.</p>
+      </div>
+      <div id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span class="f3-banner-text">O ESGOTO VOLTA PARA O RIO EM POUCOS DIAS</span>
+        <span class="f3-banner-pill">ÁGUA SECA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 14.38;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 7.8);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2, mixCor = M.mixCor;
+        
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s3-skyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d2542"/><stop offset="1" stop-color="#050a14"/></linearGradient>' +
+          '<linearGradient id="s3-tankGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#334155"/><stop offset="1" stop-color="#1e293b"/></linearGradient>' +
+          '<linearGradient id="s3-waterGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#1d4ed8"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s3-skyGrad)' }) +
+          T('circle', { cx: 860, cy: 120, r: 46, fill: '#facc15', 'fill-opacity': 0.16 }) +
+          // caixa d'água
+          T('line', { x1: 380, y1: 560, x2: 402, y2: 380, stroke: '#64748b', 'stroke-width': 9, 'stroke-linecap': 'round' }) +
+          T('line', { x1: 500, y1: 560, x2: 478, y2: 380, stroke: '#64748b', 'stroke-width': 9, 'stroke-linecap': 'round' }) +
+          T('line', { x1: 396, y1: 470, x2: 484, y2: 470, stroke: '#475569', 'stroke-width': 5 }) +
+          T('line', { x1: 388, y1: 520, x2: 492, y2: 520, stroke: '#475569', 'stroke-width': 5 }) +
+          T('rect', { x: 350, y: 248, width: 180, height: 132, rx: 14, fill: 'url(#s3-tankGrad)', stroke: '#94a3b8', 'stroke-width': 4 }) +
+          T('path', { d: 'M344 250 L440 210 L536 250 Z', fill: '#475569', stroke: '#94a3b8', 'stroke-width': 4 }) +
+          T('rect', { id: 's3-nivel', x: 362, y: 270, width: 156, height: 96, rx: 6, fill: 'url(#s3-waterGrad)' }) +
+          // cano
+          T('path', { d: 'M440 380 L440 452 L748 452', fill: 'none', stroke: '#94a3b8', 'stroke-width': 14, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }) +
+          T('path', { d: 'M440 380 L440 452 L748 452', fill: 'none', stroke: '#cbd5e1', 'stroke-width': 5, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }) +
+          // torneira
+          G({ id: 's3-torneira' },
+            T('rect', { x: 748, y: 424, width: 46, height: 56, rx: 8, fill: '#64748b', stroke: '#cbd5e1', 'stroke-width': 3 }) +
+            T('path', { d: 'M790 436 L818 436 L818 470 L800 470', fill: 'none', stroke: '#cbd5e1', 'stroke-width': 10, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }) +
+            T('rect', { x: 764, y: 410, width: 14, height: 26, rx: 5, fill: '#f8fafc' })) +
+          T('circle', { id: 's3-gota0', cx: 812, cy: 492, r: 6, fill: '#38bdf8', opacity: 0 }) +
+          T('circle', { id: 's3-gota1', cx: 812, cy: 512, r: 5, fill: '#38bdf8', opacity: 0 }) +
+          T('circle', { id: 's3-gota2', cx: 812, cy: 532, r: 4, fill: '#38bdf8', opacity: 0 }) +
+          // bomba
+          G({ id: 's3-bomba' },
+            T('circle', { cx: 600, cy: 500, r: 40, fill: '#0b1220', stroke: '#64748b', 'stroke-width': 4 }) +
+            T('path', { d: 'M604 476 L588 504 L600 504 L592 526 L612 498 L600 498 Z', fill: '#facc15' }) +
+            T('circle', { id: 's3-led', cx: 600, cy: 470, r: 6, fill: '#22c55e' })) +
+          // rio
+          T('path', { id: 's3-rio1', d: 'M0 572 Q180 552 360 572 T720 572 T1080 572 L1080 630 L0 630 Z', fill: '#1e78d6', 'fill-opacity': 0.9 }) +
+          T('path', { id: 's3-rio2', d: 'M0 596 Q180 576 360 596 T720 596 T1080 596 L1080 630 L0 630 Z', fill: '#0e4f9e', 'fill-opacity': 0.8 }) +
+          T('path', { d: 'M0 572 Q180 552 360 572 T720 572 T1080 572', fill: 'none', stroke: '#7dd3fc', 'stroke-width': 3, 'stroke-opacity': 0.6 })
+        );
+        M.montar('#f3-cena', svg);
+        var cena = M.pegar('#f3-cena');
+        var nivel = M.pegar(cena, '#s3-nivel');
+        var gotas = [M.pegar(cena, '#s3-gota0'), M.pegar(cena, '#s3-gota1'), M.pegar(cena, '#s3-gota2')];
+        var led = M.pegar(cena, '#s3-led');
+        var rio1 = M.pegar(cena, '#s3-rio1');
+        var rio2 = M.pegar(cena, '#s3-rio2');
+        var boy = M.mascote('#f3-mascote');
+        var hud = M.medidorBarra('#f3-hud', { rotulo: 'PRESSÃO NA TUBULAÇÃO', unidade: 'BAR', max: 6, cor: '#38bdf8', decimais: 1 });
+        
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.8, 6.8));
+          var altura = 96 - u * 78;
+          nivel.setAttribute('y', f2(366 - altura));
+          nivel.setAttribute('height', f2(altura));
+          for (var i = 0; i < gotas.length; i++) {
+            var ph = ((t * 1.5 + i * 0.34) % 1);
+            var ativo = t < 3.2 ? (1 - ph) : 0;
+            gotas[i].setAttribute('cy', f2(492 + ph * 70));
+            gotas[i].setAttribute('opacity', f2(ativo));
+          }
+          led.setAttribute('fill', t > 2.6 ? '#ef4444' : '#22c55e');
+          rio1.setAttribute('fill', mixCor('#1e78d6', '#6b7a2a', u));
+          rio2.setAttribute('fill', mixCor('#0e4f9e', '#4d5a1c', u));
+          hud.atualizar(6 * (1 - u), u > 0.9 ? 'TORNEIRA SECA' : 'PRESSÃO CAINDO', u > 0.9 ? '#ef4444' : '#38bdf8');
+          boy.atualizar(t, og, {
+            humor: t > 3 ? 'triste' : 'neutro',
+            bracoD: t > 3 ? 40 : 18,
+            bracoE: 10,
+            olhar: [10, 4],
+            inclinar: t > 3 ? 6 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 26.94 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-agua'] = tl;
+    })();
+  </script>
+</template>

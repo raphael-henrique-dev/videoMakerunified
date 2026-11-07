@@ -1,0 +1,384 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f3-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    /* ── Palco 2D (SVG vetorial + mascote 2D + HUD) ── */
+    #f3-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 28%, #10264d 0%, #08142a 55%, #050a14 100%);
+    }
+    #f3-root .m2-piso {
+      position: absolute;
+      left: 0;
+      top: 1465px;
+      width: 1080px;
+      height: 455px;
+      z-index: 0;
+      background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%);
+      border-top: 2px solid rgba(56, 189, 248, 0.28);
+    }
+    #f3-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 340px;
+      width: 1080px;
+      height: 680px;
+      z-index: 1;
+    }
+    #f3-root .m2-mascote {
+      position: absolute;
+      left: 50px;
+      top: 1490px;
+      width: 300px;
+      height: 420px;
+      z-index: 2;
+    }
+    #f3-root .m2-hud {
+      position: absolute;
+      left: 400px;
+      top: 1510px;
+      width: 612px;
+      height: 300px;
+      z-index: 2;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 22px;
+    }
+
+    .f3-vignette {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 48%, rgba(56, 189, 248, 0.05) 0%, rgba(5, 10, 20, 0.60) 75%),
+        linear-gradient(180deg, rgba(5, 10, 20, 0.88) 0%, rgba(5, 10, 20, 0.10) 26%, rgba(5, 10, 20, 0.12) 68%, rgba(5, 10, 20, 0.94) 100%);
+    }
+
+    .f3-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f3-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f3-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+
+    .f3-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f3-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 28px 34px;
+      background: rgba(8, 14, 26, 0.86);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f3-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 10px;
+    }
+
+    .f3-title-accent {
+      color: #38bdf8;
+    }
+
+    .f3-subtitle {
+      font-size: 24px;
+      line-height: 1.38;
+      color: #cbd5e1;
+    }
+
+    .f3-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f3-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 16px;
+    }
+
+    .f3-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .f3-metric-val {
+      font-size: 36px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f3-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(40, 10, 14, 0.92);
+      border: 1.5px solid rgba(239, 68, 68, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f3-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fecaca;
+      letter-spacing: 0.04em;
+    }
+
+    .f3-banner-pill {
+      padding: 6px 16px;
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+  </style>
+
+  <div id="f3-root" data-composition-id="frame-03-veneno-do-calor" data-width="1080" data-height="1920" data-start="0" data-duration="16.61">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f3-cena" class="m2-cena"></div>
+    <div id="f3-mascote" class="m2-mascote"></div>
+    <div id="f3-hud" class="m2-hud"></div>
+
+    <div class="f3-ui-layer">
+      <div id="f3-topbar" class="f3-topbar">
+        <span class="f3-kicker">ERRO REAL // CAPA E TRAVESSEIRO</span>
+        <span class="f3-badge">45°C DEFORMA TUDO</span>
+      </div>
+
+      <div id="f3-header" class="f3-header-card">
+        <h1 class="f3-title">O Veneno do <span class="f3-title-accent">Calor</span></h1>
+        <p class="f3-subtitle">Capa grossa e celular debaixo do travesseiro enquanto carrega entortam a bateria por dentro</p>
+      </div>
+
+      <div id="f3-telemetry" class="f3-telemetry-row">
+        <div class="f3-metric-box">
+          <div class="f3-metric-label">TEMPERATURA LIMITE</div>
+          <div class="f3-metric-val">Acima de 40°C</div>
+        </div>
+        <div class="f3-metric-box">
+          <div class="f3-metric-label">DANO INTERNO</div>
+          <div class="f3-metric-val">Gaveta Deformada</div>
+        </div>
+      </div>
+
+      <div id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span class="f3-banner-text">JOGAR OU CARREGAR DEBAIXO DO TRAVESSEIRO COZINHA O APARELHO</span>
+        <span class="f3-banner-pill">PERIGO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 16.61;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 6.20);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, clamp = M.clamp, mix = M.mixCor, f2 = M.f2;
+        
+              var svg = M.svgBase(1080, 680,
+                '<defs>' +
+                '<clipPath id="s3-clip"><rect x="30" y="30" width="1020" height="600" rx="26"/></clipPath>' +
+                '<radialGradient id="s3-fogo"><stop offset="0" stop-color="#ef4444" stop-opacity="0.8"/><stop offset="1" stop-color="#ef4444" stop-opacity="0"/></radialGradient>' +
+                '</defs>' +
+                G({ 'clip-path': 'url(#s3-clip)' },
+                  T('rect', { x: 30, y: 30, width: 1020, height: 600, fill: '#141424' }) +
+                  // Travesseiro fofo
+                  T('ellipse', { cx: 480, cy: 460, rx: 340, ry: 90, fill: '#334155', stroke: '#475569', 'stroke-width': 4 }) +
+                  T('ellipse', { cx: 480, cy: 450, rx: 310, ry: 75, fill: '#475569' }) +
+                  // Brilho de calor sob o celular
+                  T('circle', { id: 's3-halo', cx: 480, cy: 400, r: 160, fill: 'url(#s3-fogo)', opacity: 0 }) +
+                  // Celular com capinha grossa
+                  G({ transform: 'translate(340 260)' },
+                    // Capa grossa emborrachada
+                    T('rect', { x: -16, y: -16, width: 312, height: 232, rx: 34, fill: '#0f172a', stroke: '#ef4444', 'stroke-width': 5 }),
+                    // Celular
+                    T('rect', { x: 0, y: 0, width: 280, height: 200, rx: 24, fill: '#1e293b' }),
+                    // Janela de raio-X mostrando as gavetas
+                    T('rect', { x: 18, y: 18, width: 244, height: 164, rx: 14, fill: '#0b1329', stroke: '#38bdf8', 'stroke-width': 2 }),
+                    // Gavetas internas que vão entortar
+                    G({ id: 's3-gavetas' },
+                      T('path', { id: 's3-p1', d: 'M30 60 L230 60', stroke: '#38bdf8', 'stroke-width': 6, 'stroke-linecap': 'round' }),
+                      T('path', { id: 's3-p2', d: 'M30 100 L230 100', stroke: '#38bdf8', 'stroke-width': 6, 'stroke-linecap': 'round' }),
+                      T('path', { id: 's3-p3', d: 'M30 140 L230 140', stroke: '#38bdf8', 'stroke-width': 6, 'stroke-linecap': 'round' }),
+                      // Pecinhas presas
+                      T('circle', { id: 's3-peca1', cx: 130, cy: 80, r: 12, fill: '#facc15' }),
+                      T('circle', { id: 's3-peca2', cx: 180, cy: 120, r: 12, fill: '#facc15' })
+                    ),
+                    // Cabo carregando conectado
+                    T('rect', { x: -36, y: 88, width: 24, height: 24, rx: 6, fill: '#f8fafc' }),
+                    T('path', { d: 'M-36 100 Q-90 100 -120 160', fill: 'none', stroke: '#f8fafc', 'stroke-width': 8, 'stroke-linecap': 'round' })
+                  ) +
+                  // Ondas de calor
+                  M.criarOndas('s3-onda', 5, false) +
+                  // Termômetro grande no lado direito
+                  G({ transform: 'translate(880 140)' },
+                    T('rect', { x: -16, y: 0, width: 32, height: 360, rx: 16, fill: '#0f172a', stroke: '#94a3b8', 'stroke-width': 4 }),
+                    T('circle', { cx: 0, cy: 380, r: 38, fill: '#ef4444', stroke: '#94a3b8', 'stroke-width': 4 }),
+                    T('rect', { id: 's3-mercurio', x: -8, y: 200, width: 16, height: 180, rx: 8, fill: '#ef4444' }),
+                    T('text', { id: 's3-tempTxt', x: 50, y: 390, fill: '#ef4444', 'font-family': 'Inter', 'font-weight': 700, 'font-size': 32 }, '46°C'),
+                    T('text', { x: 50, y: 350, fill: '#94a3b8', 'font-family': 'Inter', 'font-weight': 600, 'font-size': 18 }, 'CALOR')
+                  )
+                ) +
+                T('rect', { x: 30, y: 30, width: 1020, height: 600, rx: 26, fill: 'none', stroke: '#3b5b8c', 'stroke-width': 4 })
+              );
+              M.montar('#f3-cena', svg);
+              var cena = M.pegar('#f3-cena');
+              var halo = M.pegar(cena, '#s3-halo');
+              var merc = M.pegar(cena, '#s3-mercurio');
+              var tempTxt = M.pegar(cena, '#s3-tempTxt');
+              var p1 = M.pegar(cena, '#s3-p1');
+              var p2 = M.pegar(cena, '#s3-p2');
+              var p3 = M.pegar(cena, '#s3-p3');
+              var peca1 = M.pegar(cena, '#s3-peca1');
+              var peca2 = M.pegar(cena, '#s3-peca2');
+              var ondas = M.pegarLista(cena, 's3-onda', 5);
+              var boy = M.mascote('#f3-mascote');
+              var hud = M.medidorBarra('#f3-hud', { rotulo: 'TEMPERATURA INTERNA', unidade: '°C', max: 60, cor: '#ef4444' });
+        
+              M.conectar(tl, function (t, og) {
+                var calor = suave(faixa(t, 2.5, 7.5));
+                var deform = suave(faixa(t, 7.6, 12.0));
+        
+                halo.setAttribute('opacity', f2(calor * (0.6 + 0.3 * Math.sin(t * 8))));
+                var temp = lerp(26, 46, calor);
+                tempTxt.textContent = Math.round(temp) + '°C';
+                var hMerc = lerp(80, 260, calor);
+                merc.setAttribute('y', f2(380 - hMerc));
+                merc.setAttribute('height', f2(hMerc));
+        
+                // Entortar prateleiras
+                var bend = deform * 22;
+                p1.setAttribute('d', 'M30 60 Q130 ' + f2(60 + bend) + ' 230 60');
+                p2.setAttribute('d', 'M30 100 Q130 ' + f2(100 - bend) + ' 230 100');
+                p3.setAttribute('d', 'M30 140 Q130 ' + f2(140 + bend) + ' 230 140');
+                peca1.setAttribute('fill', deform > 0.5 ? '#ef4444' : '#facc15');
+                peca2.setAttribute('fill', deform > 0.5 ? '#ef4444' : '#facc15');
+        
+                // Ondas de calor
+                M.animarOndas(ondas, 480, 360, t, {
+                  periodo: 2.2, r0: 60, rMax: 260, a0: -150, a1: -30, largura: 6,
+                  cor: function(r, ph) { return mix('#fb923c', '#ef4444', ph); },
+                  opac: function(r, ph) { return calor * 0.85 * (1 - ph); }
+                });
+        
+                hud.atualizar(temp, temp > 40 ? 'ZONA PERIGOSA' : 'NORMAL', temp > 40 ? '#ef4444' : '#38bdf8');
+        
+                var bravo = t >= 7.2;
+                boy.atualizar(t, og, {
+                  humor: bravo ? 'bravo' : 'surpreso',
+                  bracoD: bravo ? 160 : 75,
+                  bracoE: bravo ? 40 : 20,
+                  tremer: bravo ? 0.9 : 0,
+                  olhar: [3, -3]
+                });
+              }, { duracao: DUR, offsetGlobal: 35.81 });
+        
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-veneno-do-calor'] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,378 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f6-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    .f6-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f6-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(250, 204, 21, 0.40);
+      border-radius: 14px;
+    }
+
+    .f6-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #facc15;
+      text-transform: uppercase;
+    }
+
+    .f6-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #fcd34d;
+      letter-spacing: 0.06em;
+    }
+
+    .f6-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 24px 32px;
+      background: rgba(8, 14, 26, 0.88);
+      border-left: 5px solid #facc15;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f6-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 60px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .f6-title-accent {
+      color: #facc15;
+    }
+
+    .f6-subtitle {
+      font-size: 23px;
+      line-height: 1.36;
+      color: #cbd5e1;
+    }
+
+    .f6-cta-banner {
+      position: absolute;
+      top: 1140px;
+      left: 68px;
+      right: 68px;
+      padding: 22px 30px;
+      background: rgba(10, 22, 42, 0.94);
+      border: 2px solid #facc15;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65);
+    }
+
+    .f6-cta-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .f6-cta-kicker {
+      font-size: 17px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.12em;
+    }
+
+    .f6-cta-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 40px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f6-cta-pill {
+      padding: 12px 26px;
+      background: #facc15;
+      color: #050a14;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 12px;
+      letter-spacing: 0.06em;
+    }
+
+    #f6-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 28%, #16294a 0%, #091528 52%, #050a14 100%);
+    }
+    #f6-root .m2-piso {
+      position: absolute;
+      left: 0;
+      top: 1465px;
+      width: 1080px;
+      height: 455px;
+      z-index: 0;
+      background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%);
+      border-top: 2px solid rgba(250, 204, 21, 0.26);
+    }
+    #f6-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 340px;
+      width: 1080px;
+      height: 680px;
+      z-index: 1;
+    }
+    #f6-root .m2-mascote {
+      position: absolute;
+      left: 50px;
+      top: 1490px;
+      width: 300px;
+      height: 420px;
+      z-index: 2;
+    }
+    #f6-root .m2-hud {
+      position: absolute;
+      left: 400px;
+      top: 1510px;
+      width: 612px;
+      height: 300px;
+      z-index: 2;
+      background: rgba(8, 14, 26, 0.9);
+      border: 1px solid rgba(250, 204, 21, 0.30);
+      border-radius: 22px;
+    }
+  </style>
+
+  <div data-hf-id="hf-p8fm" id="f6-root" data-composition-id="frame-06-raio-x-elevador" data-width="1080" data-height="1920" data-start="0" data-duration="18.36">
+    <div data-hf-id="hf-z1ui" class="m2-fundo"></div>
+    <div data-hf-id="hf-n4f5" class="m2-piso"></div>
+    <div data-hf-id="hf-xiij" id="f6-cena" class="m2-cena"></div>
+    <div data-hf-id="hf-qrlv" id="f6-mascote" class="m2-mascote"></div>
+    <div data-hf-id="hf-hqnb" id="f6-hud" class="m2-hud"></div>
+
+    <div data-hf-id="hf-d4df" class="f6-ui-layer">
+      <div data-hf-id="hf-39sg" id="f6-topbar" class="f6-topbar">
+        <span data-hf-id="hf-f3d7" class="f6-kicker">RAIO-X COMPLETO // 5 PEÇAS</span>
+        <span data-hf-id="hf-pyl0" class="f6-badge">SEGUE O CANAL</span>
+      </div>
+
+      <div data-hf-id="hf-mrzj" id="f6-header" class="f6-header-card">
+        <h1 data-hf-id="hf-yrpp" class="f6-title">Por Fora e <span data-hf-id="hf-vgq6" class="f6-title-accent">Por Dentro</span></h1>
+        <p data-hf-id="hf-lgsl" class="f6-subtitle">Contrapeso, cabos, freio de mola e cunhas: a engenharia que você usa sem ver</p>
+      </div>
+
+      <div data-hf-id="hf-u0ld" id="f6-cta" class="f6-cta-banner" style="opacity: 0;">
+        <div data-hf-id="hf-5wtd" class="f6-cta-left">
+          <span data-hf-id="hf-2q5r" class="f6-cta-kicker">O MUNDO É MAIS CURIOSO DO QUE PARECE</span>
+          <span data-hf-id="hf-6geo" class="f6-cta-title">Segue o Curiorisando!</span>
+        </div>
+        <span data-hf-id="hf-847i" class="f6-cta-pill">SEGUIR +</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 18.36;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f6-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f6-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f6-cta', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, ease: 'back.out(1.6)' }, 9.70);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var LINHAS = [
+          { nome: 'CONTRAPESO', spec: 'EQUILIBRA A CARGA', cor: '#fbbf24', y: 112, alvo: [462, 356], rota: [566, 356, 566, 150], t: 3.8 },
+          { nome: 'CABOS DE AÇO', spec: 'REDUNDÂNCIA', cor: '#38bdf8', y: 212, alvo: [420, 200], rota: [573, 200, 573, 250], t: 5.0 },
+          { nome: 'FREIO DE MOLA', spec: 'TRAVA PARADO', cor: '#22c55e', y: 312, alvo: [386, 78], rota: [580, 78, 580, 350], t: 6.3 },
+          { nome: 'CUNHAS', spec: 'AGARRAM O TRILHO', cor: '#fb923c', y: 412, alvo: [400, 372], rota: [587, 372, 587, 450], t: 7.1 },
+          { nome: 'LIMITADOR', spec: 'DISPARA A 1,3x', cor: '#f87171', y: 512, alvo: [525, 100], rota: [594, 100, 594, 550], t: 8.0 }
+        ];
+
+        var chamadas = '', linhas = '';
+        for (var i = 0; i < LINHAS.length; i++) {
+          var L = LINHAS[i];
+          chamadas += G({ id: 's6-card' + i, opacity: 0 },
+            T('rect', { x: 600, y: L.y, width: 430, height: 76, rx: 14, fill: 'rgba(8,14,26,0.94)', stroke: L.cor, 'stroke-opacity': 0.42, 'stroke-width': 2 }) +
+            T('rect', { x: 600, y: L.y, width: 7, height: 76, rx: 3, fill: L.cor }) +
+            T('circle', { cx: 632, cy: L.y + 38, r: 19, fill: L.cor, 'fill-opacity': 0.16, stroke: L.cor, 'stroke-width': 2 }) +
+            T('text', { x: 632, y: L.y + 45, 'text-anchor': 'middle', fill: L.cor, 'font-family': 'Inter, sans-serif', 'font-size': 19, 'font-weight': 700 }, String(i + 1)) +
+            T('text', { x: 666, y: L.y + 34, fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 23, 'font-weight': 700 }, L.nome) +
+            T('text', { x: 666, y: L.y + 60, fill: L.cor, 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 1.2 }, L.spec));
+          linhas += T('circle', { id: 's6-dot' + i, cx: L.alvo[0], cy: L.alvo[1], r: 5.5, fill: L.cor, stroke: '#050a14', 'stroke-width': 2, opacity: 0 }) +
+            T('path', {
+              id: 's6-ln' + i,
+              d: 'M' + L.alvo[0] + ' ' + L.alvo[1] + ' L' + L.rota[0] + ' ' + L.rota[1] + ' L' + L.rota[2] + ' ' + L.rota[3] + ' L600 ' + (L.y + 38),
+              fill: 'none', stroke: L.cor, 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round',
+              'stroke-dasharray': '1', 'stroke-dashoffset': 1, pathLength: 1, opacity: 0
+            });
+        }
+
+        var svg = M.svgBase(1080, 680,
+          '<defs>' +
+          '<linearGradient id="s6-predio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d1d33"/><stop offset="1" stop-color="#081222"/></linearGradient>' +
+          '<linearGradient id="s6-gradCab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c3352"/><stop offset="1" stop-color="#11213a"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 40, y: 20, width: 520, height: 640, rx: 24, fill: 'url(#s6-predio)', stroke: '#2b3f5c', 'stroke-width': 4 }) +
+          (function () {
+            var s = '';
+            for (var f = 0; f < 8; f++) {
+              var yy = 100 + f * 74;
+              s += T('line', { x1: 40, y1: yy, x2: 220, y2: yy, stroke: '#1e3a5f', 'stroke-width': 2 }) +
+                T('line', { x1: 480, y1: yy, x2: 560, y2: yy, stroke: '#1e3a5f', 'stroke-width': 2 });
+            }
+            return s;
+          })() +
+          T('rect', { x: 220, y: 40, width: 260, height: 600, fill: '#060f1d', stroke: '#1e3a5f', 'stroke-width': 3 }) +
+          T('rect', { x: 225, y: 44, width: 10, height: 592, rx: 3, fill: '#475569' }) +
+          T('rect', { x: 465, y: 44, width: 10, height: 592, rx: 3, fill: '#475569' }) +
+          // polia + freio
+          G({ id: 's6-sheave' },
+            T('circle', { cx: 350, cy: 72, r: 30, fill: '#1e293b', stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('circle', { cx: 350, cy: 72, r: 8, fill: '#facc15' }) +
+            T('line', { x1: 320, y1: 72, x2: 380, y2: 72, stroke: '#64748b', 'stroke-width': 4 }) +
+            T('line', { x1: 350, y1: 42, x2: 350, y2: 102, stroke: '#64748b', 'stroke-width': 4 })) +
+          T('path', { d: M.arco(350, 72, 40, 110, 250), fill: 'none', stroke: '#22c55e', 'stroke-width': 9, 'stroke-linecap': 'round' }) +
+          T('path', { d: M.arco(350, 72, 40, -70, 70), fill: 'none', stroke: '#22c55e', 'stroke-width': 9, 'stroke-linecap': 'round' }) +
+          // cabos
+          T('line', { x1: 260, y1: 300, x2: 338, y2: 76, stroke: '#e2e8f0', 'stroke-width': 3 }) +
+          T('line', { x1: 370, y1: 300, x2: 362, y2: 76, stroke: '#e2e8f0', 'stroke-width': 3 }) +
+          T('line', { x1: 420, y1: 300, x2: 408, y2: 76, stroke: '#e2e8f0', 'stroke-width': 3 }) +
+          T('line', { x1: 450, y1: 300, x2: 432, y2: 76, stroke: '#cbd5e1', 'stroke-width': 3 }) +
+          // cabine
+          G({ id: 's6-cab' },
+            T('rect', { x: 245, y: 300, width: 140, height: 130, rx: 7, fill: 'url(#s6-gradCab)', stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('rect', { x: 255, y: 310, width: 120, height: 104, rx: 4, fill: 'none', stroke: '#27406b', 'stroke-width': 2 }) +
+            T('rect', { x: 265, y: 320, width: 44, height: 70, rx: 4, fill: '#0e1b2e', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('rect', { x: 321, y: 320, width: 44, height: 70, rx: 4, fill: '#0e1b2e', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('circle', { cx: 315, cy: 355, r: 2.5, fill: '#38bdf8' }) +
+            T('text', { x: 315, y: 418, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700 }, 'CABINE') +
+            T('path', { d: 'M245 356 L228 346 L228 382 L245 372 Z', fill: '#fb923c', stroke: '#78350f', 'stroke-width': 2 }) +
+            T('path', { d: 'M385 356 L402 346 L402 382 L385 372 Z', fill: '#fb923c', stroke: '#78350f', 'stroke-width': 2 })) +
+          // contrapeso
+          G({ id: 's6-cw' },
+            T('rect', { x: 408, y: 300, width: 54, height: 112, rx: 6, fill: '#4b5563', stroke: '#cbd5e1', 'stroke-width': 3 }) +
+            T('line', { x1: 416, y1: 318, x2: 454, y2: 318, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('line', { x1: 416, y1: 394, x2: 454, y2: 394, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('text', { x: 435, y: 361, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 24, 'font-weight': 700 }, '≈')) +
+          // limitador
+          G({ id: 's6-gov' },
+            G({ id: 's6-govWheel' },
+              T('circle', { cx: 525, cy: 100, r: 22, fill: '#1e1b2e', stroke: '#f87171', 'stroke-width': 4 }) +
+              T('circle', { cx: 525, cy: 100, r: 5, fill: '#f87171' }) +
+              T('line', { x1: 505, y1: 100, x2: 545, y2: 100, stroke: '#f87171', 'stroke-width': 3 }) +
+              T('line', { x1: 525, y1: 80, x2: 525, y2: 120, stroke: '#f87171', 'stroke-width': 3 })) +
+            T('line', { x1: 514, y1: 104, x2: 514, y2: 596, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('line', { x1: 536, y1: 104, x2: 536, y2: 596, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('circle', { cx: 525, cy: 596, r: 14, fill: '#1e1b2e', stroke: '#64748b', 'stroke-width': 3 }) +
+            T('text', { x: 525, y: 642, 'text-anchor': 'middle', fill: '#f87171', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700 }, '1,3x')) +
+          // chamadas + linhas
+          linhas + chamadas +
+          T('rect', { x: 40, y: 20, width: 520, height: 640, rx: 24, fill: 'none', stroke: '#3b5b8c', 'stroke-width': 4 })
+        );
+        M.montar('#f6-cena', svg);
+
+        var cena = M.pegar('#f6-cena');
+        var card = [], ln = [], dot = [];
+        for (var i = 0; i < LINHAS.length; i++) {
+          card[i] = M.pegar(cena, '#s6-card' + i);
+          ln[i] = M.pegar(cena, '#s6-ln' + i);
+          dot[i] = M.pegar(cena, '#s6-dot' + i);
+        }
+        var sheave = M.pegar(cena, '#s6-sheave');
+        var gov = M.pegar(cena, '#s6-gov');
+        var govWheel = M.pegar(cena, '#s6-govWheel');
+        var boy = M.mascote('#f6-mascote');
+        var hud = M.medidorBarra('#f6-hud', { rotulo: 'SISTEMAS MAPEADOS', unidade: '/5', max: 5, cor: '#facc15', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var ativos = 0;
+          for (var i = 0; i < LINHAS.length; i++) {
+            var ini = LINHAS[i].t;
+            var e = suave(faixa(t, ini, ini + 0.5));
+            card[i].setAttribute('opacity', f2(e));
+            card[i].setAttribute('transform', 'translate(' + f2((1 - e) * 26) + ' 0)');
+            ln[i].setAttribute('opacity', f2(e * 0.62));
+            ln[i].setAttribute('stroke-dashoffset', f2(1 - e));
+            dot[i].setAttribute('opacity', f2(e));
+            if (e > 0.5) ativos++;
+          }
+          sheave.setAttribute('transform', 'rotate(' + f2(t * 12) + ' 350 72)');
+          govWheel.setAttribute('transform', 'rotate(' + f2(-t * 20) + ' 525 100)');
+
+          hud.atualizar(ativos, ativos >= 5 ? 'TUDO NO LUGAR' : 'MAPEANDO...', ativos >= 5 ? '#facc15' : '#38bdf8');
+
+          var festa = t >= 9.8;
+          boy.atualizar(t, og, {
+            humor: festa ? 'feliz' : 'surpreso',
+            bracoD: festa ? 150 + Math.sin(t * 6) * 16 : 108,
+            bracoE: festa ? 150 + Math.cos(t * 6) * 16 : 12,
+            olhar: [7, -4],
+            pulo: festa ? Math.abs(Math.sin((t - 9.8) * 5)) * 24 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 74.69 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-06-raio-x-elevador'] = tl;
+    })();
+  </script>
+</template>

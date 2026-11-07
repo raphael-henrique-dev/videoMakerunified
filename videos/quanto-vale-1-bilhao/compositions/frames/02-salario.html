@@ -1,0 +1,130 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f2-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f2-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f2-topbar { position:absolute; top:76px; left:68px; right:140px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f2-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f2-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f2-header-card { position:absolute; top:164px; left:68px; right:140px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f2-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f2-title-accent { color:#38bdf8; }
+    .f2-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f2-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f2-banner-text { font-size:19px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f2-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; white-space:nowrap; }
+    #f2-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 40% 24%, #17284a 0%, #091226 58%, #050a14 100%); }
+    #f2-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f2-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f2-root .m2-mascote { position:absolute; left:20px; top:624px; width:250px; height:350px; z-index:2; }
+    #f2-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f2-root" data-composition-id="frame-02-salario" data-width="1080" data-height="1920" data-start="0" data-duration="15.63">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f2-cena" class="m2-cena"></div>
+    <div id="f2-mascote" class="m2-mascote"></div>
+    <div id="f2-hud" class="m2-hud"></div>
+
+    <div class="f2-ui-layer">
+      <div id="f2-topbar" class="f2-topbar">
+        <span class="f2-kicker">CONTA 01 // SALÁRIO</span>
+        <span class="f2-badge">8.333 ANOS</span>
+      </div>
+      <div id="f2-header" class="f2-header-card">
+        <h1 class="f2-title">Juntar com <span class="f2-title-accent">salário</span></h1>
+        <p class="f2-subtitle">Guardar 10 mil por mês, sem gastar um centavo, ainda é uma viagem no tempo.</p>
+      </div>
+      <div id="f2-banner" class="f2-banner" style="opacity: 0;">
+        <span class="f2-banner-text">R$ 10 MIL POR MÊS × 100.000 MESES</span>
+        <span class="f2-banner-pill">8.333 ANOS</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 15.63;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 7.0);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2, lerp = M.lerp;
+
+        var BX = 70, BW = 940, BY = 206, BH = 62;
+        var PIR = 0.54;
+
+        var piramides =
+          G({ id: 's2-pir', opacity: 0 },
+            T('path', { d: 'M470 470 L560 350 L650 470 Z', fill: '#1e293b', stroke: '#7dd3fc', 'stroke-width': 2.5 }) +
+            T('path', { d: 'M622 470 L676 398 L730 470 Z', fill: '#16233d', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('path', { d: 'M392 470 L432 424 L472 470 Z', fill: '#16233d', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('line', { x1: 560, y1: 350, x2: 560, y2: 470, stroke: '#38bdf8', 'stroke-width': 1.2, 'stroke-dasharray': '5 6', 'stroke-opacity': 0.6 }) +
+            T('text', { x: 560, y: 512, 'text-anchor': 'middle', fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 21, 'font-weight': 700, 'letter-spacing': 1 }, 'PIRÂMIDES · 4.500 ANOS ATRÁS'));
+
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s2-ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#152542"/><stop offset="1" stop-color="#050a14"/></linearGradient>' +
+          '<linearGradient id="s2-barra" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0ea5e9"/><stop offset="0.55" stop-color="#22c55e"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>' +
+          '<clipPath id="s2-corte"><rect id="s2-corteRect" x="' + BX + '" y="' + BY + '" width="0" height="' + BH + '"/></clipPath>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s2-ceu)' }) +
+          T('text', { x: 70, y: 150, fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 124, 'font-weight': 700, 'letter-spacing': -4 }, '8.333') +
+          T('text', { x: 470, y: 132, fill: '#fbbf24', 'font-family': 'Inter, sans-serif', 'font-size': 58, 'font-weight': 700, 'letter-spacing': 1 }, 'ANOS') +
+          T('text', { x: 472, y: 174, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 21, 'font-weight': 600 }, 'GUARDANDO SEM GASTAR NADA') +
+          T('rect', { x: BX, y: BY, width: BW, height: BH, rx: 14, fill: '#0b1220', stroke: 'rgba(56,189,248,0.42)', 'stroke-width': 2 }) +
+          G({ 'clip-path': 'url(#s2-corte)' },
+            T('rect', { x: BX, y: BY, width: BW, height: BH, fill: 'url(#s2-barra)', 'fill-opacity': 0.92 })) +
+          T('line', { id: 's2-marcaPir', x1: BX + BW * PIR, y1: BY - 18, x2: BX + BW * PIR, y2: BY + BH + 18, stroke: '#facc15', 'stroke-width': 3, 'stroke-dasharray': '7 6', opacity: 0 }) +
+          T('text', { id: 's2-txtPir', x: BX + BW * PIR - 12, y: BY + BH + 52, 'text-anchor': 'end', fill: '#facc15', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700, opacity: 0 }, '54% DO CAMINHO' ) +
+          G({ id: 's2-hoje', opacity: 0 },
+            T('rect', { x: 906, y: BY - 58, width: 104, height: 40, rx: 9, fill: '#facc15' }) +
+            T('text', { x: 958, y: BY - 30, 'text-anchor': 'middle', fill: '#050a14', 'font-family': 'Inter, sans-serif', 'font-size': 21, 'font-weight': 700 }, 'HOJE')) +
+          T('text', { x: 70, y: 176, fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700, 'letter-spacing': 2 }, '1 BILHÃO ACUMULADO') +
+          piramides +
+          T('rect', { x: 0, y: 546, width: 1080, height: 84, fill: '#0b1220' }) +
+          T('line', { x1: 0, y1: 546, x2: 1080, y2: 546, stroke: '#38bdf8', 'stroke-width': 2, 'stroke-opacity': 0.4 }) +
+          T('text', { x: 906, y: 596, 'text-anchor': 'end', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 21, 'font-weight': 600 }, 'R$ 10.000 × 12 meses = R$ 120.000 por ano')
+        );
+        M.montar('#f2-cena', svg);
+        var cena = M.pegar('#f2-cena');
+        var corte = M.pegar(cena, '#s2-corteRect');
+        var marcaPir = M.pegar(cena, '#s2-marcaPir');
+        var txtPir = M.pegar(cena, '#s2-txtPir');
+        var hoje = M.pegar(cena, '#s2-hoje');
+        var pir = M.pegar(cena, '#s2-pir');
+        var boy = M.mascote('#f2-mascote');
+        var hud = M.medidorBarra('#f2-hud', { rotulo: 'ANOS GUARDANDO', unidade: 'anos', max: 8333, cor: '#f59e0b', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.9, 10.6));
+          corte.setAttribute('width', f2(BW * u));
+          var chegouPir = suave(faixa(t, 3.4, 4.0));
+          marcaPir.setAttribute('opacity', f2(chegouPir));
+          pir.setAttribute('opacity', f2(suave(faixa(t, 2.4, 3.4))));
+          txtPir.setAttribute('opacity', f2(suave(faixa(t, 4.6, 5.2))));
+          hoje.setAttribute('opacity', f2(suave(faixa(t, 9.9, 10.5))));
+          hud.atualizar(Math.round(8333 * u), u > 0.995 ? 'SÓ HOJE CHEGOU' : 'GUARDANDO', u > 0.995 ? '#f59e0b' : '#38bdf8');
+          boy.atualizar(t, og, {
+            humor: t > 4.4 ? 'triste' : 'surpreso',
+            bracoD: t > 6 ? 40 : 120,
+            bracoE: 10,
+            olhar: [8, 4],
+            inclinar: t > 4.4 ? 4 : -3
+          });
+        }, { duracao: DUR, offsetGlobal: 14.34 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-salario'] = tl;
+    })();
+  </script>
+</template>

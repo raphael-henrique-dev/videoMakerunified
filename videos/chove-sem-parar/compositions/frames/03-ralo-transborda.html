@@ -1,0 +1,103 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f3-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f3-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f3-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(239,68,68,0.38); border-radius:14px; }
+    .f3-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#fca5a5; text-transform:uppercase; }
+    .f3-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f3-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #ef4444; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f3-title { font-family:'EB Garamond',serif; font-size:58px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f3-title-accent { color:#ef4444; }
+    .f3-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    #f3-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 50% 40%, #3a1a1a 0%, #08111f 55%, #050a14 100%); }
+    #f3-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#1a2332 0%,#08111f 100%); border-top:2px solid rgba(239,68,68,0.22); }
+    #f3-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f3-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f3-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(239,68,68,0.32); border-radius:22px; }
+    .f3-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(28,8,14,0.92); border:1.5px solid rgba(239,68,68,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f3-banner-text { font-size:20px; font-weight:700; color:#fca5a5; letter-spacing:.04em; }
+    .f3-banner-pill { padding:6px 16px; background:#dc2626; color:#ffffff; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+  </style>
+
+  <div id="f3-root" data-composition-id="frame-03-ralo-transborda" data-width="1080" data-height="1920" data-start="28.00" data-duration="10.46">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f3-cena" class="m2-cena"></div>
+    <div id="f3-mascote" class="m2-mascote"></div>
+    <div id="f3-hud" class="m2-hud"></div>
+
+    <div class="f3-ui-layer">
+      <div id="f3-topbar" class="f3-topbar">
+        <span class="f3-kicker">FALHA 02 // AS GALERIAS ENTUPAM</span>
+        <span class="f3-badge">ENTUPIDO</span>
+      </div>
+      <div id="f3-header" class="f3-header-card">
+        <h1 class="f3-title">O Ralo <span class="f3-title-accent">Transborda</span></h1>
+        <p class="f3-subtitle">Folha, lixo e sacola plastica bloqueiam o escoamento.</p>
+      </div>
+      <div id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span class="f3-banner-text">A GALERIA DE PLUVIAL ESTA ENTUPIDA</span>
+        <span class="f3-banner-pill">FALHA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 10.46;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 9.6);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+        var bueiro = G({ transform: 'translate(540 330)' },
+          T('rect', { x: -60, y: -34, width: 120, height: 68, rx: 12, fill: '#0b1220', stroke: '#475569', 'stroke-width': 4 }) +
+          T('rect', { x: -48, y: -22, width: 96, height: 44, rx: 6, fill: '#1e293b' }) +
+          T('line', { x1: -40, y1: 0, x2: 40, y2: 0, stroke: '#334155', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+          T('line', { x1: 0, y1: -12, x2: 0, y2: 12, stroke: '#334155', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+          G({ id: 'f3-agua', transform: 'translate(0 -6)' },
+            T('rect', { x: -44, y: -20, width: 88, height: 18, fill: '#38bdf8', 'fill-opacity': 0.7 }) +
+            T('rect', { x: -44, y: -6, width: 88, height: 6, fill: '#7dd3fc', 'fill-opacity': 0.5 }))
+        );
+        var lixo = '';
+        var lixos = [[-30, -14], [-10, -16], [10, -14], [28, -16]];
+        lixos.forEach(function (l, i) {
+          lixo += T('rect', { x: l[0], y: l[1], width: 14, height: 10, rx: 3, fill: '#94a3b8', 'fill-opacity': 0.85 });
+          lixo += T('rect', { x: l[0] + 2, y: l[1] + 2, width: 6, height: 3, fill: '#f1f5f9' });
+        });
+        var txt = T('text', { x: 540, y: 320, 'text-anchor': 'middle', 'font-family': "'Inter',sans-serif", 'font-size': '34', 'font-weight': '700', fill: '#f8fafc', 'fill-opacity': 0.9 }, 'BUEIRO ENTUPIDO');
+        var svg = M.svgBase(1080, 630,
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: '#0b1220' }) +
+          T('path', { d: 'M60 500 L1020 500 L1000 540 L80 540 Z', fill: '#1e293b' }) +
+          T('rect', { x: 480, y: 300, width: 120, height: 10, fill: '#334155' }) +
+          T('circle', { cx: 540, cy: 480, r: 180, fill: '#38bdf8', 'fill-opacity': 0.08 }) +
+          bueiro + lixo + txt
+        );
+        M.montar('#f3-cena', svg);
+        var agua = M.pegar('#f3-cena', '#f3-agua');
+        var boy = M.mascote('#f3-mascote');
+        var hud = M.medidorBarra('#f3-hud', { rotulo: 'FLUXO PLUVIAL', unidade: '%', max: 100, cor: '#ef4444', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.6, 11.0));
+          var nivel = u * 40;
+          agua.setAttribute('transform', 'translate(0 ' + f2(-6 + nivel) + ')');
+          agua.setAttribute('fill-opacity', f2(0.7 * (1 - u * 0.3)));
+          hud.atualizar(100 - u * 100, u > 0.7 ? 'ENTUPIDO: SEM ESCOAMENTO' : 'AGUA SUBINDO', u > 0.7 ? '#dc2626' : '#f59e0b');
+          boy.atualizar(t, og, { humor: t < 3.0 ? 'neutro' : 'preocupado', bracoD: t < 3 ? 40 : 130, bracoE: 8, olhar: [10, -10], inclinar: t > 5 ? -4 : 0 });
+        }, { duracao: DUR, offsetGlobal: 18.56 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-ralo-transborda'] = tl;
+    })();
+  </script>
+</template>

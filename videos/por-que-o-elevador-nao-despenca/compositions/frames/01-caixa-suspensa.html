@@ -1,0 +1,387 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #f1-root {
+      position: absolute;
+      inset: 0;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+
+    .f1-ui-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .f1-topbar {
+      position: absolute;
+      top: 76px;
+      left: 68px;
+      right: 68px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88);
+      border: 1px solid rgba(56, 189, 248, 0.38);
+      border-radius: 14px;
+    }
+
+    .f1-kicker {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: #38bdf8;
+      text-transform: uppercase;
+    }
+
+    .f1-badge {
+      font-size: 19px;
+      font-weight: 700;
+      color: #facc15;
+      letter-spacing: 0.06em;
+    }
+
+    .f1-header-card {
+      position: absolute;
+      top: 164px;
+      left: 68px;
+      right: 68px;
+      padding: 26px 32px;
+      background: rgba(8, 14, 26, 0.88);
+      border-left: 5px solid #38bdf8;
+      border-radius: 0 18px 18px 0;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+
+    .f1-title {
+      font-family: 'EB Garamond', serif;
+      font-size: 62px;
+      font-weight: 700;
+      line-height: 1.05;
+      color: #f8fafc;
+      margin-bottom: 8px;
+    }
+
+    .f1-title-accent {
+      color: #38bdf8;
+    }
+
+    .f1-subtitle {
+      font-size: 23px;
+      line-height: 1.36;
+      color: #cbd5e1;
+    }
+
+    .f1-telemetry-row {
+      position: absolute;
+      top: 1020px;
+      left: 68px;
+      right: 68px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .f1-metric-box {
+      flex: 1;
+      padding: 20px 24px;
+      background: rgba(8, 14, 26, 0.90);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 16px;
+    }
+
+    .f1-metric-label {
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      color: #38bdf8;
+      margin-bottom: 6px;
+    }
+
+    .f1-metric-val {
+      font-size: 34px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+
+    .f1-banner {
+      position: absolute;
+      top: 1185px;
+      left: 68px;
+      right: 68px;
+      padding: 18px 26px;
+      background: rgba(14, 26, 10, 0.92);
+      border: 1.5px solid rgba(250, 204, 21, 0.55);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .f1-banner-text {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fef9c3;
+      letter-spacing: 0.04em;
+    }
+
+    .f1-banner-pill {
+      padding: 6px 16px;
+      background: #facc15;
+      color: #050a14;
+      font-size: 17px;
+      font-weight: 700;
+      border-radius: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    #f1-root .m2-fundo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: radial-gradient(circle at 50% 28%, #10264d 0%, #08142a 55%, #050a14 100%);
+    }
+    #f1-root .m2-piso {
+      position: absolute;
+      left: 0;
+      top: 1465px;
+      width: 1080px;
+      height: 455px;
+      z-index: 0;
+      background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%);
+      border-top: 2px solid rgba(56, 189, 248, 0.28);
+    }
+    #f1-root .m2-cena {
+      position: absolute;
+      left: 0;
+      top: 340px;
+      width: 1080px;
+      height: 680px;
+      z-index: 1;
+    }
+    #f1-root .m2-mascote {
+      position: absolute;
+      left: 50px;
+      top: 1490px;
+      width: 300px;
+      height: 420px;
+      z-index: 2;
+    }
+    #f1-root .m2-hud {
+      position: absolute;
+      left: 400px;
+      top: 1510px;
+      width: 612px;
+      height: 300px;
+      z-index: 2;
+      background: rgba(8, 14, 26, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.32);
+      border-radius: 22px;
+    }
+  </style>
+
+  <div data-hf-id="hf-spj8" id="f1-root" data-composition-id="frame-01-caixa-suspensa" data-width="1080" data-height="1920" data-start="0" data-duration="16.61">
+    <div data-hf-id="hf-z1ui" class="m2-fundo"></div>
+    <div data-hf-id="hf-n4f5" class="m2-piso"></div>
+    <div data-hf-id="hf-jgbm" id="f1-cena" class="m2-cena"></div>
+    <div data-hf-id="hf-u0go" id="f1-mascote" class="m2-mascote"></div>
+    <div data-hf-id="hf-jqy0" id="f1-hud" class="m2-hud"></div>
+
+    <div data-hf-id="hf-x5l2" class="f1-ui-layer">
+      <div data-hf-id="hf-hxh6" id="f1-topbar" class="f1-topbar">
+        <span data-hf-id="hf-s8qe" class="f1-kicker">NOSSO DIA A DIA // A CAIXA QUE SOBE</span>
+        <span data-hf-id="hf-7ai9" class="f1-badge">1 TONELADA</span>
+      </div>
+
+      <div data-hf-id="hf-8n3z" id="f1-header" class="f1-header-card">
+        <h1 data-hf-id="hf-idoy" class="f1-title">A Caixa Que <span data-hf-id="hf-o9et" class="f1-title-accent">Não Cai</span></h1>
+        <p data-hf-id="hf-4vuz" class="f1-subtitle">Ela sobe, para no andar certo e não despenca. Mas o que segura essa caixa?</p>
+      </div>
+
+      <div data-hf-id="hf-woex" id="f1-telemetry" class="f1-telemetry-row">
+        <div data-hf-id="hf-xftc" class="f1-metric-box">
+          <div data-hf-id="hf-e630" class="f1-metric-label">DÉCIMO ANDAR</div>
+          <div data-hf-id="hf-i92a" class="f1-metric-val">Sobe Liso</div>
+        </div>
+        <div data-hf-id="hf-kroo" class="f1-metric-box">
+          <div data-hf-id="hf-s8wp" class="f1-metric-label">O QUE SEGURA?</div>
+          <div data-hf-id="hf-31fk" class="f1-metric-val">Cabos de Aço</div>
+        </div>
+      </div>
+
+      <div data-hf-id="hf-i4q0" id="f1-banner" class="f1-banner" style="opacity: 0;">
+        <span data-hf-id="hf-qdcf" class="f1-banner-text">VOCÊ NEM PENSA NO QUE SEGURA ESSA CAIXA</span>
+        <span data-hf-id="hf-1m8v" class="f1-banner-pill">CURIOSIDADE</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 16.61;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f1-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f1-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f1-telemetry', { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: 'power3.out' }, 0.45);
+      tl.fromTo('#f1-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 12.60);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        function pisoY(f) { return 95 + (10 - f) * 58; }
+        var andares = '';
+        for (var f = 10; f >= 1; f--) {
+          var y = pisoY(f);
+          andares += T('line', { x1: 70, y1: y, x2: 390, y2: y, stroke: '#1e3a5f', 'stroke-width': 2 }) +
+            T('line', { x1: 690, y1: y, x2: 1010, y2: y, stroke: '#1e3a5f', 'stroke-width': 2 }) +
+            T('text', { id: 's1-fl' + f, x: 128, y: y - 9, 'text-anchor': 'end', fill: '#7d93b0', 'font-family': 'Inter, sans-serif', 'font-size': 19, 'font-weight': 700 }, String(f)) +
+            T('text', { x: 952, y: y - 9, 'text-anchor': 'end', fill: '#8ea4bd', 'font-family': 'Inter, sans-serif', 'font-size': 16, 'font-weight': 700 }, String(f));
+        }
+
+        var svg = M.svgBase(1080, 680,
+          '<defs>' +
+          '<linearGradient id="s1-predio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0c1a30"/><stop offset="1" stop-color="#081222"/></linearGradient>' +
+          '<linearGradient id="s1-cabine" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#183253"/><stop offset="1" stop-color="#0f2038"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 70, y: 10, width: 940, height: 650, rx: 26, fill: 'url(#s1-predio)', stroke: '#27406b', 'stroke-width': 4 }) +
+          andares +
+          // poço central
+          T('rect', { x: 390, y: 30, width: 300, height: 620, fill: '#060f1d', stroke: '#1e3a5f', 'stroke-width': 3 }) +
+          T('line', { x1: 414, y1: 34, x2: 414, y2: 646, stroke: '#475569', 'stroke-width': 7, 'stroke-linecap': 'round' }) +
+          T('line', { x1: 666, y1: 34, x2: 666, y2: 646, stroke: '#475569', 'stroke-width': 7, 'stroke-linecap': 'round' }) +
+          T('line', { x1: 414, y1: 34, x2: 414, y2: 646, stroke: '#94a3b8', 'stroke-width': 2, 'stroke-dasharray': '6 14' }) +
+          T('line', { x1: 666, y1: 34, x2: 666, y2: 646, stroke: '#94a3b8', 'stroke-width': 2, 'stroke-dasharray': '6 14' }) +
+          // polia no topo
+          G({ id: 's1-sheave' },
+            T('circle', { cx: 540, cy: 58, r: 27, fill: '#1e293b', stroke: '#94a3b8', 'stroke-width': 5 }) +
+            T('circle', { cx: 540, cy: 58, r: 8, fill: '#38bdf8' }) +
+            T('line', { x1: 518, y1: 58, x2: 562, y2: 58, stroke: '#64748b', 'stroke-width': 4 }) +
+            T('line', { x1: 540, y1: 36, x2: 540, y2: 80, stroke: '#64748b', 'stroke-width': 4 })) +
+          // cabos (y1 atualizado no tempo)
+          T('line', { id: 's1-cb0', x1: 465, y1: 200, x2: 522, y2: 62, stroke: '#cbd5e1', 'stroke-width': 3 }) +
+          T('line', { id: 's1-cb1', x1: 505, y1: 200, x2: 533, y2: 64, stroke: '#e2e8f0', 'stroke-width': 3 }) +
+          T('line', { id: 's1-cb2', x1: 575, y1: 200, x2: 548, y2: 64, stroke: '#e2e8f0', 'stroke-width': 3 }) +
+          T('line', { id: 's1-cb3', x1: 615, y1: 200, x2: 559, y2: 62, stroke: '#cbd5e1', 'stroke-width': 3 }) +
+          // cabine em corte
+          G({ id: 's1-cab' },
+            T('rect', { x: 435, y: 200, width: 210, height: 170, rx: 8, fill: 'url(#s1-cabine)', stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('rect', { x: 447, y: 212, width: 186, height: 146, rx: 4, fill: 'none', stroke: '#1e3a5f', 'stroke-width': 2 }) +
+            T('rect', { x: 500, y: 214, width: 80, height: 20, rx: 4, fill: '#0b1220', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('text', { id: 's1-floor', x: 540, y: 230, 'text-anchor': 'middle', fill: '#38bdf8', 'font-family': 'Inter, sans-serif', 'font-weight': 700, 'font-size': 16 }, '1') +
+            // pessoa dentro
+            T('circle', { cx: 520, cy: 280, r: 13, fill: '#fcd34d' }) +
+            T('rect', { x: 505, y: 294, width: 30, height: 52, rx: 12, fill: '#1d4ed8' }) +
+            T('rect', { x: 509, y: 344, width: 9, height: 24, rx: 4, fill: '#1e293b' }) +
+            T('rect', { x: 523, y: 344, width: 9, height: 24, rx: 4, fill: '#1e293b' }) +
+            // painel de botões
+            T('rect', { x: 596, y: 250, width: 28, height: 66, rx: 5, fill: '#0b1220', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('circle', { cx: 610, cy: 264, r: 5, fill: '#22c55e' }) +
+            T('circle', { cx: 610, cy: 282, r: 5, fill: '#facc15' }) +
+            T('circle', { cx: 610, cy: 300, r: 5, fill: '#94a3b8' }) +
+            T('line', { x1: 455, y1: 312, x2: 480, y2: 312, stroke: '#64748b', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+            T('rect', { x: 435, y: 356, width: 210, height: 14, rx: 3, fill: '#475569' })) +
+          // anel de chegada
+          T('circle', { id: 's1-ding', cx: 540, cy: 285, r: 118, fill: 'none', stroke: '#22c55e', 'stroke-width': 4, opacity: 0 }) +
+          // interrogação e chamada
+          T('path', { d: 'M690 220 Q760 220 792 252', fill: 'none', stroke: '#facc15', 'stroke-width': 3, 'stroke-dasharray': '8 10', opacity: 0.55 }) +
+          G({ id: 's1-qg', opacity: 0 },
+            T('circle', { cx: 846, cy: 270, r: 66, fill: '#facc15', 'fill-opacity': 0.10, stroke: '#facc15', 'stroke-opacity': 0.48, 'stroke-width': 3 }) +
+            T('text', { x: 846, y: 306, 'text-anchor': 'middle', fill: '#facc15', 'font-family': 'EB Garamond, serif', 'font-weight': 700, 'font-size': 112 }, '?')) +
+          T('rect', { x: 70, y: 10, width: 940, height: 650, rx: 26, fill: 'none', stroke: '#3b5b8c', 'stroke-width': 4 })
+        );
+        M.montar('#f1-cena', svg);
+
+        var cena = M.pegar('#f1-cena');
+        var cab = M.pegar(cena, '#s1-cab');
+        var sheave = M.pegar(cena, '#s1-sheave');
+        var cb = [];
+        for (var c = 0; c < 4; c++) cb.push(M.pegar(cena, '#s1-cb' + c));
+        var flEls = [];
+        for (var fa = 1; fa <= 10; fa++) flEls[fa] = M.pegar(cena, '#s1-fl' + fa);
+        var floorTxt = M.pegar(cena, '#s1-floor');
+        var ding = M.pegar(cena, '#s1-ding');
+        var qg = M.pegar(cena, '#s1-qg');
+        var boy = M.mascote('#f1-mascote');
+        var hud = M.medidorBarra('#f1-hud', { rotulo: 'PESO SUSPENSO', unidade: 'kg', max: 1200, cor: '#38bdf8', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 1.15, 6.9));
+          var dy = lerp(350, 0, u);
+          cab.setAttribute('transform', 'translate(0 ' + f2(dy) + ')');
+          var topo = 200 + dy;
+          for (var i = 0; i < 4; i++) cb[i].setAttribute('y1', f2(topo));
+          sheave.setAttribute('transform', 'rotate(' + f2(-u * 520) + ' 540 58)');
+
+          var andar = 1 + Math.round(u * 9);
+          floorTxt.textContent = String(andar);
+          for (var k = 1; k <= 10; k++) {
+            var ativo = k === andar;
+            flEls[k].setAttribute('fill', ativo ? '#38bdf8' : '#7d93b0');
+            flEls[k].setAttribute('font-size', ativo ? '24' : '19');
+          }
+
+          var chegou = faixa(t, 7.3, 8.3);
+          var anel = Math.sin(Math.min(1, Math.max(0, chegou)) * Math.PI);
+          ding.setAttribute('opacity', f2(anel * 0.85));
+          ding.setAttribute('r', f2(118 + anel * 46));
+          ding.setAttribute('stroke', t > 12.5 ? '#facc15' : '#22c55e');
+
+          var q = suave(faixa(t, 12.6, 13.5));
+          qg.setAttribute('opacity', f2(q));
+          qg.setAttribute('transform', 'translate(846 270) scale(' + f2(0.86 + 0.14 * q + Math.sin(t * 3) * 0.025 * q) + ') translate(-846 -270)');
+
+          var alerta = t > 12.5;
+          hud.atualizar(1000, alerta ? 'O QUE SEGURA?' : 'CABOS TENSIONADOS', alerta ? '#facc15' : '#38bdf8');
+
+          boy.atualizar(t, og, {
+            humor: alerta ? 'surpreso' : (t < 2.2 ? 'surpreso' : 'neutro'),
+            bracoD: alerta ? 132 : (t < 6.9 ? 20 + Math.sin(t * 2) * 8 : 56),
+            bracoE: 10,
+            olhar: alerta ? [6, -8] : [4, -6],
+            inclinar: alerta ? -4 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 0.00 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-01-caixa-suspensa'] = tl;
+    })();
+  </script>
+</template>

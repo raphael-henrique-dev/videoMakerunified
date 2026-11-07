@@ -1,0 +1,156 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #captions-comp {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .caption-bar {
+      position: absolute;
+      left: 64px;
+      right: 64px;
+      top: 1350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .caption-pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px 14px;
+      padding: 18px 30px;
+      background: rgba(6, 11, 22, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.32);
+      border-radius: 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65);
+      min-height: 76px;
+      max-width: 940px;
+    }
+
+    .cap-word {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #94a3b8;
+    }
+
+    .cap-word.is-spoken {
+      color: #f8fafc;
+    }
+
+    .cap-word.is-active {
+      color: #38bdf8;
+      text-shadow: 0 0 22px rgba(56, 189, 248, 0.55);
+    }
+
+    .cap-word.cap-brand.is-spoken {
+      color: #fbbf24;
+    }
+
+    .cap-word.cap-brand.is-active {
+      color: #facc15;
+      text-shadow: 0 0 24px rgba(250, 204, 21, 0.65);
+    }
+  </style>
+
+  <div id="captions-comp" data-composition-id="captions" data-width="1080" data-height="1920" data-start="0" data-duration="89.54">
+    <div class="caption-bar">
+      <div id="caption-pill" class="caption-pill" style="opacity: 0;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var GROUPS = [{"frameId":"frame-01-torre","plano":"PA","start":0.12,"end":1.327,"words":[{"word":"Quanto","start":0.12,"end":0.457,"brand":false},{"word":"é,","start":0.526,"end":0.631,"brand":false},{"word":"de","start":0.666,"end":0.735,"brand":false},{"word":"verdade,","start":0.793,"end":1.281,"brand":false}]},{"frameId":"frame-01-torre","plano":"PA","start":1.327,"end":2.499,"words":[{"word":"1","start":1.327,"end":1.432,"brand":true},{"word":"bilhão","start":1.502,"end":1.769,"brand":true},{"word":"de","start":1.803,"end":1.873,"brand":false},{"word":"reais?","start":1.931,"end":2.419,"brand":false}]},{"frameId":"frame-01-torre","plano":"PA","start":2.825,"end":4.021,"words":[{"word":"Parece","start":2.825,"end":3.197,"brand":false},{"word":"só","start":3.243,"end":3.394,"brand":false},{"word":"um","start":3.464,"end":3.557,"brand":false},{"word":"número","start":3.673,"end":3.951,"brand":false}]},{"frameId":"frame-01-torre","plano":"PA","start":4.021,"end":5.773,"words":[{"word":"grande","start":4.021,"end":4.358,"brand":false},{"word":"com","start":4.404,"end":4.52,"brand":false},{"word":"nove","start":4.59,"end":4.81,"brand":false},{"word":"zeros.","start":4.868,"end":5.693,"brand":true}]},{"frameId":"frame-01-torre","plano":"M","start":5.81,"end":7.308,"words":[{"word":"Mas","start":5.81,"end":6.007,"brand":false},{"word":"empilhe","start":6.077,"end":6.553,"brand":false},{"word":"1","start":6.716,"end":6.878,"brand":false},{"word":"bilhão","start":6.948,"end":7.261,"brand":false}]},{"frameId":"frame-01-torre","plano":"M","start":7.308,"end":8.375,"words":[{"word":"em","start":7.308,"end":7.354,"brand":false},{"word":"notas","start":7.401,"end":7.714,"brand":false},{"word":"de","start":7.76,"end":7.842,"brand":false},{"word":"100,","start":7.946,"end":8.295,"brand":true}]},{"frameId":"frame-01-torre","plano":"M","start":8.515,"end":9.351,"words":[{"word":"e","start":8.515,"end":8.62,"brand":false},{"word":"a","start":8.678,"end":8.701,"brand":false},{"word":"torre","start":8.759,"end":8.991,"brand":false},{"word":"chega","start":9.038,"end":9.281,"brand":false}]},{"frameId":"frame-01-torre","plano":"M","start":9.351,"end":10.187,"words":[{"word":"a","start":9.351,"end":9.421,"brand":false},{"word":"1","start":9.444,"end":9.548,"brand":true},{"word":"quilômetro","start":9.606,"end":10.071,"brand":true},{"word":"de","start":10.106,"end":10.164,"brand":false}]},{"frameId":"frame-01-torre","plano":"M","start":10.187,"end":11.917,"words":[{"word":"altura.","start":10.187,"end":10.64,"brand":false},{"word":"Mais","start":11.197,"end":11.452,"brand":false},{"word":"alta","start":11.557,"end":11.778,"brand":false},{"word":"que","start":11.824,"end":11.894,"brand":false}]},{"frameId":"frame-01-torre","plano":"M","start":11.917,"end":12.799,"words":[{"word":"o","start":11.917,"end":11.94,"brand":false},{"word":"maior","start":11.987,"end":12.265,"brand":false},{"word":"prédio","start":12.335,"end":12.625,"brand":false},{"word":"do","start":12.671,"end":12.741,"brand":false}]},{"frameId":"frame-01-torre","plano":"M","start":12.799,"end":13.738,"words":[{"word":"mundo.","start":12.799,"end":13.658,"brand":true}]},{"frameId":"frame-02-salario","plano":"M","start":14.46,"end":15.586,"words":[{"word":"Agora","start":14.46,"end":14.75,"brand":false},{"word":"tente","start":14.797,"end":15.006,"brand":false},{"word":"juntar","start":15.052,"end":15.342,"brand":true},{"word":"isso","start":15.4,"end":15.54,"brand":false}]},{"frameId":"frame-02-salario","plano":"M","start":15.586,"end":17.293,"words":[{"word":"com","start":15.586,"end":15.691,"brand":false},{"word":"salário.","start":15.737,"end":16.283,"brand":false},{"word":"Guardando","start":16.585,"end":17.003,"brand":false},{"word":"10","start":17.049,"end":17.235,"brand":true}]},{"frameId":"frame-02-salario","plano":"M","start":17.293,"end":18.431,"words":[{"word":"mil","start":17.293,"end":17.397,"brand":true},{"word":"por","start":17.432,"end":17.571,"brand":false},{"word":"mês,","start":17.641,"end":18.071,"brand":false},{"word":"sem","start":18.233,"end":18.396,"brand":false}]},{"frameId":"frame-02-salario","plano":"M","start":18.431,"end":20.102,"words":[{"word":"gastar","start":18.431,"end":18.756,"brand":false},{"word":"nada,","start":18.825,"end":19.325,"brand":true},{"word":"você","start":19.464,"end":19.661,"brand":false},{"word":"levaria","start":19.719,"end":20.044,"brand":false}]},{"frameId":"frame-02-salario","plano":"M","start":20.102,"end":21.02,"words":[{"word":"mais","start":20.102,"end":20.288,"brand":false},{"word":"de","start":20.311,"end":20.404,"brand":false},{"word":"8","start":20.52,"end":20.718,"brand":true},{"word":"mil","start":20.822,"end":20.973,"brand":true}]},{"frameId":"frame-02-salario","plano":"M","start":21.02,"end":22.11,"words":[{"word":"anos.","start":21.02,"end":22.03,"brand":true}]},{"frameId":"frame-02-salario","plano":"PA","start":22.134,"end":23.365,"words":[{"word":"Seria","start":22.134,"end":22.424,"brand":false},{"word":"preciso","start":22.471,"end":22.807,"brand":false},{"word":"começar","start":22.854,"end":23.237,"brand":false},{"word":"a","start":23.283,"end":23.307,"brand":false}]},{"frameId":"frame-02-salario","plano":"PA","start":23.365,"end":24.63,"words":[{"word":"poupar","start":23.365,"end":23.701,"brand":false},{"word":"quase","start":23.771,"end":24.038,"brand":false},{"word":"4","start":24.201,"end":24.363,"brand":true},{"word":"mil","start":24.468,"end":24.607,"brand":true}]},{"frameId":"frame-02-salario","plano":"PA","start":24.63,"end":26.128,"words":[{"word":"anos","start":24.63,"end":24.944,"brand":true},{"word":"antes","start":25.164,"end":25.454,"brand":false},{"word":"das","start":25.478,"end":25.605,"brand":false},{"word":"pirâmides","start":25.663,"end":26.093,"brand":false}]},{"frameId":"frame-02-salario","plano":"PA","start":26.128,"end":27.405,"words":[{"word":"do","start":26.128,"end":26.186,"brand":false},{"word":"Egito.","start":26.221,"end":26.685,"brand":false},{"word":"E","start":27.045,"end":27.115,"brand":false},{"word":"só","start":27.184,"end":27.37,"brand":false}]},{"frameId":"frame-02-salario","plano":"PA","start":27.405,"end":28.194,"words":[{"word":"hoje","start":27.405,"end":27.637,"brand":true},{"word":"você","start":27.672,"end":27.846,"brand":false},{"word":"teria","start":27.916,"end":28.113,"brand":false},{"word":"o","start":28.136,"end":28.16,"brand":false}]},{"frameId":"frame-02-salario","plano":"PA","start":28.194,"end":29.412,"words":[{"word":"primeiro","start":28.194,"end":28.531,"brand":false},{"word":"bilhão.","start":28.578,"end":29.332,"brand":true}]},{"frameId":"frame-03-contagem","plano":"PA","start":30.09,"end":31.042,"words":[{"word":"E","start":30.09,"end":30.206,"brand":false},{"word":"se","start":30.276,"end":30.357,"brand":false},{"word":"você","start":30.392,"end":30.566,"brand":false},{"word":"contasse","start":30.636,"end":31.019,"brand":true}]},{"frameId":"frame-03-contagem","plano":"PA","start":31.042,"end":32.458,"words":[{"word":"esse","start":31.042,"end":31.181,"brand":false},{"word":"dinheiro,","start":31.228,"end":31.773,"brand":false},{"word":"um","start":31.936,"end":32.052,"brand":false},{"word":"real","start":32.122,"end":32.412,"brand":false}]},{"frameId":"frame-03-contagem","plano":"PA","start":32.458,"end":33.875,"words":[{"word":"por","start":32.458,"end":32.598,"brand":false},{"word":"segundo,","start":32.656,"end":33.167,"brand":false},{"word":"sem","start":33.271,"end":33.457,"brand":false},{"word":"parar","start":33.515,"end":33.805,"brand":false}]},{"frameId":"frame-03-contagem","plano":"PA","start":33.875,"end":35.093,"words":[{"word":"nem","start":33.875,"end":34.003,"brand":false},{"word":"pra","start":34.037,"end":34.142,"brand":false},{"word":"dormir?","start":34.177,"end":35.013,"brand":true}]},{"frameId":"frame-03-contagem","plano":"M","start":35.127,"end":36.323,"words":[{"word":"Um","start":35.127,"end":35.301,"brand":false},{"word":"bilhão","start":35.348,"end":35.638,"brand":false},{"word":"de","start":35.673,"end":35.731,"brand":false},{"word":"segundos","start":35.777,"end":36.253,"brand":true}]},{"frameId":"frame-03-contagem","plano":"M","start":36.323,"end":37.345,"words":[{"word":"é","start":36.323,"end":36.358,"brand":false},{"word":"mais","start":36.427,"end":36.671,"brand":false},{"word":"de","start":36.694,"end":36.752,"brand":false},{"word":"31","start":36.857,"end":37.321,"brand":true}]},{"frameId":"frame-03-contagem","plano":"M","start":37.345,"end":39.516,"words":[{"word":"anos","start":37.345,"end":37.553,"brand":true},{"word":"contando.","start":37.612,"end":38.192,"brand":false},{"word":"Você","start":38.598,"end":38.819,"brand":false},{"word":"começaria","start":38.889,"end":39.446,"brand":false}]},{"frameId":"frame-03-contagem","plano":"M","start":39.516,"end":40.944,"words":[{"word":"aos","start":39.516,"end":39.701,"brand":false},{"word":"10","start":39.759,"end":40.073,"brand":true},{"word":"e","start":40.235,"end":40.34,"brand":false},{"word":"terminaria","start":40.386,"end":40.897,"brand":false}]},{"frameId":"frame-03-contagem","plano":"M","start":40.944,"end":42.591,"words":[{"word":"com","start":40.944,"end":41.083,"brand":false},{"word":"mais","start":41.153,"end":41.362,"brand":false},{"word":"de","start":41.385,"end":41.443,"brand":false},{"word":"40.","start":41.547,"end":42.511,"brand":true}]},{"frameId":"frame-04-gasto","plano":"M","start":43.26,"end":44.096,"words":[{"word":"Vire","start":43.26,"end":43.527,"brand":false},{"word":"a","start":43.55,"end":43.573,"brand":false},{"word":"conta","start":43.643,"end":43.922,"brand":false},{"word":"do","start":43.968,"end":44.038,"brand":false}]},{"frameId":"frame-04-gasto","plano":"M","start":44.096,"end":46.279,"words":[{"word":"outro","start":44.096,"end":44.293,"brand":true},{"word":"lado:","start":44.34,"end":44.723,"brand":false},{"word":"gastar.","start":45.083,"end":45.617,"brand":false},{"word":"Que","start":46.093,"end":46.209,"brand":false}]},{"frameId":"frame-04-gasto","plano":"M","start":46.279,"end":47.056,"words":[{"word":"tal","start":46.279,"end":46.464,"brand":false},{"word":"1","start":46.488,"end":46.569,"brand":true},{"word":"milhão","start":46.627,"end":46.882,"brand":true},{"word":"de","start":46.929,"end":46.998,"brand":false}]},{"frameId":"frame-04-gasto","plano":"M","start":47.056,"end":48.171,"words":[{"word":"reais","start":47.056,"end":47.312,"brand":false},{"word":"por","start":47.37,"end":47.509,"brand":false},{"word":"dia,","start":47.567,"end":47.788,"brand":false},{"word":"todos","start":47.823,"end":48.101,"brand":false}]},{"frameId":"frame-04-gasto","plano":"M","start":48.171,"end":49.424,"words":[{"word":"os","start":48.171,"end":48.241,"brand":false},{"word":"dias?","start":48.287,"end":49.344,"brand":false}]},{"frameId":"frame-04-gasto","plano":"PA","start":49.461,"end":50.413,"words":[{"word":"O","start":49.461,"end":49.565,"brand":false},{"word":"bilhão","start":49.647,"end":49.925,"brand":false},{"word":"acaba","start":49.972,"end":50.25,"brand":true},{"word":"em","start":50.274,"end":50.343,"brand":false}]},{"frameId":"frame-04-gasto","plano":"PA","start":50.413,"end":52.201,"words":[{"word":"1.000","start":50.413,"end":50.703,"brand":true},{"word":"dias.","start":50.761,"end":51.261,"brand":true},{"word":"Menos","start":51.737,"end":52.05,"brand":false},{"word":"de","start":52.085,"end":52.143,"brand":false}]},{"frameId":"frame-04-gasto","plano":"PA","start":52.201,"end":53.454,"words":[{"word":"três","start":52.201,"end":52.468,"brand":true},{"word":"anos","start":52.538,"end":52.7,"brand":true},{"word":"de","start":52.735,"end":52.781,"brand":false},{"word":"farra,","start":52.851,"end":53.374,"brand":false}]},{"frameId":"frame-04-gasto","plano":"PA","start":53.594,"end":54.535,"words":[{"word":"e","start":53.594,"end":53.71,"brand":false},{"word":"a","start":53.768,"end":53.803,"brand":false},{"word":"conta","start":53.873,"end":54.175,"brand":false},{"word":"volta","start":54.233,"end":54.488,"brand":false}]},{"frameId":"frame-04-gasto","plano":"PA","start":54.535,"end":55.485,"words":[{"word":"pro","start":54.535,"end":54.651,"brand":false},{"word":"zero.","start":54.709,"end":55.405,"brand":true}]},{"frameId":"frame-05-maquina","plano":"PA","start":56.16,"end":57.17,"words":[{"word":"E","start":56.16,"end":56.299,"brand":false},{"word":"aqui","start":56.369,"end":56.543,"brand":false},{"word":"está","start":56.566,"end":56.775,"brand":false},{"word":"a","start":56.799,"end":57.1,"brand":false}]},{"frameId":"frame-05-maquina","plano":"PA","start":57.17,"end":58.434,"words":[{"word":"parte","start":57.17,"end":57.472,"brand":false},{"word":"que","start":57.518,"end":57.6,"brand":false},{"word":"muda","start":57.658,"end":57.925,"brand":true},{"word":"tudo:","start":57.971,"end":58.354,"brand":true}]},{"frameId":"frame-05-maquina","plano":"PA","start":58.761,"end":60.212,"words":[{"word":"um","start":58.761,"end":58.912,"brand":false},{"word":"bilhão","start":58.97,"end":59.318,"brand":false},{"word":"parado","start":59.353,"end":59.806,"brand":false},{"word":"não","start":59.968,"end":60.154,"brand":false}]},{"frameId":"frame-05-maquina","plano":"PA","start":60.212,"end":61.524,"words":[{"word":"é","start":60.212,"end":60.247,"brand":false},{"word":"dinheiro","start":60.305,"end":60.653,"brand":false},{"word":"grande.","start":60.676,"end":61.164,"brand":false},{"word":"É","start":61.384,"end":61.454,"brand":false}]},{"frameId":"frame-05-maquina","plano":"PA","start":61.524,"end":63.16,"words":[{"word":"uma","start":61.524,"end":61.663,"brand":false},{"word":"máquina","start":61.71,"end":62.058,"brand":true},{"word":"de","start":62.128,"end":62.186,"brand":false},{"word":"dinheiro.","start":62.232,"end":63.08,"brand":false}]},{"frameId":"frame-05-maquina","plano":"M","start":63.192,"end":64.572,"words":[{"word":"A","start":63.192,"end":63.308,"brand":false},{"word":"1%","start":63.413,"end":63.831,"brand":true},{"word":"ao","start":63.97,"end":64.028,"brand":false},{"word":"mês,","start":64.098,"end":64.492,"brand":false}]},{"frameId":"frame-05-maquina","plano":"M","start":64.655,"end":65.851,"words":[{"word":"ele","start":64.655,"end":64.852,"brand":false},{"word":"rende","start":64.899,"end":65.131,"brand":false},{"word":"10","start":65.201,"end":65.41,"brand":true},{"word":"milhões","start":65.479,"end":65.793,"brand":true}]},{"frameId":"frame-05-maquina","plano":"M","start":65.851,"end":67.267,"words":[{"word":"por","start":65.851,"end":65.99,"brand":false},{"word":"mês.","start":66.048,"end":66.478,"brand":false},{"word":"Mais","start":66.884,"end":67.116,"brand":false},{"word":"do","start":67.151,"end":67.221,"brand":false}]},{"frameId":"frame-05-maquina","plano":"M","start":67.267,"end":68.347,"words":[{"word":"que","start":67.267,"end":67.348,"brand":false},{"word":"muita","start":67.406,"end":67.673,"brand":false},{"word":"gente","start":67.732,"end":67.999,"brand":false},{"word":"junta","start":68.068,"end":68.312,"brand":false}]},{"frameId":"frame-05-maquina","plano":"M","start":68.347,"end":69.38,"words":[{"word":"a","start":68.347,"end":68.37,"brand":false},{"word":"vida","start":68.428,"end":68.602,"brand":false},{"word":"inteira,","start":68.625,"end":69.101,"brand":false},{"word":"sem","start":69.206,"end":69.357,"brand":true}]},{"frameId":"frame-05-maquina","plano":"M","start":69.38,"end":70.749,"words":[{"word":"ninguém","start":69.38,"end":69.647,"brand":false},{"word":"trabalhar.","start":69.682,"end":70.669,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":71.52,"end":73.053,"words":[{"word":"Por","start":71.52,"end":71.764,"brand":false},{"word":"fora,","start":71.833,"end":72.251,"brand":false},{"word":"um","start":72.472,"end":72.623,"brand":false},{"word":"bilhão","start":72.681,"end":72.994,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":73.053,"end":73.877,"words":[{"word":"é","start":73.053,"end":73.087,"brand":false},{"word":"só","start":73.157,"end":73.331,"brand":false},{"word":"um","start":73.401,"end":73.459,"brand":true},{"word":"número","start":73.529,"end":73.842,"brand":true}]},{"frameId":"frame-06-fechamento","plano":"PA","start":73.877,"end":76.07,"words":[{"word":"numa","start":73.877,"end":74.039,"brand":false},{"word":"tela.","start":74.097,"end":74.469,"brand":false},{"word":"Por","start":75.224,"end":75.409,"brand":false},{"word":"dentro,","start":75.479,"end":75.99,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":76.245,"end":77.126,"words":[{"word":"é","start":76.245,"end":76.315,"brand":false},{"word":"uma","start":76.373,"end":76.524,"brand":false},{"word":"torre","start":76.594,"end":76.837,"brand":true},{"word":"de","start":76.907,"end":77.046,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":77.162,"end":78.695,"words":[{"word":"1","start":77.162,"end":77.72,"brand":false},{"word":"km,","start":77.824,"end":77.987,"brand":false},{"word":"8","start":78.126,"end":78.381,"brand":true},{"word":"mil","start":78.486,"end":78.649,"brand":true}]},{"frameId":"frame-06-fechamento","plano":"PA","start":78.695,"end":79.833,"words":[{"word":"anos","start":78.695,"end":78.892,"brand":true},{"word":"de","start":78.927,"end":78.985,"brand":false},{"word":"salário","start":79.043,"end":79.531,"brand":false},{"word":"e","start":79.693,"end":79.798,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":79.833,"end":80.889,"words":[{"word":"uma","start":79.833,"end":79.995,"brand":false},{"word":"máquina","start":80.042,"end":80.378,"brand":false},{"word":"que","start":80.425,"end":80.506,"brand":false},{"word":"rende","start":80.576,"end":80.82,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"PA","start":80.889,"end":82.838,"words":[{"word":"sozinha.","start":80.889,"end":82.758,"brand":true}]},{"frameId":"frame-06-fechamento","plano":"M","start":82.873,"end":84.011,"words":[{"word":"Pois","start":82.873,"end":83.117,"brand":false},{"word":"é,","start":83.175,"end":83.419,"brand":false},{"word":"o","start":83.639,"end":83.709,"brand":false},{"word":"mundo","start":83.767,"end":83.988,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"M","start":84.011,"end":84.986,"words":[{"word":"é","start":84.011,"end":84.034,"brand":false},{"word":"mais","start":84.115,"end":84.359,"brand":false},{"word":"curioso","start":84.417,"end":84.847,"brand":true},{"word":"do","start":84.882,"end":84.94,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"M","start":84.986,"end":86.182,"words":[{"word":"que","start":84.986,"end":85.056,"brand":false},{"word":"parece!","start":85.102,"end":85.636,"brand":false},{"word":"Se","start":85.799,"end":85.915,"brand":false},{"word":"você","start":85.95,"end":86.147,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"M","start":86.182,"end":87.296,"words":[{"word":"é","start":86.182,"end":86.205,"brand":false},{"word":"curioso,","start":86.252,"end":86.739,"brand":false},{"word":"segue","start":86.878,"end":87.192,"brand":false},{"word":"o","start":87.215,"end":87.25,"brand":false}]},{"frameId":"frame-06-fechamento","plano":"M","start":87.296,"end":88.386,"words":[{"word":"Curiorisando!","start":87.296,"end":88.306,"brand":true}]}];
+      var DURACAO = 89.54;
+      var pill = document.getElementById('caption-pill');
+      var indiceGrupoAtual = -1;
+      var spansPalavras = [];
+
+      function montarGrupo(idx) {
+        if (idx === indiceGrupoAtual) return;
+        indiceGrupoAtual = idx;
+        spansPalavras = [];
+        if (idx < 0 || idx >= GROUPS.length) {
+          pill.style.opacity = '0';
+          pill.innerHTML = '';
+          return;
+        }
+        var g = GROUPS[idx];
+        pill.innerHTML = '';
+        for (var i = 0; i < g.words.length; i++) {
+          var w = g.words[i];
+          var span = document.createElement('span');
+          span.className = 'cap-word' + (w.brand ? ' cap-brand' : '');
+          span.textContent = w.word;
+          pill.appendChild(span);
+          spansPalavras.push(span);
+        }
+        pill.style.opacity = '1';
+      }
+
+      function renderizarLegenda(t) {
+        var idx = -1;
+        for (var i = 0; i < GROUPS.length; i++) {
+          if (t >= GROUPS[i].start && t <= GROUPS[i].end) {
+            idx = i;
+            break;
+          }
+        }
+        montarGrupo(idx);
+        if (idx < 0) return;
+        var g = GROUPS[idx];
+        for (var j = 0; j < g.words.length; j++) {
+          var w = g.words[j];
+          var sp = spansPalavras[j];
+          if (!sp) continue;
+          sp.classList.remove('is-active', 'is-spoken');
+          if (t >= w.start && t <= w.end + 0.04) {
+            sp.classList.add('is-active');
+          } else if (t > w.end + 0.04) {
+            sp.classList.add('is-spoken');
+          }
+        }
+      }
+
+      var tl = gsap.timeline({ paused: true });
+      var proxy = { t: 0 };
+      tl.to(proxy, {
+        t: DURACAO,
+        duration: DURACAO,
+        ease: 'none',
+        onUpdate: function () {
+          renderizarLegenda(proxy.t);
+        }
+      }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['captions'] = tl;
+
+      window.addEventListener('hf-seek', function (ev) {
+        if (ev && ev.detail && typeof ev.detail.time === 'number') {
+          renderizarLegenda(ev.detail.time);
+        }
+      });
+
+      renderizarLegenda(0);
+    })();
+  </script>
+</template>

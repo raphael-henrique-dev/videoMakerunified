@@ -1,0 +1,181 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f1-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f1-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f1-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f1-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f1-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f1-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #f59e0b; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f1-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f1-title-accent { color:#fbbf24; }
+    .f1-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f1-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f1-banner-text { font-size:20px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f1-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f1-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 68% 26%, #2a1c08 0%, #0d1526 52%, #050a14 100%); }
+    #f1-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f1-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f1-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f1-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(245,158,11,0.4); border-radius:22px; }
+  </style>
+
+  <div id="f1-root" data-composition-id="frame-01-lupa" data-width="1080" data-height="1920" data-start="0" data-duration="15.45">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f1-cena" class="m2-cena"></div>
+    <div id="f1-mascote" class="m2-mascote"></div>
+    <div id="f1-hud" class="m2-hud"></div>
+
+    <div class="f1-ui-layer">
+      <div id="f1-topbar" class="f1-topbar">
+        <span class="f1-kicker">EXPERIMENTO // A LUPA NO QUINTAL</span>
+        <span class="f1-badge">LUZ DO SOL</span>
+      </div>
+      <div id="f1-header" class="f1-header-card">
+        <h1 class="f1-title">E Se a Lupa Fosse do <span class="f1-title-accent">Tamanho do Sol?</span></h1>
+        <p class="f1-subtitle">Uma lupa simples já torra uma folha. Agora imagine juntar um milhão delas no mesmo ponto.</p>
+      </div>
+      <div id="f1-banner" class="f1-banner" style="opacity: 0;">
+        <span class="f1-banner-text">UMA LUPA JÁ TORRA UMA FOLHA. IMAGINA UM MILHÃO DELAS</span>
+        <span class="f1-banner-pill">1.000 W/m²</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 15.45;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f1-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f1-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f1-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 12.0);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, suave = M.suave, faixa = M.faixa, f2 = M.f2, mixCor = M.mixCor;
+
+        var fumaca = '';
+        var fumaPos = [[590, 512], [604, 496], [582, 480]];
+        for (var i = 0; i < fumaPos.length; i++) {
+          fumaca += T('circle', { id: 's1-fum' + i, cx: fumaPos[i][0], cy: fumaPos[i][1], r: f2(10 + i * 4), fill: '#cbd5e1', 'fill-opacity': 0 });
+        }
+
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s1-skyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14213d"/><stop offset="0.62" stop-color="#231a12"/><stop offset="1" stop-color="#0a1220"/></linearGradient>' +
+          '<radialGradient id="s1-solGrad" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff7ed"/><stop offset="0.55" stop-color="#fbbf24"/><stop offset="1" stop-color="#f97316"/></radialGradient>' +
+          '<linearGradient id="s1-glassGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7dd3fc" stop-opacity="0.42"/><stop offset="0.5" stop-color="#e0f2fe" stop-opacity="0.12"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0.30"/></linearGradient>' +
+          '<linearGradient id="s1-leafGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4ade80"/><stop offset="1" stop-color="#15803d"/></linearGradient>' +
+          '<radialGradient id="s1-focoGrad" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fffbeb" stop-opacity="0.95"/><stop offset="0.5" stop-color="#fbbf24" stop-opacity="0.45"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s1-skyGrad)' }) +
+          // sol com halo
+          G({ id: 's1-sol' },
+            T('circle', { id: 's1-solHalo', cx: 830, cy: 120, r: 96, fill: '#f59e0b', 'fill-opacity': 0.16 }) +
+            T('circle', { cx: 830, cy: 120, r: 70, fill: '#fbbf24', 'fill-opacity': 0.26 }) +
+            T('circle', { cx: 830, cy: 120, r: 52, fill: 'url(#s1-solGrad)' })) +
+          // chão do quintal
+          T('rect', { x: 0, y: 500, width: 1080, height: 130, fill: '#0b1f16' }) +
+          T('rect', { x: 0, y: 500, width: 1080, height: 6, fill: '#1f4d33' }) +
+          // cerca
+          G({ id: 's1-cerca', opacity: 0.9 },
+            T('rect', { x: 60, y: 392, width: 9, height: 110, fill: '#3b2a1a' }) +
+            T('rect', { x: 132, y: 392, width: 9, height: 110, fill: '#3b2a1a' }) +
+            T('rect', { x: 204, y: 392, width: 9, height: 110, fill: '#3b2a1a' }) +
+            T('rect', { x: 276, y: 392, width: 9, height: 110, fill: '#3b2a1a' }) +
+            T('rect', { x: 52, y: 414, width: 245, height: 8, rx: 4, fill: '#4a3522' }) +
+            T('rect', { x: 52, y: 456, width: 245, height: 8, rx: 4, fill: '#4a3522' })) +
+          // raios do sol até a lupa
+          T('line', { id: 's1-raio0', x1: 782, y1: 152, x2: 498, y2: 242, stroke: '#fbbf24', 'stroke-width': 4, 'stroke-opacity': 0.55, 'stroke-dasharray': '14 12' }) +
+          T('line', { id: 's1-raio1', x1: 792, y1: 194, x2: 508, y2: 286, stroke: '#fbbf24', 'stroke-width': 4, 'stroke-opacity': 0.55, 'stroke-dasharray': '14 12' }) +
+          T('line', { id: 's1-raio2', x1: 810, y1: 236, x2: 516, y2: 330, stroke: '#fbbf24', 'stroke-width': 4, 'stroke-opacity': 0.55, 'stroke-dasharray': '14 12' }) +
+          // lupa
+          G({ id: 's1-lupa' },
+            T('rect', { x: 474, y: 348, width: 26, height: 128, rx: 13, fill: '#a16207', transform: 'rotate(-42 487 352)' }) +
+            T('rect', { x: 470, y: 342, width: 34, height: 26, rx: 9, fill: '#ca8a04' }) +
+            T('circle', { cx: 420, cy: 286, r: 96, fill: 'url(#s1-glassGrad)' }) +
+            T('circle', { cx: 420, cy: 286, r: 96, fill: 'none', stroke: '#cbd5e1', 'stroke-width': 10 }) +
+            T('circle', { cx: 420, cy: 286, r: 86, fill: 'none', stroke: '#f8fafc', 'stroke-width': 2, 'stroke-opacity': 0.35 }) +
+            T('path', { d: 'M364 232 Q386 206 424 202', fill: 'none', stroke: '#f8fafc', 'stroke-width': 7, 'stroke-linecap': 'round', 'stroke-opacity': 0.7 })) +
+          // cone de luz focado
+          T('path', { id: 's1-cone', d: 'M352 344 L596 534 L490 366 Z', fill: '#fbbf24', 'fill-opacity': 0.14 }) +
+          T('line', { x1: 352, y1: 344, x2: 596, y2: 534, stroke: '#fbbf24', 'stroke-width': 3, 'stroke-opacity': 0.7 }) +
+          T('line', { x1: 490, y1: 366, x2: 596, y2: 534, stroke: '#fbbf24', 'stroke-width': 3, 'stroke-opacity': 0.7 }) +
+          // folha no chão
+          G({ id: 's1-folha' },
+            T('path', { id: 's1-folhaCorpo', d: 'M566 552 Q596 488 660 500 Q642 566 584 566 Q570 560 566 552 Z', fill: 'url(#s1-leafGrad)', stroke: '#14532d', 'stroke-width': 3 }) +
+            T('line', { x1: 574, y1: 556, x2: 646, y2: 512, stroke: '#14532d', 'stroke-width': 3, 'stroke-linecap': 'round' })) +
+          // ponto focal
+          T('circle', { id: 's1-focoHalo', cx: 600, cy: 536, r: 44, fill: 'url(#s1-focoGrad)', opacity: 0 }) +
+          T('circle', { id: 's1-foco', cx: 600, cy: 536, r: 10, fill: '#fffbeb', opacity: 0 }) +
+          fumaca +
+          // tufos de grama
+          T('path', { d: 'M120 560 Q124 536 132 528 Q130 548 138 560', fill: 'none', stroke: '#22c55e', 'stroke-width': 3, 'stroke-opacity': 0.55 }) +
+          T('path', { d: 'M880 578 Q886 550 896 542 Q892 564 902 578', fill: 'none', stroke: '#22c55e', 'stroke-width': 3, 'stroke-opacity': 0.45 }) +
+          T('path', { d: 'M960 590 Q966 566 974 558 Q972 578 982 590', fill: 'none', stroke: '#4ade80', 'stroke-width': 3, 'stroke-opacity': 0.4 })
+        );
+        M.montar('#f1-cena', svg);
+        var cena = M.pegar('#f1-cena');
+        var lupa = M.pegar(cena, '#s1-lupa');
+        var halo = M.pegar(cena, '#s1-solHalo');
+        var raios = [M.pegar(cena, '#s1-raio0'), M.pegar(cena, '#s1-raio1'), M.pegar(cena, '#s1-raio2')];
+        var foco = M.pegar(cena, '#s1-foco');
+        var focoHalo = M.pegar(cena, '#s1-focoHalo');
+        var folha = M.pegar(cena, '#s1-folha');
+        var folhaCorpo = M.pegar(cena, '#s1-folhaCorpo');
+        var fums = [M.pegar(cena, '#s1-fum0'), M.pegar(cena, '#s1-fum1'), M.pegar(cena, '#s1-fum2')];
+        var boy = M.mascote('#f1-mascote');
+        var hud = M.medidorBarra('#f1-hud', { rotulo: 'LUZ DO SOL NA TERRA', unidade: 'W/m²', max: 1200, cor: '#f59e0b', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var pulso = 1 + Math.sin(t * 2.2) * 0.05;
+          halo.setAttribute('r', f2(96 * pulso));
+          halo.setAttribute('fill-opacity', f2(0.13 + 0.05 * Math.sin(t * 2.2)));
+
+          for (var r = 0; r < raios.length; r++) {
+            raios[r].setAttribute('stroke-dashoffset', f2(-t * 26 - r * 8));
+            raios[r].setAttribute('stroke-opacity', f2(0.38 + 0.2 * Math.sin(t * 3 + r)));
+          }
+
+          lupa.setAttribute('transform', 'rotate(' + f2(Math.sin(t * 1.6) * 1.1) + ' 420 286)');
+
+          var aceso = suave(faixa(t, 1.5, 5.5));
+          var cintila = 0.72 + 0.28 * Math.sin(t * 9);
+          foco.setAttribute('opacity', f2(aceso * cintila));
+          focoHalo.setAttribute('opacity', f2(aceso * 0.85));
+          focoHalo.setAttribute('r', f2(40 + 8 * Math.sin(t * 7)));
+
+          var queima = suave(faixa(t, 5.8, 10.2));
+          folhaCorpo.setAttribute('fill', mixCor('#22c55e', '#78350f', queima));
+          folha.setAttribute('transform', 'translate(600 530) scale(' + f2(1 - 0.1 * queima) + ') translate(-600 -530)');
+
+          for (var i = 0; i < fums.length; i++) {
+            var p = faixa(t, 6.2 + i * 0.5, 11.5 + i * 0.5);
+            var sobe = Math.sin(Math.PI * p);
+            fums[i].setAttribute('opacity', f2(sobe * 0.55));
+            fums[i].setAttribute('transform', 'translate(' + f2(Math.sin(t * 2 + i) * 8) + ' ' + f2(-p * 90) + ')');
+          }
+
+          var carga = suave(faixa(t, 0.6, 6.5));
+          hud.atualizar(1000 * carga, carga > 0.94 ? 'MEIO-DIA NO QUINTAL' : 'LUZ CHEGANDO', '#f59e0b');
+          boy.atualizar(t, og, {
+            humor: t < 5.5 ? 'surpreso' : (t > 10.5 ? 'feliz' : 'surpreso'),
+            bracoD: t < 5.5 ? 132 : 62,
+            bracoE: 10,
+            olhar: [10, -8],
+            inclinar: t > 5.5 ? 3 : -2,
+            pulo: t > 10.5 ? Math.abs(Math.sin(t * 2.4)) * 6 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 0.00 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-01-lupa'] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,207 @@
+<template>
+  <style>
+    @font-face { font-family: 'EB Garamond'; font-style: normal; font-weight: 700; font-display: swap; src: url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f2-root {
+      position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: hidden;
+      background-color: #050a14; font-family: 'Inter', sans-serif; color: #f8fafc;
+    }
+
+    .f2-ui-layer { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+
+    .f2-topbar {
+      position: absolute; top: 76px; left: 68px; right: 68px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 26px;
+      background: rgba(8, 14, 26, 0.88); border: 1px solid rgba(56, 189, 248, 0.38); border-radius: 14px;
+    }
+    .f2-kicker { font-size: 20px; font-weight: 700; letter-spacing: 0.12em; color: #38bdf8; text-transform: uppercase; }
+    .f2-badge { font-size: 19px; font-weight: 700; color: #facc15; letter-spacing: 0.06em; }
+
+    .f2-header-card {
+      position: absolute; top: 164px; left: 68px; right: 68px; padding: 24px 32px;
+      background: rgba(8, 14, 26, 0.88); border-left: 5px solid #ef4444;
+      border-radius: 0 18px 18px 0; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+    }
+    .f2-title { font-family: 'EB Garamond', serif; font-size: 58px; font-weight: 700; line-height: 1.05; color: #f8fafc; margin-bottom: 8px; }
+    .f2-title-accent { color: #f87171; }
+    .f2-subtitle { font-size: 22px; line-height: 1.34; color: #cbd5e1; }
+
+    .f2-banner {
+      position: absolute; top: 1185px; left: 68px; right: 68px; padding: 18px 26px;
+      background: rgba(28, 12, 12, 0.92); border: 1.5px solid rgba(248, 113, 113, 0.5);
+      border-radius: 14px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .f2-banner-text { font-size: 21px; font-weight: 700; color: #fecaca; letter-spacing: 0.04em; }
+    .f2-banner-pill { padding: 6px 16px; background: #ef4444; color: #ffffff; font-size: 17px; font-weight: 700; border-radius: 8px; letter-spacing: 0.06em; }
+
+    #f2-root .m2-fundo {
+      position: absolute; inset: 0; z-index: 0;
+      background: radial-gradient(circle at 42% 30%, #1a1420 0%, #0d0c18 55%, #050a14 100%);
+    }
+    #f2-root .m2-cena { position: absolute; left: 0; top: 380px; width: 1080px; height: 780px; z-index: 1; }
+  </style>
+
+  <div data-hf-id="hf-spk2" id="f2-root" data-composition-id="frame-02-corpo-sem-combustivel" data-width="1080" data-height="1920" data-start="0" data-duration="12.58">
+    <div data-hf-id="hf-z2ui" class="m2-fundo"></div>
+    <div data-hf-id="hf-jgb2" id="f2-cena" class="m2-cena"></div>
+
+    <div data-hf-id="hf-x5k2" class="f2-ui-layer">
+      <div data-hf-id="hf-hxh2" id="f2-topbar" class="f2-topbar">
+        <span data-hf-id="hf-s8q2" class="f2-kicker">FÍSICA DO CORPO // SEM COMBUSTÍVEL</span>
+        <span data-hf-id="hf-7a92" class="f2-badge">SEM ENERGIA</span>
+      </div>
+
+      <div data-hf-id="hf-8n32" id="f2-header" class="f2-header-card">
+        <h1 data-hf-id="hf-ido2" class="f2-title">Um Corpo Não <span data-hf-id="hf-o9e2" class="f2-title-accent">Levanta</span></h1>
+        <p data-hf-id="hf-4vu2" class="f2-subtitle">Músculo é máquina: sem combustível, ele não obedece a nenhum cérebro.</p>
+      </div>
+
+      <div data-hf-id="hf-i4q2" id="f2-banner" class="f2-banner" style="opacity: 0;">
+        <span data-hf-id="hf-qdc2" class="f2-banner-text">MÚSCULO SEM ENERGIA NÃO SE MOVE</span>
+        <span data-hf-id="hf-1m82" class="f2-banner-pill">IMPOSSÍVEL</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 12.58;
+      var CARGA = 3.55;  // "corpo morto"
+      var TRAVA = 7.75;  // "o músculo trava"
+      var FRIA = 8.70;   // "e o corpo esfria"
+      var BAN = 10.90;
+
+      var tl = gsap.timeline({ paused: true });
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, BAN);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var membros = [
+          { d: 'M272 226 L236 320 L230 408', cor: '#2b4a6f' },
+          { d: 'M328 226 L364 320 L370 408', cor: '#2b4a6f' },
+          { d: 'M286 420 L276 540 L270 656', cor: '#2b4a6f' },
+          { d: 'M314 420 L324 540 L330 656', cor: '#2b4a6f' }
+        ].map(function (m) { return T('path', { d: m.d, fill: 'none', stroke: m.cor, 'stroke-width': 26, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }); }).join('');
+
+        var travas = '';
+        var pontos = [[236, 320], [364, 320], [276, 540], [324, 540]];
+        for (var q = 0; q < pontos.length; q++) {
+          travas += T('circle', { id: 's2-trava' + q, cx: pontos[q][0], cy: pontos[q][1], r: 20, fill: 'none', stroke: '#f87171', 'stroke-width': 3, 'stroke-dasharray': '7 6', opacity: 0 });
+        }
+
+        var fibras = '';
+        for (var f = 0; f < 7; f++) {
+          fibras += T('line', { id: 's2-fib' + f, x1: 620, y1: 470 + f * 13, x2: 900, y2: 470 + f * 13, stroke: '#38bdf8', 'stroke-width': 3, 'stroke-linecap': 'round', opacity: 0.75 });
+        }
+
+        var svg = M.svgBase(1080, 780,
+          '<defs>' +
+          '<linearGradient id="s2-pele" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#22364d"/><stop offset="1" stop-color="#131f2e"/></linearGradient>' +
+          '<linearGradient id="s2-barra" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ef4444"/><stop offset="1" stop-color="#f59e0b"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: '#0a0f1a', stroke: '#2a3446', 'stroke-width': 3 }) +
+
+          // corpo
+          G({ id: 's2-corpo', transform: 'translate(300 400) scale(1.14) translate(-300 -400)' },
+            T('rect', { x: 252, y: 196, width: 96, height: 226, rx: 40, fill: 'url(#s2-pele)', stroke: '#4a6b8f', 'stroke-width': 3 }) +
+            T('circle', { cx: 300, cy: 148, r: 46, fill: 'url(#s2-pele)', stroke: '#4a6b8f', 'stroke-width': 3 }) +
+            T('circle', { cx: 286, cy: 142, r: 5, fill: '#94a3b8' }) +
+            T('circle', { cx: 314, cy: 142, r: 5, fill: '#94a3b8' }) +
+            T('path', { d: 'M292 168 L308 168', fill: 'none', stroke: '#94a3b8', 'stroke-width': 3, 'stroke-linecap': 'round' }) +
+            T('rect', { x: 290, y: 186, width: 20, height: 16, fill: '#1b2b3d' }) +
+            membros +
+            travas) +
+
+          // painel de energia
+          T('text', { x: 590, y: 116, fill: '#f87171', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 2.4 }, 'COMBUSTÍVEL CELULAR') +
+          T('rect', { x: 590, y: 132, width: 356, height: 34, rx: 8, fill: '#111827', stroke: '#334155', 'stroke-width': 2 }) +
+          T('rect', { id: 's2-energia', x: 596, y: 138, width: 344, height: 22, rx: 5, fill: 'url(#s2-barra)' }) +
+          T('text', { id: 's2-energiaTxt', x: 946, y: 200, 'text-anchor': 'end', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 26, 'font-weight': 700 }, '100%') +
+          T('text', { x: 590, y: 200, fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 1.4 }, 'ATP DISPONÍVEL') +
+
+          // termômetro
+          T('text', { x: 590, y: 268, fill: '#38bdf8', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 2.4 }, 'TEMPERATURA') +
+          T('rect', { x: 590, y: 284, width: 356, height: 34, rx: 8, fill: '#111827', stroke: '#334155', 'stroke-width': 2 }) +
+          T('rect', { id: 's2-temp', x: 596, y: 290, width: 344, height: 22, rx: 5, fill: '#38bdf8' }) +
+          T('text', { id: 's2-tempTxt', x: 946, y: 352, 'text-anchor': 'end', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 26, 'font-weight': 700 }, '36,5 °C') +
+          T('text', { x: 590, y: 352, fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 1.4 }, 'CORPO ESFRIANDO') +
+
+          // fibras musculares
+          T('text', { x: 590, y: 420, fill: '#f59e0b', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 2.4 }, 'FIBRA MUSCULAR') +
+          T('rect', { x: 590, y: 436, width: 356, height: 132, rx: 12, fill: '#0d1420', stroke: '#2b3a4f', 'stroke-width': 2 }) +
+          fibras +
+          T('text', { id: 's2-fibTxt', x: 768, y: 604, 'text-anchor': 'middle', fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 18, 'font-weight': 700, 'letter-spacing': 1.4 }, 'CONTRAINDO') +
+
+          // ECG
+          T('line', { x1: 590, y1: 682, x2: 946, y2: 682, stroke: '#1e293b', 'stroke-width': 2 }) +
+          T('path', { id: 's2-ecg', d: 'M590 682 L946 682', fill: 'none', stroke: '#22c55e', 'stroke-width': 3, 'stroke-linejoin': 'round' }) +
+          T('text', { x: 590, y: 724, fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 1.6 }, 'ATIVIDADE ELÉTRICA') +
+
+          T('rect', { x: 40, y: 10, width: 1000, height: 760, rx: 26, fill: 'none', stroke: '#3a2430', 'stroke-width': 3 })
+        );
+        M.montar('#f2-cena', svg);
+
+        var cena = M.pegar('#f2-cena');
+        var energia = M.pegar(cena, '#s2-energia');
+        var energiaTxt = M.pegar(cena, '#s2-energiaTxt');
+        var temp = M.pegar(cena, '#s2-temp');
+        var tempTxt = M.pegar(cena, '#s2-tempTxt');
+        var fibTxt = M.pegar(cena, '#s2-fibTxt');
+        var ecg = M.pegar(cena, '#s2-ecg');
+        var corpo = M.pegar(cena, '#s2-corpo');
+        var trava = [], fib = [];
+        for (var i = 0; i < 4; i++) trava.push(M.pegar(cena, '#s2-trava' + i));
+        for (var j = 0; j < 7; j++) fib.push(M.pegar(cena, '#s2-fib' + j));
+
+        M.conectar(tl, function (t, og) {
+          var vivo = 1 - suave(faixa(t, CARGA, CARGA + 1.5));
+          energia.setAttribute('width', f2(Math.max(0, 344 * vivo)));
+          energiaTxt.textContent = Math.round(100 * vivo) + '%';
+          energiaTxt.setAttribute('fill', vivo < 0.4 ? '#f87171' : '#f8fafc');
+
+          var esfria = suave(faixa(t, FRIA, FRIA + 1.8));
+          var graus = lerp(36.5, 24, esfria);
+          temp.setAttribute('width', f2(344 * (graus - 20) / 20));
+          temp.setAttribute('fill', esfria > 0.5 ? '#60a5fa' : '#38bdf8');
+          tempTxt.textContent = graus.toFixed(1).replace('.', ',') + ' °C';
+
+          var tensao = 1 - suave(faixa(t, TRAVA, TRAVA + 0.5));
+          for (var k = 0; k < 7; k++) {
+            var tremor = Math.sin(t * 26 + k * 1.7) * 5 * tensao;
+            fib[k].setAttribute('y1', f2(470 + k * 13 + tremor));
+            fib[k].setAttribute('y2', f2(470 + k * 13 + tremor * 0.6));
+            fib[k].setAttribute('stroke', tensao < 0.35 ? '#64748b' : '#38bdf8');
+            fib[k].setAttribute('opacity', f2(0.45 + 0.35 * tensao));
+          }
+          fibTxt.textContent = tensao < 0.35 ? 'TRAVADA' : 'CONTRAINDO';
+          fibTxt.setAttribute('fill', tensao < 0.35 ? '#f87171' : '#86efac');
+
+          var travaOn = suave(faixa(t, TRAVA + 0.2, TRAVA + 0.7));
+          for (var q = 0; q < 4; q++) trava[q].setAttribute('opacity', f2(travaOn * (0.75 + Math.sin(t * 3 + q) * 0.2)));
+
+          var bate = (1 - suave(faixa(t, FRIA, FRIA + 1.2)));
+          var d = 'M590 682';
+          for (var x = 0; x <= 56; x++) {
+            var px = 590 + x * 6.33;
+            var fase = (t * 3.4 + x * 0.42) % 6.283;
+            var pico = Math.exp(-Math.pow((x % 18) - 9, 2) / 6) * Math.sin(fase) * 34 * bate;
+            d += ' L' + f2(px) + ' ' + f2(682 - pico);
+          }
+          ecg.setAttribute('d', d);
+          ecg.setAttribute('stroke', bate < 0.2 ? '#ef4444' : '#22c55e');
+
+          corpo.style.filter = t > CARGA + 0.3 ? 'saturate(' + f2(1 - 0.45 * suave(faixa(t, CARGA, CARGA + 2))) + ')' : 'none';
+        }, { duracao: DUR, offsetGlobal: 14.45 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-corpo-sem-combustivel'] = tl;
+    })();
+  </script>
+</template>

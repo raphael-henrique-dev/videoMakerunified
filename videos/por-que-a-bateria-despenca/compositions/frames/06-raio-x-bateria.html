@@ -1,0 +1,196 @@
+<template>
+  <style>
+    @font-face { font-family: 'EB Garamond'; src: url('assets/fonts/EBGaramond-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-400.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('assets/fonts/Inter-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
+    #f6-root {
+      position: absolute; inset: 0; width: 1080px; height: 1920px; overflow: hidden; background-color: #050a14;
+      font-family: 'Inter', sans-serif; color: #f8fafc;
+    }
+    #f6-root .m2-fundo { position: absolute; inset: 0; z-index: 0; background: radial-gradient(circle at 50% 28%, #10264d 0%, #08142a 55%, #050a14 100%); }
+    #f6-root .m2-piso { position: absolute; left: 0; top: 1465px; width: 1080px; height: 455px; z-index: 0; background: linear-gradient(180deg, #0f1d3a 0%, #08111f 100%); border-top: 2px solid rgba(56, 189, 248, 0.28); }
+    #f6-root .m2-cena { position: absolute; left: 0; top: 340px; width: 1080px; height: 680px; z-index: 1; }
+    #f6-root .m2-mascote { position: absolute; left: 50px; top: 1490px; width: 300px; height: 420px; z-index: 2; }
+    #f6-root .m2-hud { position: absolute; left: 400px; top: 1510px; width: 612px; height: 300px; z-index: 2; background: rgba(8, 14, 26, 0.90); border: 1px solid rgba(56, 189, 248, 0.32); border-radius: 22px; }
+
+    .f6-ui-layer { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+    .f6-topbar { position: absolute; top: 76px; left: 68px; right: 68px; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 26px; background: rgba(8, 14, 26, 0.88); border: 1px solid rgba(56, 189, 248, 0.38); border-radius: 14px; }
+    .f6-kicker { font-size: 20px; font-weight: 700; letter-spacing: 0.12em; color: #38bdf8; text-transform: uppercase; }
+    .f6-badge { font-size: 19px; font-weight: 700; color: #facc15; letter-spacing: 0.06em; }
+    .f6-header-card { position: absolute; top: 164px; left: 68px; right: 68px; padding: 28px 34px; background: rgba(8, 14, 26, 0.86); border-left: 5px solid #38bdf8; border-radius: 0 18px 18px 0; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55); }
+    .f6-title { font-family: 'EB Garamond', serif; font-size: 62px; font-weight: 700; line-height: 1.05; color: #f8fafc; margin-bottom: 10px; }
+    .f6-title-accent { color: #38bdf8; }
+    .f6-subtitle { font-size: 24px; line-height: 1.38; color: #cbd5e1; }
+
+    .f6-callouts { position: absolute; top: 410px; right: 68px; width: 470px; display: flex; flex-direction: column; gap: 11px; }
+    .f6-callout-item { padding: 10px 18px; background: rgba(8, 14, 26, 0.88); border-left: 4px solid #38bdf8; border-radius: 0 12px 12px 0; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(56, 189, 248, 0.18); border-right: 1px solid rgba(56, 189, 248, 0.18); border-bottom: 1px solid rgba(56, 189, 248, 0.18); }
+    .f6-callout-name { font-size: 17px; font-weight: 700; color: #f8fafc; }
+    .f6-callout-spec { font-size: 14px; font-weight: 700; color: #38bdf8; letter-spacing: 0.08em; }
+
+    .f6-cta-banner { position: absolute; top: 1140px; left: 68px; right: 68px; padding: 22px 30px; background: rgba(10, 22, 42, 0.94); border: 2px solid #facc15; border-radius: 18px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 18px 45px rgba(0, 0, 0, 0.65); }
+    .f6-cta-left { display: flex; flex-direction: column; gap: 4px; }
+    .f6-cta-kicker { font-size: 17px; font-weight: 700; color: #facc15; letter-spacing: 0.12em; }
+    .f6-cta-title { font-family: 'EB Garamond', serif; font-size: 40px; font-weight: 700; color: #f8fafc; }
+    .f6-cta-pill { padding: 12px 26px; background: #facc15; color: #030712; font-size: 20px; font-weight: 700; border-radius: 12px; letter-spacing: 0.06em; }
+  </style>
+
+  <div id="f6-root" data-composition-id="frame-06-raio-x-bateria" data-width="1080" data-height="1920" data-start="0" data-duration="18.07">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f6-cena" class="m2-cena"></div>
+    <div id="f6-mascote" class="m2-mascote"></div>
+    <div id="f6-hud" class="m2-hud"></div>
+
+    <div class="f6-ui-layer">
+      <div id="f6-topbar" class="f6-topbar">
+        <span class="f6-kicker">RAIO-X COMPLETO // HÁBITOS DE OURO</span>
+        <span class="f6-badge">VIDA LONGA</span>
+      </div>
+
+      <div id="f6-header" class="f6-header-card">
+        <h1 class="f6-title">Por Fora e <span class="f6-title-accent">Por Dentro</span></h1>
+        <p class="f6-subtitle">Da barrinha verde na calçada até os 4 hábitos reais para a bateria durar anos</p>
+      </div>
+
+      <div id="f6-callouts" class="f6-callouts">
+        <div class="f6-callout-item" id="f6-c7">
+          <span class="f6-callout-name">7. Bateria Firme o Dia Todo</span>
+          <span class="f6-callout-spec">100% OK</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c6">
+          <span class="f6-callout-name">6. Carga entre 20% e 80%</span>
+          <span class="f6-callout-spec">SEM ESTRESSE</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c5">
+          <span class="f6-callout-name">5. Carregador Certificado</span>
+          <span class="f6-callout-spec">VOLTS SEGURO</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c4">
+          <span class="f6-callout-name">4. Tirar Capa Grossa no Fio</span>
+          <span class="f6-callout-spec">RESPIRO</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c3">
+          <span class="f6-callout-name">3. Não Deixar no Carro ao Sol</span>
+          <span class="f6-callout-spec">SEM CALOR</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c2">
+          <span class="f6-callout-name">2. Não Jogar Carregando</span>
+          <span class="f6-callout-spec">TEMPERATURA</span>
+        </div>
+        <div class="f6-callout-item" id="f6-c1">
+          <span class="f6-callout-name">1. Célula Nova Protegida</span>
+          <span class="f6-callout-spec">BASE QUÍMICA</span>
+        </div>
+      </div>
+
+      <div id="f6-cta" class="f6-cta-banner" style="opacity: 0;">
+        <div class="f6-cta-left">
+          <span class="f6-cta-kicker">O MUNDO É MAIS CURIOSO DO QUE PARECE</span>
+          <span class="f6-cta-title">Segue o Curiorisando!</span>
+        </div>
+        <span class="f6-cta-pill">SEGUIR +</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 18.07;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f6-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f6-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+
+      var ids = ['#f6-c1', '#f6-c2', '#f6-c3', '#f6-c4', '#f6-c5', '#f6-c6', '#f6-c7'];
+      ids.forEach(function (id, idx) {
+        tl.fromTo(id, { opacity: 0, x: 32 }, { opacity: 1, x: 0, duration: 0.42, ease: 'power2.out' }, 0.45 + idx * 0.22);
+      });
+
+      tl.fromTo('#f6-cta', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.55, ease: 'back.out(1.6)' }, 9.90);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, clamp = M.clamp, mix = M.mixCor, f2 = M.f2;
+        
+              var NOMES = ['celula', 'semcalor', 'soltravesseiro', 'tirarcapa', 'carga2080', 'modoeconomia', 'vidaboa'];
+              var CORES = ['#22c55e', '#38bdf8', '#facc15', '#fb923c', '#a78bfa', '#f472b6', '#2dd4bf'];
+              var RX = 160, RY = 24, TH = 16, CX = 270;
+              function yFinal(k) { return 479 - (k - 1) * 64.5; }
+              function glifo(k) {
+                var c = '#0b1220';
+                switch (k) {
+                  case 1: return T('rect', { x: -16, y: -6, width: 32, height: 12, rx: 3, fill: c });
+                  case 2: return T('circle', { cx: 0, cy: 0, r: 8, fill: c });
+                  case 3: return T('polygon', { points: '-8,6 0,-8 8,6', fill: c });
+                  case 4: return T('rect', { x: -12, y: -10, width: 24, height: 20, rx: 4, fill: c });
+                  case 5: return T('path', { d: 'M-10 6 L0 -8 L10 6 Z', fill: c });
+                  case 6: return T('circle', { cx: -6, cy: 0, r: 5, fill: c }) + T('circle', { cx: 6, cy: 0, r: 5, fill: c });
+                  default: return T('polygon', { points: '0,-10 3,-3 10,-3 5,2 7,9 0,5 -7,9 -5,2 -10,-3 -3,-3', fill: c });
+                }
+              }
+              var discos = '', linhas = '';
+              for (var k = 1; k <= 7; k++) {
+                var cor = CORES[k - 1], esc = M.mixCor(cor, '#000000', 0.42);
+                discos += G({ id: 's6-d' + k, opacity: 0 },
+                  T('ellipse', { id: 's6-gl' + k, cx: 0, cy: 8, rx: RX + 16, ry: RY + 16, fill: cor, 'fill-opacity': 0 }),
+                  T('path', { d: 'M' + (-RX) + ' 0 L' + (-RX) + ' ' + TH + ' A' + RX + ' ' + RY + ' 0 0 0 ' + RX + ' ' + TH + ' L' + RX + ' 0 Z', fill: esc }),
+                  T('ellipse', { id: 's6-top' + k, cx: 0, cy: 0, rx: RX, ry: RY, fill: cor, stroke: '#ffffff', 'stroke-opacity': 0, 'stroke-width': 4 }),
+                  G({ transform: 'translate(0 -1)' }, glifo(k))
+                );
+                linhas += T('line', { id: 's6-ln' + k, x1: CX + RX + 6, y1: yFinal(k), x2: 514, y2: yFinal(k), stroke: cor, 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-dasharray': '1', 'stroke-dashoffset': 1, opacity: 0, pathLength: 1 });
+              }
+        
+              var svg = M.svgBase(1080, 680,
+                T('ellipse', { cx: CX, cy: 620, rx: 190, ry: 30, fill: '#000', 'fill-opacity': 0.3 }) +
+                linhas + discos
+              );
+              M.montar('#f6-cena', svg);
+              var cena = M.pegar('#f6-cena');
+              var D = [], TOP = [], GL = [], LN = [];
+              for (var i = 1; i <= 7; i++) {
+                D[i] = M.pegar(cena, '#s6-d' + i);
+                TOP[i] = M.pegar(cena, '#s6-top' + i);
+                GL[i] = M.pegar(cena, '#s6-gl' + i);
+                LN[i] = M.pegar(cena, '#s6-ln' + i);
+              }
+              var JAN = [null, [1.2, 3.8], [4.1, 5.2], [5.3, 6.8], [6.9, 8.4], [8.5, 10.2], [10.3, 12.8], [12.9, 16.0]];
+              var boy = M.mascote('#f6-mascote');
+              var hud = M.medidorBateria('#f6-hud');
+        
+              M.conectar(tl, function (t, og) {
+                for (var k = 1; k <= 7; k++) {
+                  var ini = 0.3 + (k - 1) * 0.22;
+                  var e = suave(faixa(t, ini, ini + 0.9));
+                  var cyIni = 330 - (k - 1) * 12;
+                  var cy = lerp(cyIni, yFinal(k), e);
+                  var jan = JAN[k];
+                  var luz = suave(faixa(t, jan[0], jan[0] + 0.3)) * (1 - suave(faixa(t, jan[1] - 0.3, jan[1])));
+                  var esc = 1 + 0.07 * luz;
+                  D[k].setAttribute('opacity', f2(faixa(t, ini, ini + 0.25)));
+                  D[k].setAttribute('transform', 'translate(' + CX + ' ' + f2(cy) + ') scale(' + f2(esc) + ')');
+                  GL[k].setAttribute('fill-opacity', f2(0.4 * luz + 0.06 * Math.sin(t * 5 + k) * luz));
+                  TOP[k].setAttribute('stroke-opacity', f2(luz));
+                  var ln = suave(faixa(t, ini + 0.9, ini + 1.5));
+                  LN[k].setAttribute('opacity', f2(ln));
+                  LN[k].setAttribute('stroke-dashoffset', f2(1 - ln));
+                }
+        
+                var comemora = t >= 9.9;
+                hud.atualizar(lerp(20, 100, suave(faixa(t, 2, 16))), 'BATERIA PROTEGIDA', false);
+                boy.atualizar(t, og, {
+                  humor: 'feliz',
+                  bracoD: comemora ? 150 + Math.sin(t * 6) * 18 : 85,
+                  bracoE: comemora ? 150 + Math.cos(t * 6) * 18 : 14,
+                  pulo: comemora ? Math.abs(Math.sin((t - 9.9) * 5)) * 22 : 0,
+                  olhar: [-2, -2]
+                });
+              }, { duracao: DUR, offsetGlobal: 87.22 });
+        
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-06-raio-x-bateria'] = tl;
+    })();
+  </script>
+</template>

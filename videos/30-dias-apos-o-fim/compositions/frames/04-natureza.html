@@ -1,0 +1,151 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+    #f4-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f4-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f4-topbar { position:absolute; top:76px; left:68px; right:68px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.88); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f4-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f4-badge { font-size:19px; font-weight:700; color:#facc15; letter-spacing:.06em; }
+    .f4-header-card { position:absolute; top:164px; left:68px; right:68px; padding:24px 32px; background:rgba(8,14,26,0.88); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f4-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.05; color:#f8fafc; margin-bottom:8px; }
+    .f4-title-accent { color:#38bdf8; }
+    .f4-subtitle { font-size:22px; line-height:1.36; color:#cbd5e1; }
+    .f4-banner { position:absolute; top:1240px; left:68px; right:140px; padding:16px 26px; background:rgba(8,14,26,0.92); border:1.5px solid rgba(250,204,21,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; }
+    .f4-banner-text { font-size:20px; font-weight:700; color:#fef9c3; letter-spacing:.04em; }
+    .f4-banner-pill { padding:6px 16px; background:#facc15; color:#050a14; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f4-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 50% 30%, #14301f 0%, #08170f 55%, #050a14 100%); }
+    #f4-root .m2-piso { position:absolute; left:0; top:1520px; width:1080px; height:400px; z-index:0; background:linear-gradient(180deg,#0f1d3a 0%,#08111f 100%); border-top:2px solid rgba(56,189,248,0.22); }
+    #f4-root .m2-cena { position:absolute; left:0; top:350px; width:1080px; height:630px; z-index:1; }
+    #f4-root .m2-mascote { position:absolute; left:26px; top:630px; width:250px; height:350px; z-index:2; }
+    #f4-root .m2-hud { position:absolute; left:400px; top:985px; width:540px; height:240px; z-index:2; background:rgba(8,14,26,0.9); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f4-root" data-composition-id="frame-04-natureza" data-width="1080" data-height="1920" data-start="0" data-duration="17.07">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f4-cena" class="m2-cena"></div>
+    <div id="f4-mascote" class="m2-mascote"></div>
+    <div id="f4-hud" class="m2-hud"></div>
+
+    <div class="f4-ui-layer">
+      <div id="f4-topbar" class="f4-topbar">
+        <span class="f4-kicker">SISTEMA 03 // NATUREZA</span>
+        <span class="f4-badge">SEMANA 2</span>
+      </div>
+      <div id="f4-header" class="f4-header-card">
+        <h1 class="f4-title">Semana 2: A Cidade <span class="f4-title-accent">Vira Selva</span></h1>
+        <p class="f4-subtitle">O barulho sumiu. As plantas brotam do asfalto e os animais voltam a circular.</p>
+      </div>
+      <div id="f4-banner" class="f4-banner" style="opacity: 0;">
+        <span class="f4-banner-text">A NATUREZA NÃO PRECISA DE PERMISSÃO PARA VOLTAR</span>
+        <span class="f4-banner-pill">REVANCHE VERDE</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 17.07;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f4-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f4-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 8.2);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2, mixCor = M.mixCor;
+        
+        var plantas = [
+          { x: 380, y: 560, s: 1.0 }, { x: 470, y: 520, s: 1.15 }, { x: 560, y: 575, s: 0.9 },
+          { x: 660, y: 535, s: 1.1 }, { x: 760, y: 585, s: 0.85 }, { x: 860, y: 545, s: 1.05 },
+          { x: 880, y: 590, s: 0.95 }
+        ];
+        var plantasSvg = '';
+        plantas.forEach(function (pl, i) {
+          plantasSvg += G({ id: 's4-planta' + i, transform: 'translate(' + pl.x + ' ' + pl.y + ') scale(0 0)' },
+            T('line', { x1: 0, y1: 0, x2: 0, y2: -46 * pl.s, stroke: '#22c55e', 'stroke-width': 5, 'stroke-linecap': 'round' }) +
+            T('ellipse', { cx: -13 * pl.s, cy: -32 * pl.s, rx: 14 * pl.s, ry: 7 * pl.s, fill: '#16a34a', transform: 'rotate(-28 -13 ' + (-32 * pl.s) + ')' }) +
+            T('ellipse', { cx: 13 * pl.s, cy: -40 * pl.s, rx: 14 * pl.s, ry: 7 * pl.s, fill: '#22c55e', transform: 'rotate(26 13 ' + (-40 * pl.s) + ')' }) +
+            T('ellipse', { cx: 0, cy: -50 * pl.s, rx: 8 * pl.s, ry: 12 * pl.s, fill: '#4ade80' }));
+        });
+        var rachaduras =
+          T('path', { d: 'M430 600 L455 560 L448 520 L470 490', fill: 'none', stroke: '#050a14', 'stroke-width': 5 }) +
+          T('path', { d: 'M620 620 L600 580 L610 545 L590 515', fill: 'none', stroke: '#050a14', 'stroke-width': 4 }) +
+          T('path', { d: 'M790 610 L810 575 L800 545', fill: 'none', stroke: '#050a14', 'stroke-width': 4 }) +
+          T('path', { d: 'M500 630 L520 600 L515 570', fill: 'none', stroke: '#050a14', 'stroke-width': 3 });
+        var svg = M.svgBase(1080, 630,
+          '<defs>' +
+          '<linearGradient id="s4-skyGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12301f"/><stop offset="1" stop-color="#07120b"/></linearGradient>' +
+          '<linearGradient id="s4-roadGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e293b"/><stop offset="1" stop-color="#0b1220"/></linearGradient>' +
+          '<linearGradient id="s4-buildGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#152c4d"/><stop offset="1" stop-color="#0a172b"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 630, fill: 'url(#s4-skyGrad)' }) +
+          // prédios laterais
+          T('rect', { x: 300, y: 250, width: 120, height: 310, rx: 4, fill: 'url(#s4-buildGrad)', stroke: '#27406b', 'stroke-width': 2 }) +
+          T('rect', { x: 860, y: 220, width: 150, height: 340, rx: 4, fill: 'url(#s4-buildGrad)', stroke: '#27406b', 'stroke-width': 2 }) +
+          // janelas apagadas
+          T('rect', { x: 318, y: 280, width: 18, height: 24, fill: '#334155' }) +
+          T('rect', { x: 350, y: 280, width: 18, height: 24, fill: '#334155' }) +
+          T('rect', { x: 382, y: 280, width: 18, height: 24, fill: '#334155' }) +
+          T('rect', { x: 318, y: 330, width: 18, height: 24, fill: '#334155' }) +
+          T('rect', { x: 350, y: 330, width: 18, height: 24, fill: '#334155' }) +
+          T('rect', { x: 878, y: 250, width: 18, height: 24, fill: '#334155' }) +
+          T('rect', { x: 910, y: 250, width: 18, height: 24, fill: '#334155' }) +
+          T('rect', { x: 942, y: 250, width: 18, height: 24, fill: '#334155' }) +
+          T('rect', { x: 878, y: 300, width: 18, height: 24, fill: '#334155' }) +
+          T('rect', { x: 910, y: 300, width: 18, height: 24, fill: '#334155' }) +
+          // trepadeiras
+          T('path', { id: 's4-trep0', d: 'M320 560 Q300 480 340 410 Q360 360 330 300', fill: 'none', stroke: '#22c55e', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+          T('path', { id: 's4-trep1', d: 'M900 560 Q880 480 910 400 Q930 350 900 290', fill: 'none', stroke: '#16a34a', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+          // rua
+          T('path', { d: 'M300 630 L780 630 L620 330 L460 330 Z', fill: 'url(#s4-roadGrad)' }) +
+          T('path', { d: 'M540 620 L540 340', fill: 'none', stroke: '#facc15', 'stroke-width': 5, 'stroke-dasharray': '24 20', 'stroke-opacity': 0.7 }) +
+          rachaduras + plantasSvg +
+          // capivara
+          G({ id: 's4-capivara' },
+            T('ellipse', { cx: 0, cy: 0, rx: 44, ry: 24, fill: '#8b5e34' }) +
+            T('ellipse', { cx: 40, cy: -14, rx: 20, ry: 16, fill: '#9a6a3e' }) +
+            T('circle', { cx: 52, cy: -20, r: 4, fill: '#1e293b' }) +
+            T('rect', { x: -30, y: 18, width: 9, height: 22, rx: 4, fill: '#6b4423' }) +
+            T('rect', { x: 18, y: 18, width: 9, height: 22, rx: 4, fill: '#6b4423' }) +
+            T('path', { d: 'M-44 0 Q-56 -6 -50 6', fill: 'none', stroke: '#6b4423', 'stroke-width': 5, 'stroke-linecap': 'round' }))
+        );
+        M.montar('#f4-cena', svg);
+        var cena = M.pegar('#f4-cena');
+        var plEls = plantas.map(function (_, i) { return M.pegar(cena, '#s4-planta' + i); });
+        var capivara = M.pegar(cena, '#s4-capivara');
+        var trep0 = M.pegar(cena, '#s4-trep0');
+        var trep1 = M.pegar(cena, '#s4-trep1');
+        var boy = M.mascote('#f4-mascote');
+        var hud = M.medidorBarra('#f4-hud', { rotulo: 'VERDE NA CIDADE', unidade: '%', max: 100, cor: '#22c55e', decimais: 0 });
+        
+        M.conectar(tl, function (t, og) {
+          var u = suave(faixa(t, 0.8, 7.2));
+          for (var i = 0; i < plEls.length; i++) {
+            var g = suave(faixa(t, 1.0 + i * 0.55, 2.2 + i * 0.55));
+            plEls[i].setAttribute('transform', 'translate(' + plantas[i].x + ' ' + plantas[i].y + ') scale(' + f2(g) + ' ' + f2(g) + ')');
+          }
+          capivara.setAttribute('transform', 'translate(' + f2(lerp(1010, 300, faixa(t, 2.2, 7.6))) + ' 500)');
+          trep0.setAttribute('opacity', f2(suave(faixa(t, 2.0, 3.2))));
+          trep1.setAttribute('opacity', f2(suave(faixa(t, 3.0, 4.2))));
+          hud.atualizar(100 * u, u > 0.85 ? 'CIDADE TOMADA' : 'VERDE AVANÇANDO', '#22c55e');
+          boy.atualizar(t, og, {
+            humor: t > 2.5 ? 'feliz' : 'surpreso',
+            bracoD: t > 2.5 ? 130 : 80,
+            bracoE: 12,
+            olhar: [-8, -4],
+            inclinar: 0,
+            pulo: t > 2.5 ? Math.abs(Math.sin(t * 2.2)) * 8 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 41.32 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-natureza'] = tl;
+    })();
+  </script>
+</template>

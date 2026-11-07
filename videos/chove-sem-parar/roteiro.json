@@ -1,0 +1,184 @@
+{
+  "id": "chove-sem-parar",
+  "titulo": "E Se Começasse a Chover e Nunca Mais Parasse?",
+  "subtitulo": "O que acontece quando a água não tem mais para onde escoar",
+  "modo": "2d",
+  "fps": 30,
+  "resolucao": { "largura": 1080, "altura": 1920 },
+  "alvoPpm": 170,
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.80,
+    "estilo": 0.40,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.22
+  },
+  "efeitos": {
+    "ganho": 1.12
+  },
+  "frames": [
+    {
+      "id": "frame-01-gancho-torneira",
+      "numero": "01",
+      "titulo": "E Se Começasse a Chover e Nunca Mais Parasse?",
+      "arquivo": "compositions/frames/01-gancho-torneira.html",
+      "kicker": "CENARIO // CHUVA SEM FIM",
+      "metrica": { "valor": "Dia 1", "rotulo": "A TORNEIRA ABERTA" },
+      "direcao2D": "Nuvens carregadas se acumulando no céu, primeiras gotas batendo no asfalto seco, mascote olhando para cima com guarda-chuba.",
+      "frases": [
+        {
+          "texto": "E se começasse a chover agora e nunca mais parasse?",
+          "plano": "gancho",
+          "gancho": true
+        },
+        {
+          "texto": "Não é cena de filme. É só o céu abrindo a *torneira* e esquecendo de fechar.",
+          "plano": "torneira"
+        }
+      ],
+      "sons": [
+        { "nome": "whoosh", "offset": 0.2, "ganho": 0.50 },
+        { "nome": "pingo", "offset": 1.4, "dur": 3.0, "ganho": 0.45 },
+        { "nome": "agua", "offset": 5.2, "dur": 4.0, "ganho": 0.40 }
+      ]
+    },
+    {
+      "id": "frame-02-solo-cimento",
+      "numero": "02",
+      "titulo": "O Solo Vira Cimento",
+      "arquivo": "compositions/frames/02-solo-cimento.html",
+      "kicker": "FALHA 01 // O CHAO NAO ABSORVE MAIS",
+      "metrica": { "valor": "0%", "rotulo": "ABSORCAO DO SOLO" },
+      "direcao2D": "Corte transversal do solo: agua acumulada na superfície, terra seca embaixo, mascote pisando em uma poça.",
+      "frases": [
+        {
+          "texto": "O chao do seu quintal aguenta um temporal, mas nao chuva sem fim.",
+          "plano": "quintal",
+          "jogo": "falha"
+        },
+        {
+          "texto": "Depois de horas, a terra vira *cimento* e nao absorve mais uma gota.",
+          "plano": "cimento",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "agua", "offset": 0.3, "dur": 4.0, "ganho": 0.45 },
+        { "nome": "errado", "offset": 5.5, "ganho": 0.60 },
+        { "nome": "bigorna", "offset": 6.2, "ganho": 0.55 }
+      ]
+    },
+    {
+      "id": "frame-03-ralo-transborda",
+      "numero": "03",
+      "titulo": "O Ralo Transborda",
+      "arquivo": "compositions/frames/03-ralo-transborda.html",
+      "kicker": "FALHA 02 // AS GALERIAS ENTUPAM",
+      "metrica": { "valor": "Entupido", "rotulo": "REDE DE PLUVIAL" },
+      "direcao2D": "Bueiro entupido com folhas e lixo, agua subindo na grade, mascote observando preocupado.",
+      "frases": [
+        {
+          "texto": "A galeria de pluvial entope com folha, lixo e sacola plastica.",
+          "plano": "entupido",
+          "jogo": "falha"
+        },
+        {
+          "texto": "A agua sobe no ralo, transborda e comeca a correr pela calcada.",
+          "plano": "transborda",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "whoosh", "offset": 0.3, "ganho": 0.50 },
+        { "nome": "bolhas", "offset": 2.2, "dur": 3.0, "ganho": 0.45 },
+        { "nome": "errado", "offset": 6.5, "ganho": 0.60 }
+      ]
+    },
+    {
+      "id": "frame-04-rua-rio",
+      "numero": "04",
+      "titulo": "Enxurrada Sem Freio",
+      "arquivo": "compositions/frames/04-rua-rio.html",
+      "kicker": "FALHA 03 // A RUA VIRA RIO",
+      "metrica": { "valor": "10 min", "rotulo": "RUA ALAGADA" },
+      "direcao2D": "Rua alagada com agua subindo, carros boiando, mascote em terreno mais alto observando a enxurrada.",
+      "frases": [
+        {
+          "texto": "Em minutos sua rua vira *rio*. Carro boiando, lixeira descendo a ladeira.",
+          "plano": "rio",
+          "jogo": "falha"
+        },
+        {
+          "texto": "A enxurrada nao para porque a *fonte* nunca fecha.",
+          "plano": "fonte",
+          "jogo": "falha"
+        }
+      ],
+      "sons": [
+        { "nome": "agua", "offset": 0.2, "dur": 5.0, "ganho": 0.50 },
+        { "nome": "baque", "offset": 3.5, "ganho": 0.55 },
+        { "nome": "whoosh", "offset": 7.2, "ganho": 0.55 }
+      ]
+    },
+    {
+      "id": "frame-05-drenagem",
+      "numero": "05",
+      "titulo": "Para Onde a Agua Vai?",
+      "arquivo": "compositions/frames/05-drenagem.html",
+      "kicker": "SOLUCAO // DRENAGEM E PISO PERMEAVEL",
+      "metrica": { "valor": "100%", "rotulo": "ESCOAMENTO LIBERADO" },
+      "direcao2D": "Diagrama de rede de drenagem, bueiro grande, piso permeavel com agua infiltrando no solo, mascote apontando para a solucao.",
+      "frases": [
+        {
+          "texto": "A *solucao*? Rede de drenagem com bueiros maiores, que engolem o volume.",
+          "plano": "solucao",
+          "jogo": "corrige"
+        },
+        {
+          "texto": "Para blindar isso, entra o *piso permeavel*: deixa a agua descer pra dentro da terra em vez de correr na superficie.",
+          "plano": "piso",
+          "jogo": "corrige"
+        }
+      ],
+      "sons": [
+        { "nome": "whoosh", "offset": 0.2, "ganho": 0.50 },
+        { "nome": "certo", "offset": 2.4, "ganho": 0.60 },
+        { "nome": "pingo", "offset": 5.2, "dur": 3.0, "ganho": 0.45 },
+        { "nome": "tada", "offset": 9.2, "ganho": 0.60 }
+      ]
+    },
+    {
+      "id": "frame-06-fechamento",
+      "numero": "06",
+      "titulo": "Por Fora, Parece Só Chuva. Por Dentro, É...",
+      "arquivo": "compositions/frames/06-fechamento.html",
+      "kicker": "POR FORA E POR DENTRO // CURIORISANDO",
+      "metrica": { "valor": "Curiorisando", "rotulo": "SEGUE O CANAL" },
+      "direcao2D": "Silhueta da cidade sob chuva contínua mas com drenagem funcionando, mascote acenando, selo final do Curiorisando.",
+      "frases": [
+        {
+          "texto": "Por fora, parece so uma *chuva chata*. Por dentro, e a cidade inteira testando o limite do escoamento.",
+          "plano": "por_fora_por_dentro"
+        },
+        {
+          "texto": "Pois e, o mundo e mais *curioso* do que parece. Se voce e curioso, segue o *Curiorisando*!",
+          "plano": "cta"
+        }
+      ],
+      "cauda": 1.2,
+      "sons": [
+        { "nome": "whoosh", "offset": 0.2, "ganho": 0.50 },
+        { "nome": "rotulo", "offset": 2.4, "ganho": 0.50 },
+        { "nome": "etiqueta", "offset": 4.0, "ganho": 0.45 },
+        { "nome": "final", "offset": 11.2, "ganho": 0.65 }
+      ]
+    }
+  ]
+}
