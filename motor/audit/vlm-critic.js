@@ -367,3 +367,47 @@ IMPORTANTE: Sua resposta inteira DEVE ser um único objeto JSON válido, inician
     sugestoes_gerais: resposta.sugestoes_gerais || [],
   };
 }
+
+/** Agrega resultados de lotes: nota = média ponderada pelo nº de cenas; aprovado só se todos aprovarem. */
+export function agregarResultadosVlm(resultados) {
+  const ativos = resultados.filter((r) => r?.ativo);
+  if (!ativos.length) return resultados[0] || null;
+  const pesos = ativos.map((r) => Math.max(1, r.qtdCenas || 1));
+  const soma = pesos.reduce((a, b) => a + b, 0);
+  const nota = ativos.reduce((acc, r, i) => acc + r.nota_geral * pesos[i], 0) / soma;
+  return {
+    ...ativos[0],
+    nota_geral: Math.round(nota * 10) / 10,
+    aprovado: ativos.every((r) => r.aprovado),
+    resumo_critico: ativos.map((r, i) => (ativos.length > 1 ? `Lote ${i + 1}: ` : "") + r.resumo_critico).join(" "),
+    cenas: ativos.flatMap((r) => r.cenas || []),
+    sugestoes_gerais: [...new Set(ativos.flatMap((r) => r.sugestoes_gerais || []))],
+    lotes: ativos.length,
+    lotesFalhos: resultados.length - ativos.length,
+  };
+}
+
+/**
+ * Audita várias pranchas (lotes de cenas) com timeout por lote. Falha de um lote não derruba os demais.
+ * @param {Array<{caminho:string, mapa:Array}>} lotes
+ * @param {object} opcoes mesmas de auditarComVlm + { timeoutMs }
+ */
+export async function auditarComVlmEmLotes(lotes, opcoes = {}) {
+  const timeoutMs = opcoes.timeoutMs ?? 90000;
+  const baseFetch = opcoes.fetch || globalThis.fetch;
+  const fetchComTimeout = (url, init = {}) => baseFetch(url, { ...init, signal: AbortSignal.timeout(timeoutMs) });
+  const resultados = [];
+  for (const lote of lotes) {
+    try {
+      const r = await auditarComVlm(lote.caminho, lote.mapa, { ...opcoes, fetch: fetchComTimeout });
+      resultados.push({ ...r, qtdCenas: lote.mapa.length });
+    } catch (err) {
+      resultados.push({ ativo: false, provedor: "erro", aviso: `Lote falhou: ${err.message}`, nota_geral: null, qtdCenas: lote.mapa.length });
+    }
+  }
+  const agregado = agregarResultadosVlm(resultados);
+  if (agregado && !agregado.ativo && resultados.some((r) => r.provedor === "erro")) {
+    return { ...agregado, aviso: resultados.map((r) => r.aviso).filter(Boolean).join(" | ") };
+  }
+  return agregado;
+}

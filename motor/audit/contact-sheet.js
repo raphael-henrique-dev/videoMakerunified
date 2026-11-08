@@ -50,6 +50,14 @@ function resumoAlertas(alertas) {
   return ordenados.length > 2 ? `${txt} +${ordenados.length - 2}` : txt;
 }
 
+/** Divide uma lista em lotes de até `tamanho` itens, preservando a ordem. */
+export function dividirEmLotes(lista, tamanho) {
+  const n = Math.max(1, Math.floor(tamanho) || 1);
+  const lotes = [];
+  for (let i = 0; i < lista.length; i += n) lotes.push(lista.slice(i, i + n));
+  return lotes.length ? lotes : [[]];
+}
+
 function colunasPara(n) {
   if (n <= 3) return Math.max(1, n);
   if (n <= 6) return 3;
@@ -61,7 +69,7 @@ function colunasPara(n) {
  * @param {{dirSaida: string, titulo?: string, preferencia?: string}} opcoes
  * @returns {Promise<{humana: string, vlm: string, mapaVlm: Array<{indice:number, cena:string, tempo:number}>}>}
  */
-export async function gerarPranchas(tier1, { dirSaida, titulo = "Auditoria Visual", preferencia, perfil } = {}) {
+export async function gerarPranchas(tier1, { dirSaida, titulo = "Auditoria Visual", preferencia, perfil, tamanhoLote } = {}) {
   const motor = await obterMotorImagem({ preferencia });
   const cenas = tier1.cenas;
 
@@ -96,23 +104,37 @@ export async function gerarPranchas(tier1, { dirSaida, titulo = "Auditoria Visua
     quality: 86,
   });
 
-  const mapaVlm = cenas.map((cena, i) => ({ indice: i + 1, cena: cena.id, tempo: amostraRepresentativa(cena).tempo }));
-  const vlm = path.join(dirSaida, "vlm-sheet.jpg");
-  await motor.montarPrancha({
-    output: vlm,
-    titleHeight: 0,
-    ...geo.vlm,
-    headerHeight: 34,
-    gap: 8,
-    zones: [],
-    tiles: cenas.map((cena, i) => ({
-      path: amostraRepresentativa(cena).caminho,
-      label: `#${i + 1}  ${amostraRepresentativa(cena).tempo.toFixed(1)}s`,
-      sublabel: "",
-      statusColor: "#64748b",
-    })),
-    quality: 88,
-  });
+  // Prancha(s) do VLM: por padrão o curto mantém 1 prancha única; o horizontal divide em lotes de 8 cenas.
+  const porLote = tamanhoLote || (perfilAtivo.largura > perfilAtivo.altura ? 8 : Math.max(1, cenas.length));
+  const lotesCenas = dividirEmLotes(cenas, porLote);
+  const lotesVlm = [];
+  for (let l = 0; l < lotesCenas.length; l++) {
+    const grupo = lotesCenas[l];
+    const geoLote = geometriaPranchas(perfilAtivo, grupo.length);
+    const arquivo = path.join(dirSaida, lotesCenas.length === 1 ? "vlm-sheet.jpg" : `vlm-sheet-${String(l + 1).padStart(2, "0")}.jpg`);
+    const deslocamento = l * porLote;
+    await motor.montarPrancha({
+      output: arquivo,
+      titleHeight: 0,
+      ...geoLote.vlm,
+      headerHeight: 34,
+      gap: 8,
+      zones: [],
+      tiles: grupo.map((cena, i) => ({
+        path: amostraRepresentativa(cena).caminho,
+        label: `#${deslocamento + i + 1}  ${amostraRepresentativa(cena).tempo.toFixed(1)}s`,
+        sublabel: "",
+        statusColor: "#64748b",
+      })),
+      quality: 88,
+    });
+    lotesVlm.push({
+      caminho: arquivo,
+      mapa: grupo.map((cena, i) => ({ indice: deslocamento + i + 1, cena: cena.id, tempo: amostraRepresentativa(cena).tempo })),
+    });
+  }
 
-  return { humana, vlm, mapaVlm };
+  const vlm = lotesVlm[0].caminho;
+  const mapaVlm = lotesVlm.flatMap((x) => x.mapa);
+  return { humana, vlm, mapaVlm, lotesVlm };
 }

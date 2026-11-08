@@ -16,7 +16,7 @@ import { executarHeuristicas } from "./heuristics.js";
 import { obterPerfil } from "../formato.js";
 import { HYPERFRAMES_VERSION } from "../config.js";
 import { gerarPranchas } from "./contact-sheet.js";
-import { auditarComVlm } from "./vlm-critic.js";
+import { auditarComVlmEmLotes } from "./vlm-critic.js";
 import { formatarRelatorioMarkdown, salvarRelatorio } from "./reporter.js";
 import { carregarEnv } from "../publish/env-helper.js";
 
@@ -111,6 +111,8 @@ export function calcularTimestampsCenas(vDir) {
  * @param {boolean} [opcoes.fast=false] - Pula Tier 2 (roda apenas Tier 1 determinístico)
  * @param {string} [opcoes.provider] - Provedor VLM explícito (groq, nvidia, gemini, openai, ollama)
  * @param {string} [opcoes.engine] - Motor de imagem (auto, sharp, python)
+ * @param {number} [opcoes.vlmLote] - Cenas por prancha VLM (padrão: 8 no horizontal, 1 prancha no curto)
+ * @param {number} [opcoes.vlmTimeoutMs=90000] - Timeout por lote VLM
  * @param {boolean} [opcoes.reuseSnapshots=false] - Reutiliza snapshots existentes em vez de recapturar
  * @returns {Promise<object>}
  */
@@ -184,13 +186,15 @@ export async function auditarVideoVisual(slug, opcoes = {}) {
     titulo: `Auditoria Visual: ${titulo}`,
     preferencia: opcoes.engine || process.env.MOTOR_CV_ENGINE || "auto",
     perfil,
+    tamanhoLote: opcoes.vlmLote,
   });
 
   // 5. Execução do Tier 2 Crítico VLM (se habilitado)
   let tier2 = null;
   if (!opcoes.fast) {
     try {
-      tier2 = await auditarComVlm(pranchas.vlm, pranchas.mapaVlm, {
+      tier2 = await auditarComVlmEmLotes(pranchas.lotesVlm, {
+        timeoutMs: opcoes.vlmTimeoutMs,
         provedor: opcoes.provider,
         env: process.env,
         formato: perfil.id,
@@ -266,9 +270,16 @@ if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(fileURLToP
   const reuseSnaps = process.argv.includes("--reuse-snapshots");
   const providerArg = process.argv.find((a) => a.startsWith("--provider="))?.split("=")[1];
 
+  const numArg = (nome) => {
+    const v = Number(process.argv.find((a) => a.startsWith(`--${nome}=`))?.split("=")[1]);
+    return Number.isFinite(v) && v > 0 ? v : undefined;
+  };
+  const vlmLote = numArg("vlm-lote");
+  const vlmTimeoutMs = numArg("vlm-timeout");
+
   console.log(`\n🔍 Iniciando auditoria visual por visão computacional para: videos/${slug}...`);
 
-  auditarVideoVisual(slug, { fast, provider: providerArg, reuseSnapshots: reuseSnaps })
+  auditarVideoVisual(slug, { fast, provider: providerArg, reuseSnapshots: reuseSnaps, vlmLote, vlmTimeoutMs })
     .then((r) => {
       console.log(`\n======================================================`);
       console.log(`📊 RESULTADO DA AUDITORIA VISUAL: ${r.slug.toUpperCase()}`);
