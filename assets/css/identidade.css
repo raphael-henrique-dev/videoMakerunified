@@ -1,0 +1,21 @@
+/* Identidade visual compartilhada pelos templates novos. */
+:root {
+  --cor-fundo: #050a14;
+  --cor-fundo-2: #0c192c;
+  --cor-ciano: #38bdf8;
+  --cor-laser: #00f0ff;
+  --cor-ambar: #f59e0b;
+  --cor-sucesso: #22c55e;
+  --cor-falha: #ef4444;
+  --hud: rgba(8, 14, 26, 0.84);
+  --fonte-display: "EB Garamond", serif;
+  --fonte-ui: "Inter", sans-serif;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../fonts/Inter-400.woff2") format("woff2");
+}

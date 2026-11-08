@@ -2,11 +2,20 @@
   "name": "motor-v2",
   "version": "2.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20",
+    "ffmpeg": "opcional",
+    "espeak-ng": "opcional",
+    "sharp": "opcional",
+    "python3": "opcional",
+    "PIL": "opcional"
+  },
   "type": "module",
   "description": "Motor Unificado de Geração de Vídeos 2.0 (Fábrica Atômica Multi-Vídeo + HyperFrames + Três.js 3D + Pipeline de Áudio)",
   "scripts": {
     "build:3d": "node scripts/build-3d-global.js",
     "build:2d": "cp motor/2d/motor2d.global.js assets/vendor/motor2d.global.js",
+    "test": "node --test tests/",
     "video:novo": "node motor/cli/orchestrator.js novo",
     "video:listar": "node motor/cli/orchestrator.js list",
     "video:audio": "node motor/cli/orchestrator.js audio",

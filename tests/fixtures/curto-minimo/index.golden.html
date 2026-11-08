@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1080, height=1920">
+  <title>Motor 2.0 — Fixture Curto</title>
+  <script>
+    window.__MOTOR_ESTILO_GRAFICO__ = "padrao";
+    window.__SPEECH_TIMELINE__ = [{"s":0,"e":0.6,"sil":2,"ab":1.15},{"s":0.6,"e":1.4,"sil":2,"ab":1.15},{"s":1.4,"e":1.8,"sil":1,"ab":1.15},{"s":1.8,"e":2.4,"sil":2,"ab":1.15}];
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="assets/vendor/three.min.js"></script>
+  <script src="assets/vendor/motor3d.global.js"></script>
+  <style>
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('./assets/fonts/EBGaramond-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'EB Garamond';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('./assets/fonts/EBGaramond-700.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-display: swap;
+      src: url('./assets/fonts/Inter-400.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('./assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #030914;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    #root {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+      background-color: #030914;
+    }
+
+    .clip {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    #clip-captions {
+      z-index: 40;
+      pointer-events: none;
+    }
+
+    #trans-flash {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.35), rgba(3, 9, 20, 0.95));
+      opacity: 0;
+      pointer-events: none;
+      z-index: 50;
+    }
+  </style>
+</head>
+<body>
+  <div id="root" data-composition-id="main" data-width="1080" data-height="1920" data-start="0" data-duration="2.50">
+
+    <!-- Track 1: Visual 3D + 2D Frames -->
+    <div id="clip-f1" class="clip"
+         data-composition-src="compositions/frames/frame-01.html"
+         data-composition-id="frame-01"
+         data-start="0.00" data-duration="2.50" data-track-index="1"></div>
+
+    <!-- Track 2: Per-Frame ElevenLabs Voice Audio -->
+    <audio id="audio-f1" src="assets/voice/frame-01.wav" data-start="0.00" data-duration="2.50" data-track-index="2"></audio>
+
+    <!-- Track 3: Sidechain-Ducked BGM + SFX Bed (-14 LUFS Balance) -->
+    <audio id="audio-bgm" src="assets/bgm/master_ducked_bgm.wav" data-start="0" data-duration="2.50" data-track-index="3" data-volume="1.0"></audio>
+
+    <!-- Track 4: Word-Level Karaoke Captions -->
+    <div id="clip-captions" class="clip"
+         data-composition-src="compositions/captions.html"
+         data-composition-id="captions"
+         data-track-kind="captions"
+         data-start="0" data-duration="2.50" data-track-index="4"></div>
+
+    <!-- Optical Transition Flash Layer -->
+    <div id="trans-flash"></div>
+  </div>
+
+  <script>
+    window.__timelines = window.__timelines || {};
+    var tl = gsap.timeline({ paused: true });
+
+    var cuts = [];
+    cuts.forEach(function (t) {
+      tl.set('#trans-flash', { opacity: 0 }, t - 0.14);
+      tl.to('#trans-flash', { opacity: 0.72, duration: 0.12, ease: 'power2.in' }, t - 0.12);
+      tl.to('#trans-flash', { opacity: 0, duration: 0.22, ease: 'power2.out' }, t);
+    });
+
+    tl.set('#trans-flash', { opacity: 0 }, 2.50);
+    window.__timelines['main'] = tl;
+  </script>
+</body>
+</html>

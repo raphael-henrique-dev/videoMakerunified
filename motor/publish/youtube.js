@@ -203,7 +203,8 @@ export async function uploadToYouTube(videoPath, metadata, options = {}) {
 
   const uploadData = await uploadRes.json();
   const videoId = uploadData.id;
-  const videoUrl = `https://youtube.com/shorts/${videoId}`;
+  const ehHorizontal = !metadata.tags?.includes("shorts") && !metadata.titulo?.match(/#shorts/i);
+  const videoUrl = ehHorizontal ? `https://youtube.com/watch?v=${videoId}` : `https://youtube.com/shorts/${videoId}`;
 
   console.log(`[YouTube] ✅ Upload concluído com sucesso!`);
   console.log(`[YouTube] ID do Vídeo: ${videoId}`);

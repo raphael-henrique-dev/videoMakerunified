@@ -182,7 +182,8 @@ export async function publicarVideo(slugOuDir, opcoes = {}) {
         const statusYt = resultados.plataformas.youtube.agendado_para
           ? `Agendado para ${new Date(resultados.plataformas.youtube.agendado_para).toLocaleString("pt-BR")}`
           : resultados.plataformas.youtube.privacidade;
-        linhaYt = `[YouTube Shorts](${resultados.plataformas.youtube.url}) (${statusYt})`;
+        const rotuloYt = metadados.formato === "horizontal" ? "YouTube" : "YouTube Shorts";
+        linhaYt = `[${rotuloYt}](${resultados.plataformas.youtube.url}) (${statusYt})`;
       }
 
       let linhaTk = null;

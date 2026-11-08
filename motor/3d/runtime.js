@@ -4,6 +4,7 @@ import { arredondarGeometrias } from "./math.js";
 import { montarCeu, montarLuzes, aplicarCeu } from "./lighting.js";
 import { camRespira } from "./camera.js";
 import { falar } from "./character.js";
+import { obterPerfil } from "../formato.js";
 
 function sincronizarBonecosCena(nodo, t, offsetGlobal) {
   if (!nodo || !nodo.visible) return;
@@ -417,9 +418,10 @@ function criarSoftwareRenderer3D(THREE, opcoes = {}) {
 }
 
 export function criarPalco3D(THREE, opcoes = {}) {
-  const largura = opcoes.largura ?? 1080;
-  const altura = opcoes.altura ?? 1920;
-  const fov = opcoes.fov ?? 42;
+  const perfil = opcoes.perfil ? (typeof opcoes.perfil === "string" ? obterPerfil({ formato: opcoes.perfil }) : opcoes.perfil) : null;
+  const largura = opcoes.largura ?? perfil?.largura ?? 1080;
+  const altura = opcoes.altura ?? perfil?.altura ?? 1920;
+  const fov = opcoes.fov ?? perfil?.camera?.fov ?? 42;
   const estilo =
     opcoes.estilo ||
     (typeof window !== "undefined" && window.__MOTOR_ESTILO_GRAFICO__) ||
@@ -434,7 +436,9 @@ export function criarPalco3D(THREE, opcoes = {}) {
 
   const cena = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(fov, largura / altura, 0.1, 220);
-  camera.position.set(0, 2.2, 6.2);
+  camera.position.set(0, 2.2, opcoes.cameraZ ?? perfil?.camera?.z ?? 6.2);
+  camera.userData.largura = largura;
+  camera.userData.altura = altura;
   camera.lookAt(0, 1.2, 0);
 
   let renderizador = null;

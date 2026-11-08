@@ -9,7 +9,7 @@
 
 import path from "node:path";
 import { obterMotorImagem } from "./engine.js";
-import { ZONAS_SEGURANCA, SEVERIDADE_PESO } from "./heuristics.js";
+import { ZONAS_SEGURANCA, SEVERIDADE_PESO, obterZonasSeguranca } from "./heuristics.js";
 
 export const CORES_STATUS = { ok: "#22c55e", alerta: "#f59e0b", critico: "#ef4444" };
 
@@ -44,7 +44,7 @@ function colunasPara(n) {
  * @param {{dirSaida: string, titulo?: string, preferencia?: string}} opcoes
  * @returns {Promise<{humana: string, vlm: string, mapaVlm: Array<{indice:number, cena:string, tempo:number}>}>}
  */
-export async function gerarPranchas(tier1, { dirSaida, titulo = "Auditoria Visual", preferencia } = {}) {
+export async function gerarPranchas(tier1, { dirSaida, titulo = "Auditoria Visual", preferencia, perfil } = {}) {
   const motor = await obterMotorImagem({ preferencia });
   const cenas = tier1.cenas;
 
@@ -60,6 +60,8 @@ export async function gerarPranchas(tier1, { dirSaida, titulo = "Auditoria Visua
     };
   });
 
+  const zonas = perfil ? obterZonasSeguranca({ formato: perfil.id }) : ZONAS_SEGURANCA;
+  const fonte = perfil ? { largura: perfil.largura, altura: perfil.altura } : { largura: 1080, altura: 1920 };
   const humana = path.join(dirSaida, "contact-sheet-anotada.jpg");
   await motor.montarPrancha({
     output: humana,
@@ -70,9 +72,9 @@ export async function gerarPranchas(tier1, { dirSaida, titulo = "Auditoria Visua
     headerHeight: 56,
     columns: Math.min(4, Math.max(1, cenas.length)),
     gap: 12,
-    sourceWidth: 1080,
-    sourceHeight: 1920,
-    zones: ZONAS_SEGURANCA,
+    sourceWidth: fonte.largura,
+    sourceHeight: fonte.altura,
+    zones: zonas,
     tiles: tilesHumanos,
     quality: 86,
   });

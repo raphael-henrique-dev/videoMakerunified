@@ -27,7 +27,8 @@ motor-v2/
 ├── assets/                     # Recursos globais compartilhados (fontes, SFX, Three.js)
 ├── canal/                      # Memória viva do canal
 │   ├── perfil.md               # Identidade visual, mascote, tom de voz e canais
-│   ├── aprendizados.md         # Registro de regras técnicas e padrões arquiteturais
+│   ├── aprendizados-curto.md   # Regras técnicas herdadas pelos vídeos curtos
+├── aprendizados-longo.md   # Estrutura reservada para aprendizados 16:9
 │   └── historico.md            # Registro histórico de vídeos produzidos e uploads
 ├── motor/                      # Núcleo do motor (imutável para os vídeos)
 │   ├── 2d/                     # Runtime SVG vetorial puro (motor2d.global.js)
@@ -51,6 +52,8 @@ motor-v2/
 ```bash
 # Cria um novo projeto atômico e isolado em videos/<slug>
 npm run video:novo -- por-que-o-ceu-e-azul "Por Que o Céu é Azul?"
+# Vídeo longo horizontal 1920x1080:
+npm run video:novo -- engenharia-do-clima "Engenharia do Clima" --formato=horizontal
 
 # Gera a narração com ElevenLabs, timestamps de legenda e masterização de áudio
 npm run video:audio -- por-que-o-ceu-e-azul
@@ -211,7 +214,8 @@ npm run video:agendados -- --cancel <id-ou-slug>
 
 Para aprofundamento técnico em regras, arquitetura e integrações, consulte:
 - 📖 [**Guia de Configuração e Publicação** (`motor/publish/GUIA_CONFIGURACAO.md`)](./motor/publish/GUIA_CONFIGURACAO.md) — Passo a passo no Google Cloud e TikTok Developers, soluções de erros (troubleshooting) e exemplos de código.
-- 🧠 [**Aprendizados do Canal** (`canal/aprendizados.md`)](./canal/aprendizados.md) — 12 seções acumuladas com lições de 3D, 2D vetorial, WCAG AA, ElevenLabs, ducking, PKCE e agendamento.
+- 🧠 [**Aprendizados Curtos** (`canal/aprendizados-curto.md`)](./canal/aprendizados-curto.md) — regras acumuladas do formato vertical.
+- 🧠 [**Aprendizados Longos** (`canal/aprendizados-longo.md`)](./canal/aprendizados-longo.md) — estrutura reservada para o formato horizontal.
 - 👤 [**Perfil do Canal** (`canal/perfil.md`)](./canal/perfil.md) — Personagem mascote, paleta de cores, tipografia e diretrizes de roteiro.
 - 📜 [**Histórico de Produção** (`canal/historico.md`)](./canal/historico.md) — Log de vídeos renderizados e registros de upload nas redes.
 - 🤖 [**Protocolo do Agente** (`AGENTS.md`)](./AGENTS.md) — Instruções operacionais para agentes de IA operando no repositório.

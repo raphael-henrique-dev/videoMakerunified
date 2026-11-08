@@ -6,6 +6,8 @@ import path from "node:path";
 import { execFileSync, spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { carregarEnv } from "../publish/env-helper.js";
+import { HYPERFRAMES_VERSION } from "../config.js";
+import { normalizarFormato } from "../formato.js";
 
 carregarEnv();
 
@@ -35,12 +37,14 @@ function resolverVideoDir(slug) {
 
 const comando = process.argv[2];
 const argVideo = process.argv[3];
-const argExtra = process.argv.slice(4).join(" ");
+const argsExtras = process.argv.slice(4);
+const argExtra = argsExtras.filter((arg) => !arg.startsWith("--")).join(" ");
+const formatoArg = argsExtras.find((arg) => arg.startsWith("--formato="))?.split("=")[1];
 
 switch (comando) {
   case "novo": {
     if (!argVideo) {
-      console.error("Uso: npm run video:novo -- <slug-do-video> [\"Título do Vídeo\"]");
+      console.error("Uso: npm run video:novo -- <slug-do-video> [\"Título do Vídeo\"] [--formato=curto|horizontal]");
       process.exit(1);
     }
     const slug = sanitizarSlug(argVideo);
@@ -53,14 +57,21 @@ switch (comando) {
     console.log(`[motor] Criando novo vídeo atômico: videos/${slug}...`);
     fs.mkdirSync(destDir, { recursive: true });
 
-    // 1. Copia composições, index.html, hyperframes.json e roteiro.json a partir dos templates
-    fs.cpSync(TEMPLATES_DIR, destDir, { recursive: true });
+    const formato = normalizarFormato(formatoArg);
+    const templateDir = path.join(TEMPLATES_DIR, formato);
+    // 1. Copia composições, index.html, hyperframes.json e roteiro.json a partir do template
+    fs.cpSync(templateDir, destDir, { recursive: true });
 
     // 2. Personaliza roteiro.json com o slug e título
     const roteiroPath = path.join(destDir, "roteiro.json");
     if (fs.existsSync(roteiroPath)) {
       const rot = JSON.parse(fs.readFileSync(roteiroPath, "utf8"));
       rot.id = slug;
+      rot.formato = formato;
+      rot.resolucao = formato === "horizontal"
+        ? { largura: 1920, altura: 1080 }
+        : { largura: 1080, altura: 1920 };
+      rot.fps = rot.fps || 30;
       if (argExtra) rot.titulo = argExtra;
       fs.writeFileSync(roteiroPath, JSON.stringify(rot, null, 2), "utf8");
     }
@@ -139,7 +150,7 @@ switch (comando) {
 
   case "check": {
     const vDir = resolverVideoDir(argVideo);
-    execFileSync("npx", ["--yes", "hyperframes@0.8.177", "check", path.relative(ROOT, vDir)], { stdio: "inherit" });
+    execFileSync("npx", ["--yes", `hyperframes@${HYPERFRAMES_VERSION}`, "check", path.relative(ROOT, vDir)], { stdio: "inherit" });
     break;
   }
 
@@ -187,7 +198,7 @@ switch (comando) {
 
   case "dev": {
     const vDir = resolverVideoDir(argVideo);
-    const child = spawn("npx", ["--yes", "hyperframes@0.8.177", "preview", path.relative(ROOT, vDir)], {
+    const child = spawn("npx", ["--yes", `hyperframes@${HYPERFRAMES_VERSION}`, "preview", path.relative(ROOT, vDir)], {
       stdio: "inherit",
     });
     child.on("exit", (code) => process.exit(code || 0));
@@ -200,7 +211,7 @@ switch (comando) {
     fs.mkdirSync(path.join(vDir, "renders"), { recursive: true });
     execFileSync(
       "npx",
-      ["--yes", "hyperframes@0.8.177", "render", path.relative(ROOT, vDir), "--output", outMp4],
+      ["--yes", `hyperframes@${HYPERFRAMES_VERSION}`, "render", path.relative(ROOT, vDir), "--output", outMp4],
       { stdio: "inherit" }
     );
     console.log(`\n🎉 Renderização concluída! Arquivo: ${path.relative(ROOT, outMp4)}\n`);
@@ -211,15 +222,25 @@ switch (comando) {
     const vDir = resolverVideoDir(argVideo);
     const snapDir = path.join(vDir, "renders", "snapshots");
     fs.mkdirSync(snapDir, { recursive: true });
+    const timelinePath = path.join(vDir, "timeline.json");
+    let tempos = [];
+    if (fs.existsSync(timelinePath)) {
+      const timeline = JSON.parse(fs.readFileSync(timelinePath, "utf8"));
+      tempos = (timeline.frames || []).map((frame) => Number((frame.inicio + frame.duracao / 2).toFixed(2)));
+    }
+    if (!tempos.length) {
+      const roteiro = JSON.parse(fs.readFileSync(path.join(vDir, "roteiro.json"), "utf8"));
+      tempos = (roteiro.frames || []).map((_, i) => Number((i * 8 + 4).toFixed(2)));
+    }
     execFileSync(
       "npx",
       [
         "--yes",
-        "hyperframes@0.8.177",
+        `hyperframes@${HYPERFRAMES_VERSION}`,
         "snapshot",
         path.relative(ROOT, vDir),
         "--at",
-        "2.0,6.5,16.5,27.0,36.5",
+        tempos.join(","),
         "--no-end",
         "--describe",
         "false",
@@ -238,7 +259,7 @@ switch (comando) {
     execFileSync("node", [path.join(ROOT, "scripts", "build-3d-global.js")], { stdio: "inherit" });
     execFileSync("node", [path.join(ROOT, "motor", "audio", "pipeline.js"), vDir], { stdio: "inherit" });
     execFileSync("node", [path.join(ROOT, "scripts", "gerar-storyboard.js"), vDir], { stdio: "inherit" });
-    execFileSync("npx", ["--yes", "hyperframes@0.8.177", "check", path.relative(ROOT, vDir)], { stdio: "inherit" });
+    execFileSync("npx", ["--yes", `hyperframes@${HYPERFRAMES_VERSION}`, "check", path.relative(ROOT, vDir)], { stdio: "inherit" });
     console.log(`\n✨ Pipeline concluído com sucesso para: ${path.relative(ROOT, vDir)}!`);
     break;
   }
