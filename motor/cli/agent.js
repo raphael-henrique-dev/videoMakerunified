@@ -11,7 +11,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../..");
 const CANAL_DIR = path.join(ROOT, "canal");
-const APRENDIZADOS_FILE = path.join(CANAL_DIR, "aprendizados.md");
+const APRENDIZADOS_FILE = path.join(CANAL_DIR, "aprendizados-curto.md");
 const HISTORICO_FILE = path.join(CANAL_DIR, "historico.md");
 const PERFIL_FILE = path.join(CANAL_DIR, "perfil.md");
 
@@ -102,6 +102,9 @@ async function main() {
   const slugInput = await rl.question(`\n🏷️ Identificador de pasta (slug) [padrão: ${slugSugerido}]:\n> `);
   const slug = sanitizarSlug(slugInput.trim() || slugSugerido);
 
+  const formatoInput = await rl.question("\n📐 Formato (curto ou horizontal; padrão: curto):\n> ");
+  const formato = /^(horizontal|longo)$/i.test(formatoInput.trim()) ? "horizontal" : "curto";
+
   console.log(`\n🤖 Escolha o motor de inteligência artificial:`);
   console.log(`  1. Google Gemini (usa GEMINI_API_KEY)`);
   console.log(`  2. OpenAI (usa OPENAI_API_KEY)`);
@@ -111,10 +114,12 @@ async function main() {
 
   // Carrega regras e memória do canal
   const perfil = fs.existsSync(PERFIL_FILE) ? fs.readFileSync(PERFIL_FILE, "utf8") : "";
-  const aprendizados = fs.existsSync(APRENDIZADOS_FILE) ? fs.readFileSync(APRENDIZADOS_FILE, "utf8") : "";
+  const memoriaNome = formato === "horizontal" ? "aprendizados-longo.md" : "aprendizados-curto.md";
+  const memoriaPath = path.join(CANAL_DIR, memoriaNome);
+  const aprendizados = fs.existsSync(memoriaPath) ? fs.readFileSync(memoriaPath, "utf8") : "";
 
   console.log(`\n🚀 [1/5] Scaffolding do vídeo atômico: videos/${slug}...`);
-  execFileSync("node", [path.join(ROOT, "motor", "cli", "orchestrator.js"), "novo", slug, temaPrompt], { stdio: "inherit" });
+  execFileSync("node", [path.join(ROOT, "motor", "cli", "orchestrator.js"), "novo", slug, temaPrompt, `--formato=${formato}`], { stdio: "inherit" });
 
   const destVideoDir = path.join(ROOT, "videos", slug);
   const roteiroDestPath = path.join(destVideoDir, "roteiro.json");
@@ -138,7 +143,7 @@ Regras fundamentais do canal:
 - PROIBIDO repetir conectivos como "Então você...": Varie com "A solução?", "Para blindar...", "No centro de tudo...", "E para aguentar...".
 - Emoção e locução: Configure na voz estabilidade: 0.32 e estilo: 0.48 para máxima expressividade e entusiasmo.
 - Marque palavras-chave que ganham destaque visual com asteriscos, ex: *palavra*.
-- Retorne estritamente um JSON compatível com o schema do Motor 2.0 (id, titulo, subtitulo, fps: 30, resolucao: {largura: 1080, altura: 1920}, alvoPpm: 190, voz, trilha, efeitos, frames).
+- Retorne estritamente um JSON compatível com o schema do Motor 2.0, no formato ${formato}, incluindo voz, trilha, efeitos e frames.
 
 Regras acumuladas do canal:
 ${aprendizados}
@@ -249,20 +254,7 @@ ${perfil}
   const notaTxt = resultadoAudit?.notaFinal ? ` (Nota Visual: ${resultadoAudit.notaFinal.toFixed(1)}/10)` : "";
   const propostaAprendizado = `Produção do vídeo "${temaPrompt}" (${slug}): Estruturação atômica validada com 0 erros no HyperFrames e aprovada na Auditoria Visual CV${notaTxt}.`;
   console.log(`\nO agente identificou o seguinte aprendizado para registrar:\n"${propostaAprendizado}"`);
-  const aprova = await rl.question(`\nDeseja aprovar e registrar este aprendizado em canal/aprendizados.md? (s/N)\n> `);
-
-  if (aprova.trim().toLowerCase() === "s" || aprova.trim().toLowerCase() === "sim") {
-    const dataHoje = new Date().toISOString().split("T")[0];
-    const entradaMd = `\n- **[${dataHoje}] (${slug}):** ${propostaAprendizado}`;
-    fs.appendFileSync(APRENDIZADOS_FILE, entradaMd, "utf8");
-
-    const linhaHist = `| ${dataHoje} | \`${slug}\` | **${temaPrompt}** | ~35-42s | Produzido via Agente IA Intermediário do Motor 2.0 |\n`;
-    fs.appendFileSync(HISTORICO_FILE, linhaHist, "utf8");
-
-    console.log(`✅ Registrado com sucesso em canal/aprendizados.md e canal/historico.md!`);
-  } else {
-    console.log(`ℹ️ Registro dispensado pelo usuário. Memória mantida sem alterações.`);
-  }
+  console.log(`\nℹ️ Aprendizado apenas proposto; nenhum arquivo de memória foi alterado.`);
 
   console.log(`\n🎉 PROJETO PRONTO!`);
   console.log(`- Diretório: videos/${slug}/`);

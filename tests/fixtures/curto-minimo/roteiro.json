@@ -1,0 +1,16 @@
+{
+  "id": "curto-minimo",
+  "titulo": "Fixture Curto",
+  "subtitulo": "Regressão mínima",
+  "fps": 30,
+  "resolucao": { "largura": 1080, "altura": 1920 },
+  "frames": [
+    {
+      "id": "frame-01",
+      "numero": "01",
+      "titulo": "Cena mínima",
+      "arquivo": "compositions/frames/frame-01.html",
+      "frases": [{ "texto": "Uma frase de teste.", "plano": "gancho" }]
+    }
+  ]
+}

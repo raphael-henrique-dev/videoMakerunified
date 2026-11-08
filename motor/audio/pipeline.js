@@ -7,6 +7,7 @@ import crypto from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { validarRoteiro } from "../schema/roteiro.schema.js";
+import { achatarRoteiro } from "../formato.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../..");
@@ -257,8 +258,9 @@ async function executarPipeline() {
   if (!fs.existsSync(roteiroPath)) {
     throw new Error(`Arquivo roteiro.json não encontrado em: ${VIDEO_DIR}`);
   }
-  const roteiro = JSON.parse(fs.readFileSync(roteiroPath, "utf8"));
-  const validacao = validarRoteiro(roteiro);
+  const roteiroOriginal = JSON.parse(fs.readFileSync(roteiroPath, "utf8"));
+  const roteiro = achatarRoteiro(roteiroOriginal);
+  const validacao = validarRoteiro(roteiroOriginal);
   if (!validacao.valido) {
     throw new Error(`roteiro.json inválido em ${VIDEO_DIR}:\n- ${validacao.erros.join("\n- ")}`);
   }

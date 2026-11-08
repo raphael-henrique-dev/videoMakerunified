@@ -13,7 +13,7 @@ Bem-vindo ao **Motor 2.0**, o ecossistema atômico de geração automatizada de 
 
 1. [`AGENTS.md`](./AGENTS.md) — protocolo e regras operacionais.
 2. [`canal/perfil.md`](./canal/perfil.md) — identidade visual, mascote, paleta, tipografia, tom de voz e canais conectados.
-3. [`canal/aprendizados.md`](./canal/aprendizados.md) — regras técnicas, armadilhas já resolvidas e arsenal de efeitos opcionais.
+3. [`canal/aprendizados-<formato>.md`](./canal/aprendizados-curto.md) — regras técnicas, armadilhas já resolvidas e arsenal de efeitos opcionais.
 4. [`canal/historico.md`](./canal/historico.md) — vídeos produzidos, uploads e links publicados.
 5. [`README.md`](./README.md) — arquitetura e comandos atualizados.
 6. [`assets/sfx/ORIGEM.md`](./assets/sfx/ORIGEM.md) — catálogo real de sons disponíveis (evita citar arquivo inexistente).
@@ -35,7 +35,7 @@ O repositório é organizado em uma estrutura modular multi-projeto:
   - `motor/publish/`: Módulo de publicação, autenticação OAuth2, agendamento de postagens e status em tempo real.
   - `motor/templates/`: Arquétipos de templates para novos vídeos.
 - `assets/`: Biblioteca global compartilhada (fontes WOFF2, SFX royalty-free, Three.js).
-- `canal/`: Memória viva do canal (`perfil.md`, `aprendizados.md`, `historico.md`).
+- `canal/`: Memória viva do canal (`perfil.md`, `aprendizados-curto.md`, `aprendizados-longo.md`, `historico.md`).
 - `videos/<slug>/`: **Catálogo de vídeos 100% atômicos e independentes**. Cada pasta de vídeo possui seu próprio `roteiro.json`, `index.html`, `compositions/`, `narracao/` (cache SHA-1), pasta `renders/` e `publicacao_status.json`.
 
 ---
@@ -46,8 +46,9 @@ Quando o usuário solicitar no chat a criação ou planejamento de um vídeo:
 
 ### Cenário A: Execução Autônoma Direta
 *Exemplo do usuário:* `"faça um vídeo novo sobre [tema]"`
-1. **Consulta à Memória (Regra Zero):** Releia **todos os arquivos de contexto `.md`** conforme a ordem da [seção 0](#0-regra-zero--releitura-obrigatória-do-contexto) — no mínimo [`canal/perfil.md`](./canal/perfil.md), [`canal/aprendizados.md`](./canal/aprendizados.md), [`canal/historico.md`](./canal/historico.md) e [`README.md`](./README.md).
-2. **Criação do Projeto Atômico:** Execute `npm run video:novo -- <slug> "[Título]"`.
+0. **Definir formato:** identifique `curto/reels/shorts` ou `longo/horizontal/YouTube`; se não estiver claro, pergunte uma vez e, sem interação, use `curto`.
+1. **Consulta à Memória (Regra Zero):** Releia `perfil.md`, `aprendizados-<formato>.md`, `historico.md` e `README.md`.
+2. **Criação do Projeto Atômico:** Execute `npm run video:novo -- <slug> "[Título]" --formato=curto|horizontal`.
 3. **Roteiro e Storyboard:** Escreva o `roteiro.json` em `videos/<slug>/roteiro.json` seguindo a estrutura magnética:
    - Gancho de 2s com quebra de expectativa.
    - Ritmo de videogame *"falha → corrige"*.
@@ -68,7 +69,7 @@ Quando o usuário solicitar no chat a criação ou planejamento de um vídeo:
 6. **Entrega e Checkpoint de Aprendizado:**
    - Apresente os snapshots e o resumo ao usuário.
    - **REGRA MANDATÓRIA DE MEMÓRIA:** Se você desenvolveu uma nova solução técnica, geometria 3D reutilizável ou ajuste de layout durante a criação, formule a proposta de aprendizado e pergunte:  
-     > *"Gostaria de registrar este aprendizado em `canal/aprendizados.md`?"*  
+     > *"Gostaria de registrar este aprendizado no arquivo de aprendizados do formato?"*
      **NUNCA registre na memória do canal sem a aprovação explícita do usuário.**
 
 ### Cenário B: Planejamento Prévio de Roteiro
@@ -164,4 +165,4 @@ Para garantir legibilidade perfeita nas plataformas de vídeo curto (TikTok, You
 
 > [!CAUTION]
 > **APROVAÇÃO HUMANA OBRIGATÓRIA PARA A MEMÓRIA DO CANAL:**  
-> O agente é incentivado a usar sua autonomia criativa para inventar novas cenas e animações. Porém, nenhum padrão técnico, regra ou conclusão pode ser gravado em [`canal/aprendizados.md`](./canal/aprendizados.md) de forma unilateral. O agente deve formular o aprendizado com clareza, sugerir o registro ao usuário e somente persistir após o comando afirmativo ("sim", "pode registrar", "aprovo").
+> O agente é incentivado a usar sua autonomia criativa para inventar novas cenas e animações. Porém, nenhum padrão técnico, regra ou conclusão pode ser gravado nos arquivos de aprendizados de forma unilateral. O agente deve formular o aprendizado com clareza, sugerir o registro ao usuário e somente persistir após o comando afirmativo ("sim", "pode registrar", "aprovo").

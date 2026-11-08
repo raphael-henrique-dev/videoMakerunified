@@ -39,7 +39,7 @@ export function tremer(camera, t, tIni, dur = 0.35, intensidade = 0.14) {
  * Projeta uma coordenada 3D (THREE.Vector3 ou [x,y,z]) para pixels 2D (x, y) da tela (1080x1920).
  * Essencial para conectar leader lines SVG e rótulos HTML da camada 2D HyperFrames aos objetos 3D.
  */
-export function tela(THREE, ponto3D, camera, largura = 1080, altura = 1920) {
+export function tela(THREE, ponto3D, camera, largura = camera?.userData?.largura || 1080, altura = camera?.userData?.altura || 1920) {
   const v = Array.isArray(ponto3D)
     ? new THREE.Vector3(ponto3D[0], ponto3D[1], ponto3D[2])
     : ponto3D.clone();

@@ -3,6 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { obterPerfil, achatarRoteiro } from "../motor/formato.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -33,6 +34,11 @@ if (!fs.existsSync(roteiroPath) || !fs.existsSync(timelinePath)) {
 
 const roteiro = JSON.parse(fs.readFileSync(roteiroPath, "utf8"));
 const timeline = JSON.parse(fs.readFileSync(timelinePath, "utf8"));
+const perfil = obterPerfil(roteiro);
+const roteiroPlano = achatarRoteiro(roteiro);
+const largura = perfil.largura;
+const altura = perfil.altura;
+const horizontal = perfil.id === "horizontal";
 
 // 1. Constrói grupos de legendas de até 4 palavras para o Karaokê de 3 estados
 const gruposLegenda = [];
@@ -70,6 +76,17 @@ fs.writeFileSync(
   "utf8"
 );
 
+function tempoSrt(segundos) {
+  const ms = Math.round(segundos * 1000);
+  const h = String(Math.floor(ms / 3600000)).padStart(2, "0");
+  const m = String(Math.floor((ms % 3600000) / 60000)).padStart(2, "0");
+  const s = String(Math.floor((ms % 60000) / 1000)).padStart(2, "0");
+  return `${h}:${m}:${s},${String(ms % 1000).padStart(3, "0")}`;
+}
+const blocosLegenda = gruposLegenda.map((g, i) => `${i + 1}\n${tempoSrt(g.start)} --> ${tempoSrt(g.end)}\n${g.words.map((w) => w.word).join(" ")}\n`).join("\n");
+fs.writeFileSync(path.join(VIDEO_DIR, "legendas.srt"), blocosLegenda, "utf8");
+fs.writeFileSync(path.join(VIDEO_DIR, "legendas.vtt"), `WEBVTT\n\n${blocosLegenda.replace(/,(\d{3})/g, ".$1")}`, "utf8");
+
 // 2. Gera compositions/captions.html sincronizado
 const htmlCaptions = `<template>
   <style>
@@ -95,7 +112,7 @@ const htmlCaptions = `<template>
       position: absolute;
       left: 64px;
       right: 64px;
-      top: 1350px;
+      ${horizontal ? "bottom: 54px;" : "top: 1350px;"}
       display: flex;
       justify-content: center;
       align-items: center;
@@ -113,11 +130,11 @@ const htmlCaptions = `<template>
       border-radius: 18px;
       box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65);
       min-height: 76px;
-      max-width: 940px;
+      max-width: ${perfil.legenda.larguraMaxima}px;
     }
 
     .cap-word {
-      font-size: 38px;
+      font-size: ${perfil.legenda.tamanho}px;
       font-weight: 700;
       line-height: 1.18;
       letter-spacing: -0.02em;
@@ -143,7 +160,7 @@ const htmlCaptions = `<template>
     }
   </style>
 
-  <div id="captions-comp" data-composition-id="captions" data-width="1080" data-height="1920" data-start="0" data-duration="${timeline.total.toFixed(2)}">
+  <div id="captions-comp" data-composition-id="captions" data-width="${largura}" data-height="${altura}" data-start="0" data-duration="${timeline.total.toFixed(2)}">
     <div class="caption-bar">
       <div id="caption-pill" class="caption-pill" style="opacity: 0;"></div>
     </div>
@@ -308,7 +325,7 @@ if (fs.existsSync(indexPath)) {
     window.__MOTOR_ESTILO_GRAFICO__ = ${JSON.stringify(estiloGrafico)};
     window.__SPEECH_TIMELINE__ = ${JSON.stringify(speechTimeline)};
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+  <script src="assets/vendor/gsap.min.js"></script>
   ${scriptsMotor}
   <style>
     @font-face {
@@ -347,8 +364,8 @@ if (fs.existsSync(indexPath)) {
     }
 
     html, body {
-      width: 1080px;
-      height: 1920px;
+      width: ${largura}px;
+      height: ${altura}px;
       overflow: hidden;
       background-color: #030914;
       font-family: 'Inter', sans-serif;
@@ -358,8 +375,8 @@ if (fs.existsSync(indexPath)) {
 
     #root {
       position: relative;
-      width: 1080px;
-      height: 1920px;
+      width: ${largura}px;
+      height: ${altura}px;
       overflow: hidden;
       background-color: #030914;
     }
@@ -388,7 +405,7 @@ if (fs.existsSync(indexPath)) {
   </style>
 </head>
 <body>
-  <div id="root" data-composition-id="main" data-width="1080" data-height="1920" data-start="0" data-duration="${totalStr}">
+  <div id="root" data-composition-id="main" data-width="${largura}" data-height="${altura}" data-start="0" data-duration="${totalStr}">
 
     <!-- Track 1: Visual 3D + 2D Frames -->
 ${clipsHtml}
@@ -433,8 +450,7 @@ ${temMasterMix ? "" : `
 // 4. Gera STORYBOARD.md
 let md = `# STORYBOARD — ${roteiro.titulo} (\`${roteiro.id}\`)
 
-> **Subtítulo:** ${roteiro.subtitulo || "-"}  
-> **Resolução:** ${roteiro.resolucao?.largura || 1080}x${roteiro.resolucao?.altura || 1920} (${roteiro.fps || 30} FPS)  
+> **Subtítulo:** ${roteiro.subtitulo || "-"}${"  \n"}${horizontal ? `> **Formato:** \`${perfil.id}\`${"  \n"}` : ""}> **Resolução:** ${largura}x${altura} (${roteiro.fps || perfil.fps} FPS)${"  "}
 > **Duração Total:** \`${timeline.total.toFixed(2)}s\`  
 > **Voz & Ritmo:** ElevenLabs (\`${roteiro.voz?.id || "padrão"}\`) acelerada em \`${timeline.fatorAceleracaoVoz}x\` (~190 PPM) + Masterização \`-14 LUFS\` com Sidechain Ducking.
 
@@ -453,7 +469,7 @@ timeline.frames.forEach((fm) => {
 md += `\n---\n\n## Detalhamento por Frame\n\n`;
 
 timeline.frames.forEach((fm, idx) => {
-  const def = roteiro.frames[idx] || {};
+  const def = roteiroPlano.frames[idx] || {};
   md += `### Frame ${fm.numero} — ${fm.titulo} (\`${fm.inicio.toFixed(2)}s\` → \`${fm.fim.toFixed(2)}s\`)\n\n`;
   md += `- **Kicker Editorial:** \`${fm.kicker || "-"}\`\n`;
   md += `- **Direção 3D (Three.js):** ${def.direcao3D || "-"}\n`;

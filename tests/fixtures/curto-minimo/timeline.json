@@ -1,0 +1,30 @@
+{
+  "total": 2.5,
+  "fatorAceleracaoVoz": 1,
+  "frames": [
+    {
+      "id": "frame-01",
+      "numero": "01",
+      "titulo": "Cena mínima",
+      "arquivo": "compositions/frames/frame-01.html",
+      "inicio": 0,
+      "duracao": 2.5,
+      "fim": 2.5,
+      "audioSrc": "assets/voice/frame-01.wav",
+      "frases": [],
+      "metrica": {}
+    }
+  ],
+  "frases": [
+    {
+      "frameId": "frame-01",
+      "plano": "gancho",
+      "palavras": [
+        { "texto": "Uma", "exibicao": "Uma", "inicio": 0, "fim": 0.6 },
+        { "texto": "frase", "exibicao": "frase", "inicio": 0.6, "fim": 1.4 },
+        { "texto": "de", "exibicao": "de", "inicio": 1.4, "fim": 1.8 },
+        { "texto": "teste.", "exibicao": "teste.", "inicio": 1.8, "fim": 2.4 }
+      ]
+    }
+  ]
+}

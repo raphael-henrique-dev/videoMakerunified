@@ -14,6 +14,7 @@
 //                        do TikTok / YouTube Shorts / Reels
 
 import { obterMotorImagem } from "./engine.js";
+import { obterPerfil } from "../formato.js";
 
 export const RESOLUCAO_ANALISE = { largura: 270, altura: 480 };
 export const RESOLUCAO_FONTE = { largura: 1080, altura: 1920 };
@@ -31,9 +32,18 @@ export const RESOLUCAO_FONTE = { largura: 1080, altura: 1920 };
  */
 export const ZONAS_SEGURANCA = [
   { id: "topo", nome: "Topo (abas/busca)", x: 0, y: 0, w: 1080, h: 160, color: "#f59e0b", limiarMedio: 0.05, limiarAlto: 1.01, severidadeMax: "medio" },
-  { id: "rodape", nome: "Rodapé (@/descrição/som)", x: 0, y: 1540, w: 1080, h: 380, color: "#ef4444", limiarMedio: 0.03, limiarAlto: 0.06 },
+  { id: "rodape", nome: "Rodapé (@/descrição/som)", x: 0, y: 1540, w: 1080, h: 380, color: "#ef4444", limiarMedio: 0.01, limiarAlto: 0.06 },
   { id: "lateral", nome: "Lateral direita (ações)", x: 940, y: 800, w: 140, h: 800, color: "#a855f7", limiarMedio: 0.06, limiarAlto: 0.1 },
 ];
+
+export function obterZonasSeguranca(roteiro = {}) {
+  const perfil = obterPerfil(roteiro);
+  if (perfil.id === "curto") return ZONAS_SEGURANCA;
+  return [
+    { id: "titulo", nome: "Margem de título (TV)", x: 192, y: 108, w: 1536, h: 864, color: "#f59e0b", limiarMedio: 0.02, limiarAlto: 0.08 },
+    { id: "acao", nome: "Margem de ação (TV)", x: 96, y: 54, w: 1728, h: 972, color: "#38bdf8", limiarMedio: 0.02, limiarAlto: 0.08 },
+  ];
+}
 
 export const LIMIARES = {
   blankDesvio: 4, // desvio-padrão de luminância abaixo disso = quadro uniforme

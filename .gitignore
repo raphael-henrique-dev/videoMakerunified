@@ -31,7 +31,10 @@ videos/*/snapshots/
 # Áudios Gerados por IA e Mixagens Brutas (regeneráveis via pipeline)
 videos/*/narracao/
 videos/*/assets/audio/*.wav
+videos/*/assets/voice/*.wav
+videos/*/assets/bgm/*.wav
 videos/*/assets/bgm/master_mix_*.wav
+videos/*/legendas.*
 canal/testes-de-voz/
 assets/narracao-cache/
 

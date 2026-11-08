@@ -40,3 +40,7 @@ Explicamos a engenharia oculta que sustenta o mundo moderno (cabos submarinos, s
 - **YouTube Shorts:** `@ocuriorisando` (Nome: **Curiorisando**, ID: `UCSZb2xYEYvNJRNs2caiyLQg`). Upload automatizado de Shorts via Google YouTube Data API v3 com agendamento nativo na nuvem.
 - **TikTok:** **Curiorisando** (OpenID: `-000Xy9Ilz5B5-UT9FJGa0U-LyRsQUB7bHYo`). Upload automatizado via TikTok Content Posting API v2 com PKCE S256 e modos Direct Post e Inbox (Rascunhos).
 - **Diagnóstico em Tempo Real:** Verificável a qualquer momento via `npm run video:status` ou `npm run auth:status`.
+
+## Formatos
+- **Curto:** 1080x1920, safe-zones de aplicativos e legendas acima do rodapé.
+- **Horizontal:** 1920x1080, margens de TV de aproximadamente 10% para títulos e 5% para ação, sem zonas de interface e legenda centralizada na parte inferior.

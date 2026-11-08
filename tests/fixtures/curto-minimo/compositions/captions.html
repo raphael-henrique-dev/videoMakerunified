@@ -1,0 +1,156 @@
+<template>
+  <style>
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: url('assets/fonts/Inter-700.woff2') format('woff2');
+    }
+
+    #captions-comp {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .caption-bar {
+      position: absolute;
+      left: 64px;
+      right: 64px;
+      top: 1350px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .caption-pill {
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px 14px;
+      padding: 18px 30px;
+      background: rgba(6, 11, 22, 0.88);
+      border: 1.5px solid rgba(56, 189, 248, 0.32);
+      border-radius: 18px;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.65);
+      min-height: 76px;
+      max-width: 940px;
+    }
+
+    .cap-word {
+      font-size: 38px;
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+      color: #94a3b8;
+    }
+
+    .cap-word.is-spoken {
+      color: #f8fafc;
+    }
+
+    .cap-word.is-active {
+      color: #38bdf8;
+      text-shadow: 0 0 22px rgba(56, 189, 248, 0.55);
+    }
+
+    .cap-word.cap-brand.is-spoken {
+      color: #fbbf24;
+    }
+
+    .cap-word.cap-brand.is-active {
+      color: #facc15;
+      text-shadow: 0 0 24px rgba(250, 204, 21, 0.65);
+    }
+  </style>
+
+  <div id="captions-comp" data-composition-id="captions" data-width="1080" data-height="1920" data-start="0" data-duration="2.50">
+    <div class="caption-bar">
+      <div id="caption-pill" class="caption-pill" style="opacity: 0;"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var GROUPS = [{"frameId":"frame-01","plano":"gancho","start":0,"end":2.48,"words":[{"word":"Uma","start":0,"end":0.6,"brand":false},{"word":"frase","start":0.6,"end":1.4,"brand":false},{"word":"de","start":1.4,"end":1.8,"brand":false},{"word":"teste.","start":1.8,"end":2.4,"brand":false}]}];
+      var DURACAO = 2.50;
+      var pill = document.getElementById('caption-pill');
+      var indiceGrupoAtual = -1;
+      var spansPalavras = [];
+
+      function montarGrupo(idx) {
+        if (idx === indiceGrupoAtual) return;
+        indiceGrupoAtual = idx;
+        spansPalavras = [];
+        if (idx < 0 || idx >= GROUPS.length) {
+          pill.style.opacity = '0';
+          pill.innerHTML = '';
+          return;
+        }
+        var g = GROUPS[idx];
+        pill.innerHTML = '';
+        for (var i = 0; i < g.words.length; i++) {
+          var w = g.words[i];
+          var span = document.createElement('span');
+          span.className = 'cap-word' + (w.brand ? ' cap-brand' : '');
+          span.textContent = w.word;
+          pill.appendChild(span);
+          spansPalavras.push(span);
+        }
+        pill.style.opacity = '1';
+      }
+
+      function renderizarLegenda(t) {
+        var idx = -1;
+        for (var i = 0; i < GROUPS.length; i++) {
+          if (t >= GROUPS[i].start && t <= GROUPS[i].end) {
+            idx = i;
+            break;
+          }
+        }
+        montarGrupo(idx);
+        if (idx < 0) return;
+        var g = GROUPS[idx];
+        for (var j = 0; j < g.words.length; j++) {
+          var w = g.words[j];
+          var sp = spansPalavras[j];
+          if (!sp) continue;
+          sp.classList.remove('is-active', 'is-spoken');
+          if (t >= w.start && t <= w.end + 0.04) {
+            sp.classList.add('is-active');
+          } else if (t > w.end + 0.04) {
+            sp.classList.add('is-spoken');
+          }
+        }
+      }
+
+      var tl = gsap.timeline({ paused: true });
+      var proxy = { t: 0 };
+      tl.to(proxy, {
+        t: DURACAO,
+        duration: DURACAO,
+        ease: 'none',
+        onUpdate: function () {
+          renderizarLegenda(proxy.t);
+        }
+      }, 0);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['captions'] = tl;
+
+      window.addEventListener('hf-seek', function (ev) {
+        if (ev && ev.detail && typeof ev.detail.time === 'number') {
+          renderizarLegenda(ev.detail.time);
+        }
+      });
+
+      renderizarLegenda(0);
+    })();
+  </script>
+</template>

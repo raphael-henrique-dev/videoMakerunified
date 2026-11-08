@@ -12,7 +12,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { executarHeuristicas } from "./heuristics.js";
+import { executarHeuristicas, obterZonasSeguranca } from "./heuristics.js";
+import { obterPerfil } from "../formato.js";
 import { gerarPranchas } from "./contact-sheet.js";
 import { auditarComVlm } from "./vlm-critic.js";
 import { formatarRelatorioMarkdown, salvarRelatorio } from "./reporter.js";
@@ -120,10 +121,12 @@ export async function auditarVideoVisual(slug, opcoes = {}) {
   fs.mkdirSync(snapDir, { recursive: true });
 
   let titulo = slug;
+  let roteiro = {};
   try {
     const rotPath = path.join(vDir, "roteiro.json");
     if (fs.existsSync(rotPath)) {
-      titulo = JSON.parse(fs.readFileSync(rotPath, "utf8")).titulo || slug;
+      roteiro = JSON.parse(fs.readFileSync(rotPath, "utf8"));
+      titulo = roteiro.titulo || slug;
     }
   } catch {}
 
@@ -170,6 +173,7 @@ export async function auditarVideoVisual(slug, opcoes = {}) {
   // 3. Execução do Tier 1 Determinístico Local
   const tier1 = await executarHeuristicas(cenasParaAnalise, {
     preferencia: opcoes.engine || process.env.MOTOR_CV_ENGINE || "auto",
+    zonas: obterZonasSeguranca(roteiro),
   });
 
   // 4. Geração de Pranchas de Contato (Humana e VLM)
@@ -177,6 +181,7 @@ export async function auditarVideoVisual(slug, opcoes = {}) {
     dirSaida: auditDir,
     titulo: `Auditoria Visual: ${titulo}`,
     preferencia: opcoes.engine || process.env.MOTOR_CV_ENGINE || "auto",
+    perfil: obterPerfil(roteiro),
   });
 
   // 5. Execução do Tier 2 Crítico VLM (se habilitado)
