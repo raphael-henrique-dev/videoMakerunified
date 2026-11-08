@@ -1,0 +1,202 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f6-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f6-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f6-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(8,14,26,0.90); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f6-title { font-family:'EB Garamond',serif; font-size:58px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f6-title-accent { color:#7dd3fc; }
+    .f6-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f6-banner { position:absolute; top:1248px; left:64px; right:140px; padding:16px 24px; background:rgba(8,14,26,0.95); border:1.5px solid rgba(56,189,248,0.6); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f6-banner-text { font-size:19px; font-weight:700; color:#e0f2fe; letter-spacing:.03em; line-height:1.25; }
+    .f6-banner-pill { flex:0 0 auto; padding:8px 16px; background:#38bdf8; color:#04202f; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f6-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 58% 24%, #102a3f 0%, #08172a 48%, #050a14 100%); }
+    #f6-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#08182a 0%,#050a14 100%); border-top:2px solid rgba(56,189,248,0.20); }
+    #f6-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f6-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f6-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(8,14,26,0.92); border:1px solid rgba(56,189,248,0.34); border-radius:22px; }
+  </style>
+
+  <div id="f6-root" data-composition-id="frame-06-limite" data-width="1080" data-height="1920" data-start="0" data-duration="25.58">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f6-cena" class="m2-cena"></div>
+    <div id="f6-mascote" class="m2-mascote"></div>
+    <div id="f6-hud" class="m2-hud"></div>
+
+    <div class="f6-ui-layer">
+      <div id="f6-header" class="f6-header-card">
+        <h1 class="f6-title">O Detalhe Que Nenhum <span class="f6-title-accent">Concreto Resolve</span></h1>
+        <p class="f6-subtitle">Noventa dias de silêncio e o maior risco não é a bomba: é o tempo, o tédio e a convivência.</p>
+      </div>
+      <div id="f6-banner" class="f6-banner" style="opacity: 0;">
+        <span class="f6-banner-text">POR FORA É AÇO. POR DENTRO, PRECISA DE GENTE.</span>
+        <span class="f6-banner-pill">CURIORISANDO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 25.58;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f6-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f6-banner', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.5, ease: 'back.out(1.6)' }, 17.8);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        function sala(x, y, w, h, titulo, cor, id, conteudo) {
+          return G({ id: id, opacity: 0.32 },
+            T('rect', { x: x, y: y, width: w, height: h, rx: 10, fill: 'rgba(10,20,34,0.96)', stroke: cor, 'stroke-width': 2 }) +
+            T('text', { x: x + w / 2, y: y + 22, 'text-anchor': 'middle', fill: cor, 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 1.2 }, titulo) +
+            (conteudo || ''));
+        }
+
+        function slabs(x, y, w, n, passo, cor) {
+          var s = '';
+          for (var k = 0; k < n; k++) s += T('rect', { x: x, y: y + k * passo, width: w, height: 8, rx: 3, fill: cor });
+          return s;
+        }
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<linearGradient id="s6-soloGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3c2b1a"/><stop offset="1" stop-color="#1a1209"/></linearGradient>' +
+          '<linearGradient id="s6-acoGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#94a3b8"/><stop offset="0.5" stop-color="#64748b"/><stop offset="1" stop-color="#334155"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: '#050a14' }) +
+          // painel da porta (acima do mascote)
+          T('rect', { x: 30, y: 20, width: 258, height: 258, rx: 18, fill: 'rgba(8,14,26,0.94)', stroke: 'rgba(56,189,248,0.32)', 'stroke-width': 2 }) +
+          T('path', { d: 'M30 196 Q90 176 150 188 Q220 198 288 186 L288 278 L30 278 Z', fill: 'url(#s6-soloGrad)' }) +
+          T('path', { d: 'M30 196 Q90 176 150 188 Q220 198 288 186', fill: 'none', stroke: '#166534', 'stroke-width': 10 }) +
+          T('rect', { x: 92, y: 62, width: 134, height: 132, rx: 8, fill: '#475569', stroke: '#cbd5e1', 'stroke-width': 3 }) +
+          T('rect', { x: 102, y: 72, width: 114, height: 122, rx: 5, fill: 'url(#s6-acoGrad)', stroke: '#1e293b', 'stroke-width': 2 }) +
+          T('line', { x1: 102, y1: 108, x2: 216, y2: 108, stroke: '#334155', 'stroke-width': 2.5 }) +
+          T('line', { x1: 102, y1: 160, x2: 216, y2: 160, stroke: '#334155', 'stroke-width': 2.5 }) +
+          G({ id: 's6-roda' },
+            T('circle', { cx: 159, cy: 130, r: 24, fill: '#334155', stroke: '#e2e8f0', 'stroke-width': 3.5 }) +
+            T('line', { x1: 159, y1: 108, x2: 159, y2: 152, stroke: '#e2e8f0', 'stroke-width': 3.5 }) +
+            T('line', { x1: 137, y1: 130, x2: 181, y2: 130, stroke: '#e2e8f0', 'stroke-width': 3.5 }) +
+            T('line', { x1: 144, y1: 115, x2: 174, y2: 145, stroke: '#e2e8f0', 'stroke-width': 3 }) +
+            T('line', { x1: 174, y1: 115, x2: 144, y2: 145, stroke: '#e2e8f0', 'stroke-width': 3 }) +
+            T('circle', { cx: 159, cy: 130, r: 5, fill: '#f8fafc' })) +
+          T('text', { x: 159, y: 230, 'text-anchor': 'middle', fill: '#e2e8f0', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1.2 }, 'POR FORA: AÇO') +
+          T('text', { x: 159, y: 250, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 11, 'font-weight': 400 }, 'trancado por dentro') +
+          // casca em corte
+          T('rect', { x: 336, y: 46, width: 594, height: 486, rx: 22, fill: '#64748b', stroke: '#e2e8f0', 'stroke-width': 4 }) +
+          T('rect', { x: 352, y: 62, width: 562, height: 454, rx: 14, fill: '#08131f', stroke: '#334155', 'stroke-width': 3 }) +
+          // linha do tempo
+          T('text', { x: 366, y: 88, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 11.5, 'font-weight': 700, 'letter-spacing': 1.2 }, 'DIA 1') +
+          T('text', { x: 900, y: 88, 'text-anchor': 'end', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 11.5, 'font-weight': 700, 'letter-spacing': 1.2 }, 'DIA 90') +
+          T('rect', { x: 366, y: 96, width: 534, height: 10, rx: 5, fill: '#0b1220', stroke: '#475569', 'stroke-width': 1.5 }) +
+          T('rect', { id: 's6-tempo', x: 368, y: 98, width: 0, height: 6, rx: 3, fill: '#38bdf8' }) +
+          // salas
+          sala(366, 118, 262, 152, 'ENERGIA', '#fbbf24', 's6-salaEnergia',
+            T('rect', { x: 384, y: 150, width: 92, height: 54, rx: 5, fill: '#7c2d12', stroke: '#f59e0b', 'stroke-width': 2 }) +
+            T('line', { x1: 394, y1: 162, x2: 466, y2: 162, stroke: '#f59e0b', 'stroke-width': 2, opacity: 0.7 }) +
+            T('line', { x1: 394, y1: 174, x2: 466, y2: 174, stroke: '#f59e0b', 'stroke-width': 2, opacity: 0.7 }) +
+            T('line', { x1: 394, y1: 186, x2: 466, y2: 186, stroke: '#f59e0b', 'stroke-width': 2, opacity: 0.7 }) +
+            T('circle', { cx: 500, cy: 177, r: 18, fill: 'none', stroke: '#fbbf24', 'stroke-width': 3 }) +
+            T('line', { x1: 500, y1: 161, x2: 500, y2: 193, stroke: '#fbbf24', 'stroke-width': 2.5 }) +
+            T('line', { x1: 484, y1: 177, x2: 516, y2: 177, stroke: '#fbbf24', 'stroke-width': 2.5 }) +
+            T('rect', { x: 532, y: 152, width: 76, height: 50, rx: 6, fill: '#0b1220', stroke: '#86efac', 'stroke-width': 2 }) +
+            T('rect', { x: 540, y: 160, width: 16, height: 34, rx: 3, fill: '#22c55e', opacity: 0.85 }) +
+            T('rect', { x: 562, y: 160, width: 16, height: 34, rx: 3, fill: '#22c55e', opacity: 0.85 }) +
+            T('rect', { x: 584, y: 160, width: 16, height: 34, rx: 3, fill: '#22c55e', opacity: 0.85 }) +
+            T('text', { x: 384, y: 234, fill: '#fde68a', 'font-family': 'Inter, sans-serif', 'font-size': 11.5, 'font-weight': 400 }, 'diesel + reserva')) +
+          sala(640, 118, 260, 152, 'AR', '#4ade80', 's6-salaAr',
+            T('circle', { cx: 700, cy: 176, r: 30, fill: '#0b1220', stroke: '#4ade80', 'stroke-width': 3 }) +
+            G({ id: 's6-fan2' },
+              T('path', { d: 'M700 176 C714 158 734 162 732 176 Z', fill: '#4ade80', opacity: 0.85 }) +
+              T('path', { d: 'M700 176 C686 194 684 210 700 206 Z', fill: '#4ade80', opacity: 0.85 }) +
+              T('circle', { cx: 700, cy: 176, r: 5, fill: '#e2e8f0' })) +
+            T('rect', { x: 736, y: 164, width: 34, height: 24, fill: '#1e293b' }) +
+            T('rect', { x: 774, y: 150, width: 96, height: 52, rx: 6, fill: '#334155', stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('line', { x1: 786, y1: 158, x2: 786, y2: 194, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('line', { x1: 802, y1: 158, x2: 802, y2: 194, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('line', { x1: 818, y1: 158, x2: 818, y2: 194, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('line', { x1: 834, y1: 158, x2: 834, y2: 194, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('line', { x1: 850, y1: 158, x2: 850, y2: 194, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('text', { x: 654, y: 234, fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 11.5, 'font-weight': 400 }, 'filtro + pressão')) +
+          sala(366, 282, 262, 152, 'ÁGUA', '#22d3ee', 's6-salaAgua',
+            T('rect', { x: 384, y: 310, width: 82, height: 98, rx: 8, fill: '#0e7490', stroke: '#67e8f9', 'stroke-width': 2, opacity: 0.85 }) +
+            T('line', { x1: 384, y1: 342, x2: 466, y2: 342, stroke: '#cffafe', 'stroke-width': 1.5, 'stroke-dasharray': '5 4' }) +
+            T('rect', { x: 486, y: 312, width: 66, height: 46, rx: 6, fill: '#334155', stroke: '#22d3ee', 'stroke-width': 2 }) +
+            slabs(494, 319, 50, 3, 13, '#475569') +
+            T('path', { d: 'M466 360 L486 360', fill: 'none', stroke: '#22d3ee', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+            T('path', { d: 'M552 360 L580 360 L580 404', fill: 'none', stroke: '#22d3ee', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+            T('text', { x: 384, y: 424, fill: '#cffafe', 'font-family': 'Inter, sans-serif', 'font-size': 11.5, 'font-weight': 400 }, '2.000 L filtrados')) +
+          sala(640, 282, 260, 222, 'CONVIVÊNCIA', '#f472b6', 's6-salaVida',
+            T('rect', { x: 700, y: 366, width: 110, height: 8, rx: 4, fill: '#a16207' }) +
+            T('rect', { x: 708, y: 374, width: 7, height: 32, fill: '#a16207' }) +
+            T('rect', { x: 795, y: 374, width: 7, height: 32, fill: '#a16207' }) +
+            T('circle', { cx: 726, cy: 340, r: 9, fill: '#fcd34d' }) +
+            T('rect', { x: 716, y: 350, width: 20, height: 22, rx: 5, fill: '#1d4ed8' }) +
+            T('circle', { cx: 786, cy: 344, r: 9, fill: '#fcd34d' }) +
+            T('rect', { x: 776, y: 354, width: 20, height: 22, rx: 5, fill: '#166534' }) +
+            T('rect', { x: 652, y: 430, width: 104, height: 18, rx: 6, fill: '#1d4ed8' }) +
+            T('rect', { x: 652, y: 448, width: 104, height: 10, rx: 4, fill: '#1e3a8a' }) +
+            T('rect', { x: 658, y: 422, width: 30, height: 10, rx: 5, fill: '#e2e8f0' }) +
+            T('text', { x: 654, y: 484, fill: '#f9a8d4', 'font-family': 'Inter, sans-serif', 'font-size': 11.5, 'font-weight': 400 }, 'mesa, cama e paciência')) +
+          // etiqueta e selo
+          T('rect', { x: 360, y: 548, width: 240, height: 38, rx: 12, fill: 'rgba(8,20,36,0.95)', stroke: '#38bdf8', 'stroke-width': 2 }) +
+          T('text', { x: 480, y: 573, 'text-anchor': 'middle', fill: '#bae6fd', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1.2 }, 'POR DENTRO: GENTE') +
+          G({ id: 's6-selo', opacity: 0 },
+            T('circle', { cx: 860, cy: 584, r: 42, fill: 'rgba(8,20,36,0.95)', stroke: '#38bdf8', 'stroke-width': 4 }) +
+            T('text', { x: 860, y: 576, 'text-anchor': 'middle', fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 10.5, 'font-weight': 700, 'letter-spacing': 1.2 }, 'SEGUE O') +
+            T('text', { x: 860, y: 596, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 12.5, 'font-weight': 700, 'letter-spacing': 1.0 }, 'CURIORISANDO'))
+        );
+        M.montar('#f6-cena', svg);
+        var cena = M.pegar('#f6-cena');
+        var roda = M.pegar(cena, '#s6-roda');
+        var tempo = M.pegar(cena, '#s6-tempo');
+        var fan2 = M.pegar(cena, '#s6-fan2');
+        var selo = M.pegar(cena, '#s6-selo');
+        var salaEnergia = M.pegar(cena, '#s6-salaEnergia');
+        var salaAr = M.pegar(cena, '#s6-salaAr');
+        var salaAgua = M.pegar(cena, '#s6-salaAgua');
+        var salaVida = M.pegar(cena, '#s6-salaVida');
+        var boy = M.mascote('#f6-mascote');
+        var hud = M.medidorBarra('#f6-hud', { rotulo: 'DIAS TRANCADO', unidade: 'DIAS', max: 90, cor: '#38bdf8', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var dias = 90 * suave(faixa(t, 3.6, 11.0));
+          tempo.setAttribute('width', f2(534 * (dias / 90)));
+
+          var abre = suave(faixa(t, 0.4, 2.2));
+          roda.setAttribute('transform', 'rotate(' + f2(abre * 180 + Math.sin(t * 1.4) * 2) + ' 159 130)');
+
+          salaEnergia.setAttribute('opacity', f2(0.32 + 0.68 * suave(faixa(t, 11.2, 12.0))));
+          salaAr.setAttribute('opacity', f2(0.32 + 0.68 * suave(faixa(t, 12.8, 13.6))));
+          salaAgua.setAttribute('opacity', f2(0.32 + 0.68 * suave(faixa(t, 14.8, 15.6))));
+          salaVida.setAttribute('opacity', f2(0.32 + 0.68 * suave(faixa(t, 16.0, 16.8))));
+          fan2.setAttribute('transform', 'rotate(' + f2(t * 260) + ' 700 176)');
+
+          var seloT = suave(faixa(t, 22.6, 23.4));
+          selo.setAttribute('opacity', f2(seloT));
+          selo.setAttribute('transform', 'translate(860 584) scale(' + f2(lerp(0.5, 1, seloT)) + ') translate(-860 -584)');
+
+          hud.atualizar(dias, dias > 84 ? 'O TEMPO É O INIMIGO' : 'CONTANDO OS DIAS', dias > 84 ? '#f59e0b' : '#38bdf8');
+
+          boy.atualizar(t, og, {
+            humor: t > 17.8 ? 'feliz' : (t > 11.0 ? 'triste' : 'neutro'),
+            bracoD: t > 17.8 ? 122 : 14,
+            bracoE: t > 17.8 ? 76 : 8,
+            olhar: [6, 0],
+            inclinar: t > 11.0 && t < 17.8 ? 4 : 0,
+            pulo: t > 17.8 ? Math.abs(Math.sin((t - 18.0) * 3.0)) * 5 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 84.88 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-06-limite'] = tl;
+    })();
+  </script>
+</template>

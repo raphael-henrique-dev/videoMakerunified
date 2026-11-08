@@ -1,0 +1,250 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f3-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f3-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f3-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(6,14,26,0.90); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f3-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#7dd3fc; text-transform:uppercase; }
+    .f3-badge { font-size:19px; font-weight:700; color:#fbbf24; letter-spacing:.06em; }
+    .f3-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(6,14,26,0.90); border-left:5px solid #fbbf24; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f3-title { font-family:'EB Garamond',serif; font-size:54px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f3-title-accent { color:#fde68a; }
+    .f3-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f3-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(6,16,30,0.94); border:1.5px solid rgba(251,191,36,0.6); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f3-banner-text { font-size:19px; font-weight:700; color:#fef3c7; letter-spacing:.03em; line-height:1.25; }
+    .f3-banner-pill { flex:0 0 auto; padding:7px 15px; background:#fbbf24; color:#1a1203; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f3-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 82% 16%, #3a2a0c 0%, #0b2030 46%, #050a14 100%); }
+    #f3-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#0a1420 0%,#050a14 100%); border-top:2px solid rgba(251,191,36,0.18); }
+    #f3-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f3-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f3-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(6,14,26,0.92); border:1px solid rgba(251,191,36,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f3-root" data-composition-id="frame-03-energia-sem-queima" data-width="1080" data-height="1920" data-start="0" data-duration="25.94">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f3-cena" class="m2-cena"></div>
+    <div id="f3-mascote" class="m2-mascote"></div>
+    <div id="f3-hud" class="m2-hud"></div>
+
+    <div class="f3-ui-layer">
+      <div id="f3-topbar" class="f3-topbar">
+        <span class="f3-kicker">ENERGIA // O FIM DA QUEIMA</span>
+        <span class="f3-badge">8 MIN</span>
+      </div>
+      <div id="f3-header" class="f3-header-card">
+        <h1 class="f3-title">A Energia Deixa de Ser <span class="f3-title-accent">Queimada</span></h1>
+        <p class="f3-subtitle">O sol manda energia de graça a cada 8 minutos. O desafio nunca foi produzir — foi guardar.</p>
+      </div>
+      <div id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span class="f3-banner-text">O TELHADO VIRA USINA</span>
+        <span class="f3-banner-pill">ENERGIA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 25.94;
+      var T_SOL = 1.2;
+      var T_PAINEIS = 3.2;
+      var T_BATERIA = 7.6;
+      var T_FUSAO = 18.4;
+      var T_BANNER = 23.8;
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, T_BANNER);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var fundo =
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: '#071018' }) +
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: 'url(#s3-fundoGrad)' });
+
+        // estrelas
+        var estrelas = '';
+        for (var e = 0; e < 34; e++) {
+          estrelas += T('circle', { id: 's3-est' + e, cx: f2(M.ruido(e * 2.1) * 1080), cy: f2(M.ruido(e * 4.9) * 300), r: f2(1 + M.ruido(e * 3.3) * 1.6), fill: '#e0f2fe', opacity: f2(0.18 + M.ruido(e * 6.1) * 0.4) });
+        }
+
+        // sol
+        var raios = '';
+        for (var r = 0; r < 12; r++) {
+          var ang = (r / 12) * Math.PI * 2;
+          raios += T('line', { id: 's3-raio' + r, x1: f2(900 + Math.cos(ang) * 62), y1: f2(92 + Math.sin(ang) * 62), x2: f2(900 + Math.cos(ang) * 86), y2: f2(92 + Math.sin(ang) * 86), stroke: '#fbbf24', 'stroke-width': 4, 'stroke-linecap': 'round', opacity: 0.6 });
+        }
+        var sol =
+          G({ id: 's3-sol' },
+            T('circle', { cx: 900, cy: 92, r: 78, fill: 'url(#s3-solGrad)' }) +
+            raios +
+            T('circle', { cx: 900, cy: 92, r: 44, fill: '#fbbf24' }) +
+            T('circle', { cx: 886, cy: 78, r: 11, fill: '#fde68a', opacity: 0.7 }));
+
+        // feixe de luz até o telhado
+        var feixe =
+          T('path', { id: 's3-feixe', d: 'M872 128 L620 330 L700 330 L900 132 Z', fill: 'url(#s3-feixeGrad)', opacity: 0 });
+
+        // conta de luz encolhendo
+        var conta =
+          G({ id: 's3-conta' },
+            T('rect', { x: 352, y: 58, width: 196, height: 150, rx: 12, fill: 'rgba(6,14,26,0.96)', stroke: '#fbbf24', 'stroke-width': 2 }) +
+            T('text', { x: 450, y: 88, 'text-anchor': 'middle', fill: '#fde68a', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1.0 }, 'CONTA DE LUZ') +
+            T('text', { id: 's3-valor', x: 450, y: 148, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 44, 'font-weight': 700, 'font-variant-numeric': 'tabular-nums' }, 'R$ 100') +
+            T('path', { id: 's3-seta', d: 'M418 172 L482 172 M466 160 L482 172 L466 184', fill: 'none', stroke: '#22c55e', 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0 }) +
+            T('text', { id: 's3-economia', x: 450, y: 198, 'text-anchor': 'middle', fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 0.8 }, ''));
+
+        // casa
+        var casa =
+          G({ id: 's3-casa' },
+            T('rect', { x: 366, y: 356, width: 250, height: 224, rx: 4, fill: '#0b1a2c', stroke: '#1e3a5f', 'stroke-width': 3 }) +
+            T('path', { d: 'M336 362 L491 262 L646 362 Z', fill: '#0e2238', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('rect', { x: 424, y: 470, width: 68, height: 110, rx: 4, fill: '#0e7490', stroke: '#67e8f9', 'stroke-width': 2 }) +
+            T('circle', { cx: 482, cy: 528, r: 4, fill: '#fde68a' }) +
+            T('rect', { x: 390, y: 400, width: 44, height: 40, rx: 3, fill: '#fbbf24', opacity: 0.75 }) +
+            T('rect', { x: 550, y: 400, width: 44, height: 40, rx: 3, fill: '#fbbf24', opacity: 0.75 }) +
+            T('rect', { x: 390, y: 458, width: 44, height: 40, rx: 3, fill: '#0b1220', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('rect', { x: 550, y: 458, width: 44, height: 40, rx: 3, fill: '#0b1220', stroke: '#38bdf8', 'stroke-width': 2 }));
+
+        // painéis solares no telhado
+        var paineis = '';
+        var painelDefs = [
+          { x: 380, y: 330, w: 70, h: 30, rot: -31 },
+          { x: 456, y: 300, w: 70, h: 30, rot: -31 },
+          { x: 532, y: 330, w: 70, h: 30, rot: -31 }
+        ];
+        painelDefs.forEach(function (p, i) {
+          paineis +=
+            G({ id: 's3-painel' + i, transform: 'rotate(' + p.rot + ' ' + (p.x + p.w / 2) + ' ' + (p.y + p.h / 2) + ')' },
+              T('rect', { x: p.x, y: p.y, width: p.w, height: p.h, rx: 3, fill: '#0e7490', stroke: '#67e8f9', 'stroke-width': 2 }) +
+              T('line', { x1: p.x + p.w / 3, y1: p.y, x2: p.x + p.w / 3, y2: p.y + p.h, stroke: '#67e8f9', 'stroke-width': 1.2, opacity: 0.7 }) +
+              T('line', { x1: p.x + 2 * p.w / 3, y1: p.y, x2: p.x + 2 * p.w / 3, y2: p.y + p.h, stroke: '#67e8f9', 'stroke-width': 1.2, opacity: 0.7 }) +
+              T('line', { x1: p.x, y1: p.y + p.h / 2, x2: p.x + p.w, y2: p.y + p.h / 2, stroke: '#67e8f9', 'stroke-width': 1.2, opacity: 0.7 }));
+        });
+
+        // bateria
+        var bateria =
+          G({ id: 's3-bateria' },
+            T('rect', { x: 652, y: 420, width: 96, height: 160, rx: 12, fill: '#0b1220', stroke: '#e2e8f0', 'stroke-width': 4 }) +
+            T('rect', { x: 680, y: 408, width: 40, height: 14, rx: 5, fill: '#94a3b8' }) +
+            T('rect', { id: 's3-carga', x: 664, y: 556, width: 72, height: 12, rx: 5, fill: '#22c55e' }) +
+            T('path', { d: 'M704 456 L684 502 L702 502 L692 546 L716 492 L698 492 Z', fill: '#fde047' }) +
+            T('text', { x: 700, y: 600, 'text-anchor': 'middle', fill: '#bbf7d0', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 0.8 }, 'BATERIA'));
+
+        // torre de transmissão
+        var torre =
+          G({ id: 's3-torre' },
+            T('path', { d: 'M820 580 L850 280 L858 280 L888 580', fill: 'none', stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('path', { d: 'M828 520 L880 520 M832 470 L876 470 M836 420 L872 420 M840 370 L868 370 M844 320 L864 320', stroke: '#94a3b8', 'stroke-width': 3 }) +
+            T('path', { d: 'M812 330 L896 330 M800 300 L908 300', stroke: '#cbd5e1', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 800, cy: 300, r: 4, fill: '#7dd3fc' }) +
+            T('circle', { cx: 908, cy: 300, r: 4, fill: '#7dd3fc' }) +
+            T('path', { d: 'M800 300 C740 300 700 360 700 420', fill: 'none', stroke: '#38bdf8', 'stroke-width': 2, 'stroke-dasharray': '8 8', opacity: 0.55 }) +
+            T('path', { d: 'M908 300 C960 300 980 380 960 460', fill: 'none', stroke: '#38bdf8', 'stroke-width': 2, 'stroke-dasharray': '8 8', opacity: 0.35 }));
+
+        // anel de fusão
+        var fusao =
+          G({ id: 's3-fusao', opacity: 0 },
+            T('ellipse', { cx: 720, cy: 120, rx: 96, ry: 38, fill: 'none', stroke: '#fbbf24', 'stroke-width': 10 }) +
+            T('ellipse', { cx: 720, cy: 120, rx: 96, ry: 38, fill: 'none', stroke: '#fde68a', 'stroke-width': 3, 'stroke-dasharray': '14 10' }) +
+            T('ellipse', { cx: 720, cy: 120, rx: 58, ry: 20, fill: 'none', stroke: '#67e8f9', 'stroke-width': 4 }) +
+            T('circle', { cx: 720, cy: 120, r: 24, fill: 'url(#s3-plasmaGrad)' }) +
+            T('text', { x: 720, y: 188, 'text-anchor': 'middle', fill: '#fde68a', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 1.2 }, 'FUSÃO'));
+
+        // setas de fluxo
+        var setas =
+          G({ id: 's3-setas' },
+            T('path', { id: 's3-seta1', d: 'M640 340 C670 360 680 390 680 410', fill: 'none', stroke: '#67e8f9', 'stroke-width': 3, 'stroke-dasharray': '9 8', opacity: 0.7 }) +
+            T('path', { id: 's3-seta2', d: 'M652 500 C630 500 620 500 610 500', fill: 'none', stroke: '#67e8f9', 'stroke-width': 3, 'stroke-dasharray': '9 8', opacity: 0.7 }) +
+            T('path', { id: 's3-seta3', d: 'M750 500 C780 500 790 470 800 440', fill: 'none', stroke: '#67e8f9', 'stroke-width': 3, 'stroke-dasharray': '9 8', opacity: 0.7 }));
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<radialGradient id="s3-fundoGrad" cx="0.82" cy="0.14" r="0.8"><stop offset="0" stop-color="#7c5a0f" stop-opacity="0.50"/><stop offset="0.5" stop-color="#3a2a0c" stop-opacity="0.22"/><stop offset="1" stop-color="#050a14" stop-opacity="0"/></radialGradient>' +
+          '<radialGradient id="s3-solGrad" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.55"/><stop offset="0.55" stop-color="#f59e0b" stop-opacity="0.18"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0"/></radialGradient>' +
+          '<linearGradient id="s3-feixeGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.45"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></linearGradient>' +
+          '<radialGradient id="s3-plasmaGrad" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#fff7ed" stop-opacity="0.95"/><stop offset="0.45" stop-color="#fbbf24" stop-opacity="0.75"/><stop offset="1" stop-color="#f59e0b" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          fundo + estrelas + sol + feixe + conta + casa + paineis + bateria + torre + fusao + setas
+        );
+        M.montar('#f3-cena', svg);
+        var cena = M.pegar('#f3-cena');
+        var solEl = M.pegar(cena, '#s3-sol');
+        var feixeEl = M.pegar(cena, '#s3-feixe');
+        var valorEl = M.pegar(cena, '#s3-valor');
+        var setaEl = M.pegar(cena, '#s3-seta');
+        var economiaEl = M.pegar(cena, '#s3-economia');
+        var cargaEl = M.pegar(cena, '#s3-carga');
+        var fusaoEl = M.pegar(cena, '#s3-fusao');
+        var raioEls = [];
+        for (var rI = 0; rI < 12; rI++) raioEls.push(M.pegar(cena, '#s3-raio' + rI));
+        var painelEls = [];
+        for (var pI = 0; pI < 3; pI++) painelEls.push(M.pegar(cena, '#s3-painel' + pI));
+        var seta1 = M.pegar(cena, '#s3-seta1'), seta2 = M.pegar(cena, '#s3-seta2'), seta3 = M.pegar(cena, '#s3-seta3');
+        var estEls = [];
+        for (var eI = 0; eI < 34; eI++) estEls.push(M.pegar(cena, '#s3-est' + eI));
+        var boy = M.mascote('#f3-mascote');
+        var hud = M.medidorBarra('#f3-hud', { rotulo: 'ENERGIA DO TELHADO', unidade: '%', max: 100, cor: '#fbbf24', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var pulsoSol = 1 + 0.03 * Math.sin(t * 2.0);
+          solEl.setAttribute('transform', 'translate(900 92) scale(' + f2(pulsoSol) + ') translate(-900 -92)');
+          for (var r2 = 0; r2 < 12; r2++) raioEls[r2].setAttribute('opacity', f2(0.32 + 0.38 * (0.5 + 0.5 * Math.sin(t * 2.8 + r2 * 0.7))));
+
+          feixeEl.setAttribute('opacity', f2(0.55 * suave(faixa(t, T_SOL, T_SOL + 1.0)) * (0.8 + 0.2 * Math.sin(t * 2.2))));
+
+          var kp = suave(faixa(t, T_PAINEIS, T_PAINEIS + 1.6));
+          for (var p2 = 0; p2 < 3; p2++) {
+            var kpp = suave(faixa(t, T_PAINEIS + p2 * 0.35, T_PAINEIS + p2 * 0.35 + 0.6));
+            var rec = painelEls[p2].querySelector('rect');
+            rec.setAttribute('fill', M.mixCor('#0e7490', '#67e8f9', kpp));
+            rec.setAttribute('opacity', f2(0.75 + 0.25 * kpp));
+          }
+
+          var kb = suave(faixa(t, T_BATERIA, T_BATERIA + 2.2));
+          cargaEl.setAttribute('width', f2(12 + 60 * kb));
+          cargaEl.setAttribute('fill', kb > 0.9 ? '#86efac' : '#22c55e');
+
+          var kf = suave(faixa(t, T_FUSAO, T_FUSAO + 1.0));
+          fusaoEl.setAttribute('opacity', f2(kf));
+          fusaoEl.setAttribute('transform', 'translate(720 120) scale(' + f2(lerp(0.7, 1, kf)) + ') translate(-720 -120)');
+
+          var contaVal = lerp(100, 12, suave(faixa(t, T_PAINEIS + 0.8, 17.0)));
+          valorEl.textContent = 'R$ ' + Math.round(contaVal);
+          setaEl.setAttribute('opacity', f2(suave(faixa(t, T_BATERIA, T_BATERIA + 0.6))));
+          economiaEl.textContent = contaVal < 30 ? 'QUASE ZERO' : '';
+
+          seta1.setAttribute('stroke-dashoffset', f2(-t * 24));
+          seta2.setAttribute('stroke-dashoffset', f2(-t * 24));
+          seta3.setAttribute('stroke-dashoffset', f2(-t * 24));
+
+          for (var e2 = 0; e2 < 34; e2++) {
+            estEls[e2].setAttribute('opacity', f2(0.18 + 0.45 * (0.5 + 0.5 * Math.sin(t * 1.4 + e2 * 1.1))));
+          }
+
+          hud.atualizar(lerp(0, 88, suave(faixa(t, 1.2, 17.0))), t > 16.0 ? 'QUASE TUDO DO SOL' : 'CAPTANDO LUZ', t > 16.0 ? '#fbbf24' : '#f59e0b');
+
+          boy.atualizar(t, og, {
+            humor: t > T_FUSAO ? 'feliz' : 'surpreso',
+            bracoD: t > T_FUSAO ? 118 : 42,
+            bracoE: 12,
+            olhar: [10, -4],
+            inclinar: -2,
+            pulo: t > T_BANNER ? Math.abs(Math.sin((t - T_BANNER) * 4.0)) * 9 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 48.03 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-energia-sem-queima'] = tl;
+    })();
+  </script>
+</template>

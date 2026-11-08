@@ -1,0 +1,229 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f2-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f2-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f2-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(8,14,26,0.90); border:1px solid rgba(56,189,248,0.40); border-radius:14px; }
+    .f2-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#38bdf8; text-transform:uppercase; }
+    .f2-badge { font-size:19px; font-weight:700; color:#fbbf24; letter-spacing:.06em; }
+    .f2-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(8,14,26,0.90); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f2-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f2-title-accent { color:#7dd3fc; }
+    .f2-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f2-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(8,14,26,0.94); border:1.5px solid rgba(56,189,248,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f2-banner-text { font-size:19px; font-weight:700; color:#e0f2fe; letter-spacing:.03em; line-height:1.25; }
+    .f2-banner-pill { flex:0 0 auto; padding:7px 15px; background:#38bdf8; color:#04202f; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f2-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 38% 26%, #0d2a45 0%, #081627 48%, #050a14 100%); }
+    #f2-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#091a2b 0%,#050a14 100%); border-top:2px solid rgba(56,189,248,0.20); }
+    #f2-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f2-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f2-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(8,14,26,0.92); border:1px solid rgba(56,189,248,0.34); border-radius:22px; }
+  </style>
+
+  <div id="f2-root" data-composition-id="frame-02-casca-concreto" data-width="1080" data-height="1920" data-start="0" data-duration="15.96">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f2-cena" class="m2-cena"></div>
+    <div id="f2-mascote" class="m2-mascote"></div>
+    <div id="f2-hud" class="m2-hud"></div>
+
+    <div class="f2-ui-layer">
+      <div id="f2-topbar" class="f2-topbar">
+        <span class="f2-kicker">CAMADA 01 // A CASCA</span>
+        <span class="f2-badge">4,5 BAR</span>
+      </div>
+      <div id="f2-header" class="f2-header-card">
+        <h1 class="f2-title">A Casca de <span class="f2-title-accent">Concreto Armado</span></h1>
+        <p class="f2-subtitle">Concreto aguenta o peso. O aço segura o concreto inteiro quando a terra empurra.</p>
+      </div>
+      <div id="f2-banner" class="f2-banner" style="opacity: 0;">
+        <span class="f2-banner-text">CONCRETO SEM AÇO É CASCA DE OVO</span>
+        <span class="f2-banner-pill">AÇO + CONCRETO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 15.96;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 13.0);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        function seta(x, y, ang, id) {
+          return G({ id: id, transform: 'translate(' + x + ' ' + y + ') rotate(' + ang + ')' },
+            T('line', { x1: 0, y1: 0, x2: 28, y2: 0, stroke: '#f59e0b', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+            T('path', { d: 'M28 -9 L44 0 L28 9 Z', fill: '#f59e0b' }));
+        }
+
+        var aco = '';
+        for (var r = 0; r < 12; r++) {
+          aco += T('line', { x1: 364, y1: 214 + r * 26, x2: 706, y2: 214 + r * 26, stroke: '#64748b', 'stroke-width': 2, 'stroke-dasharray': '9 7', opacity: 0.55 });
+        }
+        for (var c = 0; c < 13; c++) {
+          aco += T('line', { x1: 364 + c * 28, y1: 204, x2: 364 + c * 28, y2: 548, stroke: '#64748b', 'stroke-width': 2, 'stroke-dasharray': '9 7', opacity: 0.55 });
+        }
+
+        var rad = '';
+        for (var i = 0; i < 12; i++) rad += T('circle', { id: 's2-rad' + i, r: 3.2, fill: '#f87171', opacity: 0 });
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<linearGradient id="s2-soloGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a3423"/><stop offset="0.35" stop-color="#33220f"/><stop offset="1" stop-color="#1b120a"/></linearGradient>' +
+          '<linearGradient id="s2-concGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#b8c4d4"/><stop offset="0.55" stop-color="#8b9bb0"/><stop offset="1" stop-color="#64748b"/></linearGradient>' +
+          '<linearGradient id="s2-ceuGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d2a45"/><stop offset="1" stop-color="#0a1c30"/></linearGradient>' +
+          '<linearGradient id="s2-luzGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.45"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 320, y: 0, width: 760, height: 74, fill: 'url(#s2-ceuGrad)' }) +
+          T('path', { d: 'M320 74 Q460 56 600 72 T860 70 T1080 78 L1080 96 L320 96 Z', fill: '#166534' }) +
+          T('rect', { x: 300, y: 74, width: 780, height: 566, fill: 'url(#s2-soloGrad)' }) +
+          (function () {
+            var s = '';
+            for (var k = 0; k < 50; k++) {
+              s += T('circle', { cx: f2(320 + M.ruido(k * 2.3) * 740), cy: f2(96 + M.ruido(k * 5.1) * 520), r: f2(2 + M.ruido(k * 3.7) * 5), fill: '#6b4a2f', 'fill-opacity': f2(0.3 + M.ruido(k * 7.3) * 0.45) });
+            }
+            return s;
+          })() +
+          T('path', { d: 'M320 470 Q500 452 700 476 T1080 470 L1080 508 Q760 494 500 502 T320 494 Z', fill: '#3f2c1a', opacity: 0.65 }) +
+          // painel de profundidade / blindagem (canto superior esquerdo, acima do mascote)
+          T('rect', { x: 30, y: 20, width: 258, height: 258, rx: 18, fill: 'rgba(8,14,26,0.90)', stroke: 'rgba(56,189,248,0.30)', 'stroke-width': 2 }) +
+          T('text', { x: 48, y: 52, fill: '#38bdf8', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 1.4 }, 'TERRA = BLINDAGEM') +
+          T('text', { x: 48, y: 78, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 400 }, 'segura radiação e calor') +
+          T('line', { x1: 66, y1: 104, x2: 66, y2: 244, stroke: '#cbd5e1', 'stroke-width': 2, 'stroke-dasharray': '6 6' }) +
+          T('line', { x1: 56, y1: 104, x2: 76, y2: 104, stroke: '#cbd5e1', 'stroke-width': 2 }) +
+          T('line', { x1: 56, y1: 244, x2: 76, y2: 244, stroke: '#cbd5e1', 'stroke-width': 2 }) +
+          T('text', { x: 86, y: 109, fill: '#e2e8f0', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700 }, '0 m') +
+          T('text', { x: 86, y: 249, fill: '#e2e8f0', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700 }, '−6 m') +
+          T('circle', { cx: 180, cy: 190, r: 30, fill: 'rgba(56,189,248,0.12)', stroke: '#38bdf8', 'stroke-width': 2 }) +
+          T('text', { x: 180, y: 198, 'text-anchor': 'middle', fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700 }, '−6m') +
+          rad +
+          // casca
+          T('rect', { x: 350, y: 190, width: 370, height: 368, rx: 28, fill: 'url(#s2-concGrad)', stroke: '#e2e8f0', 'stroke-width': 3 }) +
+          G({ id: 's2-aco', opacity: 0.4 }, aco) +
+          T('rect', { x: 378, y: 218, width: 314, height: 312, rx: 14, fill: '#0a1220', stroke: '#334155', 'stroke-width': 3 }) +
+          T('path', { d: 'M470 236 L530 236 L590 460 L410 460 Z', fill: 'url(#s2-luzGrad)', opacity: 0.65 }) +
+          T('rect', { x: 486, y: 226, width: 28, height: 10, rx: 4, fill: '#fbbf24' }) +
+          T('circle', { cx: 500, cy: 228, r: 13, fill: '#fbbf24', 'fill-opacity': 0.28 }) +
+          T('rect', { x: 396, y: 430, width: 128, height: 20, rx: 6, fill: '#1d4ed8' }) +
+          T('rect', { x: 396, y: 450, width: 128, height: 14, rx: 4, fill: '#1e3a8a' }) +
+          T('rect', { x: 400, y: 418, width: 36, height: 12, rx: 6, fill: '#e2e8f0' }) +
+          T('rect', { x: 606, y: 398, width: 50, height: 50, rx: 5, fill: '#7c2d12', stroke: '#f59e0b', 'stroke-width': 2 }) +
+          T('text', { x: 535, y: 508, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 1.3 }, 'ABRIGO') +
+          // setas
+          seta(312, 246, 0, 's2-seta1') +
+          seta(312, 330, 0, 's2-seta2') +
+          seta(312, 414, 0, 's2-seta3') +
+          seta(432, 152, 90, 's2-seta4') +
+          seta(535, 152, 90, 's2-seta5') +
+          seta(638, 152, 90, 's2-seta6') +
+          seta(748, 246, 180, 's2-seta7') +
+          seta(748, 330, 180, 's2-seta8') +
+          seta(748, 414, 180, 's2-seta9') +
+          T('text', { x: 536, y: 132, 'text-anchor': 'middle', fill: '#fbbf24', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 1.4 }, 'PRESSÃO DA TERRA') +
+          // comparativos à direita
+          G({ id: 's2-cardTijolo' },
+            T('rect', { x: 780, y: 196, width: 150, height: 160, rx: 12, fill: 'rgba(38,16,10,0.94)', stroke: 'rgba(248,113,113,0.45)', 'stroke-width': 2 }) +
+            T('text', { x: 792, y: 222, fill: '#fca5a5', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 1.1 }, 'SÓ TIJOLO') +
+            T('rect', { x: 796, y: 236, width: 60, height: 72, fill: '#7c2d12', stroke: '#b91c1c', 'stroke-width': 2 }) +
+            T('line', { x1: 796, y1: 254, x2: 856, y2: 254, stroke: '#4a1508', 'stroke-width': 2 }) +
+            T('line', { x1: 796, y1: 274, x2: 856, y2: 274, stroke: '#4a1508', 'stroke-width': 2 }) +
+            T('line', { x1: 796, y1: 294, x2: 856, y2: 294, stroke: '#4a1508', 'stroke-width': 2 }) +
+            T('path', { id: 's2-trinca', d: 'M826 236 L816 258 L834 276 L820 308', fill: 'none', stroke: '#fecaca', 'stroke-width': 3, opacity: 0 }) +
+            T('text', { x: 868, y: 268, 'text-anchor': 'middle', fill: '#f87171', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700 }, '✕') +
+            T('text', { x: 868, y: 292, 'text-anchor': 'middle', fill: '#fca5a5', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700 }, 'RACHA') +
+            T('text', { x: 792, y: 336, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 400 }, 'a terra empurra') +
+            T('text', { x: 792, y: 350, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 400 }, 'e ele abre no meio')) +
+          G({ id: 's2-cardArmado' },
+            T('rect', { x: 780, y: 372, width: 150, height: 168, rx: 12, fill: 'rgba(8,28,22,0.94)', stroke: 'rgba(34,197,94,0.45)', 'stroke-width': 2 }) +
+            T('text', { x: 792, y: 398, fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 1.1 }, 'CONCRETO ARMADO') +
+            T('rect', { x: 796, y: 412, width: 60, height: 72, fill: '#94a3b8', stroke: '#e2e8f0', 'stroke-width': 2 }) +
+            G({ id: 's2-grade', opacity: 0.9 },
+              T('line', { x1: 804, y1: 424, x2: 848, y2: 424, stroke: '#166534', 'stroke-width': 3 }) +
+              T('line', { x1: 804, y1: 440, x2: 848, y2: 440, stroke: '#166534', 'stroke-width': 3 }) +
+              T('line', { x1: 804, y1: 456, x2: 848, y2: 456, stroke: '#166534', 'stroke-width': 3 }) +
+              T('line', { x1: 812, y1: 416, x2: 812, y2: 480, stroke: '#166534', 'stroke-width': 3 }) +
+              T('line', { x1: 840, y1: 416, x2: 840, y2: 480, stroke: '#166534', 'stroke-width': 3 })) +
+            T('text', { x: 868, y: 444, 'text-anchor': 'middle', fill: '#22c55e', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700 }, '✓') +
+            T('text', { x: 868, y: 468, 'text-anchor': 'middle', fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700 }, 'SEGURA') +
+            T('text', { x: 792, y: 512, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 400 }, 'o aço segura') +
+            T('text', { x: 792, y: 526, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 400 }, 'o bloco inteiro'))
+        );
+        M.montar('#f2-cena', svg);
+        var cena = M.pegar('#f2-cena');
+        var aco = M.pegar(cena, '#s2-aco');
+        var grade = M.pegar(cena, '#s2-grade');
+        var trinca = M.pegar(cena, '#s2-trinca');
+        var cardTijolo = M.pegar(cena, '#s2-cardTijolo');
+        var cardArmado = M.pegar(cena, '#s2-cardArmado');
+        var setas = [];
+        for (var s = 1; s <= 9; s++) setas.push(M.pegar(cena, '#s2-seta' + s));
+        var rads = [];
+        for (var rr = 0; rr < 12; rr++) rads.push(M.pegar(cena, '#s2-rad' + rr));
+        var boy = M.mascote('#f2-mascote');
+        var hud = M.medidorBarra('#f2-hud', { rotulo: 'PRESSÃO DA TERRA', unidade: 'BAR', max: 10, cor: '#f59e0b', decimais: 1 });
+
+        // posições base das setas
+        var base = [
+          [312, 246, 0], [312, 330, 0], [312, 414, 0],
+          [432, 152, 90], [535, 152, 90], [638, 152, 90],
+          [748, 246, 180], [748, 330, 180], [748, 414, 180]
+        ];
+
+        M.conectar(tl, function (t, og) {
+          var pressao = suave(faixa(t, 1.1, 4.4));
+          var armou = suave(faixa(t, 9.3, 10.8));
+          var segura = suave(faixa(t, 13.2, 14.6));
+          aco.setAttribute('opacity', f2(0.4 + 0.6 * armou));
+          grade.setAttribute('stroke', armou > 0.5 ? '#22c55e' : '#0f172a');
+          for (var q = 0; q < 9; q++) {
+            var pulso = Math.sin(t * 3.2 + q * 0.7) * 7.5;
+            var recuo = segura * 16;
+            var ax = base[q][0], ay = base[q][1], ang = base[q][2];
+            var dirx = ang === 0 ? 1 : (ang === 180 ? -1 : 0);
+            var diry = ang === 90 ? 1 : 0;
+            setas[q].setAttribute('transform',
+              'translate(' + f2(ax - dirx * recuo + dirx * pulso * (1 - segura)) + ' ' + f2(ay - diry * recuo + diry * pulso * (1 - segura)) + ') rotate(' + ang + ')');
+          }
+
+          for (var i = 0; i < 12; i++) {
+            var ciclo = ((t * 0.55 + i * 0.29) % 1);
+            var y = 10 + ciclo * 200;
+            rads[i].setAttribute('cx', f2(430 + ((i * 73) % 330)));
+            rads[i].setAttribute('cy', f2(y));
+            rads[i].setAttribute('opacity', f2(ciclo < 0.8 ? 0.85 : 0));
+          }
+
+          var trincaT = suave(faixa(t, 12.0, 12.7));
+          trinca.setAttribute('opacity', f2(trincaT));
+          cardTijolo.setAttribute('opacity', f2(0.55 + 0.45 * (1 - trincaT)));
+          cardArmado.setAttribute('opacity', f2(0.55 + 0.45 * segura));
+
+          var valor = lerp(0, 4.5, pressao);
+          hud.atualizar(valor, segura > 0.6 ? 'CASCA AGUENTA' : (pressao > 0.7 ? 'PAREDE SOB PRESSÃO' : 'ESCAVANDO'), segura > 0.6 ? '#22c55e' : '#f59e0b');
+
+          boy.atualizar(t, og, {
+            humor: segura > 0.4 ? 'feliz' : (pressao > 0.6 ? 'surpreso' : 'neutro'),
+            capacete: true,
+            bracoD: segura > 0.4 ? 120 : (pressao > 0.6 ? 52 : 14),
+            bracoE: segura > 0.4 ? 62 : 8,
+            olhar: [6, -4],
+            pulo: segura > 0.4 ? Math.abs(Math.sin((t - 13.4) * 3.4)) * 5 : Math.abs(Math.sin(t * 1.7)) * 3
+          });
+        }, { duracao: DUR, offsetGlobal: 13.27 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-casca-concreto'] = tl;
+    })();
+  </script>
+</template>

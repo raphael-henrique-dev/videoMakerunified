@@ -1,0 +1,233 @@
+{
+  "id": "o-que-a-ciencia-preve-100-anos",
+  "titulo": "O Que a Ciência Prevê Para os Próximos 100 Anos?",
+  "subtitulo": "Do clima já travado ao câncer pego 10 anos antes: o que a ciência já sabe sobre 2126 — e o que ainda depende de nós",
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "fps": 30,
+  "alvoPpm": 170,
+  "modo": "2d",
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.8,
+    "estilo": 0.4,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.2
+  },
+  "efeitos": {
+    "ganho": 1.12
+  },
+  "publicacao": {
+    "titulo": "O Que a Ciência Prevê Para os Próximos 100 Anos? 🔮 #shorts",
+    "descricao": "Clima já travado, câncer pego 10 anos antes, telhado virando usina e comida crescendo em prédio. O que a ciência já sabe sobre 2126 — e o que ainda depende de nós.",
+    "tags": ["ciencia", "futuro", "previsoes", "tecnologia", "medicina", "curiosidades"],
+    "tiktok_caption": "O que a ciência prevê para os próximos 100 anos? 🔮 Clima, medicina, energia, comida e corpo: o que já está travado e o que ainda é escolha. #curiosidades #ciencia #futuro #fyp #foryou",
+    "allow_comments": true,
+    "allow_duet": true,
+    "allow_stitch": true
+  },
+  "frames": [
+    {
+      "id": "frame-01-clima-travado",
+      "numero": "01",
+      "titulo": "O Futuro Já Está no Ar",
+      "arquivo": "compositions/frames/01-clima-travado.html",
+      "kicker": "2126 // O FUTURO JÁ COMEÇOU",
+      "metrica": {
+        "rotulo": "CO₂ JÁ EMITIDO",
+        "valor": "300 ANOS"
+      },
+      "direcao2D": "Cidade sob domo de calor com sol pulsante, termômetro gigante subindo, carros soltando nuvens de gás carbônico, cadeado sobre parte da linha do tempo e asfalto ondulando. Mascote suando ao lado de um ventilador.",
+      "cauda": 0.3,
+      "sons": [
+        { "nome": "zumbido", "offset": 0.4, "dur": 4.5, "ganho": 0.3 },
+        { "nome": "buzina", "offset": 2.0, "ganho": 0.35 },
+        { "nome": "whoosh", "offset": 4.6, "ganho": 0.45 },
+        { "nome": "trava", "offset": 7.2, "ganho": 0.55 },
+        { "nome": "errado", "offset": 10.2, "ganho": 0.5 }
+      ],
+      "frases": [
+        {
+          "plano": "GANCHO",
+          "jogo": "gancho_clima",
+          "gancho": true,
+          "texto": "A ciência já consegue *prever* o seu futuro — e a primeira previsão não tem *robô* nenhum: é o *clima* da sua rua."
+        },
+        {
+          "plano": "M",
+          "jogo": "clima_travado",
+          "texto": "Cada tonelada de *gás carbônico* que já saiu do escapamento fica *séculos* no ar. Ou seja: parte do aquecimento dos próximos *100 anos* já está *travada.* A pergunta é só o quanto a gente ainda vai *piorar.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-02-medicina-antecedencia",
+      "numero": "02",
+      "titulo": "O Câncer Pego Antes de Virar Tumor",
+      "arquivo": "compositions/frames/02-medicina-antecedencia.html",
+      "kicker": "MEDICINA // O ALARME ANTECIPADO",
+      "metrica": {
+        "rotulo": "ANTES DO NÓDULO",
+        "valor": "10 ANOS"
+      },
+      "direcao2D": "Scanner circular com silhueta humana e ponto vermelho minúsculo, tubo de sangue girando em primeiro plano, linha do tempo célula → nódulo → sintoma com janela verde de detecção, frasco de remédio e painel de exame de sangue.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "bip", "offset": 0.5, "ganho": 0.45 },
+        { "nome": "pingo", "offset": 2.2, "ganho": 0.4 },
+        { "nome": "zumbido", "offset": 4.0, "dur": 3.5, "ganho": 0.28 },
+        { "nome": "ding", "offset": 7.6, "ganho": 0.5 },
+        { "nome": "certo", "offset": 10.8, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "diagnostico_antecipado",
+          "texto": "Na *medicina,* a virada é sair da *espera.* Hoje você só descobre um *câncer* quando ele já fez *estrago.* A aposta é o contrário: um exame de *sangue* achando o problema *anos* antes do primeiro *nódulo.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "medicina_precisao",
+          "texto": "Junto com isso vem a *edição de genes* e a *medicina de precisão:* o remédio feito pro *seu* corpo, não pra *média.* O câncer deixa de ser *sentença* e vira *doença crônica* — igual *pressão alta.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-03-energia-sem-queima",
+      "numero": "03",
+      "titulo": "A Energia Deixa de Ser Queimada",
+      "arquivo": "compositions/frames/03-energia-sem-queima.html",
+      "kicker": "ENERGIA // O FIM DA QUEIMA",
+      "metrica": {
+        "rotulo": "SOL ATÉ A TERRA",
+        "valor": "8 MIN"
+      },
+      "direcao2D": "Casa com telhado coberto de painéis solares, bateria de parede carregando, torre de transmissão ao fundo, anel de fusão brilhando como um sol artificial e conta de luz encolhendo com seta para baixo.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "liga", "offset": 0.4, "ganho": 0.45 },
+        { "nome": "zumbido", "offset": 2.4, "dur": 4.0, "ganho": 0.3 },
+        { "nome": "bip", "offset": 5.0, "ganho": 0.4 },
+        { "nome": "turbina", "offset": 7.0, "dur": 2.5, "ganho": 0.4 },
+        { "nome": "certo", "offset": 10.4, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "energia_solar",
+          "texto": "A *energia* segue o mesmo caminho: parar de *queimar* coisa pra fazer *eletricidade.* O sol manda energia de graça a cada *8 minutos* — o problema nunca foi *produzir,* foi *guardar.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "bateria_fusao",
+          "texto": "Com *bateria* barata e rede inteligente, o telhado vira *usina* e a conta de luz vira *sobra.* E lá na frente entra a *fusão:* copiar o sol dentro de uma *caixa,* sem lixo nuclear de longo *prazo.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-04-comida-sem-chuva",
+      "numero": "04",
+      "titulo": "A Feira do Futuro",
+      "arquivo": "compositions/frames/04-comida-sem-chuva.html",
+      "kicker": "COMIDA // A FEIRA DO FUTURO",
+      "metrica": {
+        "rotulo": "ÁGUA NA PROTEÍNA",
+        "valor": "90% MENOS"
+      },
+      "direcao2D": "Fazenda vertical iluminada em rosa com prateleiras de alface, biorreator de proteína borbulhando, usina de dessalinização com gotas e canos, nuvem de chuva riscada e etiqueta de preço caindo ao lado de um prato.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "bolhas", "offset": 0.4, "dur": 4.0, "ganho": 0.4 },
+        { "nome": "agua", "offset": 2.8, "dur": 3.0, "ganho": 0.35 },
+        { "nome": "etiqueta", "offset": 5.4, "ganho": 0.45 },
+        { "nome": "ding", "offset": 7.8, "ganho": 0.5 },
+        { "nome": "certo", "offset": 10.6, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "fazenda_vertical",
+          "texto": "A *comida* passa pela mesma lógica. A feira de *2126* não depende só de *chuva:* planta cresce em *prédio,* proteína sai de *tanque* e a água do mar vira *água de beber.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "preco_estavel",
+          "texto": "Isso não é *comida de astronauta:* é *seguro* contra seca. Quando a safra quebra, o preço do *tomate* não decola — porque a produção está *dentro da cidade,* a poucos *metros* do prato."
+        }
+      ]
+    },
+    {
+      "id": "frame-05-corpo-maquina",
+      "numero": "05",
+      "titulo": "O Corpo Ganha Extensão",
+      "arquivo": "compositions/frames/05-corpo-maquina.html",
+      "kicker": "CORPO // A PONTE COM A MÁQUINA",
+      "metrica": {
+        "rotulo": "PENSAMENTO → MOVIMENTO",
+        "valor": "100 ms"
+      },
+      "direcao2D": "Silhueta humana com faixa neural brilhando no cérebro, braço robótico espelhando o gesto, exoesqueleto articulado na perna, retina artificial e implante coclear em cards laterais, ondas de sinal ligando cérebro e máquina.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "bip", "offset": 0.4, "ganho": 0.45 },
+        { "nome": "metal", "offset": 2.6, "ganho": 0.4 },
+        { "nome": "zumbido", "offset": 4.4, "dur": 3.2, "ganho": 0.28 },
+        { "nome": "ding", "offset": 7.4, "ganho": 0.5 },
+        { "nome": "certo", "offset": 10.2, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "interface_cerebro",
+          "texto": "E o *corpo?* A promessa não é baixar a mente num *computador.* É devolver *movimento* a quem perdeu: um *pensamento* vira comando, e o *braço* robótico obedece."
+        },
+        {
+          "plano": "PA",
+          "jogo": "devolver_sentidos",
+          "texto": "Exoesqueleto pra quem tem *força* de menos, retina artificial pra quem perdeu a *visão,* implante que traduz *som* em estímulo. A máquina não substitui o *humano* — ela *devolve* o que a doença *tirou.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-06-futuro-escolha",
+      "numero": "06",
+      "titulo": "O Futuro É Uma Escolha",
+      "arquivo": "compositions/frames/06-futuro-escolha.html",
+      "kicker": "2126 // O QUE NÃO DÁ PRA PREVER",
+      "metrica": {
+        "rotulo": "FUTURO EM ABERTO",
+        "valor": "100%"
+      },
+      "direcao2D": "Encruzilhada dividida ao meio: à esquerda cidade seca e quente, à direita cidade verde e fresca. Relógio gigante marcando 2126, alavanca central nas mãos de uma silhueta, linha do tempo HOJE → 2126 e selo final do Curiorisando.",
+      "cauda": 1.2,
+      "sons": [
+        { "nome": "brilho", "offset": 0.5, "ganho": 0.45 },
+        { "nome": "range", "offset": 2.6, "ganho": 0.4 },
+        { "nome": "bip", "offset": 5.0, "ganho": 0.4 },
+        { "nome": "certo", "offset": 8.8, "ganho": 0.5 },
+        { "nome": "final", "offset": 20.0, "ganho": 0.62 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "escolha_humana",
+          "texto": "Só que tem uma coisa que nenhum *modelo* acerta: a *escolha* humana. A ciência prevê o *cenário* — não o que a gente vai *fazer* com ele."
+        },
+        {
+          "plano": "M",
+          "jogo": "fechamento_curiorisando",
+          "texto": "O *clima,* o *remédio,* a *energia* e a *comida* dos próximos *100 anos* dependem de decisões tomadas *hoje.* Por fora, parece só *previsão.* Por dentro, é *gente* escolhendo o *futuro.* Pois é, o mundo é mais *curioso* do que parece! Se você é curioso, segue o *Curiorisando!*"
+        }
+      ]
+    }
+  ]
+}

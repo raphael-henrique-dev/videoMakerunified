@@ -1,0 +1,233 @@
+{
+  "id": "bunker-a-prova-de-tudo",
+  "titulo": "Como Construir um Bunker à Prova de Tudo?",
+  "subtitulo": "A engenharia real por trás de uma casa enterrada: concreto armado, blindagem contra água, ar pressurizado e 90 dias de autonomia",
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "fps": 30,
+  "alvoPpm": 178,
+  "modo": "2d",
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.8,
+    "estilo": 0.4,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.22
+  },
+  "efeitos": {
+    "ganho": 1.12
+  },
+  "publicacao": {
+    "titulo": "Como Construir um Bunker à Prova de Tudo? 🕳️ #shorts",
+    "descricao": "Concreto armado, manta impermeável, ar pressurizado e 90 dias de autonomia: a engenharia real de um bunker — e o detalhe que nenhum concreto resolve.",
+    "tags": ["bunker", "engenharia", "curiosidades", "sobrevivencia", "construcao", "ciencia"],
+    "tiktok_caption": "Como se constrói um bunker à prova de tudo? 🕳️ O detalhe que nenhum concreto resolve vai te surpreender. #curiosidades #engenharia #bunker #fyp #foryou",
+    "allow_comments": true,
+    "allow_duet": true,
+    "allow_stitch": true
+  },
+  "frames": [
+    {
+      "id": "frame-01-porao-comum",
+      "numero": "01",
+      "titulo": "O Porão Comum Não Salva",
+      "arquivo": "compositions/frames/01-porao-comum.html",
+      "kicker": "PROJETO BUNKER // O TESTE",
+      "metrica": {
+        "rotulo": "AUTONOMIA DO PORÃO",
+        "valor": "0 DIAS"
+      },
+      "direcao2D": "Corte de uma casa com porão alagado, água subindo, calor entrando pelas frestas e medidor de CO2 estourando no vermelho. O porão comum vira uma armadilha.",
+      "cauda": 0.3,
+      "sons": [
+        { "nome": "bip", "offset": 0.35, "ganho": 0.5 },
+        { "nome": "zumbido", "offset": 0.9, "ganho": 0.4 },
+        { "nome": "agua", "offset": 2.6, "dur": 4.0, "ganho": 0.45 },
+        { "nome": "errado", "offset": 8.0, "ganho": 0.62 },
+        { "nome": "baque", "offset": 9.4, "ganho": 0.5 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "gancho_cidade",
+          "gancho": true,
+          "texto": "E se a cidade lá fora virasse um lugar *impossível* de viver... por trinta *dias?*"
+        },
+        {
+          "plano": "M",
+          "jogo": "porao_falha",
+          "texto": "Um porão comum não resolve: a água *entra,* o ar *acaba,* e o calor te *cozinha* em horas."
+        }
+      ]
+    },
+    {
+      "id": "frame-02-casca-concreto",
+      "numero": "02",
+      "titulo": "A Casca de Concreto Armado",
+      "arquivo": "compositions/frames/02-casca-concreto.html",
+      "kicker": "CAMADA 01 // A CASCA",
+      "metrica": {
+        "rotulo": "PRESSÃO DA TERRA",
+        "valor": "4,5 BAR"
+      },
+      "direcao2D": "Corte do solo com o bunker enterrado, setas de pressão empurrando as paredes, malha de vergalhões dentro do concreto e o comparativo entre tijolo rachado e casca armada intacta.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "pedra", "offset": 0.6, "ganho": 0.5 },
+        { "nome": "baque", "offset": 3.0, "ganho": 0.55 },
+        { "nome": "racha", "offset": 6.2, "ganho": 0.6 },
+        { "nome": "metal", "offset": 8.0, "ganho": 0.55 },
+        { "nome": "certo", "offset": 9.6, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "enterrar_fundo",
+          "texto": "O primeiro passo é *enterrar* o bunker bem fundo — é a terra que segura a radiação e o *calor.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "concreto_aco",
+          "texto": "A solução? Uma casca de *concreto armado,* com vergalhões de aço por dentro. Porque concreto sozinho *racha,* e a terra empurra a parede pra *dentro.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-03-agua-freatico",
+      "numero": "03",
+      "titulo": "O Inimigo Que Não Faz Barulho",
+      "arquivo": "compositions/frames/03-agua-freatico.html",
+      "kicker": "CAMADA 02 // A ÁGUA",
+      "metrica": {
+        "rotulo": "ÁGUA INFILTRADA",
+        "valor": "0 LITROS"
+      },
+      "direcao2D": "Lençol freático subindo até a parede do bunker, manta impermeável brilhando, colchão de brita drenando e bomba de sump tirando a água do poço.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "pingo", "offset": 0.5, "ganho": 0.5 },
+        { "nome": "agua", "offset": 1.2, "dur": 4.5, "ganho": 0.42 },
+        { "nome": "bolhas", "offset": 4.0, "dur": 2.5, "ganho": 0.4 },
+        { "nome": "liga", "offset": 7.4, "ganho": 0.55 },
+        { "nome": "esguicho", "offset": 8.2, "ganho": 0.45 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "lencol_freatico",
+          "texto": "Só que lá embaixo tem um inimigo *silencioso:* o lençol freático. Ele sobe e transforma o seu bunker numa *piscina.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "drenagem_bomba",
+          "texto": "Para blindar isso, entra uma *manta* impermeável por fora, um colchão de *brita* que puxa a água, e uma bomba que tira o que sobra — *sem parar.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-04-ar-pressao",
+      "numero": "04",
+      "titulo": "O Ar É o Primeiro a Acabar",
+      "arquivo": "compositions/frames/04-ar-pressao.html",
+      "kicker": "CAMADA 03 // O AR",
+      "metrica": {
+        "rotulo": "PRESSÃO INTERNA",
+        "valor": "+50 Pa"
+      },
+      "direcao2D": "Tomada de ar externa sugando fumaça, pilha de filtros (pré-filtro, HEPA e carvão ativado), ventilador empurrando ar limpo e o bunker sob pressão positiva com o CO2 caindo.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "turbina", "offset": 0.5, "dur": 5.0, "ganho": 0.4 },
+        { "nome": "whoosh", "offset": 2.0, "ganho": 0.5 },
+        { "nome": "estalo", "offset": 3.6, "ganho": 0.55 },
+        { "nome": "certo", "offset": 8.4, "ganho": 0.5 },
+        { "nome": "bip", "offset": 9.2, "ganho": 0.45 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "co2_sobe",
+          "texto": "Agora o pior: sem ar novo, você aguenta *minutos.* E o seu próprio CO2 te derruba em poucas *horas.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "filtro_pressao",
+          "texto": "A resposta? Um filtro de *carvão ativado* com HEPA, empurrando ar pra dentro e mantendo o bunker *pressurizado.* Assim, o veneno de fora não entra nem pela *fresta.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-05-autonomia",
+      "numero": "05",
+      "titulo": "90 Dias de Autonomia",
+      "arquivo": "compositions/frames/05-autonomia.html",
+      "kicker": "CAMADA 04 // OS SISTEMAS",
+      "metrica": {
+        "rotulo": "AUTONOMIA TOTAL",
+        "valor": "90 DIAS"
+      },
+      "direcao2D": "Sala de máquinas em quatro quadrantes: gerador a diesel, banco de baterias, tanques de água com filtragem e prateleiras de comida seca com sementes, sob um calendário de 90 dias.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "liga", "offset": 0.5, "ganho": 0.55 },
+        { "nome": "turbina", "offset": 1.2, "dur": 3.0, "ganho": 0.35 },
+        { "nome": "torneira", "offset": 4.6, "ganho": 0.45 },
+        { "nome": "etiqueta", "offset": 6.2, "ganho": 0.5 },
+        { "nome": "certo", "offset": 9.0, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "energia_gerador",
+          "texto": "Sem *energia,* a bomba para, o filtro para, e a luz acaba. Por isso entra um gerador a *diesel* lá fora, com baterias de reserva aqui *dentro.*"
+        },
+        {
+          "plano": "PA",
+          "jogo": "estoque_90_dias",
+          "texto": "E para aguentar *noventa dias* trancado, você estoca água filtrada, comida seca e *sementes.* Porque o bunker não te salva de *ficar* lá dentro."
+        }
+      ]
+    },
+    {
+      "id": "frame-06-limite",
+      "numero": "06",
+      "titulo": "O Detalhe Que Nenhum Concreto Resolve",
+      "arquivo": "compositions/frames/06-limite.html",
+      "kicker": "RAIO-X FINAL // O LIMITE",
+      "metrica": {
+        "rotulo": "DIAS TRANCADO",
+        "valor": "90 DIAS"
+      },
+      "direcao2D": "Porta de aço blindada numa encosta com grama por cima, corte interno mostrando as salas do bunker, linha do tempo do dia 1 ao dia 90 e o selo final do Curiorisando.",
+      "cauda": 1.0,
+      "sons": [
+        { "nome": "trava", "offset": 0.4, "ganho": 0.6 },
+        { "nome": "range", "offset": 1.4, "ganho": 0.45 },
+        { "nome": "range", "offset": 4.4, "dur": 4.0, "ganho": 0.4 },
+        { "nome": "racha", "offset": 7.4, "ganho": 0.4 },
+        { "nome": "final", "offset": 14.2, "ganho": 0.62 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "tempo_convivencia",
+          "texto": "Mas tem um detalhe que nenhum concreto resolve: o *tempo.* Noventa dias de silêncio, e o maior risco lá dentro não é a *bomba* — é o tédio e a *convivência.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "fechamento_curiorisando",
+          "texto": "Por fora, é só uma porta de *aço* no meio do mato. Por dentro, é uma casa que precisa de *gente* pra funcionar. Pois é, o mundo é mais *curioso* do que parece! Se você é curioso, segue o *Curiorisando!*"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,294 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f6-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f6-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f6-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(6,14,26,0.90); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f6-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#7dd3fc; text-transform:uppercase; }
+    .f6-badge { font-size:19px; font-weight:700; color:#fbbf24; letter-spacing:.06em; }
+    .f6-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(6,14,26,0.90); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f6-title { font-family:'EB Garamond',serif; font-size:54px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f6-title-accent { color:#7dd3fc; }
+    .f6-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f6-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(6,16,30,0.94); border:1.5px solid rgba(56,189,248,0.6); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f6-banner-text { font-size:19px; font-weight:700; color:#bae6fd; letter-spacing:.03em; line-height:1.25; }
+    .f6-banner-pill { flex:0 0 auto; padding:7px 15px; background:#38bdf8; color:#04121f; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f6-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 62% 24%, #102a44 0%, #0a1626 46%, #050a14 100%); }
+    #f6-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#081422 0%,#050a14 100%); border-top:2px solid rgba(56,189,248,0.18); }
+    #f6-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f6-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f6-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(6,14,26,0.92); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f6-root" data-composition-id="frame-06-espelho" data-width="1080" data-height="1920" data-start="0" data-duration="29.72">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f6-cena" class="m2-cena"></div>
+    <div id="f6-mascote" class="m2-mascote"></div>
+    <div id="f6-hud" class="m2-hud"></div>
+
+    <div class="f6-ui-layer">
+      <div id="f6-topbar" class="f6-topbar">
+        <span class="f6-kicker">HOJE // O ESPELHO</span>
+        <span class="f6-badge">147 ANOS</span>
+      </div>
+      <div id="f6-header" class="f6-header-card">
+        <h1 class="f6-title">O Único Órgão Que Estuda <span class="f6-title-accent">a Si Mesmo</span></h1>
+        <p class="f6-subtitle">147 anos depois, a psicologia mede o que ninguém vê — mas ainda precisa usar o cérebro para estudar o cérebro.</p>
+      </div>
+      <div id="f6-banner" class="f6-banner" style="opacity: 0;">
+        <span class="f6-banner-text">O CÉREBRO ESTUDA A SI MESMO</span>
+        <span class="f6-banner-pill">HOJE</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 29.72;
+      var T_SONO = 1.5;
+      var T_ATENCAO = 2.25;
+      var T_MEMORIA = 3.25;
+      var T_HUMOR = 4.05;
+      var T_LINHA = 5.2;
+      var T_LINHA_FIM = 9.0;
+      var T_LIMITE = 18.9;
+      var T_FINAL = 22.6;
+      var T_SELO = 25.8;
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f6-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f6-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f6-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, T_SELO + 0.2);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        // estrelas
+        var estrelas = '';
+        for (var e = 0; e < 46; e++) {
+          estrelas += T('circle', { id: 's6-est' + e, cx: f2(M.ruido(e * 1.9) * 1080), cy: f2(M.ruido(e * 4.7) * 540), r: f2(1 + M.ruido(e * 3.3) * 1.9), fill: '#e0f2fe', opacity: f2(0.25 + M.ruido(e * 6.1) * 0.5) });
+        }
+        // horizonte suave
+        var horizonte =
+          T('rect', { x: 0, y: 500, width: 1080, height: 140, fill: '#071018' }) +
+          T('line', { x1: 0, y1: 500, x2: 1080, y2: 500, stroke: '#0e7490', 'stroke-width': 2, opacity: 0.5 });
+
+        // chips do que a psicologia mede
+        var chipsDef = [
+          { id: 's6-chip0', x: 282, w: 108, rot: 'SONO' },
+          { id: 's6-chip1', x: 400, w: 122, rot: 'ATENÇÃO' },
+          { id: 's6-chip2', x: 532, w: 128, rot: 'MEMÓRIA' },
+          { id: 's6-chip3', x: 670, w: 106, rot: 'HUMOR' }
+        ];
+        var chips = '';
+        chipsDef.forEach(function (c) {
+          chips +=
+            G({ id: c.id },
+              T('rect', { x: c.x, y: 22, width: c.w, height: 42, rx: 21, fill: 'rgba(6,16,30,0.92)', stroke: '#38bdf8', 'stroke-width': 2 }) +
+              T('text', { x: c.x + c.w / 2, y: 49, 'text-anchor': 'middle', fill: '#bae6fd', 'font-family': 'Inter, sans-serif', 'font-size': 16, 'font-weight': 700, 'letter-spacing': 1.4 }, c.rot));
+        });
+
+        // espelho
+        var espelho =
+          T('rect', { x: 534, y: 88, width: 372, height: 424, rx: 58, fill: '#2a1c12', stroke: '#f59e0b', 'stroke-width': 12 }) +
+          T('rect', { x: 556, y: 110, width: 328, height: 380, rx: 44, fill: '#071018', stroke: '#fbbf24', 'stroke-width': 3 }) +
+          T('circle', { cx: 720, cy: 300, r: 178, fill: 'url(#s6-brilhoGrad)' }) +
+          T('circle', { cx: 566, cy: 122, r: 10, fill: '#f59e0b' }) +
+          T('circle', { cx: 874, cy: 122, r: 10, fill: '#f59e0b' }) +
+          T('circle', { cx: 566, cy: 478, r: 10, fill: '#f59e0b' }) +
+          T('circle', { cx: 874, cy: 478, r: 10, fill: '#f59e0b' }) +
+          T('path', { d: 'M720 48 L746 78 L720 108 L694 78 Z', fill: '#f59e0b', stroke: '#fbbf24', 'stroke-width': 3 });
+
+        // cérebro em rede
+        var nodos = [
+          [688, 246], [710, 228], [738, 230], [760, 252], [774, 282], [768, 312],
+          [748, 336], [722, 350], [694, 338], [672, 316], [664, 282], [690, 276],
+          [714, 296], [740, 294], [712, 320], [744, 316]
+        ];
+        var arestas = [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 9], [9, 10], [10, 0], [0, 11], [11, 12], [12, 13], [13, 14], [14, 15], [15, 6], [11, 13], [12, 14], [2, 13], [9, 12], [14, 7]];
+        var rede = '';
+        arestas.forEach(function (a, i) {
+          rede += T('line', { id: 's6-lig' + i, x1: nodos[a[0]][0], y1: nodos[a[0]][1], x2: nodos[a[1]][0], y2: nodos[a[1]][1], stroke: '#67e8f9', 'stroke-width': 2, opacity: 0.30 });
+        });
+        var nos = '';
+        nodos.forEach(function (n, i) {
+          nos += T('circle', { id: 's6-no' + i, cx: n[0], cy: n[1], r: i % 4 === 0 ? 5 : 3.6, fill: '#a5f3fc' });
+        });
+
+        var cerebro =
+          G({ id: 's6-cerebro' },
+            T('path', { d: 'M720 392 C690 392 668 372 664 348 C638 342 624 320 632 298 C620 276 632 250 656 244 C660 220 682 204 706 210 C716 192 740 192 750 210 C774 204 796 220 800 244 C824 250 836 276 824 298 C832 320 818 342 792 348 C788 372 766 392 736 392 C730 398 726 398 720 392 Z', fill: '#0e7490', 'fill-opacity': 0.30, stroke: '#67e8f9', 'stroke-width': 5 }) +
+            T('line', { x1: 720, y1: 212, x2: 720, y2: 384, stroke: '#67e8f9', 'stroke-width': 2.5, opacity: 0.55 }) +
+            T('path', { d: 'M676 260 C688 250 700 260 696 274 C692 288 676 286 674 274', fill: 'none', stroke: '#a5f3fc', 'stroke-width': 2.5, opacity: 0.7 }) +
+            T('path', { d: 'M700 222 C714 214 726 226 720 238 C714 250 698 246 698 234', fill: 'none', stroke: '#a5f3fc', 'stroke-width': 2.5, opacity: 0.7 }) +
+            T('path', { d: 'M750 226 C766 220 778 232 770 244 C762 256 746 250 748 238', fill: 'none', stroke: '#a5f3fc', 'stroke-width': 2.5, opacity: 0.7 }) +
+            T('path', { d: 'M778 286 C790 280 800 292 792 304 C784 316 768 308 772 296', fill: 'none', stroke: '#a5f3fc', 'stroke-width': 2.5, opacity: 0.7 }) +
+            T('path', { d: 'M666 316 C678 308 690 320 682 332 C674 344 660 334 664 324', fill: 'none', stroke: '#a5f3fc', 'stroke-width': 2.5, opacity: 0.7 }) +
+            rede + nos);
+
+        // silhueta diante do espelho
+        var pessoa =
+          G({ id: 's6-pessoa' },
+            T('path', { d: 'M372 560 C374 480 396 300 466 260 C536 300 558 480 560 560 Z', fill: '#0b1a2c', stroke: '#1e3a5f', 'stroke-width': 3 }) +
+            T('circle', { cx: 466, cy: 214, r: 44, fill: '#0b1a2c', stroke: '#38bdf8', 'stroke-width': 3.5 }) +
+            T('path', { d: 'M504 208 C512 212 512 222 504 226 L498 224 L500 214 Z', fill: '#0b1a2c', stroke: '#1e3a5f', 'stroke-width': 2 }) +
+            T('circle', { cx: 488, cy: 206, r: 4, fill: '#7dd3fc' }) +
+            T('path', { d: 'M466 258 C456 266 444 270 432 268', fill: 'none', stroke: '#1e3a5f', 'stroke-width': 3, 'stroke-linecap': 'round' }));
+
+        // feixe de observação
+        var feixe =
+          T('path', { id: 's6-feixe0', d: 'M508 196 C524 190 538 196 552 208', fill: 'none', stroke: '#38bdf8', 'stroke-width': 3, 'stroke-dasharray': '8 8', opacity: 0.8 }) +
+          T('path', { id: 's6-feixe1', d: 'M504 228 C520 230 534 234 548 240', fill: 'none', stroke: '#38bdf8', 'stroke-width': 3, 'stroke-dasharray': '8 8', opacity: 0.6 }) +
+          T('path', { id: 's6-feixe2', d: 'M498 258 C514 262 526 268 538 276', fill: 'none', stroke: '#38bdf8', 'stroke-width': 3, 'stroke-dasharray': '8 8', opacity: 0.45 });
+
+        // linha do tempo
+        var linha =
+          T('line', { x1: 340, y1: 600, x2: 940, y2: 600, stroke: '#1e3a5f', 'stroke-width': 5, 'stroke-linecap': 'round' }) +
+          T('line', { id: 's6-progresso', x1: 340, y1: 600, x2: 340, y2: 600, stroke: '#38bdf8', 'stroke-width': 5, 'stroke-linecap': 'round' });
+        var marcos = [
+          { x: 380, rot: '1879' },
+          { x: 560, rot: '1900' },
+          { x: 720, rot: '1950' },
+          { x: 900, rot: 'HOJE' }
+        ];
+        var marcosHtml = '';
+        marcos.forEach(function (m, i) {
+          marcosHtml +=
+            T('circle', { id: 's6-halo' + i, cx: m.x, cy: 600, r: 18, fill: '#38bdf8', opacity: 0 }) +
+            T('circle', { id: 's6-dot' + i, cx: m.x, cy: 600, r: 10, fill: '#1e3a5f', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('text', { x: m.x, y: 578, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 16, 'font-weight': 700, 'letter-spacing': 1.0 }, m.rot);
+        });
+
+        // selo do canal
+        var selo =
+          G({ id: 's6-selo', opacity: 0 },
+            T('circle', { cx: 318, cy: 512, r: 54, fill: 'rgba(6,14,26,0.92)', stroke: '#f59e0b', 'stroke-width': 4 }) +
+            T('circle', { cx: 318, cy: 512, r: 44, fill: 'none', stroke: '#f59e0b', 'stroke-width': 1.5, 'stroke-dasharray': '4 5' }) +
+            T('text', { x: 318, y: 505, 'text-anchor': 'middle', fill: '#fde68a', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 1.2 }, 'CURIORISANDO') +
+            T('text', { x: 318, y: 527, 'text-anchor': 'middle', fill: '#fbbf24', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 2.0 }, 'CIÊNCIA'));
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<radialGradient id="s6-brilhoGrad" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#22d3ee" stop-opacity="0.26"/><stop offset="0.6" stop-color="#0e7490" stop-opacity="0.10"/><stop offset="1" stop-color="#0e7490" stop-opacity="0"/></radialGradient>' +
+          '<radialGradient id="s6-glowGrad" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#67e8f9" stop-opacity="0.42"/><stop offset="0.55" stop-color="#22d3ee" stop-opacity="0.16"/><stop offset="1" stop-color="#0e7490" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: '#071018' }) +
+          estrelas +
+          horizonte +
+          chips +
+          espelho +
+          G({ id: 's6-glow', opacity: 0 }, T('circle', { cx: 720, cy: 300, r: 210, fill: 'url(#s6-glowGrad)' })) +
+          cerebro +
+          pessoa +
+          feixe +
+          linha +
+          marcosHtml +
+          selo +
+          // etiqueta
+          G({ id: 's6-tagCerebro', opacity: 0 },
+            T('rect', { x: 268, y: 100, width: 238, height: 44, rx: 10, fill: 'rgba(6,14,26,0.95)', stroke: '#67e8f9', 'stroke-width': 2 }) +
+            T('text', { x: 387, y: 129, 'text-anchor': 'middle', fill: '#a5f3fc', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 1.0 }, 'O MESMO CÉREBRO') +
+            T('line', { x1: 506, y1: 124, x2: 552, y2: 190, stroke: '#67e8f9', 'stroke-width': 2.5, 'stroke-dasharray': '7 6' })) +
+          G({ id: 's6-tagLimite', opacity: 0 },
+            T('rect', { x: 606, y: 522, width: 306, height: 44, rx: 10, fill: 'rgba(6,14,26,0.95)', stroke: '#fbbf24', 'stroke-width': 2 }) +
+            T('text', { x: 759, y: 551, 'text-anchor': 'middle', fill: '#fde68a', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 1.0 }, 'QUEM ESTUDA TAMBÉM SENTE'))
+        );
+        M.montar('#f6-cena', svg);
+        var cena = M.pegar('#f6-cena');
+        var cerebroEl = M.pegar(cena, '#s6-cerebro');
+        var glowEl = M.pegar(cena, '#s6-glow');
+        var pessoaEl = M.pegar(cena, '#s6-pessoa');
+        var progresso = M.pegar(cena, '#s6-progresso');
+        var selo = M.pegar(cena, '#s6-selo');
+        var tagC = M.pegar(cena, '#s6-tagCerebro');
+        var tagL = M.pegar(cena, '#s6-tagLimite');
+        var feixes = [M.pegar(cena, '#s6-feixe0'), M.pegar(cena, '#s6-feixe1'), M.pegar(cena, '#s6-feixe2')];
+        var chipEls = chipsDef.map(function (c) { return M.pegar(cena, '#' + c.id); });
+        var noEls = [];
+        for (var nI = 0; nI < nodos.length; nI++) noEls.push(M.pegar(cena, '#s6-no' + nI));
+        var dots = [], halos = [];
+        for (var dI = 0; dI < 4; dI++) { dots.push(M.pegar(cena, '#s6-dot' + dI)); halos.push(M.pegar(cena, '#s6-halo' + dI)); }
+        var boy = M.mascote('#f6-mascote');
+        var hud = M.medidorBarra('#f6-hud', { rotulo: 'ANOS DE MÉTODO', unidade: 'ANOS', max: 150, cor: '#38bdf8', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          for (var e = 0; e < 46; e++) {
+            var el = M.pegar(cena, '#s6-est' + e);
+            if (el) el.setAttribute('opacity', f2(0.22 + 0.55 * (0.5 + 0.5 * Math.sin(t * 1.7 + e * 1.3))));
+          }
+
+          var pulso = 1 + 0.012 * Math.sin(t * 2.1);
+          cerebroEl.setAttribute('transform', 'translate(720 300) scale(' + f2(pulso) + ') translate(-720 -300)');
+
+          var dim = suave(faixa(t, 16.3, 17.2));
+          var relight = suave(faixa(t, T_LIMITE, T_LIMITE + 1.0));
+          glowEl.setAttribute('opacity', f2(0.22 * (1 - dim) + (0.62 + 0.14 * Math.sin(t * 4.2)) * relight));
+          cerebroEl.setAttribute('opacity', f2(1 - dim * 0.38 * (1 - relight)));
+
+          for (var n = 0; n < nodos.length; n++) {
+            var fase = 0.5 + 0.5 * Math.sin(t * 2.6 + n * 0.9);
+            noEls[n].setAttribute('opacity', f2(0.45 + 0.55 * fase));
+            noEls[n].setAttribute('r', f2((n % 4 === 0 ? 4.6 : 3.2) + fase * 1.4));
+          }
+
+          var ativosChips = [T_SONO, T_ATENCAO, T_MEMORIA, T_HUMOR];
+          for (var cI = 0; cI < 4; cI++) {
+            var kc = suave(faixa(t, ativosChips[cI], ativosChips[cI] + 0.4));
+            var rc = chipEls[cI].querySelector('rect');
+            var tc = chipEls[cI].querySelector('text');
+            rc.setAttribute('stroke', kc > 0.5 ? '#22c55e' : '#38bdf8');
+            rc.setAttribute('fill', kc > 0.5 ? 'rgba(18,44,26,0.92)' : 'rgba(6,16,30,0.92)');
+            tc.setAttribute('fill', kc > 0.5 ? '#bbf7d0' : '#bae6fd');
+          }
+
+          // linha do tempo avança
+          var prog = suave(faixa(t, T_LINHA, T_LINHA_FIM));
+          progresso.setAttribute('x2', f2(lerp(340, 940, prog)));
+          for (var m = 0; m < 4; m++) {
+            var limite = 340 + (marcos[m].x - 340) / 600;
+            var km = suave(faixa(prog, limite - 0.04, limite + 0.04));
+            dots[m].setAttribute('fill', km > 0.5 ? (m === 3 ? '#22c55e' : '#38bdf8') : '#1e3a5f');
+            dots[m].setAttribute('stroke', km > 0.5 ? (m === 3 ? '#86efac' : '#7dd3fc') : '#38bdf8');
+            halos[m].setAttribute('opacity', f2(km * (0.10 + 0.10 * Math.sin(t * 3 + m))));
+          }
+
+          for (var fI = 0; fI < 3; fI++) {
+            feixes[fI].setAttribute('stroke-dashoffset', f2(-t * 26 - fI * 8));
+            feixes[fI].setAttribute('opacity', f2((0.5 - fI * 0.08) * suave(faixa(t, 1.4, 2.2))));
+          }
+
+          var olhar = suave(faixa(t, 2.0, 3.0));
+          pessoaEl.setAttribute('transform', 'rotate(' + f2(-olhar * 1.4) + ' 466 430)');
+
+          tagC.setAttribute('opacity', f2(suave(faixa(t, 12.9, 13.4)) * (1 - suave(faixa(t, 18.2, 18.5)))));
+          tagL.setAttribute('opacity', f2(suave(faixa(t, T_LIMITE - 0.4, T_LIMITE + 0.1))));
+
+          var ks = suave(faixa(t, T_SELO, T_SELO + 0.6));
+          selo.setAttribute('opacity', f2(ks));
+          selo.setAttribute('transform', 'translate(318 512) scale(' + f2(lerp(0.6, 1, ks)) + ') translate(-318 -512)');
+
+          hud.atualizar(147, t > T_FINAL ? 'O CÉREBRO ESTUDA A SI MESMO' : 'CIÊNCIA MEDINDO O INVISÍVEL', t > T_FINAL ? '#fbbf24' : '#38bdf8');
+
+          boy.atualizar(t, og, {
+            humor: t > T_FINAL ? 'feliz' : (t > 4 ? 'surpreso' : 'neutro'),
+            bracoD: t > T_FINAL ? 116 : 40,
+            bracoE: t > T_FINAL ? 30 : 12,
+            olhar: [12, -4],
+            inclinar: t > T_FINAL ? -2 : 2,
+            pulo: t > T_SELO ? Math.abs(Math.sin((t - T_SELO) * 4.4)) * 10 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 101.80 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-06-espelho'] = tl;
+    })();
+  </script>
+</template>

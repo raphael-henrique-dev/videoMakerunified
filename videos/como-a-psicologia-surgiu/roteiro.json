@@ -1,0 +1,233 @@
+{
+  "id": "como-a-psicologia-surgiu",
+  "titulo": "Como a Psicologia Surgiu?",
+  "subtitulo": "Da furadeira no crânio ao laboratório de 1879: a história real de como a mente virou ciência",
+  "resolucao": {
+    "largura": 1080,
+    "altura": 1920
+  },
+  "fps": 30,
+  "alvoPpm": 172,
+  "modo": "2d",
+  "voz": {
+    "motor": "elevenlabs",
+    "id": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelo": "eleven_multilingual_v2",
+    "estabilidade": 0.38,
+    "similaridade": 0.8,
+    "estilo": 0.4,
+    "velocidade": 1.08,
+    "acelerar": 1.0
+  },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.2
+  },
+  "efeitos": {
+    "ganho": 1.12
+  },
+  "publicacao": {
+    "titulo": "Como a Psicologia Surgiu? 🧠 #shorts",
+    "descricao": "Furadeira no crânio, sangria, correntes no hospício... e então alguém decidiu medir. A história real de como a psicologia deixou de adivinhar e virou ciência.",
+    "tags": ["psicologia", "historia", "ciencia", "curiosidades", "mente", "comportamento"],
+    "tiktok_caption": "Como a psicologia surgiu? 🧠 Antes de virar ciência, a mente foi tratada com furadeira, sangria e corrente. #curiosidades #psicologia #historia #fyp #foryou",
+    "allow_comments": true,
+    "allow_duet": true,
+    "allow_stitch": true
+  },
+  "frames": [
+    {
+      "id": "frame-01-trepanacao",
+      "numero": "01",
+      "titulo": "O Crânio Furava Antes da Teoria",
+      "arquivo": "compositions/frames/01-trepanacao.html",
+      "kicker": "PRÉ-HISTÓRIA // O FURO",
+      "metrica": {
+        "rotulo": "CURA REAL",
+        "valor": "0%"
+      },
+      "direcao2D": "Caverna com fogueira, crânio humano em perfil com buraco circular, sílex girando sobre a cabeça e xamã mascarado segurando a ferramenta. Etiquetas TREPANAÇÃO e ESPÍRITO SAINDO, partículas de brasa e selo de infecção.",
+      "cauda": 0.3,
+      "sons": [
+        { "nome": "fogo", "offset": 0.4, "dur": 5.0, "ganho": 0.4 },
+        { "nome": "pedra", "offset": 1.6, "ganho": 0.5 },
+        { "nome": "baque", "offset": 3.4, "ganho": 0.55 },
+        { "nome": "pedra", "offset": 5.2, "ganho": 0.45 },
+        { "nome": "errado", "offset": 8.4, "ganho": 0.6 }
+      ],
+      "frases": [
+        {
+          "plano": "GANCHO",
+          "jogo": "gancho_furador",
+          "gancho": true,
+          "texto": "Imagine tratar a sua *ansiedade* com uma *furadeira* no crânio — e achar isso *genial.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "trepanacao_falha",
+          "texto": "Foi assim por *milhares* de anos: um buraco na cabeça pra deixar o espírito *sair.* Só que a dor continuava — e a *infecção* chegava junto."
+        }
+      ]
+    },
+    {
+      "id": "frame-02-humores-sangria",
+      "numero": "02",
+      "titulo": "A Tristeza Não Sai Pelo Sangue",
+      "arquivo": "compositions/frames/02-humores-sangria.html",
+      "kicker": "TEORIA DOS HUMORES // A SANGRIA",
+      "metrica": {
+        "rotulo": "SANGUE RETIRADO",
+        "valor": "500 mL"
+      },
+      "direcao2D": "Consultório antigo de madeira, estante com quatro potes de humor (sangue, fleuma, bile amarela e bile negra), paciente sentado com o braço esticado, médico de peruca aplicando a lanceta e bacia enchendo de gotas. Etiquetas SANGRIA e BILE NEGRA.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "range", "offset": 0.5, "ganho": 0.4 },
+        { "nome": "pingo", "offset": 2.0, "ganho": 0.5 },
+        { "nome": "estalo", "offset": 4.0, "ganho": 0.55 },
+        { "nome": "pingo", "offset": 5.0, "ganho": 0.45 },
+        { "nome": "tampa", "offset": 7.2, "ganho": 0.5 },
+        { "nome": "errado", "offset": 9.4, "ganho": 0.58 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "quatro_humores",
+          "texto": "Depois, a culpa virou *líquido:* excesso de *bile negra,* *fleuma* e sangue quente. A tristeza era só um *desequilíbrio* de fluido."
+        },
+        {
+          "plano": "PA",
+          "jogo": "sangria_falha",
+          "texto": "A cura? *Sangria.* Abrir a veia e tirar *meio litro* de sangue. O paciente saía mais *fraco* — e a tristeza continuava *exatamente* no lugar."
+        }
+      ]
+    },
+    {
+      "id": "frame-03-hospicio",
+      "numero": "03",
+      "titulo": "O Depósito de Gente Incompreendida",
+      "arquivo": "compositions/frames/03-hospicio.html",
+      "kicker": "SÉCULO XVIII // O DEPÓSITO",
+      "metrica": {
+        "rotulo": "TRATAMENTOS EFICAZES",
+        "valor": "0"
+      },
+      "direcao2D": "Corredor de hospício em pedra fria: cela com grades e silhueta atrás, correntes na parede, cadeira giratória com cintos no centro e banheira de gelo com cubos à direita. Etiquetas CORRENTES, CADEIRA GIRATÓRIA e BANHO DE GELO.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "range", "offset": 0.6, "ganho": 0.5 },
+        { "nome": "metal", "offset": 1.4, "ganho": 0.45 },
+        { "nome": "congela", "offset": 4.2, "ganho": 0.5 },
+        { "nome": "zumbido", "offset": 6.0, "dur": 4.0, "ganho": 0.35 },
+        { "nome": "errado", "offset": 9.6, "ganho": 0.6 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "hospicio_deposito",
+          "texto": "Quando ninguém entendia, o jeito era *esconder.* O hospício virou *depósito:* corrente no pulso, cela de pedra, banho de *gelo* e cadeira que *girava* até desmaiar."
+        },
+        {
+          "plano": "PA",
+          "jogo": "castigo_zero",
+          "texto": "Ninguém *media* nada. Ninguém *anotava* nada. Era castigo com nome de *tratamento* — e a conta de *cura* fechava em *zero.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-04-laboratorio",
+      "numero": "04",
+      "titulo": "1879: A Psicologia Ganha Régua",
+      "arquivo": "compositions/frames/04-laboratorio.html",
+      "kicker": "1879 // O LABORATÓRIO",
+      "metrica": {
+        "rotulo": "TEMPO DE REAÇÃO",
+        "valor": "0,18 s"
+      },
+      "direcao2D": "Laboratório de madeira em Leipzig: pêndulo de latão oscilando, cronoscópio com mostrador e ponteiro, pesquisador de casaco e sujeito apertando uma tecla telegráfica. Painel digital de tempo de reação, gráfico de barras e etiquetas PÊNDULO, CRONOSCÓPIO e TEMPO DE REAÇÃO.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "trava", "offset": 0.5, "ganho": 0.5 },
+        { "nome": "bip", "offset": 2.2, "ganho": 0.5 },
+        { "nome": "clique", "offset": 4.4, "ganho": 0.5 },
+        { "nome": "ding", "offset": 6.8, "ganho": 0.55 },
+        { "nome": "certo", "offset": 9.2, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "wundt_1879",
+          "texto": "A virada veio quando alguém decidiu *medir* em vez de *adivinhar.* Em *mil oitocentos e setenta e nove,* Wilhelm Wundt abriu o primeiro *laboratório* de psicologia do mundo."
+        },
+        {
+          "plano": "M",
+          "jogo": "tempo_reacao",
+          "texto": "Ali não tinha *espírito* nem *bile:* tinha *pêndulo,* cronômetro e gente apertando um *botão.* O tempo de reação virava *número* — e o que ninguém via virava *dado.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-05-divã",
+      "numero": "05",
+      "titulo": "A Fala Também É Dado",
+      "arquivo": "compositions/frames/05-diva.html",
+      "kicker": "SÉCULO XX // A FALA",
+      "metrica": {
+        "rotulo": "EVIDÊNCIA CLÍNICA",
+        "valor": "100%"
+      },
+      "direcao2D": "Consultório com divã de couro e paciente deitado, terapeuta de óculos sentado na poltrona com prancheta, ondas de fala subindo e palavras-pensamento flutuando. Faixa inferior FALA → HIPÓTESE → TESTE, abajur aceso e relógio na parede.",
+      "cauda": 0.25,
+      "sons": [
+        { "nome": "range", "offset": 0.5, "ganho": 0.35 },
+        { "nome": "etiqueta", "offset": 2.6, "ganho": 0.5 },
+        { "nome": "bip", "offset": 5.0, "ganho": 0.4 },
+        { "nome": "certo", "offset": 8.8, "ganho": 0.55 }
+      ],
+      "frases": [
+        {
+          "plano": "M",
+          "jogo": "freud_diva",
+          "texto": "Para a *dor* que não aparecia no exame, entra o *divã:* Freud mostrou que a *fala* também é dado — o que você *evita* contar diz muito sobre você."
+        },
+        {
+          "plano": "PA",
+          "jogo": "evidencia_teste",
+          "texto": "Depois vieram os que só aceitavam o que dá pra *ver:* *comportamento,* estímulo e resposta. E a terapia virou *teste:* se não funciona em *pesquisa,* não entra no *consultório.*"
+        }
+      ]
+    },
+    {
+      "id": "frame-06-espelho",
+      "numero": "06",
+      "titulo": "O Único Órgão Que Estuda a Si Mesmo",
+      "arquivo": "compositions/frames/06-espelho.html",
+      "kicker": "HOJE // O ESPELHO",
+      "metrica": {
+        "rotulo": "ANOS DE MÉTODO",
+        "valor": "147"
+      },
+      "direcao2D": "Espelho grande com moldura trabalhada refletindo um cérebro em rede de nós luminosos; silhueta humana diante do espelho, chips de SONO, ATENÇÃO, MEMÓRIA e HUMOR, linha do tempo 1879 → 1900 → 1950 → HOJE e selo final do Curiorisando.",
+      "cauda": 1.1,
+      "sons": [
+        { "nome": "brilho", "offset": 0.5, "ganho": 0.5 },
+        { "nome": "etiqueta", "offset": 3.0, "ganho": 0.45 },
+        { "nome": "bip", "offset": 6.0, "ganho": 0.4 },
+        { "nome": "certo", "offset": 10.0, "ganho": 0.5 },
+        { "nome": "final", "offset": 20.0, "ganho": 0.62 }
+      ],
+      "frases": [
+        {
+          "plano": "PA",
+          "jogo": "psicologia_hoje",
+          "texto": "Hoje a psicologia mede *sono,* *atenção,* *memória* e *humor* — e trata *ansiedade* e *depressão* com métodos *testados,* não com *sangria.*"
+        },
+        {
+          "plano": "M",
+          "jogo": "fechamento_curiorisando",
+          "texto": "Mas tem um limite que nenhum laboratório resolve: o *cérebro* é o único órgão que estuda *a si mesmo.* Por fora, parece só *conversa.* Por dentro, é *ciência* medindo o que ninguém consegue *ver.* Pois é, o mundo é mais *curioso* do que parece! Se você é curioso, segue o *Curiorisando!*"
+        }
+      ]
+    }
+  ]
+}

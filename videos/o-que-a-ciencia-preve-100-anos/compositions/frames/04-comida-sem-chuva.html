@@ -1,0 +1,236 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f4-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f4-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f4-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(6,14,26,0.90); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f4-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#7dd3fc; text-transform:uppercase; }
+    .f4-badge { font-size:19px; font-weight:700; color:#4ade80; letter-spacing:.06em; }
+    .f4-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(6,14,26,0.90); border-left:5px solid #4ade80; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f4-title { font-family:'EB Garamond',serif; font-size:54px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f4-title-accent { color:#86efac; }
+    .f4-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f4-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(6,16,30,0.94); border:1.5px solid rgba(74,222,128,0.6); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f4-banner-text { font-size:19px; font-weight:700; color:#bbf7d0; letter-spacing:.03em; line-height:1.25; }
+    .f4-banner-pill { flex:0 0 auto; padding:7px 15px; background:#4ade80; color:#04140a; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f4-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 42% 24%, #2a1230 0%, #0b2030 46%, #050a14 100%); }
+    #f4-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#081a16 0%,#050a14 100%); border-top:2px solid rgba(74,222,128,0.18); }
+    #f4-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f4-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f4-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(6,14,26,0.92); border:1px solid rgba(74,222,128,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f4-root" data-composition-id="frame-04-comida-sem-chuva" data-width="1080" data-height="1920" data-start="0" data-duration="23.44">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f4-cena" class="m2-cena"></div>
+    <div id="f4-mascote" class="m2-mascote"></div>
+    <div id="f4-hud" class="m2-hud"></div>
+
+    <div class="f4-ui-layer">
+      <div id="f4-topbar" class="f4-topbar">
+        <span class="f4-kicker">COMIDA // A FEIRA DO FUTURO</span>
+        <span class="f4-badge">-90% ÁGUA</span>
+      </div>
+      <div id="f4-header" class="f4-header-card">
+        <h1 class="f4-title">A Feira do <span class="f4-title-accent">Futuro</span></h1>
+        <p class="f4-subtitle">Planta cresce em prédio, proteína sai de tanque e a água do mar vira água de beber.</p>
+      </div>
+      <div id="f4-banner" class="f4-banner" style="opacity: 0;">
+        <span class="f4-banner-text">A SAFRA NÃO DEPENDE DA CHUVA</span>
+        <span class="f4-banner-pill">COMIDA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 23.44;
+      var T_FAZENDA = 1.4;
+      var T_BIOREATOR = 5.0;
+      var T_AGUA = 7.6;
+      var T_PRECO = 11.0;
+      var T_BANNER = 21.6;
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f4-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f4-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, T_BANNER);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var fundo =
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: '#071018' }) +
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: 'url(#s4-fundoGrad)' });
+
+        // nuvem riscada
+        var nuvem =
+          G({ id: 's4-nuvem' },
+            T('path', { d: 'M566 132 C566 108 586 92 610 96 C620 76 650 70 666 88 C688 76 714 88 716 112 C738 114 752 132 746 150 L580 150 C568 148 562 142 566 132 Z', fill: '#1e293b', stroke: '#64748b', 'stroke-width': 2 }) +
+            T('line', { x1: 566, y1: 86, x2: 742, y2: 158, stroke: '#ef4444', 'stroke-width': 5, 'stroke-linecap': 'round' }) +
+            T('text', { x: 654, y: 180, 'text-anchor': 'middle', fill: '#fca5a5', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 0.8 }, 'CHUVA NÃO É GARANTIDA'));
+
+        // fazenda vertical
+        var fazenda =
+          G({ id: 's4-fazenda' },
+            T('rect', { x: 352, y: 58, width: 168, height: 524, rx: 16, fill: 'rgba(8,20,32,0.92)', stroke: '#4ade80', 'stroke-width': 3 }) +
+            T('rect', { x: 364, y: 72, width: 144, height: 496, rx: 10, fill: '#071018', stroke: '#1e3a5f', 'stroke-width': 1.5 }) +
+            T('text', { x: 436, y: 46, 'text-anchor': 'middle', fill: '#bbf7d0', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1.0 }, 'FAZENDA VERTICAL'));
+
+        var prateleiras = '';
+        var alfaces = '';
+        var leds = '';
+        for (var s = 0; s < 4; s++) {
+          var sy = 96 + s * 118;
+          prateleiras += T('rect', { x: 374, y: sy + 62, width: 124, height: 10, rx: 4, fill: '#1e3a5f' });
+          leds += T('rect', { id: 's4-led' + s, x: 374, y: sy, width: 124, height: 8, rx: 4, fill: '#f472b6', opacity: 0.5 });
+          for (var a = 0; a < 5; a++) {
+            var ax = 386 + a * 24;
+            alfaces +=
+              G({ id: 's4-alfa' + s + '-' + a, transform: 'translate(' + ax + ' ' + (sy + 58) + ') scale(0.2)' },
+                T('path', { d: 'M0 0 C-14 -4 -18 -22 -8 -30 C-2 -34 6 -34 12 -28 C22 -20 16 -2 0 0 Z', fill: a % 2 ? '#22c55e' : '#4ade80', stroke: '#86efac', 'stroke-width': 1.2 }) +
+                T('path', { d: 'M0 0 L0 -24', stroke: '#166534', 'stroke-width': 2 }) +
+                T('path', { d: 'M0 -10 C-6 -14 -10 -18 -12 -24', fill: 'none', stroke: '#166534', 'stroke-width': 1.5 }) +
+                T('path', { d: 'M0 -16 C6 -20 10 -22 12 -28', fill: 'none', stroke: '#166534', 'stroke-width': 1.5 }));
+          }
+        }
+
+        // biorreator
+        var biorreator =
+          G({ id: 's4-biorreator' },
+            T('rect', { x: 560, y: 300, width: 150, height: 280, rx: 30, fill: 'rgba(8,20,32,0.94)', stroke: '#fbbf24', 'stroke-width': 3 }) +
+            T('path', { d: 'M574 300 C574 270 696 270 696 300', fill: 'rgba(8,20,32,0.94)', stroke: '#fbbf24', 'stroke-width': 3 }) +
+            T('rect', { x: 574, y: 382, width: 122, height: 184, rx: 18, fill: '#3f2a0a' }) +
+            T('rect', { x: 574, y: 382, width: 122, height: 184, rx: 18, fill: 'url(#s4-caldoGrad)' }) +
+            T('rect', { x: 590, y: 330, width: 90, height: 10, rx: 5, fill: '#fbbf24', opacity: 0.5 }) +
+            T('circle', { cx: 635, cy: 340, r: 10, fill: 'none', stroke: '#fde68a', 'stroke-width': 2 }) +
+            T('line', { x1: 635, y1: 340, x2: 642, y2: 333, stroke: '#fde68a', 'stroke-width': 2 }) +
+            T('rect', { x: 596, y: 580, width: 78, height: 14, rx: 7, fill: '#fbbf24', opacity: 0.4 }) +
+            T('text', { x: 635, y: 614, 'text-anchor': 'middle', fill: '#fde68a', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1.0 }, 'PROTEÍNA'));
+
+        var bolhas = '';
+        for (var b = 0; b < 14; b++) {
+          bolhas += T('circle', { id: 's4-bolha' + b, cx: 0, cy: 0, r: 3 + (b % 4) * 1.6, fill: '#fde68a', opacity: 0 });
+        }
+
+        // dessalinização
+        var usina =
+          G({ id: 's4-usina' },
+            T('rect', { x: 760, y: 340, width: 180, height: 240, rx: 12, fill: 'rgba(8,20,32,0.94)', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('rect', { x: 776, y: 356, width: 148, height: 70, rx: 8, fill: '#0b1220', stroke: '#1e3a5f', 'stroke-width': 2 }) +
+            T('path', { d: 'M776 420 L810 390 L844 420 L878 390 L912 420 L924 406', fill: 'none', stroke: '#38bdf8', 'stroke-width': 3, opacity: 0.7 }) +
+            T('rect', { x: 776, y: 444, width: 64, height: 120, rx: 8, fill: '#0b1220', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('rect', { x: 784, y: 500, width: 48, height: 56, rx: 6, fill: '#0e7490' }) +
+            T('rect', { x: 860, y: 444, width: 64, height: 120, rx: 8, fill: '#0b1220', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('rect', { x: 868, y: 468, width: 48, height: 88, rx: 6, fill: '#22d3ee', opacity: 0.7 }) +
+            T('path', { d: 'M840 480 C848 480 852 486 852 494', fill: 'none', stroke: '#38bdf8', 'stroke-width': 5, 'stroke-linecap': 'round' }) +
+            T('text', { x: 850, y: 614, 'text-anchor': 'middle', fill: '#bae6fd', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1.0 }, 'ÁGUA DO MAR → DOCE'));
+
+        var gotas = '';
+        for (var g = 0; g < 8; g++) {
+          gotas += T('path', { id: 's4-gota' + g, d: 'M0 0 C-5 8 -5 14 0 18 C5 14 5 8 0 0 Z', fill: '#67e8f9', opacity: 0 });
+        }
+
+        // prato com hambúrguer e etiqueta de preço
+        var prato =
+          G({ id: 's4-prato' },
+            T('ellipse', { cx: 850, cy: 206, rx: 88, ry: 26, fill: '#0b1220', stroke: '#cbd5e1', 'stroke-width': 3 }) +
+            T('path', { d: 'M790 196 C790 170 910 170 910 196 Z', fill: '#f59e0b', stroke: '#fbbf24', 'stroke-width': 2 }) +
+            T('rect', { x: 792, y: 196, width: 116, height: 12, rx: 6, fill: '#22c55e' }) +
+            T('rect', { x: 796, y: 208, width: 108, height: 16, rx: 8, fill: '#7c2d12' }) +
+            T('path', { d: 'M790 224 C790 244 910 244 910 224 Z', fill: '#d97706', stroke: '#fbbf24', 'stroke-width': 2 }) +
+            T('text', { x: 850, y: 268, 'text-anchor': 'middle', fill: '#fde68a', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 0.8 }, 'PROTEÍNA DE TANQUE'));
+
+        var etiqueta =
+          G({ id: 's4-etiqueta', transform: 'translate(940 120) rotate(8)' },
+            T('path', { d: 'M0 0 L-52 0 L-78 30 L-52 60 L0 60 Z', fill: 'rgba(6,14,26,0.96)', stroke: '#4ade80', 'stroke-width': 3 }) +
+            T('circle', { cx: -56, cy: 30, r: 6, fill: '#4ade80' }) +
+            T('text', { id: 's4-preco', x: -26, y: 26, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 18, 'font-weight': 700 }, 'R$ 40' ) +
+            T('path', { id: 's4-setaPreco', d: 'M-40 40 L-12 40 M-20 32 L-12 40 L-20 48', fill: 'none', stroke: '#4ade80', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0 }));
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<radialGradient id="s4-fundoGrad" cx="0.42" cy="0.24" r="0.78"><stop offset="0" stop-color="#831843" stop-opacity="0.28"/><stop offset="0.55" stop-color="#0b2030" stop-opacity="0.12"/><stop offset="1" stop-color="#050a14" stop-opacity="0"/></radialGradient>' +
+          '<linearGradient id="s4-caldoGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.55"/><stop offset="1" stop-color="#7c2d12" stop-opacity="0.85"/></linearGradient>' +
+          '</defs>' +
+          fundo + nuvem + fazenda + prateleiras + leds + alfaces + biorreator + bolhas + usina + gotas + prato + etiqueta
+        );
+        M.montar('#f4-cena', svg);
+        var cena = M.pegar('#f4-cena');
+        var alfaEls = [];
+        for (var s2 = 0; s2 < 4; s2++) for (var a2 = 0; a2 < 5; a2++) alfaEls.push(M.pegar(cena, '#s4-alfa' + s2 + '-' + a2));
+        var ledEls = [];
+        for (var l = 0; l < 4; l++) ledEls.push(M.pegar(cena, '#s4-led' + l));
+        var bolhaEls = [];
+        for (var b2 = 0; b2 < 14; b2++) bolhaEls.push(M.pegar(cena, '#s4-bolha' + b2));
+        var gotaEls = [];
+        for (var g2 = 0; g2 < 8; g2++) gotaEls.push(M.pegar(cena, '#s4-gota' + g2));
+        var precoEl = M.pegar(cena, '#s4-preco');
+        var setaPreco = M.pegar(cena, '#s4-setaPreco');
+        var etiquetaEl = M.pegar(cena, '#s4-etiqueta');
+        var boy = M.mascote('#f4-mascote');
+        var hud = M.medidorBarra('#f4-hud', { rotulo: 'ÁGUA NA PROTEÍNA', unidade: '% MENOS', max: 100, cor: '#4ade80', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          // LEDs rosa pulsando
+          for (var l2 = 0; l2 < 4; l2++) {
+            ledEls[l2].setAttribute('opacity', f2(0.35 + 0.45 * (0.5 + 0.5 * Math.sin(t * 2.4 + l2 * 0.9))));
+          }
+
+          // alfaces crescem
+          for (var a3 = 0; a3 < 20; a3++) {
+            var s3 = Math.floor(a3 / 5);
+            var kA = suave(faixa(t, T_FAZENDA + s3 * 0.55 + (a3 % 5) * 0.08, T_FAZENDA + s3 * 0.55 + 0.8));
+            var elA = alfaEls[a3];
+            if (elA) elA.setAttribute('transform', 'translate(' + (386 + (a3 % 5) * 24) + ' ' + (96 + s3 * 118 + 58) + ') scale(' + f2(lerp(0.2, 1, kA)) + ')');
+          }
+
+          // bolhas do biorreator
+          for (var b3 = 0; b3 < 14; b3++) {
+            var fase = ((t * 0.35 + b3 / 14) % 1);
+            var bx = 590 + M.ruido(b3 * 3.1) * 90;
+            bolhaEls[b3].setAttribute('cx', f2(bx + Math.sin(t * 1.8 + b3) * 6));
+            bolhaEls[b3].setAttribute('cy', f2(560 - fase * 168));
+            bolhaEls[b3].setAttribute('opacity', f2(0.65 * (1 - fase) * suave(faixa(t, T_BIOREATOR, T_BIOREATOR + 0.8))));
+          }
+
+          // gotas da dessalinização
+          for (var g3 = 0; g3 < 8; g3++) {
+            var fg = ((t * 0.55 + g3 / 8) % 1);
+            var gx = 788 + (g3 % 4) * 30;
+            gotaEls[g3].setAttribute('transform', 'translate(' + gx + ' ' + f2(470 + fg * 80) + ')');
+            gotaEls[g3].setAttribute('opacity', f2(0.75 * (1 - fg) * suave(faixa(t, T_AGUA, T_AGUA + 0.7))));
+          }
+
+          // preço cai
+          var kP = suave(faixa(t, T_PRECO, T_PRECO + 1.4));
+          var preco = Math.round(lerp(40, 18, kP));
+          precoEl.textContent = 'R$ ' + preco;
+          setaPreco.setAttribute('opacity', f2(kP));
+          etiquetaEl.setAttribute('transform', 'translate(940 120) rotate(' + f2(8 + Math.sin(t * 2.2) * 3) + ')');
+
+          hud.atualizar(lerp(0, 90, suave(faixa(t, 1.0, 18.0))), t > 17.0 ? 'TANQUE, NÃO PASTO' : 'MENOS ÁGUA', t > 17.0 ? '#86efac' : '#4ade80');
+
+          boy.atualizar(t, og, {
+            humor: t > T_PRECO ? 'feliz' : 'surpreso',
+            bracoD: t > T_PRECO ? 112 : 40,
+            bracoE: 14,
+            olhar: [8, -2],
+            inclinar: -2,
+            pulo: t > T_BANNER ? Math.abs(Math.sin((t - T_BANNER) * 4.1)) * 8 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 73.97 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-comida-sem-chuva'] = tl;
+    })();
+  </script>
+</template>

@@ -1,0 +1,245 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f3-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#040d14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f3-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f3-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(6,16,24,0.90); border:1px solid rgba(34,211,238,0.40); border-radius:14px; }
+    .f3-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#22d3ee; text-transform:uppercase; }
+    .f3-badge { font-size:19px; font-weight:700; color:#fbbf24; letter-spacing:.06em; }
+    .f3-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(6,16,24,0.90); border-left:5px solid #22d3ee; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f3-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f3-title-accent { color:#67e8f9; }
+    .f3-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f3-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(6,16,24,0.94); border:1.5px solid rgba(34,211,238,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f3-banner-text { font-size:19px; font-weight:700; color:#cffafe; letter-spacing:.03em; line-height:1.25; }
+    .f3-banner-pill { flex:0 0 auto; padding:7px 15px; background:#22d3ee; color:#04212a; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f3-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 40% 24%, #08303d 0%, #061a24 48%, #040d14 100%); }
+    #f3-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#071c26 0%,#040d14 100%); border-top:2px solid rgba(34,211,238,0.20); }
+    #f3-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f3-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f3-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(6,16,24,0.92); border:1px solid rgba(34,211,238,0.34); border-radius:22px; }
+  </style>
+
+  <div id="f3-root" data-composition-id="frame-03-agua-freatico" data-width="1080" data-height="1920" data-start="0" data-duration="18.46">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f3-cena" class="m2-cena"></div>
+    <div id="f3-mascote" class="m2-mascote"></div>
+    <div id="f3-hud" class="m2-hud"></div>
+
+    <div class="f3-ui-layer">
+      <div id="f3-topbar" class="f3-topbar">
+        <span class="f3-kicker">CAMADA 02 // A ÁGUA</span>
+        <span class="f3-badge">0 LITROS</span>
+      </div>
+      <div id="f3-header" class="f3-header-card">
+        <h1 class="f3-title">O Inimigo Que <span class="f3-title-accent">Não Faz Barulho</span></h1>
+        <p class="f3-subtitle">Lá embaixo a água não cai de cima. Ela sobe pelo chão e transforma o abrigo numa piscina.</p>
+      </div>
+      <div id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span class="f3-banner-text">MANTA + BRITA + BOMBA: O BUNKER FICA SECO</span>
+        <span class="f3-banner-pill">3 CAMADAS</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 18.46;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 14.6);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        function chip(x, num, titulo, sub, cor, corNum) {
+          return G({},
+            T('rect', { x: x, y: 14, width: 188, height: 56, rx: 12, fill: 'rgba(6,16,24,0.94)', stroke: cor, 'stroke-width': 1.5 }) +
+            T('circle', { cx: x + 26, cy: 42, r: 13, fill: cor }) +
+            T('text', { x: x + 26, y: 47, 'text-anchor': 'middle', fill: corNum, 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700 }, num) +
+            T('text', { x: x + 48, y: 37, fill: cor, 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 0.8 }, titulo) +
+            T('text', { x: x + 48, y: 56, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 11, 'font-weight': 400 }, sub));
+        }
+
+        function badge(x, y, num, cor, corNum) {
+          return T('circle', { cx: x, cy: y, r: 13, fill: cor, stroke: '#040d14', 'stroke-width': 2 }) +
+            T('text', { x: x, y: y + 5, 'text-anchor': 'middle', fill: corNum, 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700 }, num);
+        }
+
+        // brita: colchão drenante entre a manta e o solo
+        var brita = '';
+        for (var b = 0; b < 78; b++) {
+          var bx = 654 + M.ruido(b * 1.7) * 34;
+          var by = 118 + M.ruido(b * 4.3) * 472;
+          brita += T('circle', { cx: f2(bx), cy: f2(by), r: f2(2.2 + M.ruido(b * 2.9) * 3.2), fill: '#a8a29e', 'fill-opacity': f2(0.32 + M.ruido(b * 6.1) * 0.4) });
+        }
+
+        // gotas da descarga
+        var gotas = '';
+        for (var d = 0; d < 6; d++) {
+          gotas += T('circle', { id: 's3-gota' + d, r: 3.4, fill: '#67e8f9', opacity: 0 });
+        }
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<linearGradient id="s3-soloGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a2b1c"/><stop offset="1" stop-color="#1a1209"/></linearGradient>' +
+          '<linearGradient id="s3-aguaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0e7490"/><stop offset="1" stop-color="#082f49"/></linearGradient>' +
+          '<linearGradient id="s3-concGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#94a3b8"/><stop offset="1" stop-color="#475569"/></linearGradient>' +
+          '<linearGradient id="s3-luzGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.4"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></linearGradient>' +
+          '</defs>' +
+          // céu e grama
+          T('rect', { x: 0, y: 0, width: 1080, height: 104, fill: '#0a2233' }) +
+          T('path', { d: 'M0 104 Q140 88 280 102 T540 100 T800 106 T1080 96 L1080 122 L0 122 Z', fill: '#14532d' }) +
+          // solo
+          T('rect', { x: 0, y: 104, width: 1080, height: 536, fill: 'url(#s3-soloGrad)' }) +
+          (function () {
+            var s = '';
+            for (var k = 0; k < 52; k++) {
+              s += T('circle', { cx: f2(M.ruido(k * 2.7) * 1080), cy: f2(124 + M.ruido(k * 5.9) * 500), r: f2(2 + M.ruido(k * 3.1) * 4.4), fill: '#6b4a2f', 'fill-opacity': f2(0.28 + M.ruido(k * 8.3) * 0.4) });
+            }
+            return s;
+          })() +
+          // lençol freático (por trás do bunker)
+          G({ id: 's3-lencol' },
+            T('path', { id: 's3-agua', d: 'M0 640 L1080 640 L1080 640 L0 640 Z', fill: 'url(#s3-aguaGrad)', opacity: 0.86 }) +
+            T('path', { id: 's3-nivel', d: 'M0 640 L1080 640', fill: 'none', stroke: '#67e8f9', 'stroke-width': 3.5, opacity: 0.9 })) +
+          // brita
+          G({ id: 's3-brita' }, brita) +
+          // manta impermeável
+          G({ id: 's3-manta', opacity: 0.55 },
+            T('rect', { x: 330, y: 126, width: 326, height: 444, rx: 30, fill: 'none', stroke: '#f59e0b', 'stroke-width': 7, 'stroke-dasharray': '16 10' })) +
+          // casca
+          T('rect', { x: 344, y: 140, width: 296, height: 416, rx: 20, fill: 'url(#s3-concGrad)', stroke: '#e2e8f0', 'stroke-width': 3 }) +
+          // interior seco
+          T('rect', { x: 368, y: 164, width: 248, height: 368, rx: 12, fill: '#071620', stroke: '#334155', 'stroke-width': 3 }) +
+          T('path', { d: 'M460 172 L524 172 L590 440 L394 440 Z', fill: 'url(#s3-luzGrad)', opacity: 0.55 }) +
+          T('rect', { x: 482, y: 164, width: 20, height: 9, rx: 3, fill: '#fbbf24' }) +
+          G({},
+            T('rect', { x: 404, y: 188, width: 176, height: 30, rx: 15, fill: 'rgba(6,32,20,0.92)', stroke: '#22c55e', 'stroke-width': 1.5 }) +
+            T('text', { x: 492, y: 208, 'text-anchor': 'middle', fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 12.5, 'font-weight': 700, 'letter-spacing': 1.2 }, 'SECO AQUI DENTRO')) +
+          T('rect', { x: 386, y: 468, width: 120, height: 18, rx: 5, fill: '#1d4ed8' }) +
+          T('rect', { x: 386, y: 486, width: 120, height: 14, rx: 4, fill: '#1e3a8a' }) +
+          T('rect', { x: 392, y: 458, width: 34, height: 12, rx: 6, fill: '#e2e8f0' }) +
+          T('rect', { x: 556, y: 458, width: 50, height: 50, rx: 5, fill: '#7c2d12', stroke: '#f59e0b', 'stroke-width': 2 }) +
+          T('rect', { x: 368, y: 516, width: 248, height: 16, fill: '#0b1520' }) +
+          // poço de sump
+          T('rect', { x: 688, y: 392, width: 96, height: 212, rx: 10, fill: '#0a1a22', stroke: '#475569', 'stroke-width': 3 }) +
+          T('rect', { id: 's3-pocoAgua', x: 696, y: 396, width: 80, height: 200, fill: '#0e7490', opacity: 0.9 }) +
+          T('rect', { x: 698, y: 400, width: 76, height: 8, rx: 4, fill: '#94a3b8' }) +
+          // bomba
+          G({ id: 's3-bomba' },
+            T('rect', { x: 700, y: 404, width: 72, height: 46, rx: 8, fill: '#334155', stroke: '#cbd5e1', 'stroke-width': 3 }) +
+            T('circle', { id: 's3-rotor', cx: 736, cy: 427, r: 13, fill: 'none', stroke: '#22d3ee', 'stroke-width': 3 }) +
+            T('line', { x1: 736, y1: 414, x2: 736, y2: 440, stroke: '#22d3ee', 'stroke-width': 2 }) +
+            T('line', { x1: 723, y1: 427, x2: 749, y2: 427, stroke: '#22d3ee', 'stroke-width': 2 })) +
+          // tubo de descarga
+          T('path', { d: 'M736 404 L736 356 L880 356 L880 142', fill: 'none', stroke: '#94a3b8', 'stroke-width': 10, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }) +
+          T('path', { id: 's3-fluxo', d: 'M736 404 L736 356 L880 356 L880 142', fill: 'none', stroke: '#0e7490', 'stroke-width': 4, 'stroke-linecap': 'round', 'stroke-dasharray': '10 14' }) +
+          T('path', { d: 'M866 152 L880 128 L894 152 Z', fill: '#67e8f9' }) +
+          T('text', { x: 880, y: 112, 'text-anchor': 'middle', fill: '#cffafe', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 1.2 }, 'PRA FORA') +
+          gotas +
+          // etiquetas numeradas no desenho
+          badge(346, 132, '1', '#f59e0b', '#241303') +
+          badge(670, 230, '2', '#a8a29e', '#1a1209') +
+          badge(736, 392, '3', '#22d3ee', '#04212a') +
+          // legenda superior
+          chip(336, '1', 'MANTA', 'impermeável por fora', '#f59e0b', '#241303') +
+          chip(542, '2', 'BRITA', 'drena a água', '#a8a29e', '#1a1209') +
+          chip(748, '3', 'BOMBA', 'tira o que sobra', '#22d3ee', '#04212a') +
+          // painel do nível (acima do mascote)
+          T('rect', { x: 30, y: 20, width: 258, height: 258, rx: 18, fill: 'rgba(6,16,24,0.92)', stroke: 'rgba(34,211,238,0.32)', 'stroke-width': 2 }) +
+          T('text', { x: 48, y: 52, fill: '#22d3ee', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 1.4 }, 'NÍVEL FREÁTICO') +
+          T('text', { id: 's3-nivelNum', x: 48, y: 118, fill: '#67e8f9', 'font-family': 'Inter, sans-serif', 'font-size': 60, 'font-weight': 700 }, '0 m') +
+          T('text', { x: 48, y: 148, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 400 }, 'a água sobe pelo chão') +
+          T('rect', { x: 48, y: 174, width: 222, height: 18, rx: 9, fill: '#0b1220', stroke: '#334155', 'stroke-width': 1.5 }) +
+          T('rect', { id: 's3-nivelFill', x: 50, y: 176, width: 0, height: 14, rx: 7, fill: '#22d3ee' }) +
+          T('text', { x: 48, y: 214, fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700 }, '0m') +
+          T('text', { x: 159, y: 214, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700 }, '−3m') +
+          T('text', { x: 270, y: 214, 'text-anchor': 'end', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700 }, '−6m') +
+          T('text', { x: 48, y: 248, fill: '#fbbf24', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 0.6 }, 'PRESSÃO: 0,6 BAR')
+        );
+        M.montar('#f3-cena', svg);
+        var cena = M.pegar('#f3-cena');
+        var agua = M.pegar(cena, '#s3-agua');
+        var nivel = M.pegar(cena, '#s3-nivel');
+        var nivelNum = M.pegar(cena, '#s3-nivelNum');
+        var nivelFill = M.pegar(cena, '#s3-nivelFill');
+        var manta = M.pegar(cena, '#s3-manta');
+        var pocoAgua = M.pegar(cena, '#s3-pocoAgua');
+        var rotor = M.pegar(cena, '#s3-rotor');
+        var fluxo = M.pegar(cena, '#s3-fluxo');
+        var gts = [];
+        for (var g = 0; g < 6; g++) gts.push(M.pegar(cena, '#s3-gota' + g));
+        var boy = M.mascote('#f3-mascote');
+        var hud = M.medidorBarra('#f3-hud', { rotulo: 'ÁGUA INFILTRADA', unidade: 'L', max: 100, cor: '#22d3ee', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var sobe = suave(faixa(t, 3.4, 7.6));
+          var bombeando = suave(faixa(t, 8.6, 9.6));
+          var secando = suave(faixa(t, 14.7, 17.4));
+          var nivelY = lerp(lerp(640, 420, sobe), 626, secando);
+
+          var dAgua = 'M0 ' + f2(nivelY);
+          for (var wx = 20; wx <= 1080; wx += 20) {
+            dAgua += ' L' + wx + ' ' + f2(nivelY + Math.sin(wx * 0.016 + t * 2.2) * 5);
+          }
+          dAgua += ' L1080 640 L0 640 Z';
+          agua.setAttribute('d', dAgua);
+
+          var dNiv = 'M0 ' + f2(nivelY);
+          for (var nx = 20; nx <= 1080; nx += 20) {
+            dNiv += ' L' + nx + ' ' + f2(nivelY + Math.sin(nx * 0.016 + t * 2.2) * 5);
+          }
+          nivel.setAttribute('d', dNiv);
+          nivel.setAttribute('opacity', f2(0.2 + 0.8 * sobe * (1 - secando)));
+
+          var metros = Math.round(6 * sobe * (1 - secando));
+          nivelNum.textContent = metros === 0 ? '0 m' : '−' + metros + ' m';
+          nivelFill.setAttribute('width', f2(222 * sobe * (1 - secando)));
+
+          var brilho = 0.55 + 0.45 * Math.max(sobe, secando) + Math.sin(t * 4.4) * 0.12 * secando;
+          manta.setAttribute('opacity', f2(Math.min(1, brilho)));
+          manta.setAttribute('stroke', secando > 0.5 ? '#22c55e' : '#f59e0b');
+
+          var cotaPoco = 200 * sobe * (1 - 0.8 * bombeando) * (1 - secando);
+          pocoAgua.setAttribute('y', f2(596 - cotaPoco));
+          pocoAgua.setAttribute('height', f2(cotaPoco));
+
+          rotor.setAttribute('transform', 'rotate(' + f2(t * 520 * (0.15 + 0.85 * bombeando)) + ' 736 427)');
+          fluxo.setAttribute('stroke-dashoffset', f2(-t * 90 * (0.2 + 0.8 * bombeando)));
+
+          for (var i = 0; i < 6; i++) {
+            var ciclo = ((t * 1.2 + i * 0.23) % 1);
+            gts[i].setAttribute('cx', f2(886 + Math.sin(i * 2.1) * 10));
+            gts[i].setAttribute('cy', f2(146 + ciclo * 58));
+            gts[i].setAttribute('opacity', f2(bombeando > 0.35 && ciclo < 0.8 ? 0.9 : 0));
+          }
+
+          var valor = lerp(lerp(0, 86, sobe), 0, secando);
+          hud.atualizar(valor, secando > 0.85 ? 'SECO E ESTÁVEL' : (bombeando > 0.5 ? 'BOMBA DRENANDO' : (sobe > 0.5 ? 'INFILTRAÇÃO' : 'MONITORANDO')), secando > 0.85 ? '#22c55e' : (sobe > 0.5 ? '#ef4444' : '#22d3ee'));
+
+          boy.atualizar(t, og, {
+            humor: secando > 0.8 ? 'feliz' : (sobe > 0.5 ? 'surpreso' : 'neutro'),
+            capacete: true,
+            bracoD: secando > 0.8 ? 118 : (sobe > 0.5 ? 54 : 12),
+            bracoE: secando > 0.8 ? 66 : 8,
+            olhar: [4, -6],
+            tremer: sobe > 0.6 && secando < 0.3 ? 1.0 : 0,
+            pulo: secando > 0.8 ? Math.abs(Math.sin((t - 17.3) * 3.6)) * 5 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 29.23 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-agua-freatico'] = tl;
+    })();
+  </script>
+</template>

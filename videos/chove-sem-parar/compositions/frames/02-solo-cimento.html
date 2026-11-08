@@ -70,6 +70,10 @@
         for (var i = 0; i < 8; i++) {
           rachaduras += T('path', { d: 'M' + f2(200 + i * 110) + ' 200 L' + f2(210 + i * 110 + M.ruido(i) * 20) + ' 245', stroke: '#1e293b', 'stroke-width': 4, 'stroke-linecap': 'round' });
         }
+        var gotasSolo = '';
+        for (var i = 0; i < 14; i++) {
+          gotasSolo += T('line', { id: 'f2-gota' + i, x1: f2(80 + M.ruido(i) * 920), y1: f2(-10 + i * 40), x2: f2(80 + M.ruido(i) * 920 + 3), y2: f2(10 + i * 40), stroke: '#7dd3fc', 'stroke-width': 2, 'stroke-opacity': f2(0.4 + M.ruido(i) * 0.4) });
+        }
         var svg = M.svgBase(1080, 630,
           '<defs>' +
           '<linearGradient id="f2-solo" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e293b"/><stop offset="1" stop-color="#0b1220"/></linearGradient>' +
@@ -79,10 +83,13 @@
           aguaSup +
           soloSeco +
           rachaduras +
+          gotasSolo +
           T('text', { x: 540, y: 320, 'text-anchor': 'middle', 'font-family': "'Inter',sans-serif", 'font-size': '34', 'font-weight': '700', fill: '#f8fafc', 'fill-opacity': 0.9 }, 'CORTE TRANSVERSAL DO SOLO')
         );
         M.montar('#f2-cena', svg);
         var aguaSupEl = M.pegar('#f2-cena', '#f2-aguaSup');
+        var gotasEls = [];
+        for (var i = 0; i < 14; i++) gotasEls.push(M.pegar('#f2-cena', '#f2-gota' + i));
         var boy = M.mascote('#f2-mascote');
         var hud = M.medidorBarra('#f2-hud', { rotulo: 'SAUDE DO SOLO', unidade: '%', max: 100, cor: '#ef4444', decimais: 0 });
 
@@ -91,6 +98,11 @@
           var absorcao = 100 * (1 - u);
           hud.atualizar(absorcao, u > 0.7 ? 'CIMENTO: SEM ABSORCAO' : 'TERRA SATURADA', u > 0.7 ? '#dc2626' : '#f59e0b');
           aguaSupEl.setAttribute('fill-opacity', f2(0.55 * (1 - u)));
+          for (var i = 0; i < gotasEls.length; i++) {
+            var gy = ((t * 100 + i * 40) % 150) - 10;
+            gotasEls[i].setAttribute('y1', f2(gy));
+            gotasEls[i].setAttribute('y2', f2(gy + 14));
+          }
           boy.atualizar(t, og, { humor: t < 3.0 ? 'neutro' : 'triste', bracoD: t < 3 ? 40 : 130, bracoE: 8, olhar: [0, -10], inclinar: t > 5 ? 4 : 0 });
         }, { duracao: DUR, offsetGlobal: 9.21 });
       }

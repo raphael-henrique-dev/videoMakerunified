@@ -1,0 +1,317 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f4-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#0a0d14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f4-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f4-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(9,16,28,0.90); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f4-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#7dd3fc; text-transform:uppercase; }
+    .f4-badge { font-size:19px; font-weight:700; color:#fbbf24; letter-spacing:.06em; }
+    .f4-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(9,16,28,0.90); border-left:5px solid #38bdf8; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f4-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f4-title-accent { color:#7dd3fc; }
+    .f4-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f4-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(7,16,30,0.94); border:1.5px solid rgba(56,189,248,0.6); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f4-banner-text { font-size:19px; font-weight:700; color:#bae6fd; letter-spacing:.03em; line-height:1.25; }
+    .f4-banner-pill { flex:0 0 auto; padding:7px 15px; background:#38bdf8; color:#04121f; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f4-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 62% 24%, #1a2a3f 0%, #0b1220 50%, #050810 100%); }
+    #f4-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#0b1220 0%,#050810 100%); border-top:2px solid rgba(56,189,248,0.18); }
+    #f4-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f4-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f4-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(9,16,28,0.92); border:1px solid rgba(56,189,248,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f4-root" data-composition-id="frame-04-laboratorio" data-width="1080" data-height="1920" data-start="0" data-duration="23.62">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f4-cena" class="m2-cena"></div>
+    <div id="f4-mascote" class="m2-mascote"></div>
+    <div id="f4-hud" class="m2-hud"></div>
+
+    <div class="f4-ui-layer">
+      <div id="f4-topbar" class="f4-topbar">
+        <span class="f4-kicker">1879 // O LABORATÓRIO</span>
+        <span class="f4-badge">LEIPZIG</span>
+      </div>
+      <div id="f4-header" class="f4-header-card">
+        <h1 class="f4-title">1879: A Psicologia <span class="f4-title-accent">Ganha Régua</span></h1>
+        <p class="f4-subtitle">Wilhelm Wundt abriu o primeiro laboratório de psicologia e trocou a adivinhação pelo cronômetro.</p>
+      </div>
+      <div id="f4-banner" class="f4-banner" style="opacity: 0;">
+        <span class="f4-banner-text">O INVISÍVEL VIROU NÚMERO</span>
+        <span class="f4-banner-pill">1879</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 23.62;
+      var T_1879 = 4.1;
+      var T_PENDULO = 14.6;
+      var T_BOTAO = 17.3;
+      var T_MEDIDA = 19.75;
+      var T_BARRAS = 20.0;
+      var T_SELO = 21.9;
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f4-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f4-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, T_SELO + 0.1);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var tabuas = '';
+        for (var w = 0; w < 12; w++) {
+          tabuas += T('rect', { x: w * 90, y: 0, width: 90, height: 520, fill: w % 2 === 0 ? '#1c1712' : '#19140f' });
+          tabuas += T('line', { x1: w * 90, y1: 0, x2: w * 90, y2: 520, stroke: '#0f0c08', 'stroke-width': 3, opacity: 0.85 });
+        }
+        var poeira = '';
+        for (var d = 0; d < 24; d++) {
+          poeira += T('circle', { cx: f2(M.ruido(d * 2.9) * 1080), cy: f2(M.ruido(d * 4.7) * 500), r: f2(1.2 + M.ruido(d * 3.3) * 2.4), fill: '#fde68a', 'fill-opacity': f2(0.08 + M.ruido(d * 5.1) * 0.16) });
+        }
+
+        // estante de instrumentos
+        var estante =
+          T('rect', { x: 286, y: 24, width: 190, height: 10, rx: 3, fill: '#5c3719' }) +
+          T('rect', { x: 300, y: 34, width: 166, height: 54, fill: '#241a12', stroke: '#3b2a1c', 'stroke-width': 2 }) +
+          T('rect', { x: 310, y: 46, width: 12, height: 34, rx: 3, fill: '#7dd3fc', 'fill-opacity': 0.7 }) +
+          T('rect', { x: 328, y: 54, width: 10, height: 26, rx: 3, fill: '#facc15', 'fill-opacity': 0.7 }) +
+          T('rect', { x: 344, y: 48, width: 12, height: 32, rx: 3, fill: '#f87171', 'fill-opacity': 0.65 }) +
+          T('rect', { x: 366, y: 40, width: 84, height: 10, rx: 2, fill: '#8b5e34' }) +
+          T('rect', { x: 366, y: 52, width: 84, height: 10, rx: 2, fill: '#b91c1c', 'fill-opacity': 0.8 }) +
+          T('rect', { x: 366, y: 64, width: 84, height: 10, rx: 2, fill: '#1d4ed8', 'fill-opacity': 0.8 });
+
+        // pêndulo
+        var pendulo =
+          T('rect', { x: 538, y: 96, width: 44, height: 12, rx: 4, fill: '#64748b' }) +
+          G({ id: 's4-pendulo' },
+            T('rect', { x: 557, y: 108, width: 6, height: 202, fill: '#d4a017' }) +
+            T('circle', { cx: 560, cy: 320, r: 28, fill: '#f59e0b', stroke: '#fbbf24', 'stroke-width': 4 }) +
+            T('circle', { cx: 552, cy: 312, r: 7, fill: '#fde68a', 'fill-opacity': 0.8 }) +
+            T('line', { x1: 560, y1: 108, x2: 560, y2: 126, stroke: '#f8fafc', 'stroke-width': 4, opacity: 0.6 }));
+
+        // sujeito experimental
+        var sujeito =
+          G({ id: 's4-sujeito' },
+            T('rect', { x: 330, y: 330, width: 112, height: 190, rx: 12, fill: '#3a2a1c' }) +
+            T('rect', { x: 318, y: 506, width: 136, height: 22, rx: 8, fill: '#4a3524' }) +
+            T('rect', { x: 330, y: 528, width: 12, height: 62, fill: '#2a1c12' }) +
+            T('rect', { x: 430, y: 528, width: 12, height: 62, fill: '#2a1c12' }) +
+            // tronco
+            T('path', { d: 'M352 352 C356 330 380 318 396 318 C416 318 432 330 434 352 L440 486 L344 486 Z', fill: '#4b5563' }) +
+            T('path', { d: 'M356 358 L350 480', stroke: '#374151', 'stroke-width': 3 }) +
+            // braço apoiado na mesa
+            T('path', { id: 's4-bracoSuj', d: 'M424 402 L500 432 L532 438', fill: 'none', stroke: '#4b5563', 'stroke-width': 26, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 536, cy: 438, r: 14, fill: '#e8a87c' }) +
+            // cabeça de perfil
+            T('circle', { cx: 392, cy: 292, r: 40, fill: '#e8a87c' }) +
+            T('path', { d: 'M354 282 C356 248 380 234 402 236 C422 238 434 252 432 272 C418 258 400 258 386 264 C370 272 360 282 358 292 Z', fill: '#2b1a12' }) +
+            T('ellipse', { cx: 414, cy: 292, rx: 5, ry: 6, fill: '#1f2937' }) +
+            T('path', { d: 'M424 304 Q414 310 404 304', fill: 'none', stroke: '#7f1d1d', 'stroke-width': 3, 'stroke-linecap': 'round' }) +
+            T('path', { d: 'M404 326 Q392 334 378 326', fill: 'none', stroke: '#c98a5e', 'stroke-width': 2.5 }));
+
+        // mesa
+        var mesa =
+          T('rect', { x: 460, y: 438, width: 300, height: 18, rx: 6, fill: '#6b4423' }) +
+          T('rect', { x: 476, y: 456, width: 14, height: 150, fill: '#4a2c17' }) +
+          T('rect', { x: 726, y: 456, width: 14, height: 150, fill: '#4a2c17' }) +
+          T('rect', { x: 460, y: 454, width: 300, height: 8, fill: '#4a2c17' }) +
+          // tecla telegráfica
+          T('rect', { x: 500, y: 424, width: 52, height: 14, rx: 4, fill: '#334155' }) +
+          T('rect', { x: 512, y: 414, width: 26, height: 10, rx: 4, fill: '#cbd5e1' }) +
+          T('circle', { id: 's4-tecla', cx: 525, cy: 414, r: 7, fill: '#ef4444' }) +
+          // placa 1879
+          T('rect', { x: 580, y: 408, width: 62, height: 26, rx: 4, fill: '#b45309', stroke: '#fbbf24', 'stroke-width': 2 }) +
+          T('text', { x: 611, y: 427, 'text-anchor': 'middle', fill: '#fef3c7', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700, 'letter-spacing': 1.0 }, '1879');
+
+        // cronoscópio
+        var cronoscopio =
+          G({ id: 's4-cronoscopio' },
+            T('rect', { x: 606, y: 420, width: 84, height: 20, rx: 6, fill: '#7c4a0a' }) +
+            T('circle', { cx: 648, cy: 474, r: 46, fill: '#d4a017', stroke: '#fbbf24', 'stroke-width': 5 }) +
+            T('circle', { cx: 648, cy: 474, r: 38, fill: '#fef3c7' }) +
+            (function () {
+              var s = '';
+              for (var i = 0; i < 12; i++) {
+                var a = i * Math.PI / 6;
+                s += T('line', { x1: f2(648 + Math.cos(a) * 30), y1: f2(474 + Math.sin(a) * 30), x2: f2(648 + Math.cos(a) * 36), y2: f2(474 + Math.sin(a) * 36), stroke: '#78350f', 'stroke-width': 3 });
+              }
+              return s;
+            })() +
+            T('line', { id: 's4-ponteiro', x1: 648, y1: 474, x2: 648, y2: 444, stroke: '#b91c1c', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 648, cy: 474, r: 5, fill: '#78350f' }));
+
+        // Wundt
+        var wundt =
+          G({ id: 's4-wundt' },
+            T('rect', { x: 812, y: 452, width: 32, height: 148, rx: 10, fill: '#1f2937' }) +
+            T('rect', { x: 864, y: 452, width: 32, height: 148, rx: 10, fill: '#1f2937' }) +
+            T('path', { d: 'M800 396 L808 348 C812 328 830 318 848 320 L872 322 C890 328 898 344 896 360 L892 408 L880 560 L820 560 Z', fill: '#374151' }) +
+            T('path', { d: 'M812 380 L816 552', stroke: '#1f2937', 'stroke-width': 3 }) +
+            T('path', { d: 'M884 380 L880 552', stroke: '#1f2937', 'stroke-width': 3 }) +
+            // braço com relógio de bolso
+            T('path', { d: 'M812 396 L780 424', fill: 'none', stroke: '#374151', 'stroke-width': 24, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 776, cy: 428, r: 14, fill: '#e8a87c' }) +
+            T('line', { x1: 776, y1: 442, x2: 786, y2: 468, stroke: '#fbbf24', 'stroke-width': 2.5, 'stroke-dasharray': '5 4' }) +
+            T('circle', { cx: 788, cy: 476, r: 15, fill: '#d4a017', stroke: '#fbbf24', 'stroke-width': 3 }) +
+            T('line', { x1: 788, y1: 476, x2: 788, y2: 466, stroke: '#78350f', 'stroke-width': 2 }) +
+            // cabeça
+            T('circle', { cx: 850, cy: 290, r: 38, fill: '#e8a87c' }) +
+            T('path', { d: 'M814 280 C816 246 838 232 858 234 C878 236 890 250 888 270 C874 256 856 254 840 262 C826 270 818 278 816 288 Z', fill: '#9ca3af' }) +
+            T('path', { d: 'M822 306 C826 336 836 350 850 352 C864 350 876 338 880 308 C868 322 858 326 850 326 C840 326 832 318 822 306 Z', fill: '#e2e8f0' }) +
+            T('ellipse', { cx: 838, cy: 292, rx: 4.5, ry: 5, fill: '#1f2937' }) +
+            T('ellipse', { cx: 866, cy: 292, rx: 4.5, ry: 5, fill: '#1f2937' }) +
+            T('path', { d: 'M850 296 L850 310 L844 312', fill: 'none', stroke: '#c98a5e', 'stroke-width': 2.5, 'stroke-linecap': 'round' }) +
+            T('path', { d: 'M838 318 Q850 324 862 318', fill: 'none', stroke: '#7f1d1d', 'stroke-width': 3, 'stroke-linecap': 'round' }));
+
+        // painel digital
+        var painel =
+          G({ id: 's4-painel', opacity: 0 },
+            T('rect', { x: 752, y: 36, width: 228, height: 118, rx: 14, fill: 'rgba(6,14,26,0.96)', stroke: '#38bdf8', 'stroke-width': 2.5 }) +
+            T('text', { x: 770, y: 62, fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 2.0 }, 'TEMPO DE REAÇÃO') +
+            T('text', { id: 's4-tempo', x: 770, y: 122, fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 56, 'font-weight': 700, 'font-variant-numeric': 'tabular-nums' }, '0,31 s') +
+            T('text', { x: 770, y: 144, fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 600, 'letter-spacing': 1.2 }, 'SUJEITO 04 · ENSAIO 12') +
+            T('rect', { id: 's4-flash', x: 752, y: 36, width: 228, height: 118, rx: 14, fill: '#38bdf8', opacity: 0 }));
+
+        // gráfico de barras
+        var barras = G({ id: 's4-grafico', opacity: 0 },
+          T('rect', { x: 752, y: 170, width: 228, height: 152, rx: 14, fill: 'rgba(6,14,26,0.96)', stroke: 'rgba(56,189,248,0.45)', 'stroke-width': 2 }) +
+          T('text', { x: 770, y: 194, fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1.8 }, 'ENSAIOS (s)') +
+          T('line', { x1: 774, y1: 300, x2: 958, y2: 300, stroke: '#475569', 'stroke-width': 2 }));
+        for (var bi = 0; bi < 5; bi++) {
+          barras += T('rect', { id: 's4-bar' + bi, x: 782 + bi * 35, y: 300, width: 22, height: 0, rx: 4, fill: bi === 4 ? '#22c55e' : '#38bdf8' });
+          barras += T('text', { x: 793 + bi * 35, y: 314, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 11, 'font-weight': 700 }, String(bi + 1));
+        }
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<radialGradient id="s4-luzGrad" cx="0.5" cy="0.2" r="0.7"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.18"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: '#1a140e' }) +
+          tabuas +
+          T('rect', { x: 0, y: 0, width: 1080, height: 520, fill: 'url(#s4-luzGrad)' }) +
+          poeira +
+          T('rect', { x: 0, y: 520, width: 1080, height: 120, fill: '#120d08' }) +
+          (function () {
+            var s = '';
+            for (var i = 0; i < 7; i++) s += T('line', { x1: 0, y1: 536 + i * 14, x2: 1080, y2: 536 + i * 14, stroke: '#22180f', 'stroke-width': 2 });
+            return s;
+          })() +
+          estante +
+          painel +
+          barras +
+          pendulo +
+          sujeito +
+          mesa +
+          cronoscopio +
+          wundt +
+          // caixinha do mascote
+          T('rect', { x: 246, y: 512, width: 58, height: 46, rx: 8, fill: '#334155', stroke: '#64748b', 'stroke-width': 3 }) +
+          T('circle', { id: 's4-botaoM', cx: 275, cy: 506, r: 9, fill: '#ef4444' }) +
+          T('line', { x1: 275, y1: 512, x2: 275, y2: 492, stroke: '#94a3b8', 'stroke-width': 3 }) +
+          // etiquetas
+          G({ id: 's4-tagPendulo', opacity: 0 },
+            T('rect', { x: 282, y: 96, width: 172, height: 44, rx: 10, fill: 'rgba(9,16,28,0.95)', stroke: '#fbbf24', 'stroke-width': 2 }) +
+            T('text', { x: 368, y: 125, 'text-anchor': 'middle', fill: '#fde68a', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700, 'letter-spacing': 1.2 }, 'PÊNDULO') +
+            T('line', { x1: 454, y1: 118, x2: 548, y2: 300, stroke: '#fbbf24', 'stroke-width': 2.5, 'stroke-dasharray': '7 6' })) +
+          G({ id: 's4-tagCrono', opacity: 0 },
+            T('rect', { x: 282, y: 152, width: 200, height: 44, rx: 10, fill: 'rgba(9,16,28,0.95)', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('text', { x: 382, y: 181, 'text-anchor': 'middle', fill: '#bae6fd', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700, 'letter-spacing': 1.0 }, 'CRONOSCÓPIO') +
+            T('path', { d: 'M482 174 L560 174 L620 428', fill: 'none', stroke: '#38bdf8', 'stroke-width': 2.5, 'stroke-dasharray': '7 6' })) +
+          G({ id: 's4-selo', opacity: 0 },
+            T('circle', { cx: 648, cy: 474, r: 92, fill: 'rgba(6,14,26,0.80)', stroke: '#22c55e', 'stroke-width': 5 }) +
+            T('text', { x: 648, y: 466, 'text-anchor': 'middle', fill: '#bbf7d0', 'font-family': 'Inter, sans-serif', 'font-size': 30, 'font-weight': 700, 'letter-spacing': 1.2 }, '0,18 s') +
+            T('text', { x: 648, y: 498, 'text-anchor': 'middle', fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 16, 'font-weight': 700, 'letter-spacing': 2.0 }, 'VIROU DADO'))
+        );
+        M.montar('#f4-cena', svg);
+        var cena = M.pegar('#f4-cena');
+        var pend = M.pegar(cena, '#s4-pendulo');
+        var ponteiro = M.pegar(cena, '#s4-ponteiro');
+        var tempoEl = M.pegar(cena, '#s4-tempo');
+        var flash = M.pegar(cena, '#s4-flash');
+        var painelEl = M.pegar(cena, '#s4-painel');
+        var grafico = M.pegar(cena, '#s4-grafico');
+        var tecla = M.pegar(cena, '#s4-tecla');
+        var botaoM = M.pegar(cena, '#s4-botaoM');
+        var bracoSuj = M.pegar(cena, '#s4-bracoSuj');
+        var tagP = M.pegar(cena, '#s4-tagPendulo');
+        var tagC = M.pegar(cena, '#s4-tagCrono');
+        var selo = M.pegar(cena, '#s4-selo');
+        var bars = [];
+        for (var bk = 0; bk < 5; bk++) bars.push(M.pegar(cena, '#s4-bar' + bk));
+        var boy = M.mascote('#f4-mascote');
+        var hud = M.medidorBarra('#f4-hud', { rotulo: 'TEMPO DE REAÇÃO', unidade: 's', max: 0.5, cor: '#38bdf8', decimais: 2 });
+
+        M.conectar(tl, function (t, og) {
+          var swing = suave(faixa(t, T_PENDULO, T_PENDULO + 0.7));
+          pend.setAttribute('transform', 'rotate(' + f2(Math.sin(t * 2.3) * 26 * swing) + ' 560 108)');
+
+          // ponteiro do cronoscópio
+          var pressao = 0;
+          var teclaPulso = 0;
+          var ciclos = [2.2, 3.0, 3.8, T_BOTAO, T_BOTAO + 0.6, T_BOTAO + 1.2];
+          for (var ci = 0; ci < ciclos.length; ci++) {
+            var ph = faixa(t, ciclos[ci], ciclos[ci] + 0.35);
+            if (t >= ciclos[ci] && t <= ciclos[ci] + 0.6) {
+              var pulso = Math.sin(ph * Math.PI);
+              pressao = Math.max(pressao, pulso);
+              teclaPulso = Math.max(teclaPulso, pulso);
+            }
+          }
+          var alvo = suave(faixa(t, T_MEDIDA, T_MEDIDA + 0.8));
+          var ang = -70 + pressao * 210 + alvo * 46;
+          ponteiro.setAttribute('transform', 'rotate(' + f2(ang) + ' 648 474)');
+
+          var valor = lerp(0.31, 0.18, suave(faixa(t, T_MEDIDA, T_MEDIDA + 0.9)));
+          tempoEl.textContent = valor.toFixed(2).replace('.', ',') + ' s';
+          tempoEl.setAttribute('fill', alvo > 0.6 ? '#86efac' : '#f8fafc');
+
+          var kflash = suave(faixa(t, T_MEDIDA + 0.7, T_MEDIDA + 0.85)) * (1 - suave(faixa(t, T_MEDIDA + 0.85, T_MEDIDA + 1.2)));
+          flash.setAttribute('opacity', f2(kflash * 0.35));
+          painelEl.setAttribute('opacity', f2(suave(faixa(t, T_1879, T_1879 + 0.7))));
+
+          grafico.setAttribute('opacity', f2(suave(faixa(t, T_BARRAS - 0.3, T_BARRAS + 0.2))));
+          var alturas = [92, 78, 104, 70, 52];
+          for (var bI = 0; bI < 5; bI++) {
+            var kb = suave(faixa(t, T_BARRAS + bI * 0.16, T_BARRAS + bI * 0.16 + 0.5));
+            bars[bI].setAttribute('height', f2(alturas[bI] * kb));
+            bars[bI].setAttribute('y', f2(300 - alturas[bI] * kb));
+          }
+
+          var pressiona = faixa(t, T_BOTAO, T_BOTAO + 1.4) * (1 - faixa(t, T_BOTAO + 1.4, T_BOTAO + 1.8));
+          var bounce = Math.abs(Math.sin(t * 12)) * pressiona * 3;
+          bracoSuj.setAttribute('transform', 'translate(0 ' + f2(bounce) + ')');
+          tecla.setAttribute('fill', teclaPulso > 0.35 ? '#fca5a5' : '#ef4444');
+          botaoM.setAttribute('fill', t > T_BOTAO + 1.0 && t < T_BOTAO + 2.4 ? '#fca5a5' : '#ef4444');
+
+          tagP.setAttribute('opacity', f2(suave(faixa(t, 14.6, 15.1))));
+          tagC.setAttribute('opacity', f2(suave(faixa(t, 15.35, 15.85))));
+
+          var kselo = suave(faixa(t, T_SELO, T_SELO + 0.5));
+          selo.setAttribute('opacity', f2(kselo));
+          selo.setAttribute('transform', 'translate(648 474) scale(' + f2(lerp(0.6, 1, kselo)) + ') translate(-648 -474)');
+
+          hud.atualizar(valor, alvo > 0.5 ? 'O INVISÍVEL VIROU DADO' : 'MEDINDO O INVISÍVEL', alvo > 0.5 ? '#22c55e' : '#38bdf8');
+
+          boy.atualizar(t, og, {
+            humor: t > T_MEDIDA ? 'feliz' : (t > T_BOTAO ? 'surpreso' : 'neutro'),
+            bracoD: t > T_BOTAO && t < T_BOTAO + 1.6 ? 78 : 14,
+            bracoE: 10,
+            olhar: [10, 2],
+            pulo: t > T_MEDIDA + 0.4 ? Math.abs(Math.sin((t - T_MEDIDA) * 5.2)) * 10 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 55.44 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-laboratorio'] = tl;
+    })();
+  </script>
+</template>

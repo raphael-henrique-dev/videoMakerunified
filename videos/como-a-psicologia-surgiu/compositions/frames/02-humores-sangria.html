@@ -1,0 +1,298 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f2-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#120709; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f2-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f2-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(34,10,16,0.90); border:1px solid rgba(248,113,113,0.40); border-radius:14px; }
+    .f2-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#fca5a5; text-transform:uppercase; }
+    .f2-badge { font-size:19px; font-weight:700; color:#fbbf24; letter-spacing:.06em; }
+    .f2-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(34,10,16,0.90); border-left:5px solid #b91c1c; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f2-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f2-title-accent { color:#fca5a5; }
+    .f2-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f2-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(44,8,14,0.94); border:1.5px solid rgba(248,113,113,0.6); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f2-banner-text { font-size:19px; font-weight:700; color:#fecaca; letter-spacing:.03em; line-height:1.25; }
+    .f2-banner-pill { flex:0 0 auto; padding:7px 15px; background:#f87171; color:#2a0b06; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f2-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 70% 28%, #3a1218 0%, #1b0a10 48%, #0a0508 100%); }
+    #f2-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#1b0d10 0%,#0a0508 100%); border-top:2px solid rgba(185,28,28,0.22); }
+    #f2-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f2-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f2-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(34,10,16,0.92); border:1px solid rgba(248,113,113,0.34); border-radius:22px; }
+  </style>
+
+  <div id="f2-root" data-composition-id="frame-02-humores-sangria" data-width="1080" data-height="1920" data-start="0" data-duration="19.91">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f2-cena" class="m2-cena"></div>
+    <div id="f2-mascote" class="m2-mascote"></div>
+    <div id="f2-hud" class="m2-hud"></div>
+
+    <div class="f2-ui-layer">
+      <div id="f2-topbar" class="f2-topbar">
+        <span class="f2-kicker">TEORIA DOS HUMORES // A SANGRIA</span>
+        <span class="f2-badge">SÉCULO XVII</span>
+      </div>
+      <div id="f2-header" class="f2-header-card">
+        <h1 class="f2-title">A Tristeza Não Sai <span class="f2-title-accent">Pelo Sangue</span></h1>
+        <p class="f2-subtitle">Bile negra, fleuma e sangria: a depressão virou desequilíbrio de líquido — e o tratamento era perder sangue.</p>
+      </div>
+      <div id="f2-banner" class="f2-banner" style="opacity: 0;">
+        <span class="f2-banner-text">TIRAR SANGUE NÃO TIRA A TRISTEZA</span>
+        <span class="f2-banner-pill">500 mL</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 19.91;
+      var T_POTES = 0.8;      // potes de humor surgem
+      var T_CORTE = 9.55;     // "Sangria" (9.56)
+      var T_ENCHENDO = 10.70; // "Abrir a veia" (10.76)
+      var T_FRACASSO = 15.10; // "fraco" (15.16)
+      var T_SELO = 16.30;     // "tristeza continuava" (16.24)
+      var T_BANNER = 18.35;   // "no lugar" (18.28)
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, T_BANNER);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        // tábuas da parede
+        var tabuas = '';
+        for (var w = 0; w < 12; w++) {
+          tabuas += T('rect', { x: w * 90, y: 0, width: 90, height: 520, fill: w % 2 === 0 ? '#2a1710' : '#24130d' });
+          tabuas += T('line', { x1: w * 90, y1: 0, x2: w * 90, y2: 520, stroke: '#160b08', 'stroke-width': 3, opacity: 0.8 });
+        }
+        // tábuas do piso
+        var piso = '';
+        for (var p = 0; p < 9; p++) {
+          piso += T('line', { x1: 0, y1: 540 + p * 12, x2: 1080, y2: 540 + p * 12, stroke: '#2c1710', 'stroke-width': 2, opacity: 0.7 });
+        }
+        // poeira no ar
+        var poeira = '';
+        for (var d = 0; d < 22; d++) {
+          poeira += T('circle', { cx: f2(M.ruido(d * 2.3) * 1080), cy: f2(M.ruido(d * 4.1) * 500), r: f2(1.3 + M.ruido(d * 3.7) * 2.2), fill: '#fbbf24', 'fill-opacity': f2(0.10 + M.ruido(d * 5.2) * 0.18) });
+        }
+
+        // estante + potes dos quatro humores
+        var humores = [
+          { x: 620, cor: '#b91c1c', rot: 'SANGUE' },
+          { x: 716, cor: '#7dd3fc', rot: 'FLEUMA' },
+          { x: 812, cor: '#facc15', rot: 'B. AMARELA' },
+          { x: 908, cor: '#52525b', rot: 'B. NEGRA' }
+        ];
+        var potes = '';
+        humores.forEach(function (h, i) {
+          potes +=
+            G({ id: 's2-pote' + i, opacity: 0 },
+              T('rect', { x: h.x, y: 66, width: 68, height: 92, rx: 12, fill: 'rgba(226,232,240,0.10)', stroke: '#cbd5e1', 'stroke-width': 2.5 }) +
+              T('rect', { x: h.x + 6, y: 96, width: 56, height: 56, rx: 8, fill: h.cor, 'fill-opacity': 0.82 }) +
+              T('rect', { x: h.x + 14, y: 102, width: 10, height: 42, rx: 5, fill: '#f8fafc', 'fill-opacity': 0.35 }) +
+              T('rect', { x: h.x + 20, y: 52, width: 28, height: 16, rx: 5, fill: '#8b5e34' }) +
+              T('text', { x: h.x + 34, y: 184, 'text-anchor': 'middle', fill: '#e2e8f0', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 0.6 }, h.rot));
+        });
+
+        // paciente (grupo que se inclina no fim)
+        var paciente =
+          G({ id: 's2-paciente' },
+            // tronco e pernas
+            T('rect', { x: 486, y: 344, width: 118, height: 156, rx: 26, fill: '#6b5a45' }) +
+            T('rect', { x: 470, y: 486, width: 96, height: 76, rx: 14, fill: '#334155' }) +
+            T('rect', { x: 566, y: 486, width: 96, height: 76, rx: 14, fill: '#334155' }) +
+            T('rect', { x: 474, y: 548, width: 76, height: 34, rx: 12, fill: '#1f2937' }) +
+            T('rect', { x: 574, y: 548, width: 76, height: 34, rx: 12, fill: '#1f2937' }) +
+            // braço esticado para a bacia
+            T('path', { d: 'M596 380 L688 428', fill: 'none', stroke: '#6b5a45', 'stroke-width': 30, 'stroke-linecap': 'round' }) +
+            T('path', { d: 'M600 366 L690 416', fill: 'none', stroke: '#7a6a52', 'stroke-width': 20, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 700, cy: 432, r: 16, fill: '#e8a87c' }) +
+            // cabeça
+            G({ id: 's2-cabecaPac' },
+              T('circle', { cx: 548, cy: 288, r: 48, fill: '#e8a87c' }) +
+              T('path', { d: 'M506 268 C508 228 542 214 570 216 C596 218 610 238 606 262 C590 246 568 244 552 252 C532 262 520 276 516 290 Z', fill: '#2b1a12' }) +
+              T('ellipse', { cx: 574, cy: 290, rx: 6, ry: 7, fill: '#1f2937' }) +
+              T('path', { d: 'M586 306 Q576 312 566 306', fill: 'none', stroke: '#7f1d1d', 'stroke-width': 3.5, 'stroke-linecap': 'round' }) +
+              T('path', { d: 'M566 330 Q548 340 530 330', fill: 'none', stroke: '#c98a5e', 'stroke-width': 2.5 })));
+
+        var cadeira =
+          T('rect', { x: 452, y: 300, width: 176, height: 198, rx: 12, fill: '#4a2c17' }) +
+          T('rect', { x: 470, y: 330, width: 140, height: 22, rx: 8, fill: '#6b4423' }) +
+          T('rect', { x: 440, y: 484, width: 200, height: 26, rx: 8, fill: '#5c3719' }) +
+          T('rect', { x: 456, y: 508, width: 14, height: 60, fill: '#3b2412' }) +
+          T('rect', { x: 610, y: 508, width: 14, height: 60, fill: '#3b2412' });
+
+        // mesa e bacia
+        var mesa =
+          T('rect', { x: 660, y: 470, width: 190, height: 14, rx: 5, fill: '#6b4423' }) +
+          T('rect', { x: 676, y: 484, width: 12, height: 86, fill: '#4a2c17' }) +
+          T('rect', { x: 822, y: 484, width: 12, height: 86, fill: '#4a2c17' });
+
+        // médico
+        var medico =
+          G({ id: 's2-medico' },
+            T('rect', { x: 836, y: 398, width: 34, height: 170, rx: 12, fill: '#1f2937' }) +
+            T('rect', { x: 888, y: 398, width: 34, height: 170, rx: 12, fill: '#1f2937' }) +
+            T('path', { d: 'M828 372 L838 320 C842 300 862 290 878 292 L900 294 C920 300 928 318 926 336 L922 380 L902 560 L842 560 Z', fill: '#d6d3d1' }) +
+            T('path', { d: 'M846 380 L850 556', stroke: '#a8a29e', 'stroke-width': 3 }) +
+            T('path', { d: 'M902 380 L898 556', stroke: '#a8a29e', 'stroke-width': 3 }) +
+            // braço que aplica a lanceta
+            T('path', { id: 's2-bracoMed', d: 'M848 392 L790 416', fill: 'none', stroke: '#d6d3d1', 'stroke-width': 26, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 786, cy: 418, r: 15, fill: '#e8a87c' }) +
+            // cabeça com peruca
+            T('circle', { cx: 878, cy: 262, r: 38, fill: '#e8a87c' }) +
+            T('circle', { cx: 850, cy: 250, r: 18, fill: '#e2e8f0' }) +
+            T('circle', { cx: 872, cy: 232, r: 20, fill: '#e2e8f0' }) +
+            T('circle', { cx: 898, cy: 240, r: 18, fill: '#e2e8f0' }) +
+            T('circle', { cx: 912, cy: 264, r: 16, fill: '#e2e8f0' }) +
+            T('circle', { cx: 844, cy: 278, r: 14, fill: '#e2e8f0' }) +
+            T('path', { d: 'M866 258 L872 282 L860 284', fill: 'none', stroke: '#c98a5e', 'stroke-width': 3, 'stroke-linecap': 'round' }) +
+            T('ellipse', { cx: 852, cy: 270, rx: 4.5, ry: 5, fill: '#1f2937' }) +
+            T('ellipse', { cx: 890, cy: 270, rx: 4.5, ry: 5, fill: '#1f2937' }) +
+            T('path', { d: 'M862 300 Q876 308 894 298', fill: 'none', stroke: '#7f1d1d', 'stroke-width': 3.5, 'stroke-linecap': 'round' }) +
+            // lanceta
+            G({ id: 's2-lanceta' },
+              T('rect', { x: 742, y: 408, width: 52, height: 7, rx: 3, fill: '#cbd5e1' }) +
+              T('path', { d: 'M742 405 L722 411 L742 418 Z', fill: '#e2e8f0', stroke: '#94a3b8', 'stroke-width': 1.5 })));
+
+        // gotas de sangue
+        var gotas = '';
+        for (var g = 0; g < 9; g++) {
+          gotas += T('circle', { id: 's2-gota' + g, r: f2(3 + M.ruido(g * 3.3) * 3), fill: '#dc2626', opacity: 0 });
+        }
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<radialGradient id="s2-velaGrad" cx="0.5" cy="0.4" r="0.6"><stop offset="0" stop-color="#fbbf24" stop-opacity="0.22"/><stop offset="1" stop-color="#fbbf24" stop-opacity="0"/></radialGradient>' +
+          '<clipPath id="s2-clipBacia"><path d="M681 496 Q745 576 809 496 Z"/></clipPath>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: '#24130d' }) +
+          tabuas +
+          T('rect', { x: 0, y: 0, width: 1080, height: 520, fill: 'url(#s2-velaGrad)' }) +
+          poeira +
+          piso +
+          T('rect', { x: 0, y: 520, width: 1080, height: 120, fill: '#1a0d09' }) +
+          piso +
+          // vela no canto
+          T('rect', { x: 320, y: 402, width: 22, height: 96, rx: 6, fill: '#fde68a' }) +
+          T('path', { id: 's2-chama', d: 'M331 402 C321 386 326 372 331 362 C336 374 341 388 331 402 Z', fill: '#fb923c' }) +
+          // estante
+          T('rect', { x: 596, y: 168, width: 436, height: 12, rx: 4, fill: '#5c3719' }) +
+          T('rect', { x: 616, y: 180, width: 12, height: 26, fill: '#4a2c17' }) +
+          T('rect', { x: 1000, y: 180, width: 12, height: 26, fill: '#4a2c17' }) +
+          potes +
+          cadeira +
+          paciente +
+          mesa +
+          // bacia
+          T('path', { d: 'M681 496 Q745 576 809 496 Z', fill: '#334155', stroke: '#94a3b8', 'stroke-width': 4, 'stroke-linejoin': 'round' }) +
+          G({ 'clip-path': 'url(#s2-clipBacia)' }, T('rect', { id: 's2-sangue', x: 670, y: 520, width: 160, height: 90, fill: '#991b1b' })) +
+          T('ellipse', { cx: 745, cy: 496, rx: 64, ry: 12, fill: '#5b1a1a', stroke: '#b91c1c', 'stroke-width': 3 }) +
+          T('rect', { x: 742, y: 472, width: 6, height: 22, rx: 3, fill: '#94a3b8' }) +
+          medico +
+          gotas +
+          // etiquetas
+          G({ id: 's2-tagSangria', opacity: 0 },
+            T('rect', { x: 764, y: 196, width: 170, height: 46, rx: 10, fill: 'rgba(44,8,14,0.95)', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('text', { x: 849, y: 226, 'text-anchor': 'middle', fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 21, 'font-weight': 700, 'letter-spacing': 1.4 }, 'SANGRIA') +
+            T('line', { x1: 800, y1: 242, x2: 772, y2: 400, stroke: '#f87171', 'stroke-width': 2.5 })) +
+          G({ id: 's2-tagBile', opacity: 0 },
+            T('rect', { x: 268, y: 78, width: 204, height: 46, rx: 10, fill: 'rgba(20,10,8,0.95)', stroke: '#fbbf24', 'stroke-width': 2 }) +
+            T('text', { x: 370, y: 108, 'text-anchor': 'middle', fill: '#fde68a', 'font-family': 'Inter, sans-serif', 'font-size': 19, 'font-weight': 700, 'letter-spacing': 1.0 }, 'BILE NEGRA') +
+            T('line', { x1: 472, y1: 112, x2: 930, y2: 150, stroke: '#fbbf24', 'stroke-width': 2.5, 'stroke-dasharray': '7 6' })) +
+          G({ id: 's2-tagVolume', opacity: 0 },
+            T('rect', { x: 676, y: 588, width: 138, height: 40, rx: 9, fill: 'rgba(44,8,14,0.95)', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('text', { x: 745, y: 615, 'text-anchor': 'middle', fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700 }, '500 mL')) +
+          // carimbo final
+          G({ id: 's2-selo', opacity: 0 },
+            T('circle', { cx: 560, cy: 300, r: 92, fill: 'rgba(44,8,14,0.84)', stroke: '#ef4444', 'stroke-width': 7 }) +
+            T('text', { x: 560, y: 290, 'text-anchor': 'middle', fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 27, 'font-weight': 700, 'letter-spacing': 1.4 }, 'TRISTEZA') +
+            T('text', { x: 560, y: 324, 'text-anchor': 'middle', fill: '#fca5a5', 'font-family': 'Inter, sans-serif', 'font-size': 27, 'font-weight': 700, 'letter-spacing': 1.4 }, 'INTACTA'))
+        );
+        M.montar('#f2-cena', svg);
+        var cena = M.pegar('#f2-cena');
+        var pac = M.pegar(cena, '#s2-paciente');
+        var cabPac = M.pegar(cena, '#s2-cabecaPac');
+        var bracoMed = M.pegar(cena, '#s2-bracoMed');
+        var lanceta = M.pegar(cena, '#s2-lanceta');
+        var sangue = M.pegar(cena, '#s2-sangue');
+        var chama = M.pegar(cena, '#s2-chama');
+        var tagS = M.pegar(cena, '#s2-tagSangria');
+        var tagB = M.pegar(cena, '#s2-tagBile');
+        var tagV = M.pegar(cena, '#s2-tagVolume');
+        var selo = M.pegar(cena, '#s2-selo');
+        var potesEl = [];
+        for (var pi = 0; pi < 4; pi++) potesEl.push(M.pegar(cena, '#s2-pote' + pi));
+        var gotasEl = [];
+        for (var gi = 0; gi < 9; gi++) gotasEl.push(M.pegar(cena, '#s2-gota' + gi));
+        var boy = M.mascote('#f2-mascote');
+        var hud = M.medidorBarra('#f2-hud', { rotulo: 'SANGUE RETIRADO', unidade: 'mL', max: 1000, cor: '#f87171', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          chama.setAttribute('transform', 'translate(331 402) scale(1 ' + f2(1 + 0.14 * Math.sin(t * 10.4)) + ') translate(-331 -402)');
+
+          for (var i = 0; i < 4; i++) {
+            var k = suave(faixa(t, T_POTES + i * 0.22, T_POTES + i * 0.22 + 0.4));
+            potesEl[i].setAttribute('opacity', f2(k));
+            potesEl[i].setAttribute('transform', 'translate(0 ' + f2((1 - k) * -18) + ')');
+          }
+
+          var corte = suave(faixa(t, T_CORTE, T_CORTE + 0.35));
+          var retira = suave(faixa(t, T_FRACASSO, T_FRACASSO + 0.8));
+          bracoMed.setAttribute('transform', 'rotate(' + f2(-corte * 6 + retira * 26) + ' 848 392)');
+          lanceta.setAttribute('transform', 'translate(' + f2(-corte * 4) + ' ' + f2(-corte * 6 + retira * 26) + ')');
+          lanceta.setAttribute('opacity', f2(1 - retira * 0.55));
+
+          // gotas caindo
+          for (var d = 0; d < 9; d++) {
+            var ciclo = ((t * 0.72 + d * 0.19) % 1);
+            var ativo = faixa(t, T_CORTE + 0.2, T_CORTE + 0.7) * (1 - faixa(t, 16.2, 16.7));
+            var gx = 702 + Math.sin(d * 2.1) * 5 + ciclo * 40;
+            var gy = 438 + ciclo * 56;
+            gotasEl[d].setAttribute('cx', f2(gx));
+            gotasEl[d].setAttribute('cy', f2(gy));
+            gotasEl[d].setAttribute('opacity', f2(ativo * (ciclo < 0.92 ? 0.9 : 0)));
+          }
+
+          var nivel = 0.16 + 0.78 * suave(faixa(t, T_ENCHENDO, T_ENCHENDO + 4.1));
+          sangue.setAttribute('y', f2(lerp(520, 470, nivel)));
+
+          var slump = suave(faixa(t, T_FRACASSO, T_FRACASSO + 1.4));
+          pac.setAttribute('transform', 'rotate(' + f2(slump * 4.5) + ' 548 520)');
+          cabPac.setAttribute('transform', 'rotate(' + f2(slump * 8) + ' 548 330)');
+
+          var ks = suave(faixa(t, T_CORTE - 0.2, T_CORTE + 0.3));
+          tagB.setAttribute('opacity', f2(suave(faixa(t, 1.5, 2.0))));
+          tagS.setAttribute('opacity', f2(ks));
+          tagV.setAttribute('opacity', f2(suave(faixa(t, 12.05, 12.55))));
+
+          var kselo = suave(faixa(t, T_SELO, T_SELO + 0.6));
+          selo.setAttribute('opacity', f2(kselo));
+          selo.setAttribute('transform', 'translate(560 300) scale(' + f2(lerp(0.55, 1, kselo)) + ') translate(-560 -300)');
+
+          hud.atualizar(Math.round(500 * suave(faixa(t, T_ENCHENDO, T_ENCHENDO + 4.1))), slump > 0.4 ? 'TRISTEZA INTACTA' : 'SANGUE SAINDO', slump > 0.4 ? '#ef4444' : '#f87171');
+
+          boy.atualizar(t, og, {
+            humor: t > T_FRACASSO ? 'triste' : (t > 2.0 ? 'surpreso' : 'neutro'),
+            bracoD: t > T_FRACASSO ? 30 : 18,
+            bracoE: t > T_FRACASSO ? 42 : 10,
+            olhar: [8, 4],
+            tremer: t > T_FRACASSO ? 0.4 : 0,
+            inclinar: t > T_FRACASSO ? 5 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 15.72 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-humores-sangria'] = tl;
+    })();
+  </script>
+</template>

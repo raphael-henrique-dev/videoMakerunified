@@ -1,0 +1,287 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f3-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#070c14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f3-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f3-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(10,18,30,0.90); border:1px solid rgba(148,163,184,0.36); border-radius:14px; }
+    .f3-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#cbd5e1; text-transform:uppercase; }
+    .f3-badge { font-size:19px; font-weight:700; color:#f87171; letter-spacing:.06em; }
+    .f3-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(10,18,30,0.90); border-left:5px solid #64748b; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f3-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f3-title-accent { color:#f87171; }
+    .f3-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f3-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(12,20,32,0.94); border:1.5px solid rgba(248,113,113,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f3-banner-text { font-size:19px; font-weight:700; color:#fecaca; letter-spacing:.03em; line-height:1.25; }
+    .f3-banner-pill { flex:0 0 auto; padding:7px 15px; background:#f87171; color:#1a0508; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f3-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 64% 24%, #1b2a3d 0%, #0b1220 50%, #05090f 100%); }
+    #f3-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#0b1220 0%,#05090f 100%); border-top:2px solid rgba(148,163,184,0.20); }
+    #f3-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f3-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f3-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(10,18,30,0.92); border:1px solid rgba(148,163,184,0.30); border-radius:22px; }
+  </style>
+
+  <div id="f3-root" data-composition-id="frame-03-hospicio" data-width="1080" data-height="1920" data-start="0" data-duration="19.81">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f3-cena" class="m2-cena"></div>
+    <div id="f3-mascote" class="m2-mascote"></div>
+    <div id="f3-hud" class="m2-hud"></div>
+
+    <div class="f3-ui-layer">
+      <div id="f3-topbar" class="f3-topbar">
+        <span class="f3-kicker">SÉCULO XVIII // O DEPÓSITO</span>
+        <span class="f3-badge">SEM DIAGNÓSTICO</span>
+      </div>
+      <div id="f3-header" class="f3-header-card">
+        <h1 class="f3-title">O Depósito de Gente <span class="f3-title-accent">Incompreendida</span></h1>
+        <p class="f3-subtitle">Sem entender, a sociedade escondeu: correntes, celas e gelo no lugar de escuta e observação.</p>
+      </div>
+      <div id="f3-banner" class="f3-banner" style="opacity: 0;">
+        <span class="f3-banner-text">CASTIGO NÃO É TRATAMENTO</span>
+        <span class="f3-banner-pill">0 CURAS</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 19.81;
+      var T_CELA = 2.5;
+      var T_GELO = 8.35;
+      var T_CADEIRA = 8.8;
+      var T_FRACASSO = 10.2;
+      var T_SELO = 14.5;
+      var T_ZERO = 18.0;
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f3-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f3-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f3-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, T_SELO + 0.1);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        // blocos de pedra
+        var pedras = '';
+        for (var row = 0; row < 7; row++) {
+          var yy = row * 84;
+          var off = row % 2 === 0 ? -70 : 0;
+          for (var col = 0; col < 10; col++) {
+            pedras += T('rect', { x: off + col * 140, y: yy, width: 136, height: 80, rx: 6, fill: row % 2 === 0 ? '#141e2b' : '#111a25', stroke: '#1e293b', 'stroke-width': 2 });
+          }
+        }
+        // poeira fria
+        var poeira = '';
+        for (var d = 0; d < 26; d++) {
+          poeira += T('circle', { cx: f2(M.ruido(d * 2.7) * 1080), cy: f2(M.ruido(d * 4.9) * 540), r: f2(1.2 + M.ruido(d * 3.1) * 2.1), fill: '#cbd5e1', 'fill-opacity': f2(0.06 + M.ruido(d * 6.2) * 0.14) });
+        }
+
+        // janela alta com grades
+        var janela =
+          T('path', { d: 'M300 180 L300 96 Q300 40 370 40 Q440 40 440 96 L440 180 Z', fill: '#0b1220', stroke: '#334155', 'stroke-width': 5 }) +
+          T('circle', { cx: 396, cy: 92, r: 24, fill: '#e2e8f0' }) +
+          T('circle', { cx: 388, cy: 86, r: 5, fill: '#cbd5e1' }) +
+          T('line', { x1: 370, y1: 44, x2: 370, y2: 176, stroke: '#475569', 'stroke-width': 5 }) +
+          T('line', { x1: 300, y1: 108, x2: 440, y2: 108, stroke: '#475569', 'stroke-width': 5 }) +
+          T('path', { d: 'M300 180 L250 520 L500 520 L440 180 Z', fill: '#e2e8f0', 'fill-opacity': 0.05 });
+
+        // cela com silhueta
+        var cela =
+          T('rect', { x: 286, y: 108, width: 240, height: 424, fill: '#0a111c', stroke: '#334155', 'stroke-width': 4 }) +
+          G({ id: 's3-preso', opacity: 0 },
+            T('circle', { cx: 412, cy: 350, r: 30, fill: '#141e2b' }) +
+            T('path', { d: 'M368 560 C368 470 386 418 412 414 C438 418 456 470 456 560 Z', fill: '#141e2b' })) +
+          (function () {
+            var b = '';
+            for (var i = 0; i < 7; i++) {
+              b += T('line', { x1: 300 + i * 36, y1: 108, x2: 300 + i * 36, y2: 532, stroke: '#475569', 'stroke-width': 7 });
+            }
+            return b;
+          })() +
+          T('rect', { x: 286, y: 108, width: 240, height: 10, fill: '#475569' }) +
+          T('rect', { x: 286, y: 522, width: 240, height: 10, fill: '#475569' }) +
+          T('rect', { x: 286, y: 300, width: 240, height: 8, fill: '#334155' });
+
+        // correntes
+        function corrente(x, y0, n, id) {
+          var s = '';
+          for (var i = 0; i < n; i++) {
+            s += T('ellipse', { cx: x, cy: y0 + i * 15, rx: 9, ry: 7, fill: 'none', stroke: '#94a3b8', 'stroke-width': 4, transform: 'rotate(' + (i % 2 === 0 ? 20 : -20) + ' ' + x + ' ' + (y0 + i * 15) + ')' });
+          }
+          s += T('path', { d: 'M' + (x - 18) + ' ' + y0 + ' L' + (x + 18) + ' ' + y0 + ' L' + (x + 14) + ' ' + (y0 - 16) + ' L' + (x - 14) + ' ' + (y0 - 16) + ' Z', fill: '#64748b' });
+          return G({ id: id }, s);
+        }
+
+        // cadeira giratória com rodas e cintos
+        var cadeira =
+          G({ id: 's3-cadeira' },
+            T('circle', { cx: 640, cy: 404, r: 60, fill: 'none', stroke: '#64748b', 'stroke-width': 7 }) +
+            (function () {
+              var sp = '';
+              for (var i = 0; i < 6; i++) {
+                var a = i * Math.PI / 3;
+                sp += T('line', { x1: 640, y1: 404, x2: f2(640 + Math.cos(a) * 56), y2: f2(404 + Math.sin(a) * 56), stroke: '#475569', 'stroke-width': 4 });
+              }
+              return sp;
+            })() +
+            T('rect', { x: 604, y: 330, width: 72, height: 106, rx: 10, fill: '#4a2c17', stroke: '#6b4423', 'stroke-width': 3 }) +
+            T('rect', { x: 592, y: 436, width: 96, height: 16, rx: 5, fill: '#6b4423' }) +
+            T('rect', { x: 580, y: 452, width: 120, height: 12, rx: 5, fill: '#5c3719' }) +
+            T('rect', { x: 596, y: 464, width: 12, height: 74, fill: '#3b2412' }) +
+            T('rect', { x: 672, y: 464, width: 12, height: 74, fill: '#3b2412' }) +
+            T('rect', { x: 612, y: 360, width: 56, height: 10, rx: 5, fill: '#94a3b8' }) +
+            T('rect', { x: 612, y: 402, width: 56, height: 10, rx: 5, fill: '#94a3b8' }) +
+            T('path', { d: 'M604 318 L676 318', stroke: '#94a3b8', 'stroke-width': 5, 'stroke-linecap': 'round' }));
+
+        // banheira de gelo
+        var banheira =
+          G({ id: 's3-banheira' },
+            T('rect', { x: 756, y: 432, width: 180, height: 122, rx: 18, fill: '#475569', stroke: '#94a3b8', 'stroke-width': 4 }) +
+            T('rect', { x: 766, y: 452, width: 160, height: 82, rx: 12, fill: '#1d4ed8', 'fill-opacity': 0.82 }) +
+            T('rect', { x: 766, y: 452, width: 160, height: 82, rx: 12, fill: 'none', stroke: '#60a5fa', 'stroke-width': 2 }) +
+            (function () {
+              var s = '';
+              for (var i = 0; i < 7; i++) {
+                var ix = 780 + (i * 41) % 130;
+                var iy = 462 + (i * 23) % 56;
+                s += T('rect', { id: 's3-gelo' + i, x: ix, y: iy, width: 18, height: 14, rx: 4, fill: '#e0f2fe', 'fill-opacity': 0.85, stroke: '#bae6fd', 'stroke-width': 1.5 });
+              }
+              return s;
+            })() +
+            T('rect', { x: 742, y: 470, width: 18, height: 10, rx: 4, fill: '#94a3b8' }) +
+            T('rect', { x: 738, y: 466, width: 8, height: 22, rx: 3, fill: '#64748b' }));
+
+        var vapor = '';
+        for (var v = 0; v < 3; v++) {
+          vapor += T('path', { id: 's3-vapor' + v, d: 'M' + (798 + v * 34) + ' 444 C' + (786 + v * 34) + ' 414 ' + (812 + v * 34) + ' 402 ' + (798 + v * 34) + ' 372', fill: 'none', stroke: '#bae6fd', 'stroke-width': 4, 'stroke-linecap': 'round', opacity: 0 });
+        }
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<radialGradient id="s3-luaGrad" cx="0.5" cy="0.3" r="0.7"><stop offset="0" stop-color="#93c5fd" stop-opacity="0.20"/><stop offset="1" stop-color="#93c5fd" stop-opacity="0"/></radialGradient>' +
+          '<linearGradient id="s3-gradeGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1b2a3d"/><stop offset="1" stop-color="#0b1220"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: 'url(#s3-gradeGrad)' }) +
+          pedras +
+          poeira +
+          T('rect', { x: 0, y: 0, width: 1080, height: 520, fill: 'url(#s3-luaGrad)' }) +
+          T('rect', { x: 0, y: 520, width: 1080, height: 120, fill: '#0a111c' }) +
+          (function () {
+            var s = '';
+            for (var i = 0; i < 8; i++) {
+              s += T('line', { x1: 0, y1: 536 + i * 13, x2: 1080, y2: 536 + i * 13, stroke: '#1e293b', 'stroke-width': 2, opacity: 0.75 });
+            }
+            return s;
+          })() +
+          janela +
+          cela +
+          corrente(548, 118, 11, 's3-corrente0') +
+          corrente(578, 92, 9, 's3-corrente1') +
+          G({ id: 's3-blur0', opacity: 0 }, T('path', { d: 'M556 404 A84 84 0 0 1 724 404', fill: 'none', stroke: '#94a3b8', 'stroke-width': 5, 'stroke-linecap': 'round' })) +
+          G({ id: 's3-blur1', opacity: 0 }, T('path', { d: 'M568 380 A72 72 0 0 0 712 380', fill: 'none', stroke: '#cbd5e1', 'stroke-width': 4, 'stroke-linecap': 'round' })) +
+          cadeira +
+          banheira +
+          vapor +
+          // etiquetas
+          G({ id: 's3-tagCorrente', opacity: 0 },
+            T('rect', { x: 268, y: 56, width: 190, height: 46, rx: 10, fill: 'rgba(10,18,30,0.95)', stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('text', { x: 363, y: 86, 'text-anchor': 'middle', fill: '#e2e8f0', 'font-family': 'Inter, sans-serif', 'font-size': 20, 'font-weight': 700, 'letter-spacing': 1.2 }, 'CORRENTES') +
+            T('line', { x1: 458, y1: 100, x2: 540, y2: 160, stroke: '#94a3b8', 'stroke-width': 2.5, 'stroke-dasharray': '7 6' })) +
+          G({ id: 's3-tagCadeira', opacity: 0 },
+            T('rect', { x: 664, y: 212, width: 252, height: 46, rx: 10, fill: 'rgba(10,18,30,0.95)', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('text', { x: 790, y: 242, 'text-anchor': 'middle', fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 19, 'font-weight': 700, 'letter-spacing': 1.0 }, 'CADEIRA GIRATÓRIA') +
+            T('line', { x1: 700, y1: 258, x2: 660, y2: 322, stroke: '#f87171', 'stroke-width': 2.5 })) +
+          G({ id: 's3-tagGelo', opacity: 0 },
+            T('rect', { x: 742, y: 336, width: 192, height: 46, rx: 10, fill: 'rgba(8,24,40,0.95)', stroke: '#7dd3fc', 'stroke-width': 2 }) +
+            T('text', { x: 838, y: 366, 'text-anchor': 'middle', fill: '#bae6fd', 'font-family': 'Inter, sans-serif', 'font-size': 19, 'font-weight': 700, 'letter-spacing': 1.0 }, 'BANHO DE GELO') +
+            T('line', { x1: 850, y1: 382, x2: 846, y2: 430, stroke: '#7dd3fc', 'stroke-width': 2.5 })) +
+          G({ id: 's3-selo', opacity: 0 },
+            T('circle', { cx: 640, cy: 300, r: 86, fill: 'rgba(12,20,32,0.86)', stroke: '#ef4444', 'stroke-width': 5 }) +
+            T('circle', { cx: 640, cy: 300, r: 76, fill: 'none', stroke: 'rgba(248,113,113,0.55)', 'stroke-width': 2, 'stroke-dasharray': '10 8' }) +
+            T('text', { x: 640, y: 292, 'text-anchor': 'middle', fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 34, 'font-weight': 700, 'letter-spacing': 1.5 }, '0 CURAS') +
+            T('text', { x: 640, y: 326, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 2.2 }, 'NENHUM MÉTODO'))
+        );
+        M.montar('#f3-cena', svg);
+        var cena = M.pegar('#f3-cena');
+        var cadeiraEl = M.pegar(cena, '#s3-cadeira');
+        var blur0 = M.pegar(cena, '#s3-blur0');
+        var blur1 = M.pegar(cena, '#s3-blur1');
+        var preso = M.pegar(cena, '#s3-preso');
+        var corr0 = M.pegar(cena, '#s3-corrente0');
+        var corr1 = M.pegar(cena, '#s3-corrente1');
+        var tagC = M.pegar(cena, '#s3-tagCorrente');
+        var tagCad = M.pegar(cena, '#s3-tagCadeira');
+        var tagG = M.pegar(cena, '#s3-tagGelo');
+        var seloEl = M.pegar(cena, '#s3-selo');
+        var vaporEl = [];
+        for (var vi = 0; vi < 3; vi++) vaporEl.push(M.pegar(cena, '#s3-vapor' + vi));
+        var gelos = [];
+        for (var gj = 0; gj < 7; gj++) gelos.push(M.pegar(cena, '#s3-gelo' + gj));
+        var boy = M.mascote('#f3-mascote');
+        var hud = M.medidorBarra('#f3-hud', { rotulo: 'TRATAMENTOS EFICAZES', unidade: 'DE 10', max: 10, cor: '#94a3b8', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          corr0.setAttribute('transform', 'rotate(' + f2(Math.sin(t * 1.5) * 4) + ' 548 102)');
+          corr1.setAttribute('transform', 'rotate(' + f2(Math.sin(t * 1.7 + 0.8) * 5) + ' 578 76)');
+
+          // cadeira gira cada vez mais rápido
+          var acel = suave(faixa(t, T_CADEIRA, T_CADEIRA + 1.6));
+          var freia = suave(faixa(t, T_FRACASSO, T_FRACASSO + 1.4));
+          var ang = (t - T_CADEIRA) * 220 * acel * (1 - freia * 0.92);
+          cadeiraEl.setAttribute('transform', 'rotate(' + f2(ang) + ' 640 470)');
+          var rapidez = acel * (1 - freia);
+          blur0.setAttribute('opacity', f2(rapidez * 0.55));
+          blur1.setAttribute('opacity', f2(rapidez * 0.4));
+          blur0.setAttribute('transform', 'rotate(' + f2(ang * 0.5) + ' 640 404)');
+          blur1.setAttribute('transform', 'rotate(' + f2(ang * 0.35) + ' 640 380)');
+
+          // vapor do gelo
+          for (var i = 0; i < 3; i++) {
+            var ph = ((t * 0.35 + i * 0.31) % 1);
+            var on = suave(faixa(t, T_GELO, T_GELO + 0.8));
+            vaporEl[i].setAttribute('opacity', f2(on * 0.45 * (1 - ph)));
+            vaporEl[i].setAttribute('transform', 'translate(0 ' + f2(-ph * 34) + ')');
+          }
+          for (var gI = 0; gI < 7; gI++) {
+            gelos[gI].setAttribute('transform', 'translate(0 ' + f2(Math.sin(t * 1.6 + gI) * 2.4) + ')');
+          }
+
+          // preso se encolhe
+          var kpreso = suave(faixa(t, T_CELA, T_CELA + 0.9));
+          var enc = suave(faixa(t, T_FRACASSO, T_FRACASSO + 1.6));
+          preso.setAttribute('transform', 'translate(412 560) scale(1 ' + f2(1 - enc * 0.05) + ') translate(-412 -560)');
+          preso.setAttribute('opacity', f2(kpreso * (0.9 - enc * 0.15)));
+
+          tagC.setAttribute('opacity', f2(suave(faixa(t, 5.6, 6.1))));
+          tagCad.setAttribute('opacity', f2(suave(faixa(t, 8.6, 9.1)) * (1 - suave(faixa(t, 14.4, 14.7)))));
+          tagG.setAttribute('opacity', f2(suave(faixa(t, 8.3, 8.8))));
+
+          var kselo = suave(faixa(t, T_SELO, T_SELO + 0.5));
+          var zeroPulse = Math.sin(faixa(t, T_ZERO, T_ZERO + 0.55) * Math.PI);
+          seloEl.setAttribute('opacity', f2(kselo));
+          seloEl.setAttribute('transform', 'translate(640 300) scale(' + f2(lerp(0.7, 1, kselo) + zeroPulse * 0.06) + ') translate(-640 -300)');
+
+          hud.atualizar(0, t >= T_ZERO ? 'ZERO ESCUTA. ZERO CURA.' : (enc > 0.5 ? 'NINGUÉM MEDIA NADA' : 'CASTIGO COM NOME DE CURA'), t >= T_ZERO || enc > 0.5 ? '#ef4444' : '#94a3b8');
+
+          boy.atualizar(t, og, {
+            humor: 'triste',
+            bracoD: enc > 0.5 ? 34 : 22,
+            bracoE: enc > 0.5 ? 44 : 26,
+            olhar: [10, 2],
+            tremer: 0.45 + enc * 0.4,
+            inclinar: 5
+          });
+        }, { duracao: DUR, offsetGlobal: 35.63 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-03-hospicio'] = tl;
+    })();
+  </script>
+</template>

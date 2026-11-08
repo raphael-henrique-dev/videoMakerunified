@@ -1,0 +1,229 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f1-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#0a0508; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f1-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f1-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(24,8,12,0.90); border:1px solid rgba(248,113,113,0.42); border-radius:14px; }
+    .f1-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#fca5a5; text-transform:uppercase; }
+    .f1-badge { font-size:19px; font-weight:700; color:#fbbf24; letter-spacing:.06em; }
+    .f1-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(24,8,12,0.90); border-left:5px solid #f87171; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f1-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f1-title-accent { color:#fca5a5; }
+    .f1-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f1-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(34,8,12,0.94); border:1.5px solid rgba(248,113,113,0.6); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f1-banner-text { font-size:19px; font-weight:700; color:#fecaca; letter-spacing:.03em; line-height:1.25; }
+    .f1-banner-pill { flex:0 0 auto; padding:7px 15px; background:#f87171; color:#1a0508; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f1-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 66% 26%, #3a1016 0%, #1b0a10 48%, #0a0508 100%); }
+    #f1-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#1a0b10 0%,#0a0508 100%); border-top:2px solid rgba(248,113,113,0.20); }
+    #f1-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f1-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f1-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(24,8,12,0.92); border:1px solid rgba(248,113,113,0.34); border-radius:22px; }
+  </style>
+
+  <div id="f1-root" data-composition-id="frame-01-porao-comum" data-width="1080" data-height="1920" data-start="0" data-duration="13.27">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f1-cena" class="m2-cena"></div>
+    <div id="f1-mascote" class="m2-mascote"></div>
+    <div id="f1-hud" class="m2-hud"></div>
+
+    <div class="f1-ui-layer">
+      <div id="f1-topbar" class="f1-topbar">
+        <span class="f1-kicker">PROJETO BUNKER // O TESTE</span>
+        <span class="f1-badge">DIA 1</span>
+      </div>
+      <div id="f1-header" class="f1-header-card">
+        <h1 class="f1-title">O Porão Comum <span class="f1-title-accent">Não Salva</span></h1>
+        <p class="f1-subtitle">Trinta dias lá embaixo e o seu abrigo vira uma armadilha alagada, sem ar e quente.</p>
+      </div>
+      <div id="f1-banner" class="f1-banner" style="opacity: 0;">
+        <span class="f1-banner-text">PORÃO COMUM NÃO É BUNKER: ÁGUA, AR E CALOR ENTRAM</span>
+        <span class="f1-banner-pill">0 DIAS</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 13.27;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f1-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f1-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f1-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 10.9);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var gotas = '';
+        for (var d = 0; d < 7; d++) {
+          gotas += T('circle', { id: 's1-gota' + d, r: 3.4, fill: '#7dd3fc', opacity: 0 });
+        }
+        var telhado = T('path', { d: 'M316 214 L560 128 L804 214 Z', fill: '#7f1d1d', stroke: '#b91c1c', 'stroke-width': 4, 'stroke-linejoin': 'round' });
+        var casa = T('rect', { x: 348, y: 214, width: 424, height: 96, fill: '#221018', stroke: '#7f1d1d', 'stroke-width': 3 });
+        var janelas = '';
+        janelas += T('rect', { x: 384, y: 238, width: 62, height: 46, rx: 4, fill: '#fbbf24', 'fill-opacity': 0.92 });
+        janelas += T('rect', { x: 676, y: 238, width: 62, height: 46, rx: 4, fill: '#fbbf24', 'fill-opacity': 0.55 });
+        janelas += T('rect', { x: 520, y: 236, width: 60, height: 74, rx: 5, fill: '#0b1220', stroke: '#b91c1c', 'stroke-width': 3 });
+        janelas += T('circle', { cx: 568, cy: 274, r: 3.4, fill: '#fbbf24' });
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<linearGradient id="s1-ceuGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#45101a"/><stop offset="0.62" stop-color="#2a0d14"/><stop offset="1" stop-color="#170a0e"/></linearGradient>' +
+          '<linearGradient id="s1-soloGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3b2417"/><stop offset="1" stop-color="#1c1109"/></linearGradient>' +
+          '<linearGradient id="s1-aguaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d4ed8"/><stop offset="1" stop-color="#0b2350"/></linearGradient>' +
+          '<linearGradient id="s1-paredeGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3f4b5e"/><stop offset="1" stop-color="#26313f"/></linearGradient>' +
+          '</defs>' +
+          T('rect', { x: 0, y: 0, width: 1080, height: 304, fill: 'url(#s1-ceuGrad)' }) +
+          T('circle', { cx: 872, cy: 86, r: 66, fill: '#f97316', 'fill-opacity': 0.16 }) +
+          T('circle', { cx: 872, cy: 86, r: 42, fill: '#fb923c', 'fill-opacity': 0.9 }) +
+          T('path', { id: 's1-onda1', d: 'M120 78 Q190 54 260 78 T400 78 T540 78 T680 78', fill: 'none', stroke: '#fb923c', 'stroke-width': 4, 'stroke-linecap': 'round', opacity: 0.55 }) +
+          T('path', { id: 's1-onda2', d: 'M120 112 Q190 88 260 112 T400 112 T540 112 T680 112', fill: 'none', stroke: '#f59e0b', 'stroke-width': 4, 'stroke-linecap': 'round', opacity: 0.4 }) +
+          T('path', { id: 's1-onda3', d: 'M120 146 Q190 122 260 146 T400 146 T540 146 T680 146', fill: 'none', stroke: '#fbbf24', 'stroke-width': 4, 'stroke-linecap': 'round', opacity: 0.3 }) +
+          // solo
+          T('rect', { x: 0, y: 300, width: 1080, height: 340, fill: 'url(#s1-soloGrad)' }) +
+          (function () {
+            var s = '';
+            for (var i = 0; i < 44; i++) {
+              s += T('circle', { cx: f2(M.ruido(i * 1.7) * 1080), cy: f2(318 + M.ruido(i * 4.3) * 310), r: f2(1.6 + M.ruido(i * 2.9) * 3.4), fill: '#6b4a2f', 'fill-opacity': f2(0.35 + M.ruido(i * 5.5) * 0.4) });
+            }
+            return s;
+          })() +
+          // casa
+          telhado + casa + janelas +
+          T('rect', { x: 742, y: 168, width: 26, height: 52, fill: '#4c1d1d' }) +
+          T('line', { x1: 560, y1: 128, x2: 560, y2: 92, stroke: '#94a3b8', 'stroke-width': 4 }) +
+          T('circle', { cx: 560, cy: 86, r: 6, fill: '#fca5a5' }) +
+          // porão: paredes
+          T('rect', { x: 404, y: 310, width: 340, height: 302, fill: '#111827' }) +
+          T('rect', { x: 404, y: 310, width: 340, height: 18, fill: 'url(#s1-paredeGrad)' }) +
+          T('rect', { x: 404, y: 310, width: 18, height: 302, fill: 'url(#s1-paredeGrad)' }) +
+          T('rect', { x: 726, y: 310, width: 18, height: 302, fill: 'url(#s1-paredeGrad)' }) +
+          T('text', { x: 574, y: 342, 'text-anchor': 'middle', fill: '#fca5a5', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 2.0 }, 'PORÃO') +
+          // móveis do porão
+          T('rect', { x: 438, y: 470, width: 96, height: 12, rx: 4, fill: '#7c2d12' }) +
+          T('rect', { x: 442, y: 482, width: 10, height: 46, fill: '#7c2d12' }) +
+          T('rect', { x: 520, y: 482, width: 10, height: 46, fill: '#7c2d12' }) +
+          T('rect', { x: 636, y: 386, width: 74, height: 96, rx: 6, fill: '#1f2937', stroke: '#64748b', 'stroke-width': 3 }) +
+          T('line', { x1: 650, y1: 412, x2: 696, y2: 412, stroke: '#94a3b8', 'stroke-width': 3 }) +
+          T('line', { x1: 650, y1: 432, x2: 696, y2: 432, stroke: '#94a3b8', 'stroke-width': 3 }) +
+          T('line', { x1: 650, y1: 452, x2: 682, y2: 452, stroke: '#94a3b8', 'stroke-width': 3 }) +
+          // água (path animado)
+          T('path', { id: 's1-agua', d: 'M422 604 L722 604 Z', fill: 'url(#s1-aguaGrad)', opacity: 0.92 }) +
+          T('path', { id: 's1-aguaTopo', d: 'M422 604 L722 604', fill: 'none', stroke: '#7dd3fc', 'stroke-width': 3, opacity: 0.85 }) +
+          // objetos boiando
+          G({ id: 's1-caixa' }, T('rect', { x: 468, y: 574, width: 44, height: 34, rx: 3, fill: '#a16207', stroke: '#fbbf24', 'stroke-width': 2 }) + T('line', { x1: 468, y1: 591, x2: 512, y2: 591, stroke: '#fbbf24', 'stroke-width': 2 })) +
+          G({ id: 's1-garrafa' }, T('rect', { x: 654, y: 566, width: 18, height: 42, rx: 6, fill: '#0e7490', stroke: '#67e8f9', 'stroke-width': 2 }) + T('rect', { x: 660, y: 556, width: 6, height: 12, fill: '#67e8f9' })) +
+          gotas +
+          // rachaduras
+          T('path', { id: 's1-rach1', d: 'M404 356 L424 380 L410 404 L430 428', fill: 'none', stroke: '#fca5a5', 'stroke-width': 3, opacity: 0 }) +
+          T('path', { id: 's1-rach2', d: 'M744 412 L722 436 L738 466 L718 494', fill: 'none', stroke: '#fca5a5', 'stroke-width': 3, opacity: 0 }) +
+          // etiquetas
+          G({ id: 's1-tagAgua' },
+            T('rect', { x: 288, y: 508, width: 108, height: 44, rx: 10, fill: 'rgba(30,8,12,0.95)', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('text', { x: 342, y: 537, 'text-anchor': 'middle', fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 19, 'font-weight': 700 }, 'ÁGUA') +
+            T('line', { x1: 396, y1: 530, x2: 424, y2: 546, stroke: '#f87171', 'stroke-width': 2.5 })) +
+          G({ id: 's1-tagAr' },
+            T('rect', { x: 772, y: 384, width: 128, height: 44, rx: 10, fill: 'rgba(30,8,12,0.95)', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('text', { x: 836, y: 413, 'text-anchor': 'middle', fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 19, 'font-weight': 700 }, 'SEM AR') +
+            T('line', { x1: 772, y1: 406, x2: 746, y2: 400, stroke: '#f87171', 'stroke-width': 2.5 })) +
+          G({ id: 's1-tagCalor' },
+            T('rect', { x: 792, y: 196, width: 128, height: 44, rx: 10, fill: 'rgba(40,18,4,0.95)', stroke: '#fbbf24', 'stroke-width': 2 }) +
+            T('text', { x: 856, y: 225, 'text-anchor': 'middle', fill: '#fde68a', 'font-family': 'Inter, sans-serif', 'font-size': 19, 'font-weight': 700 }, 'CALOR') +
+            T('line', { x1: 792, y1: 214, x2: 700, y2: 214, stroke: '#fbbf24', 'stroke-width': 2.5 })) +
+          // medidor de CO2 dentro do porão
+          G({ id: 's1-co2' },
+            T('rect', { x: 438, y: 370, width: 168, height: 60, rx: 10, fill: 'rgba(10,6,10,0.94)', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('text', { x: 450, y: 392, fill: '#fca5a5', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1.2 }, 'CO₂ NO AR') +
+            T('text', { id: 's1-co2Val', x: 450, y: 419, fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 24, 'font-weight': 700 }, '600 ppm')) +
+          // selo de falha
+          G({ id: 's1-selo', opacity: 0 },
+            T('circle', { cx: 574, cy: 452, r: 62, fill: 'none', stroke: '#ef4444', 'stroke-width': 8 }) +
+            T('path', { d: 'M534 412 L614 492 M614 412 L534 492', fill: 'none', stroke: '#ef4444', 'stroke-width': 10, 'stroke-linecap': 'round' }))
+        );
+        M.montar('#f1-cena', svg);
+        var cena = M.pegar('#f1-cena');
+        var agua = M.pegar(cena, '#s1-agua');
+        var aguaTopo = M.pegar(cena, '#s1-aguaTopo');
+        var co2Val = M.pegar(cena, '#s1-co2Val');
+        var co2Box = M.pegar(cena, '#s1-co2');
+        var selo = M.pegar(cena, '#s1-selo');
+        var rach1 = M.pegar(cena, '#s1-rach1');
+        var rach2 = M.pegar(cena, '#s1-rach2');
+        var caixa = M.pegar(cena, '#s1-caixa');
+        var garrafa = M.pegar(cena, '#s1-garrafa');
+        var onda1 = M.pegar(cena, '#s1-onda1');
+        var onda2 = M.pegar(cena, '#s1-onda2');
+        var onda3 = M.pegar(cena, '#s1-onda3');
+        var gts = [];
+        for (var g = 0; g < 7; g++) gts.push(M.pegar(cena, '#s1-gota' + g));
+        var boy = M.mascote('#f1-mascote');
+        var hud = M.medidorBarra('#f1-hud', { rotulo: 'AUTONOMIA DO PORÃO', unidade: 'DIAS', max: 30, cor: '#f87171', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var sobe = 0.07 * suave(faixa(t, 2.2, 6.0)) + 0.93 * suave(faixa(t, 6.8, 11.0));
+          var aguaY = lerp(604, 450, sobe);
+          var dAgua = 'M422 ' + f2(aguaY);
+          for (var wx = 442; wx <= 722; wx += 20) {
+            dAgua += ' L' + wx + ' ' + f2(aguaY + Math.sin(wx * 0.05 + t * 2.8) * 4.5);
+          }
+          dAgua += ' L722 604 L422 604 Z';
+          agua.setAttribute('d', dAgua);
+          var dTopo = 'M422 ' + f2(aguaY);
+          for (var tx = 442; tx <= 722; tx += 20) {
+            dTopo += ' L' + tx + ' ' + f2(aguaY + Math.sin(tx * 0.05 + t * 2.8) * 4.5);
+          }
+          aguaTopo.setAttribute('d', dTopo);
+          caixa.setAttribute('transform', 'translate(0 ' + f2(-sobe * 122 + Math.sin(t * 2.2) * 3) + ')');
+          garrafa.setAttribute('transform', 'translate(0 ' + f2(-sobe * 126 + Math.cos(t * 2.4) * 3) + ')');
+
+          var febre = suave(faixa(t, 10.3, 11.5));
+          var ondas = 1 + 0.35 * Math.sin(t * 3.4) + 0.9 * febre;
+          onda1.setAttribute('transform', 'translate(0 ' + f2(Math.sin(t * 2.1) * 5 * ondas) + ')');
+          onda2.setAttribute('transform', 'translate(0 ' + f2(Math.cos(t * 1.7) * 6 * ondas) + ')');
+          onda3.setAttribute('transform', 'translate(0 ' + f2(Math.sin(t * 1.3 + 1) * 7 * ondas) + ')');
+
+          var vaz = suave(faixa(t, 2.4, 5.4));
+          rach1.setAttribute('opacity', f2(vaz));
+          rach2.setAttribute('opacity', f2(vaz * 0.9));
+
+          for (var i = 0; i < 7; i++) {
+            var ciclo = ((t * 0.9 + i * 0.37) % 1);
+            var gy = 320 + ciclo * 150;
+            gts[i].setAttribute('cx', 430 + ((i * 41) % 280));
+            gts[i].setAttribute('cy', f2(gy));
+            gts[i].setAttribute('opacity', f2(ciclo < 0.85 ? 0.85 : 0));
+          }
+
+          var co2 = Math.round(lerp(600, 5200, suave(faixa(t, 8.8, 11.8))));
+          co2Val.textContent = co2 + ' ppm';
+          co2Val.setAttribute('fill', co2 > 2500 ? '#ef4444' : '#fecaca');
+          co2Box.setAttribute('stroke', co2 > 2500 ? '#ef4444' : '#f87171');
+
+          var seloT = suave(faixa(t, 11.2, 11.8));
+          selo.setAttribute('opacity', f2(seloT));
+          selo.setAttribute('transform', 'translate(574 452) scale(' + f2(lerp(0.4, 1, seloT)) + ') translate(-574 -452)');
+
+          hud.atualizar(Math.max(0, 3.2 * (1 - sobe)), sobe > 0.75 ? 'COLAPSO EM HORAS' : 'ÁGUA SUBINDO', sobe > 0.75 ? '#ef4444' : '#f87171');
+
+          boy.atualizar(t, og, {
+            humor: t > 11.0 ? 'triste' : (t > 7.0 ? 'surpreso' : 'neutro'),
+            bracoD: t > 11.0 ? 96 : (t > 7.0 ? 58 : 12),
+            bracoE: t > 11.0 ? 70 : 8,
+            olhar: [-8, -6],
+            tremer: t > 7.6 && t < 11.0 ? 1.2 : 0,
+            inclinar: t > 11.0 ? 5 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 0.00 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-01-porao-comum'] = tl;
+    })();
+  </script>
+</template>

@@ -1,6 +1,21 @@
 [
   {
     "slug": "/home/raphael/codigos/projetos_javascript/videoMakerunified-main/videos/quanto-vale-1-bilhao",
+    "data_upload": "2026-11-07T17:00:03.131Z",
+    "agendado_para": null,
+    "plataformas": {
+      "tiktok": {
+        "plataforma": "tiktok",
+        "sucesso": true,
+        "publish_id": "v_inbox_file~v2.7705475389317892097",
+        "status": "PROCESSING_UPLOAD",
+        "privacidade": "SELF_ONLY",
+        "data": "2026-11-07T17:00:11.159Z"
+      }
+    }
+  },
+  {
+    "slug": "/home/raphael/codigos/projetos_javascript/videoMakerunified-main/videos/quanto-vale-1-bilhao",
     "data_upload": "2026-11-07T15:14:39.943Z",
     "agendado_para": "2026-11-07T17:00:00.000Z",
     "plataformas": {

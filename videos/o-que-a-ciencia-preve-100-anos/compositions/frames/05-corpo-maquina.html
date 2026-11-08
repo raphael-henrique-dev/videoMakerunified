@@ -1,0 +1,228 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f5-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f5-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f5-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(6,14,26,0.90); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f5-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#7dd3fc; text-transform:uppercase; }
+    .f5-badge { font-size:19px; font-weight:700; color:#67e8f9; letter-spacing:.06em; }
+    .f5-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(6,14,26,0.90); border-left:5px solid #22d3ee; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f5-title { font-family:'EB Garamond',serif; font-size:54px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f5-title-accent { color:#a5f3fc; }
+    .f5-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f5-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(6,16,30,0.94); border:1.5px solid rgba(34,211,238,0.6); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f5-banner-text { font-size:19px; font-weight:700; color:#cffafe; letter-spacing:.03em; line-height:1.25; }
+    .f5-banner-pill { flex:0 0 auto; padding:7px 15px; background:#22d3ee; color:#04121a; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f5-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 56% 24%, #0c2a44 0%, #08182a 48%, #050a14 100%); }
+    #f5-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#061420 0%,#050a14 100%); border-top:2px solid rgba(34,211,238,0.18); }
+    #f5-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f5-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f5-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(6,14,26,0.92); border:1px solid rgba(34,211,238,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f5-root" data-composition-id="frame-05-corpo-maquina" data-width="1080" data-height="1920" data-start="0" data-duration="24.27">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f5-cena" class="m2-cena"></div>
+    <div id="f5-mascote" class="m2-mascote"></div>
+    <div id="f5-hud" class="m2-hud"></div>
+
+    <div class="f5-ui-layer">
+      <div id="f5-topbar" class="f5-topbar">
+        <span class="f5-kicker">CORPO // A PONTE COM A MÁQUINA</span>
+        <span class="f5-badge">100 ms</span>
+      </div>
+      <div id="f5-header" class="f5-header-card">
+        <h1 class="f5-title">O Corpo Ganha <span class="f5-title-accent">Extensão</span></h1>
+        <p class="f5-subtitle">A promessa não é baixar a mente num computador. É devolver movimento, visão e audição a quem perdeu.</p>
+      </div>
+      <div id="f5-banner" class="f5-banner" style="opacity: 0;">
+        <span class="f5-banner-text">A MÁQUINA DEVOLVE O QUE A DOENÇA TIROU</span>
+        <span class="f5-banner-pill">CORPO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 24.27;
+      var T_FAIXA = 1.4;
+      var T_SINAL = 3.0;
+      var T_BRACO = 5.0;
+      var T_EXO = 8.0;
+      var T_SENTIDOS = 11.0;
+      var T_BANNER = 22.6;
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f5-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f5-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f5-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, T_BANNER);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var fundo =
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: '#071018' }) +
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: 'url(#s5-fundoGrad)' });
+
+        // rede neural de fundo
+        var rede = '';
+        for (var n = 0; n < 22; n++) {
+          var nx = 300 + M.ruido(n * 3.7) * 700;
+          var ny = 40 + M.ruido(n * 7.1) * 540;
+          rede += T('circle', { cx: f2(nx), cy: f2(ny), r: f2(1.5 + M.ruido(n * 2.9) * 2), fill: '#67e8f9', opacity: f2(0.12 + M.ruido(n * 5.3) * 0.25) });
+        }
+        for (var n2 = 0; n2 < 16; n2++) {
+          var ax = 300 + M.ruido(n2 * 4.3) * 700;
+          var ay = 40 + M.ruido(n2 * 8.7) * 540;
+          var bx = ax + (M.ruido(n2 * 1.7) - 0.5) * 180;
+          var by = ay + (M.ruido(n2 * 6.1) - 0.5) * 180;
+          rede += T('line', { x1: f2(ax), y1: f2(ay), x2: f2(bx), y2: f2(by), stroke: '#0e7490', 'stroke-width': 1, opacity: 0.18 });
+        }
+
+        // silhueta humana com faixa neural
+        var humano =
+          G({ id: 's5-humano' },
+            T('circle', { cx: 520, cy: 170, r: 44, fill: '#0b1a2c', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('path', { d: 'M462 226 C472 216 494 210 520 210 C546 210 568 216 578 226 L590 350 L574 470 L540 470 L534 360 L520 360 L514 470 L480 470 L466 350 Z', fill: '#0b1a2c', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('path', { d: 'M578 232 L628 300 L616 310 L566 254', fill: '#0b1a2c', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('path', { d: 'M462 232 L430 306 L442 314 L474 254', fill: '#0b1a2c', stroke: '#38bdf8', 'stroke-width': 3 }));
+
+        // cérebro brilhando
+        var cerebro =
+          G({ id: 's5-cerebro' },
+            T('circle', { cx: 520, cy: 164, r: 28, fill: 'url(#s5-cerebroGrad)' }) +
+            T('path', { d: 'M500 164 C496 152 506 146 514 150 C518 142 530 142 534 150 C542 146 552 152 548 164 C552 174 542 180 534 176 C530 184 518 184 514 176 C506 180 496 174 500 164 Z', fill: 'none', stroke: '#a5f3fc', 'stroke-width': 2.5, opacity: 0.85 }));
+
+        // faixa neural
+        var faixaNeural =
+          G({ id: 's5-faixa' },
+            T('path', { d: 'M480 140 C492 124 548 124 560 140', fill: 'none', stroke: '#22d3ee', 'stroke-width': 7, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 490, cy: 138, r: 6, fill: '#a5f3fc' }) +
+            T('circle', { cx: 520, cy: 128, r: 6, fill: '#a5f3fc' }) +
+            T('circle', { cx: 550, cy: 138, r: 6, fill: '#a5f3fc' }));
+
+        // ondas de sinal até o braço robótico
+        var sinais = '';
+        for (var s = 0; s < 4; s++) {
+          sinais += T('path', { id: 's5-sinal' + s, d: 'M560 190 C600 190 620 220 650 240', fill: 'none', stroke: '#67e8f9', 'stroke-width': 3, 'stroke-dasharray': '8 10', opacity: 0.7 });
+        }
+
+        // braço robótico
+        var braco =
+          G({ id: 's5-braco', transform: 'rotate(0 690 280)' },
+            T('circle', { cx: 690, cy: 280, r: 22, fill: '#0b1220', stroke: '#22d3ee', 'stroke-width': 4 }) +
+            T('rect', { x: 676, y: 292, width: 28, height: 110, rx: 13, fill: '#1e3a5f', stroke: '#67e8f9', 'stroke-width': 3 }) +
+            T('circle', { cx: 690, cy: 404, r: 18, fill: '#0b1220', stroke: '#22d3ee', 'stroke-width': 4 }) +
+            T('rect', { x: 678, y: 414, width: 24, height: 96, rx: 11, fill: '#1e3a5f', stroke: '#67e8f9', 'stroke-width': 3 }) +
+            T('circle', { cx: 690, cy: 512, r: 14, fill: '#0b1220', stroke: '#22d3ee', 'stroke-width': 3 }) +
+            T('path', { d: 'M690 522 L690 556 M690 556 L674 574 M690 556 L706 574 M690 556 L690 580', fill: 'none', stroke: '#a5f3fc', 'stroke-width': 5, 'stroke-linecap': 'round' }));
+
+        var rotuloBraco = T('text', { x: 690, y: 616, 'text-anchor': 'middle', fill: '#a5f3fc', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 0.9 }, 'BRAÇO ROBÓTICO');
+
+        // exoesqueleto
+        var exo =
+          G({ id: 's5-exo' },
+            T('rect', { x: 344, y: 356, width: 34, height: 108, rx: 16, fill: '#1e3a5f', stroke: '#67e8f9', 'stroke-width': 3 }) +
+            T('circle', { cx: 361, cy: 470, r: 18, fill: '#0b1220', stroke: '#22d3ee', 'stroke-width': 4 }) +
+            G({ id: 's5-canhoto', transform: 'rotate(0 361 470)' },
+              T('rect', { x: 348, y: 480, width: 28, height: 90, rx: 13, fill: '#1e3a5f', stroke: '#67e8f9', 'stroke-width': 3 }) +
+              T('path', { d: 'M348 566 L376 566 L386 590 L338 590 Z', fill: '#1e3a5f', stroke: '#67e8f9', 'stroke-width': 3 })) +
+            T('path', { d: 'M330 380 L392 380 M330 420 L392 420', stroke: '#fbbf24', 'stroke-width': 4, 'stroke-linecap': 'round', opacity: 0.8 }) +
+            T('text', { x: 361, y: 620, 'text-anchor': 'middle', fill: '#a5f3fc', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 0.9 }, 'EXOESQUELETO'));
+
+        // retina artificial
+        var retina =
+          G({ id: 's5-retina' },
+            T('rect', { x: 824, y: 66, width: 116, height: 112, rx: 10, fill: 'rgba(6,14,26,0.95)', stroke: '#22d3ee', 'stroke-width': 2 }) +
+            T('ellipse', { cx: 882, cy: 112, rx: 34, ry: 22, fill: '#0b1220', stroke: '#67e8f9', 'stroke-width': 2 }) +
+            T('circle', { cx: 882, cy: 112, r: 12, fill: '#22d3ee' }) +
+            T('circle', { id: 's5-pupila', cx: 882, cy: 112, r: 5, fill: '#04121a' }) +
+            T('circle', { cx: 908, cy: 104, r: 4, fill: '#a5f3fc' }) +
+            T('text', { x: 882, y: 160, 'text-anchor': 'middle', fill: '#a5f3fc', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 0.6 }, 'RETINA ARTIFICIAL'));
+
+        // implante coclear
+        var ouvido =
+          G({ id: 's5-ouvido' },
+            T('rect', { x: 824, y: 206, width: 116, height: 112, rx: 10, fill: 'rgba(6,14,26,0.95)', stroke: '#22d3ee', 'stroke-width': 2 }) +
+            T('path', { d: 'M860 236 C850 248 850 272 860 284 C872 298 896 298 906 284', fill: 'none', stroke: '#67e8f9', 'stroke-width': 5, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 884, cy: 258, r: 8, fill: '#22d3ee' }) +
+            T('path', { id: 's5-ondaSom0', d: 'M912 248 C920 254 920 268 912 274', fill: 'none', stroke: '#a5f3fc', 'stroke-width': 2.5, opacity: 0.5 }) +
+            T('path', { id: 's5-ondaSom1', d: 'M920 240 C932 250 932 272 920 282', fill: 'none', stroke: '#a5f3fc', 'stroke-width': 2.5, opacity: 0.35 }) +
+            T('text', { x: 882, y: 300, 'text-anchor': 'middle', fill: '#a5f3fc', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 0.6 }, 'IMPLANTE COCLEAR'));
+
+        // etiqueta de latência
+        var tagLatencia =
+          G({ id: 's5-tagLatencia', opacity: 0 },
+            T('rect', { x: 580, y: 96, width: 188, height: 40, rx: 8, fill: 'rgba(6,14,26,0.95)', stroke: '#22d3ee', 'stroke-width': 2 }) +
+            T('text', { x: 674, y: 122, 'text-anchor': 'middle', fill: '#cffafe', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 0.8 }, 'PENSAMENTO → COMANDO'));
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<radialGradient id="s5-fundoGrad" cx="0.56" cy="0.24" r="0.78"><stop offset="0" stop-color="#0e7490" stop-opacity="0.28"/><stop offset="0.55" stop-color="#0b1a2c" stop-opacity="0.12"/><stop offset="1" stop-color="#050a14" stop-opacity="0"/></radialGradient>' +
+          '<radialGradient id="s5-cerebroGrad" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#a5f3fc" stop-opacity="0.55"/><stop offset="0.55" stop-color="#22d3ee" stop-opacity="0.22"/><stop offset="1" stop-color="#0e7490" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          fundo + rede + humano + cerebro + faixaNeural + sinais + braco + rotuloBraco + exo + retina + ouvido + tagLatencia
+        );
+        M.montar('#f5-cena', svg);
+        var cena = M.pegar('#f5-cena');
+        var cerebroEl = M.pegar(cena, '#s5-cerebro');
+        var bracoEl = M.pegar(cena, '#s5-braco');
+        var canhotoEl = M.pegar(cena, '#s5-canhoto');
+        var pupilaEl = M.pegar(cena, '#s5-pupila');
+        var tagLatenciaEl = M.pegar(cena, '#s5-tagLatencia');
+        var sinalEls = [];
+        for (var s2 = 0; s2 < 4; s2++) sinalEls.push(M.pegar(cena, '#s5-sinal' + s2));
+        var ondaEls = [M.pegar(cena, '#s5-ondaSom0'), M.pegar(cena, '#s5-ondaSom1')];
+        var boy = M.mascote('#f5-mascote');
+        var hud = M.medidorBarra('#f5-hud', { rotulo: 'PENSAMENTO → MOVIMENTO', unidade: 'ms', max: 200, cor: '#22d3ee', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var pulso = 1 + 0.05 * Math.sin(t * 3.2);
+          cerebroEl.setAttribute('transform', 'translate(520 164) scale(' + f2(pulso) + ') translate(-520 -164)');
+
+          for (var s3 = 0; s3 < 4; s3++) {
+            sinalEls[s3].setAttribute('stroke-dashoffset', f2(-t * 40 - s3 * 10));
+            sinalEls[s3].setAttribute('opacity', f2(0.25 + 0.55 * suave(faixa(t, T_SINAL + s3 * 0.2, T_SINAL + s3 * 0.2 + 0.6))));
+          }
+
+          var kB = suave(faixa(t, T_BRACO, T_BRACO + 1.0));
+          var angulo = lerp(0, -26, kB) + Math.sin(t * 1.6) * 3 * kB;
+          bracoEl.setAttribute('transform', 'rotate(' + f2(angulo) + ' 690 280)');
+
+          var kE = suave(faixa(t, T_EXO, T_EXO + 1.2));
+          canhotoEl.setAttribute('transform', 'rotate(' + f2(lerp(0, -24, kE) + Math.sin(t * 2.0) * 2 * kE) + ' 361 470)');
+
+          pupilaEl.setAttribute('cx', f2(882 + Math.sin(t * 1.4) * 5));
+          pupilaEl.setAttribute('cy', f2(112 + Math.cos(t * 1.1) * 3));
+
+          for (var o = 0; o < 2; o++) {
+            ondaEls[o].setAttribute('opacity', f2((0.35 - o * 0.1) * suave(faixa(t, T_SENTIDOS + o * 0.3, T_SENTIDOS + o * 0.3 + 0.8)) * (0.6 + 0.4 * Math.sin(t * 4 + o))));
+          }
+
+          tagLatenciaEl.setAttribute('opacity', f2(suave(faixa(t, 2.4, 3.2))));
+
+          hud.atualizar(lerp(200, 100, suave(faixa(t, 1.0, 18.5))), t > 17.5 ? 'TEMPO REAL' : 'CALIBRANDO', t > 17.5 ? '#86efac' : '#22d3ee');
+
+          boy.atualizar(t, og, {
+            humor: t > T_SENTIDOS ? 'feliz' : 'surpreso',
+            bracoD: t > T_BRACO ? 118 : 44,
+            bracoE: 14,
+            olhar: [10, -3],
+            inclinar: -2,
+            pulo: t > T_BANNER ? Math.abs(Math.sin((t - T_BANNER) * 4.2)) * 8 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 97.41 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-05-corpo-maquina'] = tl;
+    })();
+  </script>
+</template>

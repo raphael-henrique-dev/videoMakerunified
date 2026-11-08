@@ -1,0 +1,282 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f2-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#050a14; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f2-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f2-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(6,14,26,0.90); border:1px solid rgba(56,189,248,0.38); border-radius:14px; }
+    .f2-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#7dd3fc; text-transform:uppercase; }
+    .f2-badge { font-size:19px; font-weight:700; color:#4ade80; letter-spacing:.06em; }
+    .f2-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(6,14,26,0.90); border-left:5px solid #22c55e; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f2-title { font-family:'EB Garamond',serif; font-size:54px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f2-title-accent { color:#86efac; }
+    .f2-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f2-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(6,16,30,0.94); border:1.5px solid rgba(34,197,94,0.6); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f2-banner-text { font-size:19px; font-weight:700; color:#bbf7d0; letter-spacing:.03em; line-height:1.25; }
+    .f2-banner-pill { flex:0 0 auto; padding:7px 15px; background:#22c55e; color:#04140a; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f2-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 64% 26%, #0c2a3a 0%, #08182a 48%, #050a14 100%); }
+    #f2-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#061420 0%,#050a14 100%); border-top:2px solid rgba(34,197,94,0.18); }
+    #f2-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f2-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f2-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(6,14,26,0.92); border:1px solid rgba(34,197,94,0.32); border-radius:22px; }
+  </style>
+
+  <div id="f2-root" data-composition-id="frame-02-medicina-antecedencia" data-width="1080" data-height="1920" data-start="0" data-duration="26.78">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f2-cena" class="m2-cena"></div>
+    <div id="f2-mascote" class="m2-mascote"></div>
+    <div id="f2-hud" class="m2-hud"></div>
+
+    <div class="f2-ui-layer">
+      <div id="f2-topbar" class="f2-topbar">
+        <span class="f2-kicker">MEDICINA // O ALARME ANTECIPADO</span>
+        <span class="f2-badge">10 ANOS</span>
+      </div>
+      <div id="f2-header" class="f2-header-card">
+        <h1 class="f2-title">O Câncer Pego <span class="f2-title-accent">Antes do Tumor</span></h1>
+        <p class="f2-subtitle">Em vez de esperar o sintoma, a medicina aposta em achar a célula errada anos antes do primeiro nódulo.</p>
+      </div>
+      <div id="f2-banner" class="f2-banner" style="opacity: 0;">
+        <span class="f2-banner-text">O CÂNCER VIRA DOENÇA CRÔNICA</span>
+        <span class="f2-banner-pill">MEDICINA</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 26.78;
+      var T_TUBO = 1.2;
+      var T_SCAN = 3.0;
+      var T_JANELA = 7.4;
+      var T_NODULO = 10.6;
+      var T_PRECISAO = 13.0;
+      var T_BANNER = 24.8;
+
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f2-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f2-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f2-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, T_BANNER);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        var fundo =
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: '#071018' }) +
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: 'url(#s2-fundoGrad)' });
+
+        // grade médica
+        var grade = '';
+        for (var gx = 0; gx <= 1080; gx += 54) grade += T('line', { x1: gx, y1: 0, x2: gx, y2: 640, stroke: '#1e3a5f', 'stroke-width': 1, opacity: 0.22 });
+        for (var gy = 0; gy <= 640; gy += 54) grade += T('line', { x1: 0, y1: gy, x2: 1080, y2: gy, stroke: '#1e3a5f', 'stroke-width': 1, opacity: 0.22 });
+
+        // tubo de sangue
+        var celulas = '';
+        for (var c = 0; c < 16; c++) {
+          var cx0 = 382 + M.ruido(c * 2.3) * 34;
+          var cy0 = 86 + M.ruido(c * 5.1) * 150;
+          celulas += T('circle', { id: 's2-cel' + c, cx: f2(cx0), cy: f2(cy0), r: f2(2.6 + M.ruido(c * 7.7) * 2.6), fill: c % 3 === 0 ? '#fca5a5' : '#ef4444', opacity: 0.8 });
+        }
+        var tubo =
+          G({ id: 's2-tubo' },
+            T('rect', { x: 368, y: 58, width: 64, height: 206, rx: 30, fill: 'rgba(226,232,240,0.10)', stroke: '#cbd5e1', 'stroke-width': 3 }) +
+            T('rect', { x: 376, y: 96, width: 48, height: 160, rx: 24, fill: '#7f1d1d' }) +
+            T('rect', { x: 380, y: 102, width: 12, height: 140, rx: 6, fill: '#fca5a5', opacity: 0.35 }) +
+            T('rect', { x: 362, y: 52, width: 76, height: 14, rx: 7, fill: '#e2e8f0' }) +
+            celulas +
+            T('rect', { x: 352, y: 274, width: 96, height: 40, rx: 8, fill: 'rgba(6,14,26,0.95)', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('text', { x: 400, y: 300, 'text-anchor': 'middle', fill: '#bae6fd', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 0.6 }, 'SANGUE'));
+
+        // lupa sobre o tubo
+        var lupa =
+          G({ id: 's2-lupa' },
+            T('circle', { cx: 400, cy: 150, r: 44, fill: 'none', stroke: '#7dd3fc', 'stroke-width': 5 }) +
+            T('line', { x1: 430, y1: 182, x2: 456, y2: 210, stroke: '#7dd3fc', 'stroke-width': 9, 'stroke-linecap': 'round' }) +
+            T('circle', { cx: 400, cy: 150, r: 36, fill: 'rgba(56,189,248,0.08)' }));
+
+        // scanner circular
+        var scanner =
+          G({ id: 's2-scanner' },
+            T('circle', { cx: 700, cy: 296, r: 196, fill: 'rgba(8,20,32,0.86)', stroke: '#1e3a5f', 'stroke-width': 3 }) +
+            T('circle', { cx: 700, cy: 296, r: 176, fill: 'none', stroke: '#38bdf8', 'stroke-width': 2, 'stroke-dasharray': '10 12', opacity: 0.55 }) +
+            T('circle', { cx: 700, cy: 296, r: 132, fill: 'none', stroke: '#0e7490', 'stroke-width': 1.5, opacity: 0.5 }) +
+            T('line', { x1: 700, y1: 100, x2: 700, y2: 492, stroke: '#0e7490', 'stroke-width': 1.5, opacity: 0.35 }) +
+            T('line', { x1: 504, y1: 296, x2: 896, y2: 296, stroke: '#0e7490', 'stroke-width': 1.5, opacity: 0.35 }));
+
+        // silhueta humana
+        var silhueta =
+          G({ id: 's2-silhueta' },
+            T('circle', { cx: 700, cy: 206, r: 36, fill: '#0b1a2c', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('path', { d: 'M656 250 C664 242 680 238 700 238 C720 238 736 242 744 250 L752 330 L742 430 L718 430 L714 344 L700 344 L686 430 L662 430 L652 330 Z', fill: '#0b1a2c', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('path', { d: 'M656 254 L624 342 L636 348 L670 272', fill: '#0b1a2c', stroke: '#38bdf8', 'stroke-width': 3 }) +
+            T('path', { d: 'M744 254 L776 342 L764 348 L730 272', fill: '#0b1a2c', stroke: '#38bdf8', 'stroke-width': 3 }));
+
+        // ponto do tumor
+        var tumor =
+          G({ id: 's2-tumor' },
+            T('circle', { id: 's2-tumorHalo', cx: 724, cy: 316, r: 24, fill: '#ef4444', opacity: 0.16 }) +
+            T('circle', { cx: 724, cy: 316, r: 8, fill: '#ef4444', stroke: '#fca5a5', 'stroke-width': 2 }));
+
+        // linha de varredura
+        var scanline = T('line', { id: 's2-scanline', x1: 510, y1: 296, x2: 890, y2: 296, stroke: '#67e8f9', 'stroke-width': 3, opacity: 0.85 });
+
+        // etiqueta do nódulo
+        var tagNodulo =
+          G({ id: 's2-tagNodulo', opacity: 0 },
+            T('rect', { x: 820, y: 380, width: 150, height: 48, rx: 10, fill: 'rgba(6,14,26,0.95)', stroke: '#f87171', 'stroke-width': 2 }) +
+            T('text', { x: 895, y: 410, 'text-anchor': 'middle', fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 0.6 }, 'NÓDULO 3 mm') +
+            T('line', { x1: 820, y1: 396, x2: 748, y2: 322, stroke: '#f87171', 'stroke-width': 2, 'stroke-dasharray': '6 5' }));
+
+        // linha do tempo
+        var linhaY = 568;
+        var marcos = [
+          { x: 356, rot: 'CÉLULA', cor: '#38bdf8' },
+          { x: 528, rot: '10 ANOS', cor: '#22c55e' },
+          { x: 730, rot: 'NÓDULO', cor: '#ef4444' },
+          { x: 902, rot: 'SINTOMA', cor: '#94a3b8' }
+        ];
+        var linha =
+          T('line', { x1: 340, y1: linhaY, x2: 930, y2: linhaY, stroke: '#1e3a5f', 'stroke-width': 5, 'stroke-linecap': 'round' }) +
+          T('line', { id: 's2-progresso', x1: 340, y1: linhaY, x2: 340, y2: linhaY, stroke: '#38bdf8', 'stroke-width': 5, 'stroke-linecap': 'round' }) +
+          T('rect', { id: 's2-janela', x: 356, y: linhaY - 16, width: 0, height: 32, rx: 8, fill: 'rgba(34,197,94,0.16)', stroke: '#22c55e', 'stroke-width': 2, 'stroke-dasharray': '7 6' });
+        var marcosHtml = '';
+        marcos.forEach(function (m, i) {
+          marcosHtml +=
+            T('circle', { id: 's2-halo' + i, cx: m.x, cy: linhaY, r: 20, fill: m.cor, opacity: 0 }) +
+            T('circle', { id: 's2-dot' + i, cx: m.x, cy: linhaY, r: 10, fill: '#0b1220', stroke: m.cor, 'stroke-width': 3 }) +
+            T('text', { x: m.x, y: linhaY - 30, 'text-anchor': 'middle', fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 0.6 }, m.rot);
+        });
+        var tagJanela =
+          G({ id: 's2-tagJanela', opacity: 0 },
+            T('rect', { x: 440, y: 452, width: 290, height: 40, rx: 8, fill: 'rgba(6,14,26,0.95)', stroke: '#22c55e', 'stroke-width': 2 }) +
+            T('text', { x: 585, y: 478, 'text-anchor': 'middle', fill: '#bbf7d0', 'font-family': 'Inter, sans-serif', 'font-size': 15, 'font-weight': 700, 'letter-spacing': 0.8 }, 'JANELA DE DETECÇÃO'));
+
+        // card de medicina de precisão
+        var dna =
+          G({ id: 's2-dna' },
+            T('path', { d: 'M378 330 C404 350 404 370 378 390 C352 410 352 430 378 450', fill: 'none', stroke: '#67e8f9', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+            T('path', { d: 'M412 330 C386 350 386 370 412 390 C438 410 438 430 412 450', fill: 'none', stroke: '#a5f3fc', 'stroke-width': 4, 'stroke-linecap': 'round' }) +
+            T('line', { x1: 386, y1: 348, x2: 404, y2: 348, stroke: '#22d3ee', 'stroke-width': 3 }) +
+            T('line', { x1: 384, y1: 370, x2: 406, y2: 370, stroke: '#22d3ee', 'stroke-width': 3 }) +
+            T('line', { x1: 386, y1: 392, x2: 404, y2: 392, stroke: '#22d3ee', 'stroke-width': 3 }) +
+            T('line', { x1: 384, y1: 414, x2: 406, y2: 414, stroke: '#22d3ee', 'stroke-width': 3 }) +
+            T('line', { x1: 386, y1: 436, x2: 404, y2: 436, stroke: '#22d3ee', 'stroke-width': 3 }));
+        var capsula =
+          G({ id: 's2-capsula', opacity: 0 },
+            T('rect', { x: 348, y: 462, width: 76, height: 34, rx: 17, fill: '#0b1220', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('path', { d: 'M386 462 L386 496 L365 496 C356 496 348 488 348 479 C348 470 356 462 365 462 Z', fill: '#38bdf8' }) +
+            T('text', { x: 336, y: 485, 'text-anchor': 'end', fill: '#bae6fd', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 0.5 }, 'SEU DNA'));
+
+        // painel de exame
+        var painel =
+          G({ id: 's2-painel', opacity: 0 },
+            T('rect', { x: 824, y: 74, width: 116, height: 96, rx: 10, fill: 'rgba(6,14,26,0.95)', stroke: '#38bdf8', 'stroke-width': 2 }) +
+            T('text', { x: 890, y: 104, 'text-anchor': 'middle', fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 0.8 }, 'EXAME DE' ) +
+            T('text', { x: 890, y: 122, 'text-anchor': 'middle', fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 0.8 }, 'SANGUE' ) +
+            T('rect', { x: 842, y: 136, width: 96, height: 8, rx: 4, fill: '#0b1220' }) +
+            T('rect', { id: 's2-barra', x: 842, y: 136, width: 0, height: 8, rx: 4, fill: '#22c55e' }) +
+            T('text', { x: 890, y: 160, 'text-anchor': 'middle', fill: '#bbf7d0', 'font-family': 'Inter, sans-serif', 'font-size': 11, 'font-weight': 700 }, 'RASTREIO OK'));
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<radialGradient id="s2-fundoGrad" cx="0.64" cy="0.26" r="0.75"><stop offset="0" stop-color="#0e7490" stop-opacity="0.22"/><stop offset="0.55" stop-color="#0b1a2c" stop-opacity="0.12"/><stop offset="1" stop-color="#050a14" stop-opacity="0"/></radialGradient>' +
+          '<radialGradient id="s2-glowGrad" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#67e8f9" stop-opacity="0.36"/><stop offset="1" stop-color="#0e7490" stop-opacity="0"/></radialGradient>' +
+          '</defs>' +
+          fundo + grade + tubo + lupa + scanner + silhueta + tumor + scanline + tagNodulo + linha + marcosHtml + tagJanela + dna + capsula + painel
+        );
+        M.montar('#f2-cena', svg);
+        var cena = M.pegar('#f2-cena');
+        var lupaEl = M.pegar(cena, '#s2-lupa');
+        var scanlineEl = M.pegar(cena, '#s2-scanline');
+        var tumorHalo = M.pegar(cena, '#s2-tumorHalo');
+        var tagNoduloEl = M.pegar(cena, '#s2-tagNodulo');
+        var progresso = M.pegar(cena, '#s2-progresso');
+        var janela = M.pegar(cena, '#s2-janela');
+        var tagJanelaEl = M.pegar(cena, '#s2-tagJanela');
+        var capsulaEl = M.pegar(cena, '#s2-capsula');
+        var painelEl = M.pegar(cena, '#s2-painel');
+        var barra = M.pegar(cena, '#s2-barra');
+        var dnaEl = M.pegar(cena, '#s2-dna');
+        var celEls = [];
+        for (var c2 = 0; c2 < 16; c2++) celEls.push(M.pegar(cena, '#s2-cel' + c2));
+        var dotEls = [], haloEls = [];
+        for (var d2 = 0; d2 < 4; d2++) { dotEls.push(M.pegar(cena, '#s2-dot' + d2)); haloEls.push(M.pegar(cena, '#s2-halo' + d2)); }
+        var boy = M.mascote('#f2-mascote');
+        var hud = M.medidorBarra('#f2-hud', { rotulo: 'ANTECEDÊNCIA DO DIAGNÓSTICO', unidade: 'ANOS', max: 15, cor: '#22c55e', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          // células do sangue
+          for (var c3 = 0; c3 < 16; c3++) {
+            var el = celEls[c3];
+            if (!el) continue;
+            var yBase = 86 + M.ruido(c3 * 5.1) * 150;
+            el.setAttribute('cy', f2(yBase + Math.sin(t * 1.1 + c3 * 1.7) * 8));
+            el.setAttribute('opacity', f2(0.45 + 0.4 * (0.5 + 0.5 * Math.sin(t * 2.2 + c3))));
+          }
+
+          // lupa desce pelo tubo
+          var lupaY = lerp(0, 120, suave(faixa(t, T_TUBO, 6.2)));
+          lupaEl.setAttribute('transform', 'translate(0 ' + f2(lupaY) + ')');
+
+          // scanner
+          var scanY = 296 + Math.sin(t * 1.5) * 170;
+          scanlineEl.setAttribute('y1', f2(scanY));
+          scanlineEl.setAttribute('y2', f2(scanY));
+          scanlineEl.setAttribute('opacity', f2(0.35 + 0.5 * suave(faixa(t, T_SCAN, T_SCAN + 1.0))));
+
+          var pulso = 0.5 + 0.5 * Math.sin(t * 4.4);
+          tumorHalo.setAttribute('r', f2(20 + pulso * 16));
+          tumorHalo.setAttribute('opacity', f2(0.10 + pulso * 0.18));
+
+          var kn = suave(faixa(t, T_NODULO, T_NODULO + 0.8));
+          tagNoduloEl.setAttribute('opacity', f2(kn));
+
+          // progresso da linha do tempo
+          var prog = suave(faixa(t, 1.4, T_JANELA));
+          progresso.setAttribute('x2', f2(lerp(340, 930, prog)));
+          for (var d3 = 0; d3 < 4; d3++) {
+            var limites = [0.03, 0.30, 0.65, 0.96];
+            var kd = suave(faixa(prog, limites[d3] - 0.03, limites[d3] + 0.03));
+            dotEls[d3].setAttribute('fill', kd > 0.5 ? (d3 === 1 ? '#22c55e' : d3 === 2 ? '#ef4444' : d3 === 3 ? '#64748b' : '#38bdf8') : '#0b1220');
+            dotEls[d3].setAttribute('stroke', kd > 0.5 ? (d3 === 1 ? '#86efac' : d3 === 2 ? '#fca5a5' : '#38bdf8') : '#38bdf8');
+            haloEls[d3].setAttribute('opacity', f2(kd * (0.10 + 0.10 * Math.sin(t * 3 + d3))));
+          }
+
+          var kj = suave(faixa(t, T_JANELA, T_JANELA + 0.7));
+          janela.setAttribute('width', f2(374 * kj));
+          tagJanelaEl.setAttribute('opacity', f2(kj));
+
+          var kp = suave(faixa(t, T_PRECISAO, T_PRECISAO + 0.7));
+          capsulaEl.setAttribute('opacity', f2(kp));
+          capsulaEl.setAttribute('transform', 'translate(0 ' + f2(lerp(18, 0, kp)) + ')');
+
+          var kpan = suave(faixa(t, 2.0, 3.0));
+          painelEl.setAttribute('opacity', f2(kpan));
+          barra.setAttribute('width', f2(96 * suave(faixa(t, 2.6, 7.2))));
+
+          dnaEl.setAttribute('transform', 'translate(396 414) rotate(' + f2(Math.sin(t * 1.2) * 8) + ') translate(-396 -414)');
+
+          hud.atualizar(lerp(0, 10, suave(faixa(t, 1.0, 22.0))), t > 21.0 ? 'DOENÇA CRÔNICA' : 'ANTES DO SINTOMA', t > 21.0 ? '#86efac' : '#22c55e');
+
+          boy.atualizar(t, og, {
+            humor: t > T_PRECISAO ? 'feliz' : 'surpreso',
+            bracoD: t > T_PRECISAO ? 110 : 38,
+            bracoE: 12,
+            olhar: [8, -3],
+            inclinar: -2,
+            pulo: t > T_BANNER ? Math.abs(Math.sin((t - T_BANNER) * 4.2)) * 8 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 21.25 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-02-medicina-antecedencia'] = tl;
+    })();
+  </script>
+</template>

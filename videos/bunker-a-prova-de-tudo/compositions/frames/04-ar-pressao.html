@@ -1,0 +1,259 @@
+<template>
+  <style>
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/EBGaramond-400.woff2') format('woff2'); }
+    @font-face { font-family:'EB Garamond'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/EBGaramond-700.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:400; font-display:swap; src:url('assets/fonts/Inter-400.woff2') format('woff2'); }
+    @font-face { font-family:'Inter'; font-style:normal; font-weight:700; font-display:swap; src:url('assets/fonts/Inter-700.woff2') format('woff2'); }
+
+    #f4-root { position:absolute; inset:0; width:1080px; height:1920px; overflow:hidden; background-color:#030d0a; font-family:'Inter',sans-serif; color:#f8fafc; }
+    .f4-ui-layer { position:absolute; inset:0; z-index:3; pointer-events:none; }
+    .f4-topbar { position:absolute; top:76px; left:64px; right:64px; height:64px; display:flex; align-items:center; justify-content:space-between; padding:0 26px; background:rgba(6,20,16,0.90); border:1px solid rgba(34,197,94,0.42); border-radius:14px; }
+    .f4-kicker { font-size:20px; font-weight:700; letter-spacing:.12em; color:#4ade80; text-transform:uppercase; }
+    .f4-badge { font-size:19px; font-weight:700; color:#fbbf24; letter-spacing:.06em; }
+    .f4-header-card { position:absolute; top:164px; left:64px; right:64px; padding:24px 32px 26px; background:rgba(6,20,16,0.90); border-left:5px solid #22c55e; border-radius:0 18px 18px 0; box-shadow:0 20px 50px rgba(0,0,0,0.55); }
+    .f4-title { font-family:'EB Garamond',serif; font-size:60px; font-weight:700; line-height:1.04; color:#f8fafc; margin-bottom:8px; }
+    .f4-title-accent { color:#4ade80; }
+    .f4-subtitle { font-size:22px; line-height:1.34; color:#e2e8f0; }
+    .f4-banner { position:absolute; top:1248px; left:64px; right:140px; padding:15px 24px; background:rgba(6,20,16,0.94); border:1.5px solid rgba(34,197,94,0.55); border-radius:14px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .f4-banner-text { font-size:19px; font-weight:700; color:#dcfce7; letter-spacing:.03em; line-height:1.25; }
+    .f4-banner-pill { flex:0 0 auto; padding:7px 15px; background:#22c55e; color:#04210f; font-size:16px; font-weight:700; border-radius:8px; letter-spacing:.06em; }
+    #f4-root .m2-fundo { position:absolute; inset:0; z-index:0; background:radial-gradient(circle at 44% 24%, #0b3326 0%, #06190f 48%, #030d0a 100%); }
+    #f4-root .m2-piso { position:absolute; left:0; top:1440px; width:1080px; height:480px; z-index:0; background:linear-gradient(180deg,#071c14 0%,#030d0a 100%); border-top:2px solid rgba(34,197,94,0.20); }
+    #f4-root .m2-cena { position:absolute; left:0; top:344px; width:1080px; height:640px; z-index:1; }
+    #f4-root .m2-mascote { position:absolute; left:16px; top:640px; width:236px; height:330px; z-index:2; }
+    #f4-root .m2-hud { position:absolute; left:356px; top:1000px; width:584px; height:232px; z-index:2; background:rgba(6,20,16,0.92); border:1px solid rgba(34,197,94,0.34); border-radius:22px; }
+  </style>
+
+  <div id="f4-root" data-composition-id="frame-04-ar-pressao" data-width="1080" data-height="1920" data-start="0" data-duration="18.55">
+    <div class="m2-fundo"></div>
+    <div class="m2-piso"></div>
+    <div id="f4-cena" class="m2-cena"></div>
+    <div id="f4-mascote" class="m2-mascote"></div>
+    <div id="f4-hud" class="m2-hud"></div>
+
+    <div class="f4-ui-layer">
+      <div id="f4-topbar" class="f4-topbar">
+        <span class="f4-kicker">CAMADA 03 // O AR</span>
+        <span class="f4-badge">+50 Pa</span>
+      </div>
+      <div id="f4-header" class="f4-header-card">
+        <h1 class="f4-title">O Ar É o Primeiro a <span class="f4-title-accent">Acabar</span></h1>
+        <p class="f4-subtitle">Sem ar novo você aguenta minutos. Com o filtro certo e pressão sobrando, o veneno fica do lado de fora.</p>
+      </div>
+      <div id="f4-banner" class="f4-banner" style="opacity: 0;">
+        <span class="f4-banner-text">FILTRO + VENTILADOR = BUNKER SOB PRESSÃO</span>
+        <span class="f4-banner-pill">AR LIMPO</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var DUR = 18.55;
+      var tl = gsap.timeline({ paused: true });
+
+      tl.fromTo('#f4-topbar', { opacity: 0, y: -24 }, { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }, 0.08);
+      tl.fromTo('#f4-header', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.6, ease: 'power3.out' }, 0.20);
+      tl.fromTo('#f4-banner', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: 'back.out(1.6)' }, 15.2);
+
+      var M = window.Motor2D;
+      if (M) {
+        var T = M.T, G = M.G, lerp = M.lerp, suave = M.suave, faixa = M.faixa, f2 = M.f2;
+
+        // fumaça externa (dentro do painel do ar de fora)
+        var fumaca = '';
+        for (var f = 0; f < 14; f++) {
+          fumaca += T('circle', { id: 's4-fum' + f, r: f2(3 + M.ruido(f * 3.3) * 5), fill: '#f87171', opacity: 0 });
+        }
+        // ar limpo no duto
+        var limpo = '';
+        for (var a = 0; a < 12; a++) {
+          limpo += T('circle', { id: 's4-lim' + a, r: 3.6, fill: '#4ade80', opacity: 0 });
+        }
+
+        var svg = M.svgBase(1080, 640,
+          '<defs>' +
+          '<linearGradient id="s4-hepaGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e2e8f0"/><stop offset="1" stop-color="#94a3b8"/></linearGradient>' +
+          '<linearGradient id="s4-carvaoGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#334155"/><stop offset="1" stop-color="#0f172a"/></linearGradient>' +
+          '<linearGradient id="s4-salaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1e2c"/><stop offset="1" stop-color="#07131c"/></linearGradient>' +
+          '</defs>' +
+          // fundo
+          T('rect', { x: 0, y: 0, width: 1080, height: 640, fill: '#04100c' }) +
+          // painel do ar de fora (acima do mascote)
+          T('rect', { x: 30, y: 20, width: 258, height: 258, rx: 18, fill: 'rgba(26,8,8,0.94)', stroke: 'rgba(248,113,113,0.42)', 'stroke-width': 2 }) +
+          T('text', { x: 48, y: 52, fill: '#f87171', 'font-family': 'Inter, sans-serif', 'font-size': 14, 'font-weight': 700, 'letter-spacing': 1.4 }, 'AR DE FORA') +
+          T('text', { x: 48, y: 116, fill: '#fca5a5', 'font-family': 'Inter, sans-serif', 'font-size': 46, 'font-weight': 700 }, '4.800') +
+          T('text', { x: 48, y: 140, fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 400 }, 'ppm de CO₂ lá fora') +
+          fumaca +
+          T('text', { x: 48, y: 196, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 400 }, 'fumaça, poeira e gás') +
+          T('text', { x: 48, y: 216, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 400 }, 'não podem entrar') +
+          T('rect', { x: 48, y: 236, width: 222, height: 26, rx: 13, fill: 'rgba(127,29,29,0.45)', stroke: '#ef4444', 'stroke-width': 1.5 }) +
+          T('text', { x: 159, y: 254, 'text-anchor': 'middle', fill: '#fecaca', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 1.2 }, 'ZONA CONTAMINADA') +
+          // duto vertical
+          T('rect', { x: 344, y: 40, width: 176, height: 26, rx: 7, fill: '#1e293b', stroke: '#94a3b8', 'stroke-width': 3 }) +
+          (function () {
+            var s = '';
+            for (var l = 0; l < 6; l++) s += T('line', { x1: 360 + l * 25, y1: 44, x2: 360 + l * 25, y2: 64, stroke: '#94a3b8', 'stroke-width': 3 });
+            return s;
+          })() +
+          T('rect', { x: 344, y: 64, width: 176, height: 466, rx: 14, fill: '#0f172a', stroke: '#64748b', 'stroke-width': 4 }) +
+          // filtro 1: pré-filtro
+          G({ id: 's4-filtro1' },
+            T('rect', { x: 358, y: 88, width: 148, height: 54, rx: 8, fill: '#334155', stroke: '#94a3b8', 'stroke-width': 3 }) +
+            (function () {
+              var s = '';
+              for (var h = 0; h < 8; h++) s += T('line', { x1: 368 + h * 18, y1: 95, x2: 368 + h * 18, y2: 135, stroke: '#64748b', 'stroke-width': 3 });
+              return s;
+            })()) +
+          // filtro 2: HEPA
+          G({ id: 's4-filtro2' },
+            T('rect', { x: 358, y: 158, width: 148, height: 64, rx: 8, fill: 'url(#s4-hepaGrad)', stroke: '#f8fafc', 'stroke-width': 3 }) +
+            (function () {
+              var s = '';
+              for (var x = 0; x < 9; x++) s += T('path', { d: 'M368 ' + (168 + x * 6) + ' L496 ' + (168 + x * 6), stroke: '#64748b', 'stroke-width': 2.2 });
+              return s;
+            })()) +
+          // filtro 3: carvão ativado
+          G({ id: 's4-filtro3' },
+            T('rect', { x: 358, y: 238, width: 148, height: 74, rx: 8, fill: 'url(#s4-carvaoGrad)', stroke: '#475569', 'stroke-width': 3 }) +
+            (function () {
+              var s = '';
+              for (var c = 0; c < 60; c++) s += T('circle', { cx: f2(368 + M.ruido(c * 1.7) * 128), cy: f2(248 + M.ruido(c * 4.9) * 54), r: f2(1.8 + M.ruido(c * 2.3) * 2.4), fill: '#94a3b8', 'fill-opacity': 0.75 });
+              return s;
+            })()) +
+          // etiquetas dos filtros
+          G({ id: 's4-tag1' },
+            T('line', { x1: 520, y1: 115, x2: 536, y2: 115, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('text', { x: 546, y: 110, fill: '#e2e8f0', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700 }, 'PRÉ-FILTRO') +
+            T('text', { x: 546, y: 130, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 12.5, 'font-weight': 400 }, 'poeira e areia')) +
+          G({ id: 's4-tag2' },
+            T('line', { x1: 520, y1: 190, x2: 536, y2: 190, stroke: '#e2e8f0', 'stroke-width': 2 }) +
+            T('text', { x: 546, y: 185, fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700 }, 'HEPA') +
+            T('text', { x: 546, y: 205, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 12.5, 'font-weight': 400 }, 'poeira fina')) +
+          G({ id: 's4-tag3' },
+            T('line', { x1: 520, y1: 275, x2: 536, y2: 275, stroke: '#94a3b8', 'stroke-width': 2 }) +
+            T('text', { x: 546, y: 270, fill: '#facc15', 'font-family': 'Inter, sans-serif', 'font-size': 17, 'font-weight': 700 }, 'CARVÃO') +
+            T('text', { x: 546, y: 290, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 12.5, 'font-weight': 400 }, 'ativado: gás e fumaça')) +
+          // ventilador
+          T('rect', { x: 358, y: 356, width: 148, height: 12, rx: 4, fill: '#475569' }) +
+          G({ id: 's4-fan' },
+            T('circle', { cx: 432, cy: 432, r: 54, fill: '#0b1220', stroke: '#94a3b8', 'stroke-width': 4 }) +
+            G({ id: 's4-blades' },
+              T('path', { d: 'M432 432 C456 400 488 404 488 432 Z', fill: '#38bdf8', opacity: 0.9 }) +
+              T('path', { d: 'M432 432 C404 458 400 490 432 490 Z', fill: '#38bdf8', opacity: 0.9 }) +
+              T('path', { d: 'M432 432 C464 456 460 488 432 488 Z', fill: '#22d3ee', opacity: 0.55 }) +
+              T('circle', { cx: 432, cy: 432, r: 10, fill: '#e2e8f0' }))) +
+          T('text', { x: 432, y: 518, 'text-anchor': 'middle', fill: '#7dd3fc', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1.2 }, 'VENTILADOR') +
+          // duto para a sala
+          T('rect', { x: 520, y: 440, width: 180, height: 52, rx: 8, fill: '#1e293b', stroke: '#64748b', 'stroke-width': 3 }) +
+          T('path', { d: 'M548 456 L660 456 L660 476 L548 476 Z', fill: 'none', stroke: '#4ade80', 'stroke-width': 3, 'stroke-dasharray': '7 5' }) +
+          limpo +
+          // sala pressurizada
+          T('rect', { x: 700, y: 60, width: 230, height: 470, rx: 18, fill: 'url(#s4-salaGrad)', stroke: '#22c55e', 'stroke-width': 4 }) +
+          T('text', { x: 815, y: 90, 'text-anchor': 'middle', fill: '#4ade80', 'font-family': 'Inter, sans-serif', 'font-size': 13, 'font-weight': 700, 'letter-spacing': 1.6 }, 'DENTRO DO BUNKER') +
+          // manômetro
+          T('circle', { cx: 815, cy: 192, r: 70, fill: 'rgba(8,14,26,0.96)', stroke: '#334155', 'stroke-width': 4 }) +
+          T('path', { d: M.arco(815, 192, 54, 150, 390), fill: 'none', stroke: '#1e293b', 'stroke-width': 10, 'stroke-linecap': 'round' }) +
+          T('path', { id: 's4-gaugeArc', d: M.arco(815, 192, 54, 150, 150.5), fill: 'none', stroke: '#22c55e', 'stroke-width': 10, 'stroke-linecap': 'round' }) +
+          T('line', { id: 's4-needle', x1: 815, y1: 192, x2: 815, y2: 144, stroke: '#f87171', 'stroke-width': 5, 'stroke-linecap': 'round' }) +
+          T('circle', { cx: 815, cy: 192, r: 6, fill: '#e2e8f0' }) +
+          T('text', { id: 's4-gaugeVal', x: 815, y: 240, 'text-anchor': 'middle', fill: '#f8fafc', 'font-family': 'Inter, sans-serif', 'font-size': 22, 'font-weight': 700 }, '+0 Pa') +
+          T('text', { x: 815, y: 262, 'text-anchor': 'middle', fill: '#94a3b8', 'font-family': 'Inter, sans-serif', 'font-size': 10.5, 'font-weight': 700, 'letter-spacing': 1.1 }, 'PRESSÃO INTERNA') +
+          // medidor de CO2
+          T('rect', { x: 728, y: 300, width: 174, height: 92, rx: 12, fill: 'rgba(8,14,26,0.96)', stroke: '#334155', 'stroke-width': 2 }) +
+          T('text', { x: 744, y: 324, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 11.5, 'font-weight': 700, 'letter-spacing': 1.1 }, 'CO₂ NO AR') +
+          T('text', { id: 's4-co2Val', x: 744, y: 358, fill: '#f87171', 'font-family': 'Inter, sans-serif', 'font-size': 26, 'font-weight': 700 }, '4.800') +
+          T('text', { x: 838, y: 358, fill: '#cbd5e1', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 400 }, 'ppm') +
+          T('rect', { x: 744, y: 372, width: 142, height: 12, rx: 6, fill: '#0b1220', stroke: '#475569', 'stroke-width': 1.5 }) +
+          T('rect', { id: 's4-co2Bar', x: 746, y: 374, width: 138, height: 8, rx: 4, fill: '#ef4444' }) +
+          // selo de ar limpo
+          G({ id: 's4-selo', opacity: 0 },
+            T('circle', { cx: 770, cy: 460, r: 38, fill: 'rgba(6,32,20,0.95)', stroke: '#22c55e', 'stroke-width': 4 }) +
+            T('path', { d: 'M750 460 L764 474 L790 444', fill: 'none', stroke: '#22c55e', 'stroke-width': 7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }) +
+            T('text', { x: 770, y: 514, 'text-anchor': 'middle', fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 12, 'font-weight': 700, 'letter-spacing': 1.2 }, 'AR LIMPO')) +
+          // fresta: o ar escapa, o veneno não entra
+          G({ id: 's4-fresta', opacity: 0 },
+            T('path', { d: 'M892 442 L918 442', fill: 'none', stroke: '#4ade80', 'stroke-width': 6, 'stroke-linecap': 'round' }) +
+            T('path', { d: 'M918 434 L934 442 L918 450 Z', fill: '#4ade80' }) +
+            T('text', { x: 913, y: 424, 'text-anchor': 'middle', fill: '#86efac', 'font-family': 'Inter, sans-serif', 'font-size': 10.5, 'font-weight': 700 }, 'FUGA'))
+        );
+        M.montar('#f4-cena', svg);
+        var cena = M.pegar('#f4-cena');
+        var blades = M.pegar(cena, '#s4-blades');
+        var gaugeArc = M.pegar(cena, '#s4-gaugeArc');
+        var needle = M.pegar(cena, '#s4-needle');
+        var gaugeVal = M.pegar(cena, '#s4-gaugeVal');
+        var co2Val = M.pegar(cena, '#s4-co2Val');
+        var co2Bar = M.pegar(cena, '#s4-co2Bar');
+        var selo = M.pegar(cena, '#s4-selo');
+        var fresta = M.pegar(cena, '#s4-fresta');
+        var filtro1 = M.pegar(cena, '#s4-filtro1');
+        var filtro2 = M.pegar(cena, '#s4-filtro2');
+        var filtro3 = M.pegar(cena, '#s4-filtro3');
+        var fums = [], lims = [];
+        for (var q = 0; q < 14; q++) fums.push(M.pegar(cena, '#s4-fum' + q));
+        for (var w = 0; w < 12; w++) lims.push(M.pegar(cena, '#s4-lim' + w));
+        var boy = M.mascote('#f4-mascote');
+        var hud = M.medidorBarra('#f4-hud', { rotulo: 'PRESSÃO INTERNA', unidade: 'Pa', max: 100, cor: '#22c55e', decimais: 0 });
+
+        M.conectar(tl, function (t, og) {
+          var limpando = suave(faixa(t, 8.4, 15.0));
+          var pressao = suave(faixa(t, 10.6, 13.4));
+          var valor = 50 * pressao;
+
+          filtro1.setAttribute('opacity', f2(0.55 + 0.45 * suave(faixa(t, 7.4, 8.2))));
+          filtro2.setAttribute('opacity', f2(0.55 + 0.45 * suave(faixa(t, 8.2, 9.0))));
+          filtro3.setAttribute('opacity', f2(0.55 + 0.45 * suave(faixa(t, 9.0, 9.8))));
+
+          blades.setAttribute('transform', 'rotate(' + f2(t * 640 * Math.max(0.12, pressao)) + ' 432 432)');
+
+          for (var i = 0; i < 14; i++) {
+            var cicloF = ((t * 0.55 + i * 0.19) % 1);
+            fums[i].setAttribute('cx', f2(196 + ((i * 37) % 74) + Math.sin(t * 2 + i) * 6));
+            fums[i].setAttribute('cy', f2(86 + cicloF * 140));
+            var entrada = 1 - suave(faixa(t, 7.4, 9.2));
+            fums[i].setAttribute('opacity', f2(cicloF < 0.9 ? 0.7 * entrada : 0));
+          }
+          for (var j = 0; j < 12; j++) {
+            var cicloL = ((t * 0.9 + j * 0.21) % 1);
+            lims[j].setAttribute('cx', f2(530 + cicloL * 160));
+            lims[j].setAttribute('cy', f2(456 + Math.sin(j * 1.7 + t * 3) * 10));
+            lims[j].setAttribute('opacity', f2(limpando > 0.4 && cicloL < 0.85 ? 0.9 : 0));
+          }
+
+          var ang = lerp(-120, -30, pressao);
+          needle.setAttribute('transform', 'rotate(' + f2(ang) + ' 815 192)');
+          gaugeArc.setAttribute('d', M.arco(815, 192, 54, 150, 150 + 240 * pressao));
+          gaugeArc.setAttribute('stroke', pressao > 0.9 ? '#22c55e' : '#f59e0b');
+          gaugeVal.textContent = '+' + Math.round(valor) + ' Pa';
+          gaugeVal.setAttribute('fill', pressao > 0.9 ? '#86efac' : '#f8fafc');
+
+          var co2 = Math.round(lerp(4800, 620, limpando));
+          co2Val.textContent = co2.toLocaleString('pt-BR');
+          co2Val.setAttribute('fill', co2 > 2000 ? '#f87171' : '#4ade80');
+          co2Bar.setAttribute('fill', co2 > 2000 ? '#ef4444' : '#22c55e');
+          co2Bar.setAttribute('width', f2(138 * (co2 / 5000)));
+
+          var seloT = suave(faixa(t, 15.8, 16.6));
+          selo.setAttribute('opacity', f2(seloT));
+          selo.setAttribute('transform', 'translate(770 460) scale(' + f2(lerp(0.5, 1, seloT)) + ') translate(-770 -460)');
+          fresta.setAttribute('opacity', f2(suave(faixa(t, 16.0, 16.8))));
+
+          hud.atualizar(valor, pressao > 0.9 ? 'PRESSÃO POSITIVA' : (pressao > 0.3 ? 'PRESSURIZANDO' : 'AR CONTAMINADO'), pressao > 0.9 ? '#22c55e' : (pressao > 0.3 ? '#f59e0b' : '#ef4444'));
+
+          boy.atualizar(t, og, {
+            humor: pressao > 0.8 ? 'feliz' : (t > 1.4 ? 'surpreso' : 'neutro'),
+            capacete: true,
+            bracoD: pressao > 0.8 ? 112 : 48,
+            bracoE: pressao > 0.8 ? 70 : 10,
+            olhar: [8, -4],
+            pulo: pressao > 0.9 ? Math.abs(Math.sin((t - 15.8) * 3.2)) * 5 : 0
+          });
+        }, { duracao: DUR, offsetGlobal: 47.69 });
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['frame-04-ar-pressao'] = tl;
+    })();
+  </script>
+</template>

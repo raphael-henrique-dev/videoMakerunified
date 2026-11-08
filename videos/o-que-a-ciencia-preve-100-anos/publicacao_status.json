@@ -1,0 +1,19 @@
+[
+  {
+    "slug": "/home/raphael/codigos/projetos_javascript/videoMakerunified-main/videos/o-que-a-ciencia-preve-100-anos",
+    "data_upload": "2026-11-08T15:09:55.160Z",
+    "agendado_para": "2026-11-08T21:00:00.000Z",
+    "plataformas": {
+      "youtube": {
+        "plataforma": "youtube",
+        "sucesso": true,
+        "id": "DQTza-v8I0c",
+        "url": "https://youtube.com/shorts/DQTza-v8I0c",
+        "privacidade": "private",
+        "agendado_para": "2026-11-08T21:00:00.000Z",
+        "status": "scheduled",
+        "data": "2026-11-08T15:10:00.541Z"
+      }
+    }
+  }
+]
