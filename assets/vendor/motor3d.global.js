@@ -338,7 +338,7 @@ function tremer(camera, t, tIni, dur = 0.35, intensidade = 0.14) {
  * Projeta uma coordenada 3D (THREE.Vector3 ou [x,y,z]) para pixels 2D (x, y) da tela (1080x1920).
  * Essencial para conectar leader lines SVG e rótulos HTML da camada 2D HyperFrames aos objetos 3D.
  */
-function tela(THREE, ponto3D, camera, largura = 1080, altura = 1920) {
+function tela(THREE, ponto3D, camera, largura = camera?.userData?.largura || 1080, altura = camera?.userData?.altura || 1920) {
   const v = Array.isArray(ponto3D)
     ? new THREE.Vector3(ponto3D[0], ponto3D[1], ponto3D[2])
     : ponto3D.clone();
@@ -2858,9 +2858,11 @@ function criarSoftwareRenderer3D(THREE, opcoes = {}) {
 }
 
 function criarPalco3D(THREE, opcoes = {}) {
-  const largura = opcoes.largura ?? 1080;
-  const altura = opcoes.altura ?? 1920;
-  const fov = opcoes.fov ?? 42;
+  // `perfil` é um objeto de motor/formato.js passado pelo chamador (este módulo vai para o bundle do browser e não importa formato.js)
+  const perfil = opcoes.perfil && typeof opcoes.perfil === "object" ? opcoes.perfil : null;
+  const largura = opcoes.largura ?? perfil?.largura ?? 1080;
+  const altura = opcoes.altura ?? perfil?.altura ?? 1920;
+  const fov = opcoes.fov ?? perfil?.camera?.fov ?? 42;
   const estilo =
     opcoes.estilo ||
     (typeof window !== "undefined" && window.__MOTOR_ESTILO_GRAFICO__) ||
@@ -2875,7 +2877,9 @@ function criarPalco3D(THREE, opcoes = {}) {
 
   const cena = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(fov, largura / altura, 0.1, 220);
-  camera.position.set(0, 2.2, 6.2);
+  camera.position.set(0, 2.2, opcoes.cameraZ ?? perfil?.camera?.z ?? 6.2);
+  camera.userData.largura = largura;
+  camera.userData.altura = altura;
   camera.lookAt(0, 1.2, 0);
 
   let renderizador = null;

@@ -85,7 +85,9 @@ function tempoSrt(segundos) {
 }
 const blocosLegenda = gruposLegenda.map((g, i) => `${i + 1}\n${tempoSrt(g.start)} --> ${tempoSrt(g.end)}\n${g.words.map((w) => w.word).join(" ")}\n`).join("\n");
 fs.writeFileSync(path.join(VIDEO_DIR, "legendas.srt"), blocosLegenda, "utf8");
-fs.writeFileSync(path.join(VIDEO_DIR, "legendas.vtt"), `WEBVTT\n\n${blocosLegenda.replace(/,(\d{3})/g, ".$1")}`, "utf8");
+// VTT usa ponto nos milissegundos — converte só nas linhas de tempo, nunca no texto da legenda
+const blocosVtt = blocosLegenda.replace(/^(\d{2}:\d{2}:\d{2}),(\d{3}) --> (\d{2}:\d{2}:\d{2}),(\d{3})$/gm, "$1.$2 --> $3.$4");
+fs.writeFileSync(path.join(VIDEO_DIR, "legendas.vtt"), `WEBVTT\n\n${blocosVtt}`, "utf8");
 
 // 2. Gera compositions/captions.html sincronizado
 const htmlCaptions = `<template>
@@ -112,7 +114,7 @@ const htmlCaptions = `<template>
       position: absolute;
       left: 64px;
       right: 64px;
-      ${horizontal ? "bottom: 54px;" : "top: 1350px;"}
+      ${perfil.legenda.posicao};
       display: flex;
       justify-content: center;
       align-items: center;
@@ -251,6 +253,10 @@ fs.writeFileSync(path.join(VIDEO_DIR, "compositions", "captions.html"), htmlCapt
 
 // 3. Sincroniza automaticamente as durações e offsets nos arquivos HTML de cada frame e no index.html
 timeline.frames.forEach((fm) => {
+  if (!fm.arquivo) {
+    console.error(`[storyboard] Frame '${fm.id}' não tem 'arquivo' (campo 'cena' ainda não é suportado).`);
+    process.exit(1);
+  }
   const arqFrame = path.join(VIDEO_DIR, fm.arquivo);
   if (fs.existsSync(arqFrame)) {
     let htmlFrame = fs.readFileSync(arqFrame, "utf8");
@@ -319,7 +325,7 @@ if (fs.existsSync(indexPath)) {
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1080, height=1920">
+  <meta name="viewport" content="width=${largura}, height=${altura}">
   <title>Motor 2.0 — ${roteiro.titulo}</title>
   <script>
     window.__MOTOR_ESTILO_GRAFICO__ = ${JSON.stringify(estiloGrafico)};
@@ -327,7 +333,7 @@ if (fs.existsSync(indexPath)) {
   </script>
   <script src="assets/vendor/gsap.min.js"></script>
   ${scriptsMotor}
-  <style>
+${horizontal ? '  <link rel="stylesheet" href="assets/css/identidade.css">\n  <style>\n' : `  <style>
     @font-face {
       font-family: 'EB Garamond';
       font-style: normal;
@@ -357,7 +363,7 @@ if (fs.existsSync(indexPath)) {
       src: url('./assets/fonts/Inter-700.woff2') format('woff2');
     }
 
-    *, *::before, *::after {
+`}    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;

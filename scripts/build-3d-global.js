@@ -3,6 +3,7 @@
 // enquanto as sub-composições HyperFrames (<template>) têm acesso síncrono imediato a window.Motor3D.
 
 import fs from "node:fs";
+import vm from "node:vm";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -21,36 +22,45 @@ const ordemArquivos = [
   "runtime.js",
 ];
 
-let codigoCombinado = `// Gerado automaticamente por scripts/build-3d-global.js a partir de motor/3d/*.js\n(function (global) {\n  "use strict";\n  const exportsObj = {};\n`;
+export function montarBundle() {
+  let codigoCombinado = `// Gerado automaticamente por scripts/build-3d-global.js a partir de motor/3d/*.js\n(function (global) {\n  "use strict";\n  const exportsObj = {};\n`;
 
-const simbolosExportados = [];
+  const simbolosExportados = [];
 
-for (const nomeArq of ordemArquivos) {
-  const caminho = path.join(modDir, nomeArq);
-  let conteudo = fs.readFileSync(caminho, "utf8");
+  for (const nomeArq of ordemArquivos) {
+    const caminho = path.join(modDir, nomeArq);
+    let conteudo = fs.readFileSync(caminho, "utf8");
 
-  // Remove linhas de import relativas entre os módulos internos
-  conteudo = conteudo.replace(/^\s*import\s+\{[^}]+\}\s+from\s+["']\.\/[^"']+["'];?\s*$/gm, "");
+    // Remove linhas de import relativas entre os módulos internos
+    conteudo = conteudo.replace(/^\s*import\s+\{[^}]+\}\s+from\s+["']\.\/[^"']+["'];?\s*$/gm, "");
 
-  // Captura nomes de funções/constantes exportadas e remove a palavra-chave export
-  conteudo = conteudo.replace(/export\s+function\s+([a-zA-Z0-9_]+)/g, (_, nome) => {
-    simbolosExportados.push(nome);
-    return `function ${nome}`;
-  });
-  conteudo = conteudo.replace(/export\s+const\s+([a-zA-Z0-9_]+)/g, (_, nome) => {
-    simbolosExportados.push(nome);
-    return `const ${nome}`;
-  });
+    // Captura nomes de funções/constantes exportadas e remove a palavra-chave export
+    conteudo = conteudo.replace(/export\s+function\s+([a-zA-Z0-9_]+)/g, (_, nome) => {
+      simbolosExportados.push(nome);
+      return `function ${nome}`;
+    });
+    conteudo = conteudo.replace(/export\s+const\s+([a-zA-Z0-9_]+)/g, (_, nome) => {
+      simbolosExportados.push(nome);
+      return `const ${nome}`;
+    });
 
-  codigoCombinado += `\n  // --- Módulo: ${nomeArq} ---\n` + conteudo + "\n";
+    codigoCombinado += `\n  // --- Módulo: ${nomeArq} ---\n` + conteudo + "\n";
+  }
+
+  for (const s of simbolosExportados) {
+    codigoCombinado += `  exportsObj.${s} = ${s};\n`;
+  }
+
+  codigoCombinado += `  global.Motor3D = exportsObj;\n})(typeof window !== "undefined" ? window : globalThis);\n`;
+  const restos = codigoCombinado.split("\n").filter((l) => /^\s*(import|export)\s/.test(l));
+  if (restos.length) throw new Error(`Bundle 3D inválido: sobraram import/export:\n${restos.join("\n")}`);
+  try { new vm.Script(codigoCombinado, { filename: "motor3d.global.js" }); } catch (e) { throw new Error(`Bundle 3D com erro de sintaxe: ${e.message}`); }
+  return { codigoCombinado, simbolosExportados };
 }
 
-for (const s of simbolosExportados) {
-  codigoCombinado += `  exportsObj.${s} = ${s};\n`;
-}
-
-codigoCombinado += `  global.Motor3D = exportsObj;\n})(typeof window !== "undefined" ? window : globalThis);\n`;
-
+const isMain = process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+if (isMain) {
+const { codigoCombinado, simbolosExportados } = montarBundle();
 fs.mkdirSync(path.dirname(outFile), { recursive: true });
 fs.writeFileSync(outFile, codigoCombinado, "utf8");
 
@@ -72,3 +82,4 @@ if (fs.existsSync(videosDir)) {
 }
 
 console.log(`[build:3d] Gerado ${path.relative(rootDir, outFile)} com ${simbolosExportados.length} funções/constantes exportadas.`);
+}

@@ -3,6 +3,39 @@ import fs from "node:fs";
 import path from "node:path";
 import { obterPerfil, achatarRoteiro } from "../formato.js";
 
+const MIN_CAPITULO_S = 10;
+
+/**
+ * Capítulos do YouTube: precisa de >= 3, o primeiro em 0:00 e cada um com >= 10s.
+ * Com `roteiro.capitulos`, usa os títulos dos capítulos (via `capituloId` dos frames); senão, um por frame.
+ * Retorna [] quando as regras não podem ser cumpridas (o YouTube ignora a lista inválida).
+ */
+export function calcularCapitulos(framesTimeline, capitulosRoteiro, duracaoTotal) {
+  if (!framesTimeline.length) return [];
+  const titulos = new Map((capitulosRoteiro || []).map((c) => [c.id, c.titulo || c.id]));
+  let candidatos = framesTimeline.map((f) => ({
+    tempo: f.inicio,
+    fim: f.fim ?? f.inicio + (f.duracao || 0),
+    chave: f.capituloId ?? f.id,
+    titulo: (f.capituloId && titulos.get(f.capituloId)) || f.titulo || f.id,
+  }));
+  if (titulos.size) {
+    candidatos = candidatos.filter((c, i, todos) => i === 0 || c.chave !== todos[i - 1].chave);
+  }
+  const fimVideo = duracaoTotal ?? framesTimeline[framesTimeline.length - 1].fim ?? 0;
+  const mantidos = [];
+  for (const c of candidatos) {
+    if (!mantidos.length) {
+      mantidos.push({ tempo: 0, titulo: c.titulo });
+    } else if (c.tempo - mantidos[mantidos.length - 1].tempo >= MIN_CAPITULO_S) {
+      mantidos.push({ tempo: c.tempo, titulo: c.titulo });
+    }
+  }
+  // O último capítulo também precisa ter >= 10s até o fim do vídeo
+  while (mantidos.length && fimVideo && fimVideo - mantidos[mantidos.length - 1].tempo < MIN_CAPITULO_S) mantidos.pop();
+  return mantidos.length >= 3 ? mantidos : [];
+}
+
 /**
  * Prepara metadados formatados para YouTube Shorts e TikTok a partir do roteiro.json.
  * @param {string} videoDir - Caminho da pasta do vídeo (ex: videos/por-que-a-bateria-despenca)
@@ -43,13 +76,7 @@ export function prepararMetadados(videoDir) {
   const timelinePath = path.join(videoDir, "timeline.json");
   if (horizontal && fs.existsSync(timelinePath)) {
     const timeline = JSON.parse(fs.readFileSync(timelinePath, "utf8"));
-    capitulos = (timeline.frames || []).map((frame) => ({
-      tempo: frame.inicio,
-      titulo: frame.titulo || frame.id,
-    })).filter((capitulo, i, todos) => i === 0 || capitulo.tempo - todos[i - 1].tempo >= 10);
-    if (capitulos.length < 3 && Array.isArray(timeline.frames) && timeline.frames.length >= 3) {
-      capitulos = timeline.frames.slice(0, 3).map((frame) => ({ tempo: frame.inicio, titulo: frame.titulo || frame.id }));
-    }
+    capitulos = calcularCapitulos(timeline.frames || [], roteiro.capitulos, timeline.total ?? timeline.duracaoTotal);
   }
   const linhasCapitulos = capitulos.map((c) => {
     const total = Math.max(0, Math.floor(c.tempo));
@@ -87,6 +114,7 @@ export function prepararMetadados(videoDir) {
       descricao: descricaoYt,
       tags: tagsYt,
       categoryId: pub.youtube_category_id || "28", // 28 = Science & Technology
+      formato: perfil.id,
     },
     tiktok: {
       caption: tiktokCaption.slice(0, 2200),

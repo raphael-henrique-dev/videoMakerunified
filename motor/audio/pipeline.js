@@ -260,10 +260,12 @@ async function executarPipeline() {
   }
   const roteiroOriginal = JSON.parse(fs.readFileSync(roteiroPath, "utf8"));
   const roteiro = achatarRoteiro(roteiroOriginal);
-  const validacao = validarRoteiro(roteiroOriginal);
+  const validacao = validarRoteiro(roteiroOriginal, { videoDir: VIDEO_DIR });
   if (!validacao.valido) {
     throw new Error(`roteiro.json inválido em ${VIDEO_DIR}:\n- ${validacao.erros.join("\n- ")}`);
   }
+
+  (validacao.avisos || []).forEach((a) => console.warn(`[audio] Aviso: ${a}`));
 
   console.log(`[audio] Processando áudio para: ${path.relative(ROOT, VIDEO_DIR)} ("${roteiro.titulo}")`);
 
@@ -432,6 +434,7 @@ async function executarPipeline() {
       numero: frameDef.numero,
       titulo: frameDef.titulo,
       arquivo: frameDef.arquivo,
+      capituloId: frameDef.capituloId,
       kicker: frameDef.kicker,
       metrica: frameDef.metrica,
       audioSrc: `assets/voice/${nomeWavFrame}`,

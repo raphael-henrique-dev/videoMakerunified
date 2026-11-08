@@ -88,6 +88,7 @@ switch (comando) {
       execFileSync("ln", ["-sfn", "../../../assets/fonts", path.join(destAssets, "fonts")]);
       execFileSync("ln", ["-sfn", "../../../assets/vendor", path.join(destAssets, "vendor")]);
       execFileSync("ln", ["-sfn", "../../../assets/sfx", path.join(destAssets, "sfx")]);
+      execFileSync("ln", ["-sfn", "../../../assets/css", path.join(destAssets, "css")]);
     } catch (err) {
       console.warn("Aviso ao criar symlinks de assets:", err.message);
     }

@@ -28,7 +28,7 @@ motor-v2/
 ├── canal/                      # Memória viva do canal
 │   ├── perfil.md               # Identidade visual, mascote, tom de voz e canais
 │   ├── aprendizados-curto.md   # Regras técnicas herdadas pelos vídeos curtos
-├── aprendizados-longo.md   # Estrutura reservada para aprendizados 16:9
+│   ├── aprendizados-longo.md   # Estrutura reservada para aprendizados 16:9
 │   └── historico.md            # Registro histórico de vídeos produzidos e uploads
 ├── motor/                      # Núcleo do motor (imutável para os vídeos)
 │   ├── 2d/                     # Runtime SVG vetorial puro (motor2d.global.js)

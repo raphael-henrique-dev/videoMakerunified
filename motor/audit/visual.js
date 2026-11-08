@@ -12,8 +12,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { executarHeuristicas, obterZonasSeguranca } from "./heuristics.js";
+import { executarHeuristicas } from "./heuristics.js";
 import { obterPerfil } from "../formato.js";
+import { HYPERFRAMES_VERSION } from "../config.js";
 import { gerarPranchas } from "./contact-sheet.js";
 import { auditarComVlm } from "./vlm-critic.js";
 import { formatarRelatorioMarkdown, salvarRelatorio } from "./reporter.js";
@@ -139,7 +140,7 @@ export async function auditarVideoVisual(slug, opcoes = {}) {
       "npx",
       [
         "--yes",
-        "hyperframes@0.8.177",
+        `hyperframes@${HYPERFRAMES_VERSION}`,
         "snapshot",
         path.relative(ROOT, vDir),
         "--at",
@@ -171,9 +172,10 @@ export async function auditarVideoVisual(slug, opcoes = {}) {
   });
 
   // 3. Execução do Tier 1 Determinístico Local
+  const perfil = obterPerfil(roteiro);
   const tier1 = await executarHeuristicas(cenasParaAnalise, {
     preferencia: opcoes.engine || process.env.MOTOR_CV_ENGINE || "auto",
-    zonas: obterZonasSeguranca(roteiro),
+    perfil,
   });
 
   // 4. Geração de Pranchas de Contato (Humana e VLM)
@@ -181,7 +183,7 @@ export async function auditarVideoVisual(slug, opcoes = {}) {
     dirSaida: auditDir,
     titulo: `Auditoria Visual: ${titulo}`,
     preferencia: opcoes.engine || process.env.MOTOR_CV_ENGINE || "auto",
-    perfil: obterPerfil(roteiro),
+    perfil,
   });
 
   // 5. Execução do Tier 2 Crítico VLM (se habilitado)
@@ -191,6 +193,7 @@ export async function auditarVideoVisual(slug, opcoes = {}) {
       tier2 = await auditarComVlm(pranchas.vlm, pranchas.mapaVlm, {
         provedor: opcoes.provider,
         env: process.env,
+        formato: perfil.id,
       });
     } catch (err) {
       console.warn(`[visual-audit] Aviso no Tier 2 VLM: ${err.message}. Prosseguindo com fallback.`);
@@ -229,6 +232,7 @@ export async function auditarVideoVisual(slug, opcoes = {}) {
   const dadosResultado = {
     slug,
     titulo,
+    formato: perfil.id,
     aprovado,
     notaFinal,
     duracaoTotalMs,

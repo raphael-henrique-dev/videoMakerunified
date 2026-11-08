@@ -32,17 +32,42 @@ export const RESOLUCAO_FONTE = { largura: 1080, altura: 1920 };
  */
 export const ZONAS_SEGURANCA = [
   { id: "topo", nome: "Topo (abas/busca)", x: 0, y: 0, w: 1080, h: 160, color: "#f59e0b", limiarMedio: 0.05, limiarAlto: 1.01, severidadeMax: "medio" },
-  { id: "rodape", nome: "Rodapé (@/descrição/som)", x: 0, y: 1540, w: 1080, h: 380, color: "#ef4444", limiarMedio: 0.01, limiarAlto: 0.06 },
+  { id: "rodape", nome: "Rodapé (@/descrição/som)", x: 0, y: 1540, w: 1080, h: 380, color: "#ef4444", limiarMedio: 0.03, limiarAlto: 0.06 },
   { id: "lateral", nome: "Lateral direita (ações)", x: 940, y: 800, w: 140, h: 800, color: "#a855f7", limiarMedio: 0.06, limiarAlto: 0.1 },
 ];
 
-export function obterZonasSeguranca(roteiro = {}) {
-  const perfil = obterPerfil(roteiro);
+/**
+ * Zonas de risco do perfil (coordenadas na resolução do vídeo).
+ *
+ * - curto: as zonas cobertas pela interface dos apps (acima).
+ * - horizontal: faixas de MARGEM — o que sobra fora da área segura. Conteúdo de alto detalhe
+ *   (texto/UI) nessas faixas é o que gera alerta; o miolo da cena nunca é zona de risco.
+ *     acao-*   margem de ~5% (corte de TV/overscan): severidade alta possível.
+ *     titulo-* margem de ~10% (só topo/laterais — a base pertence à legenda): no máximo "médio".
+ */
+export function zonasDoPerfil(perfil) {
   if (perfil.id === "curto") return ZONAS_SEGURANCA;
+  const { acao, titulo } = perfil.areaSegura;
+  const L = perfil.largura;
+  const A = perfil.altura;
+  const acaoDir = acao.x + acao.largura;
+  const acaoBase = acao.y + acao.altura;
+  const tituloDir = titulo.x + titulo.largura;
+  const margemAcao = { color: "#ef4444", limiarMedio: 0.03, limiarAlto: 0.06 };
+  const margemTitulo = { color: "#f59e0b", limiarMedio: 0.05, limiarAlto: 1.01, severidadeMax: "medio" };
   return [
-    { id: "titulo", nome: "Margem de título (TV)", x: 192, y: 108, w: 1536, h: 864, color: "#f59e0b", limiarMedio: 0.02, limiarAlto: 0.08 },
-    { id: "acao", nome: "Margem de ação (TV)", x: 96, y: 54, w: 1728, h: 972, color: "#38bdf8", limiarMedio: 0.02, limiarAlto: 0.08 },
+    { id: "acao-topo", nome: "Margem de ação · topo (TV)", x: 0, y: 0, w: L, h: acao.y, ...margemAcao },
+    { id: "acao-base", nome: "Margem de ação · base (TV)", x: 0, y: acaoBase, w: L, h: A - acaoBase, ...margemAcao },
+    { id: "acao-esq", nome: "Margem de ação · esquerda (TV)", x: 0, y: acao.y, w: acao.x, h: acao.altura, ...margemAcao },
+    { id: "acao-dir", nome: "Margem de ação · direita (TV)", x: acaoDir, y: acao.y, w: L - acaoDir, h: acao.altura, ...margemAcao },
+    { id: "titulo-topo", nome: "Margem de título · topo (TV)", x: acao.x, y: acao.y, w: acao.largura, h: titulo.y - acao.y, ...margemTitulo },
+    { id: "titulo-esq", nome: "Margem de título · esquerda (TV)", x: acao.x, y: titulo.y, w: titulo.x - acao.x, h: titulo.altura, ...margemTitulo },
+    { id: "titulo-dir", nome: "Margem de título · direita (TV)", x: tituloDir, y: titulo.y, w: acaoDir - tituloDir, h: titulo.altura, ...margemTitulo },
   ];
+}
+
+export function obterZonasSeguranca(roteiro = {}) {
+  return zonasDoPerfil(obterPerfil(roteiro));
 }
 
 export const LIMIARES = {
@@ -178,21 +203,31 @@ function escalarZona(z, analise = RESOLUCAO_ANALISE, fonte = RESOLUCAO_FONTE) {
  * Analisa um único quadro (buffer RGB cru) e devolve métricas + alertas.
  * @returns {{metricas: object, alertas: Array<{codigo:string,severidade:string,mensagem:string,zona?:string}>, zonasVioladas: string[]}}
  */
-export function analisarQuadro(rgb, { largura = RESOLUCAO_ANALISE.largura, altura = RESOLUCAO_ANALISE.altura, zonas = ZONAS_SEGURANCA, limiares = LIMIARES } = {}) {
+export function analisarQuadro(
+  rgb,
+  {
+    largura = RESOLUCAO_ANALISE.largura,
+    altura = RESOLUCAO_ANALISE.altura,
+    zonas = ZONAS_SEGURANCA,
+    limiares = LIMIARES,
+    fonte = RESOLUCAO_FONTE,
+    miolo: mioloFonte = { x: 60, y: 200, w: 860, h: 1320 },
+  } = {}
+) {
   const cinza = paraCinza(rgb, largura, altura);
   const lum = estatisticasLuminancia(cinza);
   const bordas = mapaBordas(cinza, largura, altura);
   const alertas = [];
 
   // Área de conteúdo de referência (miolo seguro) para contextualizar as zonas
-  const miolo = escalarZona({ x: 60, y: 200, w: 860, h: 1320 }, { largura, altura });
+  const miolo = escalarZona(mioloFonte, { largura, altura }, fonte);
   const densidadeMiolo = densidadeBordas(bordas, largura, altura, miolo, limiares.bordaLimiar);
 
   const zonasMetricas = {};
   const zonasVioladas = [];
   const vazio = lum.desvio < limiares.blankDesvio;
   for (const z of zonas) {
-    const d = densidadeBordas(bordas, largura, altura, escalarZona(z, { largura, altura }), limiares.bordaLimiar);
+    const d = densidadeBordas(bordas, largura, altura, escalarZona(z, { largura, altura }, fonte), limiares.bordaLimiar);
     zonasMetricas[z.id] = arred(d, 4);
     if (vazio) continue;
     const limAlto = z.limiarAlto ?? 0.06;
@@ -288,11 +323,17 @@ export function analisarMovimento(cinzas, limiares = LIMIARES) {
 /**
  * Executa o Tier 1 completo sobre um conjunto de cenas.
  * @param {Array<{id:string, amostras:Array<{caminho:string, tempo:number}>}>} cenas
- * @param {{preferencia?: string}} [opcoes]
+ * @param {{preferencia?: string, perfil?: object, zonas?: Array, limiares?: object}} [opcoes]
+ *   `perfil` (de motor/formato.js) define resolução de análise, geometria do vídeo e zonas de risco;
+ *   sem ele, vale o perfil "curto". `zonas` sobrescreve as zonas do perfil.
  */
 export async function executarHeuristicas(cenas, opcoes = {}) {
   const motor = await obterMotorImagem({ preferencia: opcoes.preferencia });
-  const { largura, altura } = RESOLUCAO_ANALISE;
+  const perfil = opcoes.perfil || obterPerfil({});
+  const { largura, altura } = perfil.analise;
+  const fonte = { largura: perfil.largura, altura: perfil.altura };
+  const zonas = opcoes.zonas || zonasDoPerfil(perfil);
+  const miolo = { x: perfil.miolo.x, y: perfil.miolo.y, w: perfil.miolo.largura, h: perfil.miolo.altura };
   const inicio = Date.now();
 
   const caminhos = cenas.flatMap((c) => c.amostras.map((a) => a.caminho));
@@ -301,7 +342,7 @@ export async function executarHeuristicas(cenas, opcoes = {}) {
   let k = 0;
   const resultadoCenas = cenas.map((cena) => {
     const amostras = cena.amostras.map((a) => {
-      const r = analisarQuadro(buffers[k++], { largura, altura, zonas: opcoes.zonas, limiares: opcoes.limiares });
+      const r = analisarQuadro(buffers[k++], { largura, altura, zonas, limiares: opcoes.limiares, fonte, miolo });
       return { ...a, metricas: r.metricas, alertas: r.alertas, zonasVioladas: r.zonasVioladas, _cinza: r._cinza };
     });
     const mov = analisarMovimento(amostras.map((a) => a._cinza), opcoes.limiares);

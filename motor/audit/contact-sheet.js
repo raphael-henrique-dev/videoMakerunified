@@ -9,7 +9,24 @@
 
 import path from "node:path";
 import { obterMotorImagem } from "./engine.js";
-import { ZONAS_SEGURANCA, SEVERIDADE_PESO, obterZonasSeguranca } from "./heuristics.js";
+import { SEVERIDADE_PESO, zonasDoPerfil } from "./heuristics.js";
+import { obterPerfil } from "../formato.js";
+
+/** Geometria dos quadros nas pranchas: respeita a proporção do formato (sem achatar o 16:9). */
+export function geometriaPranchas(perfil, quantidadeCenas) {
+  const n = Math.max(1, quantidadeCenas);
+  if (perfil.largura > perfil.altura) {
+    const colunas = Math.min(3, n);
+    return {
+      humana: { tileWidth: 640, tileHeight: 360, columns: colunas },
+      vlm: { tileWidth: 480, tileHeight: 270, columns: colunas },
+    };
+  }
+  return {
+    humana: { tileWidth: 360, tileHeight: 640, columns: Math.min(4, n) },
+    vlm: { tileWidth: 360, tileHeight: 640, columns: colunasPara(n) },
+  };
+}
 
 export const CORES_STATUS = { ok: "#22c55e", alerta: "#f59e0b", critico: "#ef4444" };
 
@@ -60,17 +77,17 @@ export async function gerarPranchas(tier1, { dirSaida, titulo = "Auditoria Visua
     };
   });
 
-  const zonas = perfil ? obterZonasSeguranca({ formato: perfil.id }) : ZONAS_SEGURANCA;
-  const fonte = perfil ? { largura: perfil.largura, altura: perfil.altura } : { largura: 1080, altura: 1920 };
+  const perfilAtivo = perfil || obterPerfil({});
+  const zonas = zonasDoPerfil(perfilAtivo);
+  const fonte = { largura: perfilAtivo.largura, altura: perfilAtivo.altura };
+  const geo = geometriaPranchas(perfilAtivo, cenas.length);
   const humana = path.join(dirSaida, "contact-sheet-anotada.jpg");
   await motor.montarPrancha({
     output: humana,
     title: titulo,
     titleHeight: 54,
-    tileWidth: 360,
-    tileHeight: 640,
+    ...geo.humana,
     headerHeight: 56,
-    columns: Math.min(4, Math.max(1, cenas.length)),
     gap: 12,
     sourceWidth: fonte.largura,
     sourceHeight: fonte.altura,
@@ -84,10 +101,8 @@ export async function gerarPranchas(tier1, { dirSaida, titulo = "Auditoria Visua
   await motor.montarPrancha({
     output: vlm,
     titleHeight: 0,
-    tileWidth: 360,
-    tileHeight: 640,
+    ...geo.vlm,
     headerHeight: 34,
-    columns: colunasPara(cenas.length),
     gap: 8,
     zones: [],
     tiles: cenas.map((cena, i) => ({

@@ -4,7 +4,6 @@ import { arredondarGeometrias } from "./math.js";
 import { montarCeu, montarLuzes, aplicarCeu } from "./lighting.js";
 import { camRespira } from "./camera.js";
 import { falar } from "./character.js";
-import { obterPerfil } from "../formato.js";
 
 function sincronizarBonecosCena(nodo, t, offsetGlobal) {
   if (!nodo || !nodo.visible) return;
@@ -418,7 +417,8 @@ function criarSoftwareRenderer3D(THREE, opcoes = {}) {
 }
 
 export function criarPalco3D(THREE, opcoes = {}) {
-  const perfil = opcoes.perfil ? (typeof opcoes.perfil === "string" ? obterPerfil({ formato: opcoes.perfil }) : opcoes.perfil) : null;
+  // `perfil` é um objeto de motor/formato.js passado pelo chamador (este módulo vai para o bundle do browser e não importa formato.js)
+  const perfil = opcoes.perfil && typeof opcoes.perfil === "object" ? opcoes.perfil : null;
   const largura = opcoes.largura ?? perfil?.largura ?? 1080;
   const altura = opcoes.altura ?? perfil?.altura ?? 1920;
   const fov = opcoes.fov ?? perfil?.camera?.fov ?? 42;

@@ -99,6 +99,25 @@ Responda ESTRITAMENTE em formato JSON com o seguinte schema:
   "sugestoes_gerais": ["sugestão estética 1"]
 }`;
 
+/** Variante 16:9 (vídeos longos/horizontais): mesmos critérios e schema, com a geometria do formato. */
+const PROMPT_SISTEMA_CRITICO_HORIZONTAL = PROMPT_SISTEMA_CRITICO
+  .replace(
+    "para YouTube Shorts, TikTok e Instagram Reels, resolução 1080x1920 vertical 9:16",
+    "para YouTube (vídeos longos), resolução 1920x1080 horizontal 16:9"
+  )
+  .replace("Enquadramento e Clipping 9:16:", "Enquadramento e Clipping 16:9:")
+  .replace("Safe-Zones Verticais Móveis:", "Margens de Segurança de TV (16:9):")
+  .replace(
+    "O rodapé (área y > 1540px) e o topo (y < 160px) estão livres de títulos principais e textos essenciais que possam ser cobertos pelos botões de curtir/comentar ou pelas legendas do TikTok/Shorts?",
+    "Há títulos ou textos essenciais a menos de ~10% da borda (192px nas laterais, 108px no topo) ou qualquer elemento a menos de ~5% (96px laterais, 54px topo e base) que possa ser cortado em TVs? A legenda fica na base, dentro da margem de ação."
+  )
+  .replace("em tela de celular", "em tela de TV e de celular");
+
+/** Prompt de sistema do crítico visual conforme o formato ("curto" por padrão). */
+export function promptSistemaCritico(formato = "curto") {
+  return formato === "horizontal" ? PROMPT_SISTEMA_CRITICO_HORIZONTAL : PROMPT_SISTEMA_CRITICO;
+}
+
 /**
  * Resolve o provedor VLM a ser utilizado com base em preferência explícita ou chaves presentes no ambiente.
  */
@@ -147,7 +166,7 @@ export function imagemParaBase64(caminhoImagem) {
 /**
  * Dispara requisição para o Google Gemini REST API.
  */
-export async function chamarGeminiVlm(config, caminhoImagem, promptUsuario, fetchFn = globalThis.fetch) {
+export async function chamarGeminiVlm(config, caminhoImagem, promptUsuario, fetchFn = globalThis.fetch, promptSistema = PROMPT_SISTEMA_CRITICO) {
   const imgInfo = imagemParaBase64(caminhoImagem);
   const modelo = config.modelo || config.modeloPadrao;
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${config.apiKey}`;
@@ -157,7 +176,7 @@ export async function chamarGeminiVlm(config, caminhoImagem, promptUsuario, fetc
       {
         role: "user",
         parts: [
-          { text: `${PROMPT_SISTEMA_CRITICO}\n\n---\n\n${promptUsuario}` },
+          { text: `${promptSistema}\n\n---\n\n${promptUsuario}` },
           {
             inline_data: {
               mime_type: imgInfo.mime,
@@ -193,7 +212,7 @@ export async function chamarGeminiVlm(config, caminhoImagem, promptUsuario, fetc
 /**
  * Dispara requisição para APIs compatíveis com OpenAI (Groq, NVIDIA NIM, OpenAI, Ollama).
  */
-export async function chamarOpenAiCompativelVlm(config, caminhoImagem, promptUsuario, fetchFn = globalThis.fetch) {
+export async function chamarOpenAiCompativelVlm(config, caminhoImagem, promptUsuario, fetchFn = globalThis.fetch, promptSistema = PROMPT_SISTEMA_CRITICO) {
   const imgInfo = imagemParaBase64(caminhoImagem);
   const modelo = config.modelo || config.modeloPadrao;
   const url = config.endpoint || config.endpointPadrao;
@@ -208,7 +227,7 @@ export async function chamarOpenAiCompativelVlm(config, caminhoImagem, promptUsu
   const payload = {
     model: modelo,
     messages: [
-      { role: "system", content: PROMPT_SISTEMA_CRITICO },
+      { role: "system", content: promptSistema },
       {
         role: "user",
         content: [
@@ -314,20 +333,23 @@ export async function auditarComVlm(caminhoImagem, mapaCenas = [], opcoes = {}) 
     };
   }
 
+  const horizontal = opcoes.formato === "horizontal";
+  const promptSistema = promptSistemaCritico(opcoes.formato);
+  const foco = horizontal ? "enquadramento 16:9, iluminação, legibilidade em TV e celular" : "enquadramento 9:16, iluminação, legibilidade móvel";
   const promptUsuario = `Analise a prancha de contato fornecida (vlm-sheet.jpg).
 As cenas apresentadas na prancha correspondem a:
 ${mapaCenas.map((m) => `- Quadro #${m.indice}: Cena "${m.cena}" no timestamp ${m.tempo.toFixed(2)}s`).join("\n")}
 
-Avalie rigorosamente enquadramento 9:16, iluminação, legibilidade móvel e clipping. Emita as notas e correções em JSON.
+Avalie rigorosamente ${foco} e clipping. Emita as notas e correções em JSON.
 IMPORTANTE: Sua resposta inteira DEVE ser um único objeto JSON válido, iniciando imediatamente com "{" e terminando com "}". Não escreva nada antes ou depois do JSON.`;
 
   const fetchFn = opcoes.fetch || globalThis.fetch;
   let resposta = null;
 
   if (prov.tipo === "gemini") {
-    resposta = await chamarGeminiVlm(prov, caminhoImagem, promptUsuario, fetchFn);
+    resposta = await chamarGeminiVlm(prov, caminhoImagem, promptUsuario, fetchFn, promptSistema);
   } else {
-    resposta = await chamarOpenAiCompativelVlm(prov, caminhoImagem, promptUsuario, fetchFn);
+    resposta = await chamarOpenAiCompativelVlm(prov, caminhoImagem, promptUsuario, fetchFn, promptSistema);
   }
 
   const notaGeral = Number(resposta.nota_geral) || 7.0;

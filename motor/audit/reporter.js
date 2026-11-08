@@ -46,13 +46,20 @@ export function formatarRelatorioMarkdown(dados) {
 
 ---
 
-## 1. Prancha de Contato Anotada (Safe-Zones 9:16)
+## 1. Prancha de Contato Anotada (Safe-Zones ${dados.formato === "horizontal" ? "16:9" : "9:16"})
 
-> [!NOTE]
+${
+  dados.formato === "horizontal"
+    ? `> [!NOTE]
+> A prancha abaixo exibe a amostra central de cada cena do vídeo com a sobreposição das margens de segurança 16:9 (overscan de TV, 1920x1080):
+> - 🟥 **Margem de ação (5%):** faixas de 96px nas laterais e 54px no topo e na base — nada essencial deve ficar aqui.
+> - 🟧 **Margem de títulos (10%):** faixas de 192px nas laterais e 108px no topo — títulos e textos-chave devem ficar dentro.`
+    : `> [!NOTE]
 > A prancha abaixo exibe a amostra central de cada cena do vídeo com a sobreposição das safe-zones verticais do TikTok, YouTube Shorts e Reels:
 > - 🟧 **Topo (0-160px):** Área de abas e busca do app.
 > - 🟥 **Rodapé (1540-1920px):** Área de legendas nativas, nome do canal e som.
-> - 🟪 **Lateral Direita (940-1080px):** Coluna de ações (curtir, comentar, compartilhar).
+> - 🟪 **Lateral Direita (940-1080px):** Coluna de ações (curtir, comentar, compartilhar).`
+}
 
 ${
   pranchas?.humana

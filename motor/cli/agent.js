@@ -11,7 +11,6 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../..");
 const CANAL_DIR = path.join(ROOT, "canal");
-const APRENDIZADOS_FILE = path.join(CANAL_DIR, "aprendizados-curto.md");
 const HISTORICO_FILE = path.join(CANAL_DIR, "historico.md");
 const PERFIL_FILE = path.join(CANAL_DIR, "perfil.md");
 
@@ -254,7 +253,24 @@ ${perfil}
   const notaTxt = resultadoAudit?.notaFinal ? ` (Nota Visual: ${resultadoAudit.notaFinal.toFixed(1)}/10)` : "";
   const propostaAprendizado = `Produção do vídeo "${temaPrompt}" (${slug}): Estruturação atômica validada com 0 erros no HyperFrames e aprovada na Auditoria Visual CV${notaTxt}.`;
   console.log(`\nO agente identificou o seguinte aprendizado para registrar:\n"${propostaAprendizado}"`);
-  console.log(`\nℹ️ Aprendizado apenas proposto; nenhum arquivo de memória foi alterado.`);
+  const aprova = await rl.question(`\nDeseja aprovar e registrar este aprendizado em canal/${memoriaNome}? (s/N)\n> `);
+
+  if (aprova.trim().toLowerCase() === "s" || aprova.trim().toLowerCase() === "sim") {
+    const dataHoje = new Date().toISOString().split("T")[0];
+    fs.appendFileSync(memoriaPath, `\n- **[${dataHoje}] (${slug}):** ${propostaAprendizado}`, "utf8");
+
+    let duracaoTxt = "-";
+    try {
+      const meta = JSON.parse(fs.readFileSync(path.join(destVideoDir, "audio_meta.json"), "utf8"));
+      if (typeof meta.duracaoTotal === "number") duracaoTxt = `${meta.duracaoTotal.toFixed(0)}s`;
+    } catch {}
+    const linhaHist = `| ${dataHoje} | \`${slug}\` | **${temaPrompt}** | ${duracaoTxt} | Produzido via Agente IA do Motor 2.0 (${formato}) |\n`;
+    fs.appendFileSync(HISTORICO_FILE, linhaHist, "utf8");
+
+    console.log(`✅ Registrado com sucesso em canal/${memoriaNome} e canal/historico.md!`);
+  } else {
+    console.log(`ℹ️ Registro dispensado pelo usuário. Memória mantida sem alterações.`);
+  }
 
   console.log(`\n🎉 PROJETO PRONTO!`);
   console.log(`- Diretório: videos/${slug}/`);
