@@ -28,10 +28,10 @@ motor-v2/
 ├── canal/                      # Memória viva do canal
 │   ├── perfil.md               # Identidade visual, mascote, tom de voz e canais
 │   ├── aprendizados-curto.md   # Regras técnicas herdadas pelos vídeos curtos
-│   ├── aprendizados-longo.md   # Estrutura reservada para aprendizados 16:9
+│   ├── aprendizados-longo.md   # Aprendizados do formato horizontal 16:9 (preenchido só com aprovação)
 │   └── historico.md            # Registro histórico de vídeos produzidos e uploads
 ├── motor/                      # Núcleo do motor (imutável para os vídeos)
-│   ├── 2d/                     # Runtime SVG vetorial puro (motor2d.global.js)
+│   ├── 2d/                     # Runtime SVG vetorial puro (motor2d.global.js), cenas data-driven (cenas/) e transições
 │   ├── 3d/                     # Runtimes Three.js procedurais e construtores 3D
 │   ├── audio/                  # Pipeline de TTS ElevenLabs, alinhamento e masterização
 │   ├── audit/                  # Auditoria Visual por Visão Computacional (Tier 1 Local + Tier 2 VLM)
@@ -234,7 +234,7 @@ npm run video:agendados -- --cancel <id-ou-slug>
 Para aprofundamento técnico em regras, arquitetura e integrações, consulte:
 - 📖 [**Guia de Configuração e Publicação** (`motor/publish/GUIA_CONFIGURACAO.md`)](./motor/publish/GUIA_CONFIGURACAO.md) — Passo a passo no Google Cloud e TikTok Developers, soluções de erros (troubleshooting) e exemplos de código.
 - 🧠 [**Aprendizados Curtos** (`canal/aprendizados-curto.md`)](./canal/aprendizados-curto.md) — regras acumuladas do formato vertical.
-- 🧠 [**Aprendizados Longos** (`canal/aprendizados-longo.md`)](./canal/aprendizados-longo.md) — estrutura reservada para o formato horizontal.
+- 🧠 [**Aprendizados Longos** (`canal/aprendizados-longo.md`)](./canal/aprendizados-longo.md) — aprendizados do formato horizontal 16:9 (registrados só com aprovação do usuário).
 - 👤 [**Perfil do Canal** (`canal/perfil.md`)](./canal/perfil.md) — Personagem mascote, paleta de cores, tipografia e diretrizes de roteiro.
 - 📜 [**Histórico de Produção** (`canal/historico.md`)](./canal/historico.md) — Log de vídeos renderizados e registros de upload nas redes.
 - 🤖 [**Protocolo do Agente** (`AGENTS.md`)](./AGENTS.md) — Instruções operacionais para agentes de IA operando no repositório.

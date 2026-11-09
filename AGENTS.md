@@ -65,7 +65,7 @@ Quando o usuário solicitar no chat a criação ou planejamento de um vídeo:
      - Executa o crítico VLM universal ativo (**NVIDIA NIM `meta/llama-3.2-90b-vision-instruct`**).
      - Meta: **Status APROVADO** e nota **>= 8.0/10**.
      - Inspecione a prancha anotada gerada em `videos/<slug>/renders/audit/contact-sheet-anotada.jpg`.
-     - Garanta que nenhum card de texto, legenda ou métrica colida com o rodapé (`y > 1540px`) ou lateral direita (`x > 940px`).
+     - Garanta que nenhum card de texto, legenda ou métrica colida com o rodapé (`y > 1540px`) ou lateral direita (`x > 940px`) no curto, ou com as margens de segurança 16:9 (seção 4b) no horizontal.
 6. **Entrega e Checkpoint de Aprendizado:**
    - Apresente os snapshots e o resumo ao usuário.
    - **REGRA MANDATÓRIA DE MEMÓRIA:** Se você desenvolveu uma nova solução técnica, geometria 3D reutilizável ou ajuste de layout durante a criação, formule a proposta de aprendizado e pergunte:  
@@ -87,8 +87,9 @@ O usuário também pode operar o motor diretamente pelo terminal:
 # 1. Geração Assistida por IA interativa (pergunta tema, modelo de IA e confirma aprendizado)
 npm run video:ai
 
-# 2. Criação manual de um novo projeto atômico
+# 2. Criação manual de um novo projeto atômico (curto por padrão)
 npm run video:novo -- meu-video "Título do Vídeo"
+npm run video:novo -- meu-video "Título do Vídeo" --formato=horizontal
 
 # 3. Processamento de áudio, ducking e legendas
 npm run video:audio -- meu-video
@@ -158,6 +159,24 @@ Para garantir legibilidade perfeita nas plataformas de vídeo curto (TikTok, You
 - **Congelamento (Animation Freeze):** Se a diferença média entre amostras da mesma cena for `< 0.35`, o motor acusa trava de JavaScript/Timeline.
 - **Crítico VLM Ativo (NVIDIA NIM):** O modelo `meta/llama-3.2-90b-vision-instruct` inspeciona a prancha `vlm-sheet.jpg` avaliando enquadramento 3D, clipping e harmonia estética com nota mínima de corte `>= 8.0/10`.
 - **Auto-Cura:** O agente executa até 2 iterações automáticas para corrigir enquadramento de câmera (`camera.position.z`) e layout antes de consultar o usuário.
+
+---
+
+## 4b. Formato Horizontal 16:9 (`formato: "horizontal"`, 1920x1080)
+
+O horizontal **convive** com o curto: cada vídeo declara `formato` no `roteiro.json` (`curto` por padrão; `longo` é alias de `horizontal`). A fonte única dos perfis é `motor/formato.js`. Não há duração padrão: o vídeo dura o que a narração durar (soma das frases + pausas), organizado em `capitulos[]`.
+
+| Item | Regra no horizontal |
+| :--- | :--- |
+| **Margens de segurança** | Ação: 5% (96px laterais, 54px topo/base). Títulos: 10% (192px laterais, 108px topo). Palco das cenas: `y: 108` a `798` (a legenda ocupa a base, `bottom: 54px`). |
+| **Legenda** | Karaokê embaixo (`bottom: 54px`, largura máx. 1500px, 48px). |
+| **Cenas data-driven** | Em vez de `arquivo`, o frame pode ter `cena: { tipo, dados }`. Tipos: `capitulo-titulo`, `lista-animada`, `comparacao-ab`, `grafico-linha`, `grafico-barra`, `linha-do-tempo`, `numero-grande`, `diagrama-fluxo`, `mascote-explica` (código em `motor/2d/cenas/`; rode `npm run build:cenas` após alterar). No curto, `cena` é rejeitada pelo schema. |
+| **Transições** | `frame.transicao`: `flash`, `fade`, `wipe`, `push`, `zoom`. Sem ela, o horizontal alterna fade/wipe/push e usa zoom na troca de capítulo; o curto usa só `flash`. |
+| **Música/SFX** | `capitulos[].musica` (loop + crossfade de 1,5 s); sem ela vale `trilha`. SFX mixados por capítulo. |
+| **Áudio** | Retry com backoff em 429/5xx, 3 frases em paralelo, `loudnorm` em 2 passadas (-14 LUFS). |
+| **Render** | `npm run video:render -- <slug> [--4k] [--workers=N] [--low-memory] [--resume] [--crf=N]` (flags extras só no horizontal). |
+| **Auditoria** | Tier 1 usa faixas de margem 16:9; o Tier 2 (VLM) roda em lotes de 8 cenas (`--vlm-lote=N`, `--vlm-timeout=ms`). |
+| **Teste de carga** | `node scripts/gerar-roteiro-sintetico.js <slug> --cenas=40 --minutos=10 [--sem-audio]`. |
 
 ---
 
