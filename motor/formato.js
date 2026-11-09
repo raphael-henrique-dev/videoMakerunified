@@ -40,12 +40,14 @@ const PERFIS = {
       titulo: { x: 192, y: 108, largura: 1536, altura: 864 },
     },
     miolo: { x: 192, y: 108, largura: 1536, altura: 864 },
+    // palco das cenas data-driven: miolo menos a faixa inferior ocupada pela legenda
+    palco: { x: 192, y: 108, largura: 1536, altura: 690 },
     legenda: { posicao: "bottom: 54px", larguraMaxima: 1500, tamanho: 48 },
     // z provisório: ainda não validado por snapshot em 16:9 (FOV vertical fixo de 42°).
     render: { quality: "looks", crf: 16, fps: 30, resolucao4k: "landscape-4k" },
     camera: { fov: 42, z: 8.2 },
-    transicoes: ["flash"],
-    tiposCena: ["arquivo"],
+    transicoes: ["flash", "fade", "wipe", "push", "zoom"],
+    tiposCena: ["arquivo", "cena"],
   }),
 };
 
@@ -78,12 +80,22 @@ export function validarFormato(roteiro = {}) {
   return { valido: erros.length === 0, erros };
 }
 
+/** Frames com `cena` (data-driven) ganham `arquivo` derivado: o gerador escreve a composição nesse caminho. */
+function comArquivoDeCena(frame) {
+  return frame && frame.cena && !frame.arquivo ? { ...frame, arquivo: `compositions/frames/${frame.id}.html` } : frame;
+}
+
 export function achatarRoteiro(roteiro = {}) {
-  if (!Array.isArray(roteiro.capitulos) || roteiro.capitulos.length === 0) return roteiro;
+  if (!Array.isArray(roteiro.capitulos) || roteiro.capitulos.length === 0) {
+    if (Array.isArray(roteiro.frames) && roteiro.frames.some((f) => f && f.cena && !f.arquivo)) {
+      return { ...roteiro, frames: roteiro.frames.map(comArquivoDeCena) };
+    }
+    return roteiro;
+  }
   const frames = [];
   roteiro.capitulos.forEach((capitulo) => {
     (capitulo.frames || []).forEach((frame) => {
-      frames.push({ ...frame, capituloId: capitulo.id });
+      frames.push(comArquivoDeCena({ ...frame, capituloId: capitulo.id }));
     });
   });
   return { ...roteiro, frames };

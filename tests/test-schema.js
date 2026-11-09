@@ -15,7 +15,7 @@ test("todos os roteiros existentes em videos/ continuam válidos", () => {
   }
 });
 
-test("'cena' sem 'arquivo' é rejeitada com mensagem clara", () => {
+test("'cena' no formato curto é rejeitada com mensagem clara", () => {
   const r = validarRoteiro({ ...base(), frames: [{ id: "f1", cena: "x", frases: [{ texto: "oi" }] }] });
   assert.equal(r.valido, false);
   assert.match(r.erros.join(" "), /use 'arquivo'/);

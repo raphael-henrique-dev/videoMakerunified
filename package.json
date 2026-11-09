@@ -15,6 +15,7 @@
   "scripts": {
     "build:3d": "node scripts/build-3d-global.js",
     "build:2d": "cp motor/2d/motor2d.global.js assets/vendor/motor2d.global.js",
+    "build:cenas": "node scripts/build-cenas2d-global.js",
     "test": "node --test",
     "video:novo": "node motor/cli/orchestrator.js novo",
     "video:listar": "node motor/cli/orchestrator.js list",

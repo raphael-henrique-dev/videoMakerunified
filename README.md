@@ -71,6 +71,7 @@ npm run video:audit -- por-que-o-ceu-e-azul --reuse-snapshots # Pula re-captura 
 npm run video:audit -- por-que-o-ceu-e-azul --provider=gemini # Alternativa: Google Gemini 2.5 Flash
 npm run video:audit -- por-que-o-ceu-e-azul --provider=openai # Alternativa: OpenAI GPT-4o
 npm run video:audit -- por-que-o-ceu-e-azul --provider=ollama # Alternativa: Ollama Llama 3.2 Vision Local
+npm run video:audit -- engenharia-do-clima --vlm-lote=6 --vlm-timeout=120000 # Horizontal: VLM em lotes (padrão 8 cenas) com timeout por lote
 
 # Captura snapshots visuais das cenas para inspeção rápida
 npm run video:snapshot -- por-que-o-ceu-e-azul
@@ -80,6 +81,24 @@ npm run video:render -- por-que-o-ceu-e-azul
 ```
 
 ---
+
+#### Vídeos horizontais: cenas data-driven, transições, áudio e render
+
+```bash
+# Em roteiro horizontal, um frame pode usar `cena` em vez de `arquivo` (o gerador monta a composição):
+#   "cena": { "tipo": "grafico-barra", "dados": { "barras": [{ "rotulo": "A", "valor": 3 }, ...] } }
+# Tipos: capitulo-titulo, lista-animada, comparacao-ab, grafico-linha, grafico-barra,
+#        linha-do-tempo, numero-grande, diagrama-fluxo, mascote-explica (motor/2d/cenas/)
+# Transições por frame: "transicao": "flash|fade|wipe|push|zoom" (o curto usa só flash; o horizontal alterna sozinho)
+# Música por capítulo: capitulos[].musica (loop + crossfade de 1,5 s; sem ela vale `trilha`)
+npm run build:cenas                      # regenera assets/vendor/cenas2d.global.js após mexer em motor/2d/cenas/
+npm run video:render -- engenharia-do-clima --4k --workers=2 --low-memory --resume   # flags extras só no horizontal
+node scripts/gerar-roteiro-sintetico.js teste-carga --cenas=40 --minutos=10          # teste de carga (~10 min, ~40 cenas)
+node scripts/gerar-roteiro-sintetico.js teste-carga --sem-audio                      # timeline estimado, sem TTS
+```
+
+O áudio faz retry com backoff em 429/5xx (até 5 tentativas, respeita `Retry-After`), narra 3 frases em paralelo
+e masteriza com `loudnorm` em 2 passadas (alvo -14 LUFS, TP -1,5; o valor final medido vai para `audio_meta.json`).
 
 ### 2. Auditoria Visual por Visão Computacional (Two-Tier CV)
 

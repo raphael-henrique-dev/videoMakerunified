@@ -167,6 +167,10 @@ switch (comando) {
     const engineArg = argsRestantes.find((a) => a.startsWith("--engine="))?.split("=")[1];
 
     const reuseSnaps = argsRestantes.includes("--reuse-snapshots");
+    const numeroFlag = (nome) => {
+      const v = Number(argsRestantes.find((a) => a.startsWith(`--${nome}=`))?.split("=")[1]);
+      return Number.isFinite(v) && v > 0 ? v : undefined;
+    };
 
     const { auditarVideoVisual } = await import("../audit/visual.js");
     try {
@@ -175,6 +179,8 @@ switch (comando) {
         provider: providerArg,
         engine: engineArg,
         reuseSnapshots: reuseSnaps,
+        vlmLote: numeroFlag("vlm-lote"),
+        vlmTimeoutMs: numeroFlag("vlm-timeout"),
       });
       if (jsonModo) {
         console.log(JSON.stringify(res, null, 2));

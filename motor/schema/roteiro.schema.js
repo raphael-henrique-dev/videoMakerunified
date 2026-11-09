@@ -7,7 +7,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { achatarRoteiro, validarFormato } from "../formato.js";
+import { achatarRoteiro, validarFormato, obterPerfil } from "../formato.js";
+import { validarCena } from "../2d/cenas/index.js";
+import { TRANSICOES } from "../2d/transicoes.js";
 
 const SFX_DIR_GLOBAL = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../assets/sfx");
 
@@ -52,6 +54,12 @@ export function validarRoteiro(roteiro, opcoes = {}) {
     }
   }
 
+  let perfil;
+  try {
+    perfil = obterPerfil(roteiro);
+  } catch {
+    perfil = obterPerfil({});
+  }
   const normalizado = achatarRoteiro(roteiro);
   if (!Array.isArray(normalizado.frames) || normalizado.frames.length === 0) {
     erros.push("Campo obrigatório 'frames' deve ser um array não-vazio de cenas.");
@@ -61,10 +69,18 @@ export function validarRoteiro(roteiro, opcoes = {}) {
   normalizado.frames.forEach((f, idx) => {
     const rotulo = f.id || "?";
     if (!f.id) erros.push(`Frame [${idx}] sem 'id'.`);
-    if (f.cena && !f.arquivo) {
-      erros.push(`Frame [${idx}] (${rotulo}) usa 'cena', que ainda não é suportado; use 'arquivo'.`);
+    if (f.cena) {
+      if (!perfil.tiposCena.includes("cena")) {
+        erros.push(`Frame [${idx}] (${rotulo}) usa 'cena', disponível só no formato horizontal; no formato ${perfil.id} use 'arquivo'.`);
+      } else {
+        validarCena(f.cena).forEach((m) => erros.push(`Frame '${rotulo}' (cena ${f.cena?.tipo ?? "?"}): ${m}`));
+      }
     } else if (!f.arquivo) {
-      erros.push(`Frame [${idx}] (${rotulo}) sem 'arquivo'.`);
+      erros.push(`Frame [${idx}] (${rotulo}) sem 'arquivo' (ou 'cena', no formato horizontal).`);
+    }
+    if (f.transicao !== undefined) {
+      if (!TRANSICOES.includes(f.transicao)) erros.push(`Frame '${rotulo}': transição '${f.transicao}' desconhecida (${TRANSICOES.join(", ")}).`);
+      else if (!perfil.transicoes.includes(f.transicao)) addUnico(avisos, `Frame '${rotulo}': transição '${f.transicao}' não existe no formato ${perfil.id}; será usado '${perfil.transicoes[0]}'.`);
     }
 
     if (!Array.isArray(f.frases) || f.frases.length === 0) {

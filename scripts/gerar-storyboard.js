@@ -4,6 +4,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { obterPerfil, achatarRoteiro } from "../motor/formato.js";
+import { cenaUsaMascote } from "../motor/2d/cenas/index.js";
+import { planejarTransicao, resetarClips, emitirTweensJs, escolherTransicao } from "../motor/2d/transicoes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -251,6 +253,70 @@ const htmlCaptions = `<template>
 fs.mkdirSync(path.join(VIDEO_DIR, "compositions"), { recursive: true });
 fs.writeFileSync(path.join(VIDEO_DIR, "compositions", "captions.html"), htmlCaptions, "utf8");
 
+// 2b. Frames data-driven (`cena`): escreve a composição a partir do tipo e dos dados (formato horizontal)
+function idSeguro(id) {
+  return String(id).replace(/[^a-zA-Z0-9_-]/g, "-");
+}
+
+function gerarComposicaoCena(fm, frameDef) {
+  const id = idSeguro(fm.id);
+  const mascote = cenaUsaMascote(frameDef.cena.tipo);
+  const perfilJs = { largura: perfil.largura, altura: perfil.altura, miolo: perfil.miolo, palco: perfil.palco };
+  return `<template>
+  <style>
+    #${id}-root {
+      position: absolute;
+      inset: 0;
+      width: ${largura}px;
+      height: ${altura}px;
+      overflow: hidden;
+      background-color: #050a14;
+      font-family: 'Inter', sans-serif;
+      color: #f8fafc;
+    }
+  </style>
+  <div id="${id}-root" data-composition-id="${fm.id}" data-width="${largura}" data-height="${altura}" data-start="0" data-duration="${fm.duracao.toFixed(2)}">
+    <div id="${id}-cena" style="position:absolute;inset:0"></div>
+  </div>
+  <script>
+    (function () {
+      var DUR = ${fm.duracao.toFixed(2)};
+      var tl = gsap.timeline({ paused: true });
+      var M = window.Motor2D, C = window.Cenas2D;
+      var perfil = ${JSON.stringify(perfilJs)};
+      var tipo = ${JSON.stringify(frameDef.cena.tipo)};
+      var dados = ${JSON.stringify(frameDef.cena.dados || {})};
+      var raiz = document.getElementById('${id}-cena');
+      if (M && C) {
+        M.conectar(tl, function (t, off) {
+          raiz.innerHTML = C.desenharCena(tipo, dados, perfil, t, DUR, { prefixo: '${id}' });${
+            mascote
+              ? `
+          var boy = M.mascote('#${id}-mascote');
+          boy.atualizar(t, off, { humor: dados.humor || 'neutro', bracoD: 30, bracoE: 12 });`
+              : ""
+          }
+        }, { duracao: DUR, offsetGlobal: ${fm.inicio.toFixed(2)} });
+      }
+      window.__timelines = window.__timelines || {};
+      window.__timelines['${fm.id}'] = tl;
+    })();
+  </script>
+</template>
+`;
+}
+
+const framesPorId = new Map(roteiroPlano.frames.map((f) => [f.id, f]));
+const haCenas = timeline.frames.some((fm) => framesPorId.get(fm.id)?.cena);
+timeline.frames.forEach((fm) => {
+  const def = framesPorId.get(fm.id);
+  if (def?.cena && fm.arquivo) {
+    const destino = path.join(VIDEO_DIR, fm.arquivo);
+    fs.mkdirSync(path.dirname(destino), { recursive: true });
+    fs.writeFileSync(destino, gerarComposicaoCena(fm, def), "utf8");
+  }
+});
+
 // 3. Sincroniza automaticamente as durações e offsets nos arquivos HTML de cada frame e no index.html
 timeline.frames.forEach((fm) => {
   if (!fm.arquivo) {
@@ -296,7 +362,23 @@ if (fs.existsSync(indexPath)) {
         )
         .join("\n");
 
-  const cortes = timeline.frames.slice(1).map((fm) => Number(fm.inicio.toFixed(2)));
+  // Transições: o curto usa só o flash; o horizontal escolhe por corte (frame.transicao ou alternância do perfil)
+  let cortes = timeline.frames.slice(1).map((fm) => Number(fm.inicio.toFixed(2)));
+  let transicoesJs = "";
+  if (horizontal) {
+    const tweens = [];
+    const flash = [];
+    timeline.frames.forEach((fm, i) => {
+      if (i === 0) return;
+      const nome = escolherTransicao(perfil, framesPorId.get(fm.id), framesPorId.get(timeline.frames[i - 1].id), i - 1);
+      if (nome === "flash") flash.push(Number(fm.inicio.toFixed(2)));
+      else tweens.push(...planejarTransicao(nome, { tCorte: fm.inicio, idSaida: `clip-f${i}`, idEntrada: `clip-f${i + 1}`, largura }));
+    });
+    cortes = flash;
+    transicoesJs = tweens.length
+      ? `\n    ${emitirTweensJs([...resetarClips(timeline.frames.map((_, i) => `clip-f${i + 1}`)), ...tweens])}\n`
+      : "";
+  }
   const totalStr = timeline.total.toFixed(2);
 
   // Mapa compacto de palavras faladas para Lip-Sync automático do mascote 3D
@@ -317,9 +399,11 @@ if (fs.existsSync(indexPath)) {
   const estiloGrafico = roteiro.estiloGrafico || "padrao";
   // modo "2d": vídeo 100% vetorial (SVG + GSAP) via Motor2D, sem carregar Three.js/Motor3D.
   const modo2d = roteiro.modo === "2d";
-  const scriptsMotor = modo2d
-    ? `<script src="assets/vendor/motor2d.global.js"></script>`
-    : `<script src="assets/vendor/three.min.js"></script>\n  <script src="assets/vendor/motor3d.global.js"></script>`;
+  const scriptsMotor =
+    (modo2d || haCenas
+      ? `<script src="assets/vendor/motor2d.global.js"></script>`
+      : `<script src="assets/vendor/three.min.js"></script>\n  <script src="assets/vendor/motor3d.global.js"></script>`) +
+    (haCenas ? `\n  <script src="assets/vendor/cenas2d.global.js"></script>` : "");
 
   const novoIndexHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -443,7 +527,7 @@ ${temMasterMix ? "" : `
       tl.to('#trans-flash', { opacity: 0.72, duration: 0.12, ease: 'power2.in' }, t - 0.12);
       tl.to('#trans-flash', { opacity: 0, duration: 0.22, ease: 'power2.out' }, t);
     });
-
+${transicoesJs}
     tl.set('#trans-flash', { opacity: 0 }, ${totalStr});
     window.__timelines['main'] = tl;
   </script>
