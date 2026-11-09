@@ -3,7 +3,7 @@
 > **Subtítulo:** Regressão mínima  
 > **Resolução:** 1080x1920 (30 FPS)  
 > **Duração Total:** `2.50s`  
-> **Voz & Ritmo:** ElevenLabs (`padrão`) acelerada em `1x` (~190 PPM) + Masterização `-14 LUFS` com Sidechain Ducking.
+> **Voz & Ritmo:** ElevenLabs (`padrão`) com ritmo `1x` + Masterização `-14 LUFS` com Sidechain Ducking.
 
 ---
 
