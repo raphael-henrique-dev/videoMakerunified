@@ -419,6 +419,11 @@ function criarSoftwareRenderer3D(THREE, opcoes = {}) {
 export function criarPalco3D(THREE, opcoes = {}) {
   // `perfil` é um objeto de motor/formato.js passado pelo chamador (este módulo vai para o bundle do browser e não importa formato.js)
   const perfil = opcoes.perfil && typeof opcoes.perfil === "object" ? opcoes.perfil : null;
+  // "alta" (padrão): névoa leve, luz de recorte, bloom e vinheta. "legado": visual anterior do motor.
+  const qualidade =
+    opcoes.qualidade ||
+    (typeof window !== "undefined" && window.__MOTOR_QUALIDADE__) ||
+    "alta";
   const largura = opcoes.largura ?? perfil?.largura ?? 1080;
   const altura = opcoes.altura ?? perfil?.altura ?? 1920;
   const fov = opcoes.fov ?? perfil?.camera?.fov ?? 42;
@@ -501,9 +506,45 @@ export function criarPalco3D(THREE, opcoes = {}) {
     container.appendChild(canvas);
   }
 
+  // Pós-processamento barato e determinístico (só no caminho WebGL com container próprio):
+  // bloom = cópia reduzida e realçada do quadro, borrada por CSS e somada em "screen"; vinheta = degradê radial.
+  if (qualidade !== "legado" && container && !opcoes.canvas && estilo === "padrao" && renderizador.getContext) {
+    try {
+      if (getComputedStyle(container).position === "static") container.style.position = "relative";
+      const lw = Math.max(64, Math.round(largura / 4));
+      const lh = Math.max(64, Math.round(altura / 4));
+      const bloom = document.createElement("canvas");
+      bloom.width = lw;
+      bloom.height = lh;
+      bloom.setAttribute("data-layout-allow-overflow", "true");
+      bloom.style.cssText =
+        "position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;" +
+        `opacity:${opcoes.bloom ?? 0.5};filter:blur(${Math.round(largura / 70)}px) saturate(1.25)`;
+      const g = bloom.getContext("2d");
+      const vinheta = document.createElement("div");
+      vinheta.setAttribute("data-layout-allow-overflow", "true");
+      vinheta.style.cssText =
+        "position:absolute;inset:0;pointer-events:none;" +
+        `background:radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0) 52%, rgba(2,6,16,${opcoes.vinheta ?? 0.42}) 100%)`;
+      container.appendChild(bloom);
+      container.appendChild(vinheta);
+      const renderOriginal = renderizador.render.bind(renderizador);
+      renderizador.render = (c, cam) => {
+        renderOriginal(c, cam);
+        g.globalCompositeOperation = "copy";
+        g.filter = "brightness(0.62) contrast(2.4)";
+        g.drawImage(canvas, 0, 0, lw, lh);
+        g.filter = "none";
+      };
+    } catch {
+      /* sem pós-processamento: o quadro continua válido */
+    }
+  }
+
   const ceu = montarCeu(THREE, cena);
   const luzes = montarLuzes(THREE, cena);
   const palco = {
+    qualidade,
     THREE,
     cena,
     camera,

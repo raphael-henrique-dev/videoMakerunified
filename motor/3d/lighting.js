@@ -92,7 +92,24 @@ export function aplicarCeu(THREE, palco, presetNome = "mar") {
     ceu.matE.opacity = cfg.estrelas;
   }
   cena.background = new THREE.Color(cfg.meio);
-  cena.fog = new THREE.FogExp2(cfg.nevoa, cfg.dens);
+  if (palco.qualidade === "legado") {
+    cena.fog = new THREE.FogExp2(cfg.nevoa, cfg.dens);
+  } else {
+    // Névoa mais leve e mais clara que o fundo: a profundidade vem da cor, não do escurecimento do sujeito
+    const corNevoa = new THREE.Color(cfg.nevoa).lerp(new THREE.Color(cfg.horizonte), 0.5);
+    cena.fog = new THREE.FogExp2(corNevoa, cfg.dens * 0.6);
+    // Luz de recorte (rim) na cor do preset, para separar o sujeito do fundo
+    const rim = new THREE.Color(cfg.solCor).lerp(new THREE.Color(0xffffff), 0.35);
+    if (palco.contra) {
+      palco.contra.color.copy(rim);
+      palco.contra.intensity = 2.4;
+    }
+    if (palco.recorteLateral) {
+      palco.recorteLateral.color.copy(rim);
+      palco.recorteLateral.intensity = 1.6;
+    }
+    if (palco.preenchimento) palco.preenchimento.intensity = 0.62;
+  }
   if (luzAmbiente) {
     luzAmbiente.color.setHex(cfg.horizonte);
     luzAmbiente.groundColor.setHex(cfg.chao);
@@ -130,5 +147,10 @@ export function montarLuzes(THREE, cena) {
   contra.position.set(0, 10, -12);
   cena.add(contra);
 
-  return { luzAmbiente, sol, preenchimento, contra };
+  // Segunda luz de recorte, lateral e baixa, para delinear o contorno do lado oposto à luz principal
+  const recorteLateral = new THREE.DirectionalLight(0x7dd3fc, 0.8);
+  recorteLateral.position.set(9, 4, -7);
+  cena.add(recorteLateral);
+
+  return { luzAmbiente, sol, preenchimento, contra, recorteLateral };
 }

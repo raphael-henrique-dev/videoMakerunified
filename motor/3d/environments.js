@@ -3,6 +3,21 @@
 import { rand, mat, malha } from "./math.js";
 import { aplicarCeu } from "./lighting.js";
 
+/** Textura circular suave (gradiente radial) para partículas redondas em vez de quadradinhos. */
+export function texturaCirculo(THREE) {
+  const c = document.createElement("canvas");
+  c.width = c.height = 64;
+  const g = c.getContext("2d");
+  const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  grad.addColorStop(0, "rgba(255,255,255,1)");
+  grad.addColorStop(0.35, "rgba(255,255,255,0.55)");
+  grad.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 64, 64);
+  const tex = new THREE.CanvasTexture(c);
+  return tex;
+}
+
 export function criarFundoDoMar(THREE, palco, opts = {}) {
   const { cena } = palco;
   aplicarCeu(THREE, palco, opts.abismo ? "abismo" : "mar");
@@ -86,6 +101,9 @@ export function criarFundoDoMar(THREE, palco, opts = {}) {
 
   // Rochas abissais e corais bioluminescentes ao redor do palco
   const mRocha = mat(THREE, 0x0f253e, { roughness: 0.85 });
+  mRocha.flatShading = true;
+  const mRochaClara = mat(THREE, 0x1b3d63, { roughness: 0.8 });
+  mRochaClara.flatShading = true;
   const coresCoral = [0x06b6d4, 0x3b82f6, 0xf43f5e, 0xa855f7, 0x10b981];
   for (let i = 0; i < 18; i++) {
     const ang = (i / 18) * Math.PI * 2 + rand() * 0.25;
@@ -96,7 +114,7 @@ export function criarFundoDoMar(THREE, palco, opts = {}) {
     if (rz > 2.2 && Math.abs(rx) < 3.8) continue;
 
     const escalaR = 0.45 + rand() * 0.95;
-    const rocha = malha(THREE, new THREE.DodecahedronGeometry(escalaR, 1), mRocha);
+    const rocha = malha(THREE, new THREE.DodecahedronGeometry(escalaR, 0), i % 3 === 0 ? mRochaClara : mRocha);
     rocha.position.set(rx, escalaR * 0.35, rz);
     rocha.scale.set(1.2, 0.65 + rand() * 0.5, 1.0);
     rocha.rotation.set(rand(), rand(), rand());
@@ -115,41 +133,99 @@ export function criarFundoDoMar(THREE, palco, opts = {}) {
     }
   }
 
-  // Neve marinha (partículas em suspensão) e bolhas ascendentes
-  const nPart = 140;
-  const posPart = new Float32Array(nPart * 3);
-  const sementesPart = [];
-  for (let i = 0; i < nPart; i++) {
-    const sx = (rand() - 0.5) * 18;
-    const sy = 0.2 + rand() * 10;
-    const sz = (rand() - 0.5) * 16;
-    posPart[i * 3] = sx;
-    posPart[i * 3 + 1] = sy;
-    posPart[i * 3 + 2] = sz;
-    sementesPart.push({ sx, sy, sz, vel: 0.25 + rand() * 0.55, fase: rand() * 6.28 });
+  // Silhuetas distantes: formações grandes, na cor da névoa, que criam camadas de profundidade
+  const mDistante = mat(THREE, opts.abismo ? 0x0a1c33 : 0x123256, { roughness: 1 });
+  mDistante.flatShading = true;
+  for (let i = 0; i < 9; i++) {
+    const ang = (i / 9) * Math.PI * 1.1 + Math.PI * 0.95 + rand() * 0.2;
+    const raio = 20 + rand() * 9;
+    const esc = 2.4 + rand() * 3.2;
+    const rocha = malha(THREE, new THREE.DodecahedronGeometry(esc, 0), mDistante, false);
+    rocha.position.set(Math.cos(ang) * raio, esc * 0.25, Math.sin(ang) * raio - 6);
+    rocha.scale.set(1.4, 0.7 + rand() * 0.6, 1);
+    rocha.rotation.set(rand(), rand(), rand());
+    grp.add(rocha);
   }
-  const geoPart = new THREE.BufferGeometry();
-  geoPart.setAttribute("position", new THREE.BufferAttribute(posPart, 3));
-  const matPart = new THREE.PointsMaterial({
-    color: 0x7dd3fc,
-    size: 0.09,
-    transparent: true,
-    opacity: 0.55,
-    depthWrite: false,
+
+  // Neve marinha em 3 camadas de profundidade (partículas redondas, perto/meio/longe)
+  const sprite = texturaCirculo(THREE);
+  const camadas = [
+    { n: 40, tam: 0.34, op: 0.55, alcance: 9, vel: 0.35 },
+    { n: 90, tam: 0.2, op: 0.7, alcance: 14, vel: 0.28 },
+    { n: 120, tam: 0.12, op: 0.8, alcance: 22, vel: 0.2 },
+  ].map((cfgC) => {
+    const pos = new Float32Array(cfgC.n * 3);
+    const sementes = [];
+    for (let i = 0; i < cfgC.n; i++) {
+      const sx = (rand() - 0.5) * cfgC.alcance * 1.4;
+      const sy = 0.2 + rand() * 10;
+      const sz = (rand() - 0.5) * cfgC.alcance - cfgC.alcance * 0.15;
+      pos[i * 3] = sx;
+      pos[i * 3 + 1] = sy;
+      pos[i * 3 + 2] = sz;
+      sementes.push({ sx, sy, sz, vel: cfgC.vel * (0.5 + rand()), fase: rand() * 6.28 });
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    const pontos = new THREE.Points(
+      geo,
+      new THREE.PointsMaterial({
+        color: 0x9bdcff,
+        size: cfgC.tam,
+        map: sprite,
+        transparent: true,
+        opacity: cfgC.op,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true,
+      })
+    );
+    grp.add(pontos);
+    return { geo, sementes, n: cfgC.n };
   });
-  const neveMarinha = new THREE.Points(geoPart, matPart);
-  grp.add(neveMarinha);
+  const neveMarinha = grp.children[grp.children.length - 1];
+
+  // Feixes de luz vindos da superfície (planos aditivos com gradiente), com cintilação lenta
+  const feixes = [];
+  const matFeixe = () =>
+    new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide,
+      uniforms: { uCor: { value: new THREE.Color(opts.abismo ? 0x0ea5e9 : 0x7dd3fc) }, uAlpha: { value: 0.1 } },
+      vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+      fragmentShader: `uniform vec3 uCor; uniform float uAlpha; varying vec2 vUv;
+        void main(){ float lado = smoothstep(0.0,0.5,vUv.x) * smoothstep(1.0,0.5,vUv.x);
+          float alto = smoothstep(0.0,0.9,vUv.y);
+          gl_FragColor = vec4(uCor, lado * lado * alto * uAlpha); }`,
+    });
+  for (let i = 0; i < 6; i++) {
+    const m = matFeixe();
+    const feixe = new THREE.Mesh(new THREE.PlaneGeometry(2.2 + rand() * 2.2, 22), m);
+    feixe.position.set(-9 + i * 3.6 + rand() * 1.5, 9, -7 - rand() * 8);
+    feixe.rotation.z = -0.28 + rand() * 0.1;
+    feixe.renderOrder = -5;
+    grp.add(feixe);
+    feixes.push({ m, base: 0.16 + rand() * 0.1, fase: rand() * 6.28, x0: feixe.position.x, feixe });
+  }
 
   function animarAmbiente(t) {
     causticsUniforms.uTempo.value = t;
-    const attr = geoPart.attributes.position;
-    for (let i = 0; i < nPart; i++) {
-      const s = sementesPart[i];
-      const y = ((s.sy + t * s.vel) % 9.5) + 0.15;
-      const x = s.sx + Math.sin(t * 1.4 + s.fase) * 0.22;
-      attr.setXYZ(i, x, y, s.sz);
-    }
-    attr.needsUpdate = true;
+    camadas.forEach((c) => {
+      const attr = c.geo.attributes.position;
+      for (let i = 0; i < c.n; i++) {
+        const sm = c.sementes[i];
+        const y = ((sm.sy + t * sm.vel) % 9.5) + 0.15;
+        const x = sm.sx + Math.sin(t * 1.1 + sm.fase) * 0.25;
+        attr.setXYZ(i, x, y, sm.sz);
+      }
+      attr.needsUpdate = true;
+    });
+    feixes.forEach((f) => {
+      f.m.uniforms.uAlpha.value = f.base * (0.75 + 0.25 * Math.sin(t * 0.7 + f.fase));
+      f.feixe.position.x = f.x0 + Math.sin(t * 0.18 + f.fase) * 0.6;
+    });
   }
 
   return { grp, areia, planoCaustics, neveMarinha, animarAmbiente };

@@ -256,7 +256,24 @@ function aplicarCeu(THREE, palco, presetNome = "mar") {
     ceu.matE.opacity = cfg.estrelas;
   }
   cena.background = new THREE.Color(cfg.meio);
-  cena.fog = new THREE.FogExp2(cfg.nevoa, cfg.dens);
+  if (palco.qualidade === "legado") {
+    cena.fog = new THREE.FogExp2(cfg.nevoa, cfg.dens);
+  } else {
+    // Névoa mais leve e mais clara que o fundo: a profundidade vem da cor, não do escurecimento do sujeito
+    const corNevoa = new THREE.Color(cfg.nevoa).lerp(new THREE.Color(cfg.horizonte), 0.5);
+    cena.fog = new THREE.FogExp2(corNevoa, cfg.dens * 0.6);
+    // Luz de recorte (rim) na cor do preset, para separar o sujeito do fundo
+    const rim = new THREE.Color(cfg.solCor).lerp(new THREE.Color(0xffffff), 0.35);
+    if (palco.contra) {
+      palco.contra.color.copy(rim);
+      palco.contra.intensity = 2.4;
+    }
+    if (palco.recorteLateral) {
+      palco.recorteLateral.color.copy(rim);
+      palco.recorteLateral.intensity = 1.6;
+    }
+    if (palco.preenchimento) palco.preenchimento.intensity = 0.62;
+  }
   if (luzAmbiente) {
     luzAmbiente.color.setHex(cfg.horizonte);
     luzAmbiente.groundColor.setHex(cfg.chao);
@@ -294,7 +311,12 @@ function montarLuzes(THREE, cena) {
   contra.position.set(0, 10, -12);
   cena.add(contra);
 
-  return { luzAmbiente, sol, preenchimento, contra };
+  // Segunda luz de recorte, lateral e baixa, para delinear o contorno do lado oposto à luz principal
+  const recorteLateral = new THREE.DirectionalLight(0x7dd3fc, 0.8);
+  recorteLateral.position.set(9, 4, -7);
+  cena.add(recorteLateral);
+
+  return { luzAmbiente, sol, preenchimento, contra, recorteLateral };
 }
 
 
@@ -349,6 +371,67 @@ function tela(THREE, ponto3D, camera, largura = camera?.userData?.largura || 108
     y: (-v.y * 0.5 + 0.5) * altura,
     visivel: v.z >= -1 && v.z <= 1,
   };
+}
+
+/**
+ * Lento avanço de câmera (dolly-in) ao longo da cena: soma, na direção do alvo, um deslocamento de 0 a `dist`.
+ * Chame depois de `plano()`/posicionar a câmera no quadro (a posição é reescrita a cada quadro, sem acúmulo).
+ */
+function camDeriva(camera, t, dur, dist = 0.6) {
+  const u = suavissimo(faixa(t, 0, Math.max(0.001, dur)));
+  const dx = _alvoAtual[0] - camera.position.x;
+  const dy = _alvoAtual[1] - camera.position.y;
+  const dz = _alvoAtual[2] - camera.position.z;
+  const len = Math.hypot(dx, dy, dz) || 1;
+  camera.position.x += (dx / len) * dist * u;
+  camera.position.y += (dy / len) * dist * u;
+  camera.position.z += (dz / len) * dist * u;
+  camera.lookAt(_alvoAtual[0], _alvoAtual[1], _alvoAtual[2]);
+}
+
+/** Retângulo (0..1) que a caixa envolvente do objeto ocupa na tela e se está dentro de [margem, 1-margem]. */
+function dentroDaTela(THREE, objeto, camera, margem = 0.04) {
+  const caixa = new THREE.Box3().setFromObject(objeto);
+  camera.updateMatrixWorld();
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (let i = 0; i < 8; i++) {
+    const v = new THREE.Vector3(i & 1 ? caixa.max.x : caixa.min.x, i & 2 ? caixa.max.y : caixa.min.y, i & 4 ? caixa.max.z : caixa.min.z).project(camera);
+    x0 = Math.min(x0, v.x * 0.5 + 0.5);
+    x1 = Math.max(x1, v.x * 0.5 + 0.5);
+    y0 = Math.min(y0, -v.y * 0.5 + 0.5);
+    y1 = Math.max(y1, -v.y * 0.5 + 0.5);
+  }
+  return { dentro: x0 >= margem && x1 <= 1 - margem && y0 >= margem && y1 <= 1 - margem, x0, y0, x1, y1 };
+}
+
+/**
+ * Enquadra um ou mais objetos: afasta/aproxima a câmera, mantendo a direção atual, até que a esfera envolvente
+ * caiba no campo de visão (vertical e horizontal) com `margem`, e mira no centro (deslocado por `deslocamentoY`,
+ * em frações da altura visível, para deixar espaço para cards 2D).
+ * @returns {{distancia:number, centro:number[]}}
+ */
+function enquadrar(THREE, camera, alvos, { margem = 0.12, deslocamentoY = 0 } = {}) {
+  const lista = Array.isArray(alvos) ? alvos : [alvos];
+  const caixa = new THREE.Box3();
+  lista.forEach((o) => caixa.expandByObject(o));
+  const esfera = caixa.getBoundingSphere(new THREE.Sphere());
+  const fovV = (camera.fov * Math.PI) / 180;
+  const fovH = 2 * Math.atan(Math.tan(fovV / 2) * camera.aspect);
+  const distancia = (esfera.radius / Math.sin(Math.min(fovV, fovH) / 2)) * (1 + margem);
+  const centro = esfera.center.clone();
+  const dir = camera.position.clone().sub(_alvoVec(THREE)).normalize();
+  if (!Number.isFinite(dir.x) || dir.lengthSq() === 0) dir.set(0, 0.12, 1).normalize();
+  const alturaVisivel = 2 * distancia * Math.tan(fovV / 2);
+  const alvo = centro.clone();
+  alvo.y -= deslocamentoY * alturaVisivel;
+  camera.position.copy(centro.clone().add(dir.multiplyScalar(distancia)));
+  camera.position.y -= deslocamentoY * alturaVisivel;
+  mirar(camera, alvo.x, alvo.y, alvo.z);
+  return { distancia, centro: [centro.x, centro.y, centro.z] };
+}
+
+function _alvoVec(THREE) {
+  return new THREE.Vector3(_alvoAtual[0], _alvoAtual[1], _alvoAtual[2]);
 }
 
 
@@ -924,6 +1007,21 @@ function capaceteEspacial(b, ativo = true) {
 // motor/3d/environments.js — Ambientes procedurais 3D (Fundo do Mar Abissal com Caustics GLSL e Mundo Terrestre)
 
 
+/** Textura circular suave (gradiente radial) para partículas redondas em vez de quadradinhos. */
+function texturaCirculo(THREE) {
+  const c = document.createElement("canvas");
+  c.width = c.height = 64;
+  const g = c.getContext("2d");
+  const grad = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+  grad.addColorStop(0, "rgba(255,255,255,1)");
+  grad.addColorStop(0.35, "rgba(255,255,255,0.55)");
+  grad.addColorStop(1, "rgba(255,255,255,0)");
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 64, 64);
+  const tex = new THREE.CanvasTexture(c);
+  return tex;
+}
+
 function criarFundoDoMar(THREE, palco, opts = {}) {
   const { cena } = palco;
   aplicarCeu(THREE, palco, opts.abismo ? "abismo" : "mar");
@@ -1007,6 +1105,9 @@ function criarFundoDoMar(THREE, palco, opts = {}) {
 
   // Rochas abissais e corais bioluminescentes ao redor do palco
   const mRocha = mat(THREE, 0x0f253e, { roughness: 0.85 });
+  mRocha.flatShading = true;
+  const mRochaClara = mat(THREE, 0x1b3d63, { roughness: 0.8 });
+  mRochaClara.flatShading = true;
   const coresCoral = [0x06b6d4, 0x3b82f6, 0xf43f5e, 0xa855f7, 0x10b981];
   for (let i = 0; i < 18; i++) {
     const ang = (i / 18) * Math.PI * 2 + rand() * 0.25;
@@ -1017,7 +1118,7 @@ function criarFundoDoMar(THREE, palco, opts = {}) {
     if (rz > 2.2 && Math.abs(rx) < 3.8) continue;
 
     const escalaR = 0.45 + rand() * 0.95;
-    const rocha = malha(THREE, new THREE.DodecahedronGeometry(escalaR, 1), mRocha);
+    const rocha = malha(THREE, new THREE.DodecahedronGeometry(escalaR, 0), i % 3 === 0 ? mRochaClara : mRocha);
     rocha.position.set(rx, escalaR * 0.35, rz);
     rocha.scale.set(1.2, 0.65 + rand() * 0.5, 1.0);
     rocha.rotation.set(rand(), rand(), rand());
@@ -1036,41 +1137,99 @@ function criarFundoDoMar(THREE, palco, opts = {}) {
     }
   }
 
-  // Neve marinha (partículas em suspensão) e bolhas ascendentes
-  const nPart = 140;
-  const posPart = new Float32Array(nPart * 3);
-  const sementesPart = [];
-  for (let i = 0; i < nPart; i++) {
-    const sx = (rand() - 0.5) * 18;
-    const sy = 0.2 + rand() * 10;
-    const sz = (rand() - 0.5) * 16;
-    posPart[i * 3] = sx;
-    posPart[i * 3 + 1] = sy;
-    posPart[i * 3 + 2] = sz;
-    sementesPart.push({ sx, sy, sz, vel: 0.25 + rand() * 0.55, fase: rand() * 6.28 });
+  // Silhuetas distantes: formações grandes, na cor da névoa, que criam camadas de profundidade
+  const mDistante = mat(THREE, opts.abismo ? 0x0a1c33 : 0x123256, { roughness: 1 });
+  mDistante.flatShading = true;
+  for (let i = 0; i < 9; i++) {
+    const ang = (i / 9) * Math.PI * 1.1 + Math.PI * 0.95 + rand() * 0.2;
+    const raio = 20 + rand() * 9;
+    const esc = 2.4 + rand() * 3.2;
+    const rocha = malha(THREE, new THREE.DodecahedronGeometry(esc, 0), mDistante, false);
+    rocha.position.set(Math.cos(ang) * raio, esc * 0.25, Math.sin(ang) * raio - 6);
+    rocha.scale.set(1.4, 0.7 + rand() * 0.6, 1);
+    rocha.rotation.set(rand(), rand(), rand());
+    grp.add(rocha);
   }
-  const geoPart = new THREE.BufferGeometry();
-  geoPart.setAttribute("position", new THREE.BufferAttribute(posPart, 3));
-  const matPart = new THREE.PointsMaterial({
-    color: 0x7dd3fc,
-    size: 0.09,
-    transparent: true,
-    opacity: 0.55,
-    depthWrite: false,
+
+  // Neve marinha em 3 camadas de profundidade (partículas redondas, perto/meio/longe)
+  const sprite = texturaCirculo(THREE);
+  const camadas = [
+    { n: 40, tam: 0.34, op: 0.55, alcance: 9, vel: 0.35 },
+    { n: 90, tam: 0.2, op: 0.7, alcance: 14, vel: 0.28 },
+    { n: 120, tam: 0.12, op: 0.8, alcance: 22, vel: 0.2 },
+  ].map((cfgC) => {
+    const pos = new Float32Array(cfgC.n * 3);
+    const sementes = [];
+    for (let i = 0; i < cfgC.n; i++) {
+      const sx = (rand() - 0.5) * cfgC.alcance * 1.4;
+      const sy = 0.2 + rand() * 10;
+      const sz = (rand() - 0.5) * cfgC.alcance - cfgC.alcance * 0.15;
+      pos[i * 3] = sx;
+      pos[i * 3 + 1] = sy;
+      pos[i * 3 + 2] = sz;
+      sementes.push({ sx, sy, sz, vel: cfgC.vel * (0.5 + rand()), fase: rand() * 6.28 });
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    const pontos = new THREE.Points(
+      geo,
+      new THREE.PointsMaterial({
+        color: 0x9bdcff,
+        size: cfgC.tam,
+        map: sprite,
+        transparent: true,
+        opacity: cfgC.op,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending,
+        sizeAttenuation: true,
+      })
+    );
+    grp.add(pontos);
+    return { geo, sementes, n: cfgC.n };
   });
-  const neveMarinha = new THREE.Points(geoPart, matPart);
-  grp.add(neveMarinha);
+  const neveMarinha = grp.children[grp.children.length - 1];
+
+  // Feixes de luz vindos da superfície (planos aditivos com gradiente), com cintilação lenta
+  const feixes = [];
+  const matFeixe = () =>
+    new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      side: THREE.DoubleSide,
+      uniforms: { uCor: { value: new THREE.Color(opts.abismo ? 0x0ea5e9 : 0x7dd3fc) }, uAlpha: { value: 0.1 } },
+      vertexShader: `varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+      fragmentShader: `uniform vec3 uCor; uniform float uAlpha; varying vec2 vUv;
+        void main(){ float lado = smoothstep(0.0,0.5,vUv.x) * smoothstep(1.0,0.5,vUv.x);
+          float alto = smoothstep(0.0,0.9,vUv.y);
+          gl_FragColor = vec4(uCor, lado * lado * alto * uAlpha); }`,
+    });
+  for (let i = 0; i < 6; i++) {
+    const m = matFeixe();
+    const feixe = new THREE.Mesh(new THREE.PlaneGeometry(2.2 + rand() * 2.2, 22), m);
+    feixe.position.set(-9 + i * 3.6 + rand() * 1.5, 9, -7 - rand() * 8);
+    feixe.rotation.z = -0.28 + rand() * 0.1;
+    feixe.renderOrder = -5;
+    grp.add(feixe);
+    feixes.push({ m, base: 0.16 + rand() * 0.1, fase: rand() * 6.28, x0: feixe.position.x, feixe });
+  }
 
   function animarAmbiente(t) {
     causticsUniforms.uTempo.value = t;
-    const attr = geoPart.attributes.position;
-    for (let i = 0; i < nPart; i++) {
-      const s = sementesPart[i];
-      const y = ((s.sy + t * s.vel) % 9.5) + 0.15;
-      const x = s.sx + Math.sin(t * 1.4 + s.fase) * 0.22;
-      attr.setXYZ(i, x, y, s.sz);
-    }
-    attr.needsUpdate = true;
+    camadas.forEach((c) => {
+      const attr = c.geo.attributes.position;
+      for (let i = 0; i < c.n; i++) {
+        const sm = c.sementes[i];
+        const y = ((sm.sy + t * sm.vel) % 9.5) + 0.15;
+        const x = sm.sx + Math.sin(t * 1.1 + sm.fase) * 0.25;
+        attr.setXYZ(i, x, y, sm.sz);
+      }
+      attr.needsUpdate = true;
+    });
+    feixes.forEach((f) => {
+      f.m.uniforms.uAlpha.value = f.base * (0.75 + 0.25 * Math.sin(t * 0.7 + f.fase));
+      f.feixe.position.x = f.x0 + Math.sin(t * 0.18 + f.fase) * 0.6;
+    });
   }
 
   return { grp, areia, planoCaustics, neveMarinha, animarAmbiente };
@@ -2860,6 +3019,11 @@ function criarSoftwareRenderer3D(THREE, opcoes = {}) {
 function criarPalco3D(THREE, opcoes = {}) {
   // `perfil` é um objeto de motor/formato.js passado pelo chamador (este módulo vai para o bundle do browser e não importa formato.js)
   const perfil = opcoes.perfil && typeof opcoes.perfil === "object" ? opcoes.perfil : null;
+  // "alta" (padrão): névoa leve, luz de recorte, bloom e vinheta. "legado": visual anterior do motor.
+  const qualidade =
+    opcoes.qualidade ||
+    (typeof window !== "undefined" && window.__MOTOR_QUALIDADE__) ||
+    "alta";
   const largura = opcoes.largura ?? perfil?.largura ?? 1080;
   const altura = opcoes.altura ?? perfil?.altura ?? 1920;
   const fov = opcoes.fov ?? perfil?.camera?.fov ?? 42;
@@ -2942,9 +3106,45 @@ function criarPalco3D(THREE, opcoes = {}) {
     container.appendChild(canvas);
   }
 
+  // Pós-processamento barato e determinístico (só no caminho WebGL com container próprio):
+  // bloom = cópia reduzida e realçada do quadro, borrada por CSS e somada em "screen"; vinheta = degradê radial.
+  if (qualidade !== "legado" && container && !opcoes.canvas && estilo === "padrao" && renderizador.getContext) {
+    try {
+      if (getComputedStyle(container).position === "static") container.style.position = "relative";
+      const lw = Math.max(64, Math.round(largura / 4));
+      const lh = Math.max(64, Math.round(altura / 4));
+      const bloom = document.createElement("canvas");
+      bloom.width = lw;
+      bloom.height = lh;
+      bloom.setAttribute("data-layout-allow-overflow", "true");
+      bloom.style.cssText =
+        "position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:screen;" +
+        `opacity:${opcoes.bloom ?? 0.5};filter:blur(${Math.round(largura / 70)}px) saturate(1.25)`;
+      const g = bloom.getContext("2d");
+      const vinheta = document.createElement("div");
+      vinheta.setAttribute("data-layout-allow-overflow", "true");
+      vinheta.style.cssText =
+        "position:absolute;inset:0;pointer-events:none;" +
+        `background:radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0) 52%, rgba(2,6,16,${opcoes.vinheta ?? 0.42}) 100%)`;
+      container.appendChild(bloom);
+      container.appendChild(vinheta);
+      const renderOriginal = renderizador.render.bind(renderizador);
+      renderizador.render = (c, cam) => {
+        renderOriginal(c, cam);
+        g.globalCompositeOperation = "copy";
+        g.filter = "brightness(0.62) contrast(2.4)";
+        g.drawImage(canvas, 0, 0, lw, lh);
+        g.filter = "none";
+      };
+    } catch {
+      /* sem pós-processamento: o quadro continua válido */
+    }
+  }
+
   const ceu = montarCeu(THREE, cena);
   const luzes = montarLuzes(THREE, cena);
   const palco = {
+    qualidade,
     THREE,
     cena,
     camera,
@@ -3060,6 +3260,9 @@ function conectarHyperFrames(palco, tl, fnCena, opcoes = {}) {
   exportsObj.camRespira = camRespira;
   exportsObj.tremer = tremer;
   exportsObj.tela = tela;
+  exportsObj.camDeriva = camDeriva;
+  exportsObj.dentroDaTela = dentroDaTela;
+  exportsObj.enquadrar = enquadrar;
   exportsObj.criarBoneco = criarBoneco;
   exportsObj.resetPose = resetPose;
   exportsObj.humor = humor;
@@ -3076,6 +3279,7 @@ function conectarHyperFrames(palco, tl, fnCena, opcoes = {}) {
   exportsObj.segurar = segurar;
   exportsObj.capacete = capacete;
   exportsObj.capaceteEspacial = capaceteEspacial;
+  exportsObj.texturaCirculo = texturaCirculo;
   exportsObj.criarFundoDoMar = criarFundoDoMar;
   exportsObj.criarTerra = criarTerra;
   exportsObj.criarCaboSubmarino = criarCaboSubmarino;
