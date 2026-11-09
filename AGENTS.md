@@ -47,6 +47,7 @@ Quando o usuário solicitar no chat a criação ou planejamento de um vídeo:
 ### Cenário A: Execução Autônoma Direta
 *Exemplo do usuário:* `"faça um vídeo novo sobre [tema]"`
 0. **Definir formato:** identifique `curto/reels/shorts` ou `longo/horizontal/YouTube`; se não estiver claro, pergunte uma vez e, sem interação, use `curto`.
+   - **Horizontal: SEMPRE pergunte a duração-alvo antes de começar a produção** (padrão: **10 minutos**; ~1.860 palavras de narração). Só use o padrão sem perguntar se não houver como interagir (sessão não assistida) e diga isso no início do trabalho. Crie com `npm run video:novo -- <slug> "[Título]" --formato=horizontal --duracao=<min>` (grava `duracaoAlvoMin` no roteiro).
 1. **Consulta à Memória (Regra Zero):** Releia `perfil.md`, `aprendizados-<formato>.md`, `historico.md` e `README.md`.
 2. **Criação do Projeto Atômico:** Execute `npm run video:novo -- <slug> "[Título]" --formato=curto|horizontal`.
 3. **Roteiro e Storyboard:** Escreva o `roteiro.json` em `videos/<slug>/roteiro.json` seguindo a estrutura magnética:
@@ -74,7 +75,7 @@ Quando o usuário solicitar no chat a criação ou planejamento de um vídeo:
 
 ### Cenário B: Planejamento Prévio de Roteiro
 *Exemplo do usuário:* `"planeje um vídeo sobre [tema]"` ou `"proponha um roteiro para..."`
-1. O agente pesquisa e apresenta a proposta de roteiro (gancho, metáfora central, fases falha->corrige e CTA).
+1. O agente pesquisa e apresenta a proposta de roteiro (gancho, metáfora central, fases falha->corrige e CTA). No horizontal, pergunta antes a duração-alvo (padrão 10 min).
 2. Aguarda o feedback e aprovação do usuário antes de criar os arquivos de cena e sintetizar o áudio.
 
 ---
@@ -164,7 +165,7 @@ Para garantir legibilidade perfeita nas plataformas de vídeo curto (TikTok, You
 
 ## 4b. Formato Horizontal 16:9 (`formato: "horizontal"`, 1920x1080)
 
-O horizontal **convive** com o curto: cada vídeo declara `formato` no `roteiro.json` (`curto` por padrão; `longo` é alias de `horizontal`). A fonte única dos perfis é `motor/formato.js`. Não há duração padrão: o vídeo dura o que a narração durar (soma das frases + pausas), organizado em `capitulos[]`.
+O horizontal **convive** com o curto: cada vídeo declara `formato` no `roteiro.json` (`curto` por padrão; `longo` é alias de `horizontal`). A fonte única dos perfis é `motor/formato.js`. Duração-alvo padrão: **10 minutos** (`duracaoAlvoMin` no roteiro, 1–60), e o agente **sempre pergunta** antes de produzir. A duração real é a da narração (soma das frases + pausas), organizada em `capitulos[]`; o pipeline de áudio avisa se ela fugir mais de 25% do alvo.
 
 | Item | Regra no horizontal |
 | :--- | :--- |

@@ -58,3 +58,17 @@ test("horizontal: viewport 1920x1080, legenda embaixo, identidade.css, VTT prese
   assert.match(vtt, /Olá, mundo/);
   assert.match(vtt, /\d{2}:\d{2}:\d{2}\.\d{3} --> /);
 });
+
+test("video:novo horizontal grava duracaoAlvoMin (padrão 10; --duracao sobrescreve)", () => {
+  const slug = `zz-dur-${process.pid}`;
+  const dir = path.join(ROOT, "videos", slug);
+  try {
+    execFileSync("node", ["motor/cli/orchestrator.js", "novo", slug, "T", "--formato=horizontal"], { cwd: ROOT, stdio: "ignore" });
+    assert.equal(JSON.parse(fs.readFileSync(path.join(dir, "roteiro.json"), "utf8")).duracaoAlvoMin, 10);
+    fs.rmSync(dir, { recursive: true, force: true });
+    execFileSync("node", ["motor/cli/orchestrator.js", "novo", slug, "T", "--formato=horizontal", "--duracao=15"], { cwd: ROOT, stdio: "ignore" });
+    assert.equal(JSON.parse(fs.readFileSync(path.join(dir, "roteiro.json"), "utf8")).duracaoAlvoMin, 15);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});

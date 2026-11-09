@@ -30,6 +30,7 @@ const PERFIS = {
   }),
   horizontal: Object.freeze({
     id: "horizontal",
+    duracaoPadraoMin: 10,
     largura: 1920,
     altura: 1080,
     fps: 30,
@@ -103,4 +104,9 @@ export function achatarRoteiro(roteiro = {}) {
 
 export function listarPerfis() {
   return Object.values(PERFIS);
+}
+
+/** Palavras de narração necessárias para uma duração-alvo (≈ 3,1 palavras/s, ritmo ~190 PPM do canal). */
+export function palavrasParaMinutos(minutos) {
+  return Math.round(minutos * 60 * 3.1);
 }

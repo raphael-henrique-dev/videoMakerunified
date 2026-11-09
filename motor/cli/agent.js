@@ -7,6 +7,8 @@ import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { obterPerfil, palavrasParaMinutos } from "../formato.js";
+import { listarTiposCena } from "../2d/cenas/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../..");
@@ -104,6 +106,15 @@ async function main() {
   const formatoInput = await rl.question("\n📐 Formato (curto ou horizontal; padrão: curto):\n> ");
   const formato = /^(horizontal|longo)$/i.test(formatoInput.trim()) ? "horizontal" : "curto";
 
+  // Horizontal: sempre pergunta a duração antes de produzir (padrão: 10 minutos)
+  let duracaoMin = null;
+  if (formato === "horizontal") {
+    const durPadrao = obterPerfil({ formato }).duracaoPadraoMin;
+    const durInput = await rl.question(`\n⏱️ Duração alvo do vídeo em minutos [padrão: ${durPadrao}]:\n> `);
+    const n = Number(durInput.trim().replace(",", "."));
+    duracaoMin = Number.isFinite(n) && n >= 1 && n <= 60 ? n : durPadrao;
+  }
+
   console.log(`\n🤖 Escolha o motor de inteligência artificial:`);
   console.log(`  1. Google Gemini (usa GEMINI_API_KEY)`);
   console.log(`  2. OpenAI (usa OPENAI_API_KEY)`);
@@ -118,7 +129,7 @@ async function main() {
   const aprendizados = fs.existsSync(memoriaPath) ? fs.readFileSync(memoriaPath, "utf8") : "";
 
   console.log(`\n🚀 [1/5] Scaffolding do vídeo atômico: videos/${slug}...`);
-  execFileSync("node", [path.join(ROOT, "motor", "cli", "orchestrator.js"), "novo", slug, temaPrompt, `--formato=${formato}`], { stdio: "inherit" });
+  execFileSync("node", [path.join(ROOT, "motor", "cli", "orchestrator.js"), "novo", slug, temaPrompt, `--formato=${formato}`, ...(duracaoMin ? [`--duracao=${duracaoMin}`] : [])], { stdio: "inherit" });
 
   const destVideoDir = path.join(ROOT, "videos", slug);
   const roteiroDestPath = path.join(destVideoDir, "roteiro.json");
@@ -138,7 +149,7 @@ async function main() {
       const promptSistema = `Você é o Diretor Criativo e Roteirista do Canal Curiorisando no Motor 2.0.
 Regras fundamentais do canal:
 - Tom: Curiosidade técnica irresistível, ritmo rápido (~190 PPM), "falha -> corrige/engenharia" no estilo videogame.
-- Formato: 4 frames principais (01: gancho dramático, 02: montagem/mecanismo parte 1, 03: mecanismo parte 2 e blindagem, 04: vista explodida com 7 chamadas técnicas).
+${formato === "horizontal" ? `- Formato horizontal 16:9 de ~${duracaoMin} minutos (~${palavrasParaMinutos(duracaoMin)} palavras de narração), dividido em capítulos[] com frames; use frames com "cena": { tipo, dados } (tipos: ${listarTiposCena().join(", ")}) e "arquivo" só para composições manuais.` : "- Formato: 4 frames principais (01: gancho dramático, 02: montagem/mecanismo parte 1, 03: mecanismo parte 2 e blindagem, 04: vista explodida com 7 chamadas técnicas)."}
 - PROIBIDO repetir conectivos como "Então você...": Varie com "A solução?", "Para blindar...", "No centro de tudo...", "E para aguentar...".
 - Emoção e locução: Configure na voz estabilidade: 0.32 e estilo: 0.48 para máxima expressividade e entusiasmo.
 - Marque palavras-chave que ganham destaque visual com asteriscos, ex: *palavra*.

@@ -24,6 +24,14 @@ function listarNomesSfx(dir) {
   );
 }
 
+function formatoEhCurto(roteiro) {
+  try {
+    return obterPerfil(roteiro).id === "curto";
+  } catch {
+    return true;
+  }
+}
+
 export function validarRoteiro(roteiro, opcoes = {}) {
   const erros = [];
   const avisos = [];
@@ -38,6 +46,12 @@ export function validarRoteiro(roteiro, opcoes = {}) {
   if (!roteiro.titulo || typeof roteiro.titulo !== "string") erros.push("Campo obrigatório ausente: 'titulo' (string).");
 
   erros.push(...validarFormato(roteiro).erros);
+
+  if (roteiro.duracaoAlvoMin !== undefined) {
+    const d = roteiro.duracaoAlvoMin;
+    if (typeof d !== "number" || !Number.isFinite(d) || d < 1 || d > 60) erros.push("'duracaoAlvoMin' deve ser um número de minutos entre 1 e 60.");
+    else if (formatoEhCurto(roteiro)) addUnico(avisos, "'duracaoAlvoMin' só se aplica ao formato horizontal e será ignorado.");
+  }
 
   if (roteiro.voz !== undefined && (typeof roteiro.voz !== "object" || roteiro.voz === null)) {
     erros.push("Campo 'voz' deve ser um objeto.");

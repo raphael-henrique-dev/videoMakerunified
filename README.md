@@ -53,7 +53,7 @@ motor-v2/
 # Cria um novo projeto atômico e isolado em videos/<slug>
 npm run video:novo -- por-que-o-ceu-e-azul "Por Que o Céu é Azul?"
 # Vídeo longo horizontal 1920x1080:
-npm run video:novo -- engenharia-do-clima "Engenharia do Clima" --formato=horizontal
+npm run video:novo -- engenharia-do-clima "Engenharia do Clima" --formato=horizontal --duracao=10   # duração-alvo em minutos (padrão 10)
 
 # Gera a narração com ElevenLabs, timestamps de legenda e masterização de áudio
 npm run video:audio -- por-que-o-ceu-e-azul

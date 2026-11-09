@@ -4,17 +4,24 @@
   "titulo": "Exemplo Horizontal",
   "subtitulo": "Motor 2.0 em 16:9",
   "fps": 30,
-  "resolucao": { "largura": 1920, "altura": 1080 },
+  "resolucao": {
+    "largura": 1920,
+    "altura": 1080
+  },
+  "duracaoAlvoMin": 10,
   "voz": {
     "motor": "elevenlabs",
     "id": "TX3LPaxmHKxFdv7VOQHJ",
     "modelo": "eleven_multilingual_v2",
     "estabilidade": 0.38,
-    "similaridade": 0.80,
-    "estilo": 0.40,
+    "similaridade": 0.8,
+    "estilo": 0.4,
     "velocidade": 1.08
   },
-  "trilha": { "arquivo": "trilha", "ganho": 0.24 },
+  "trilha": {
+    "arquivo": "trilha",
+    "ganho": 0.24
+  },
   "capitulos": [
     {
       "id": "abertura",
@@ -25,7 +32,12 @@
           "numero": "01",
           "titulo": "Abertura",
           "arquivo": "compositions/frames/01-abertura.html",
-          "frases": [{ "texto": "O mundo é mais curioso do que parece.", "plano": "gancho" }]
+          "frases": [
+            {
+              "texto": "O mundo é mais curioso do que parece.",
+              "plano": "gancho"
+            }
+          ]
         }
       ]
     }

@@ -40,12 +40,13 @@ const comando = process.argv[2];
 const argVideo = process.argv[3];
 const argsExtras = process.argv.slice(4);
 const argExtra = argsExtras.filter((arg) => !arg.startsWith("--")).join(" ");
+const duracaoArg = Number(argsExtras.find((arg) => arg.startsWith("--duracao="))?.split("=")[1]);
 const formatoArg = argsExtras.find((arg) => arg.startsWith("--formato="))?.split("=")[1];
 
 switch (comando) {
   case "novo": {
     if (!argVideo) {
-      console.error("Uso: npm run video:novo -- <slug-do-video> [\"Título do Vídeo\"] [--formato=curto|horizontal]");
+      console.error("Uso: npm run video:novo -- <slug-do-video> [\"Título do Vídeo\"] [--formato=curto|horizontal] [--duracao=minutos (horizontal; padrão 10)]");
       process.exit(1);
     }
     const slug = sanitizarSlug(argVideo);
@@ -73,6 +74,9 @@ switch (comando) {
         ? { largura: 1920, altura: 1080 }
         : { largura: 1080, altura: 1920 };
       rot.fps = rot.fps || 30;
+      if (formato === "horizontal") {
+        rot.duracaoAlvoMin = Number.isFinite(duracaoArg) && duracaoArg > 0 ? duracaoArg : obterPerfil({ formato }).duracaoPadraoMin;
+      }
       if (argExtra) rot.titulo = argExtra;
       fs.writeFileSync(roteiroPath, JSON.stringify(rot, null, 2), "utf8");
     }

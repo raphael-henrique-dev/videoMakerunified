@@ -541,6 +541,12 @@ async function executarPipeline() {
 
   const sfxBusWav = path.join(tmpDir, "sfx_bus.wav");
   const horizontal = obterPerfil(roteiroOriginal).id === "horizontal";
+  if (horizontal && roteiroOriginal.duracaoAlvoMin) {
+    const alvoS = roteiroOriginal.duracaoAlvoMin * 60;
+    if (Math.abs(duracaoTotal - alvoS) / alvoS > 0.25) {
+      console.warn(`[audio] Aviso: duração ${(duracaoTotal / 60).toFixed(1)} min difere mais de 25% do alvo (${roteiroOriginal.duracaoAlvoMin} min). Ajuste o roteiro (~${Math.round(alvoS * 3.1)} palavras para o alvo).`);
+    }
+  }
   const intervalos = intervalosCapitulos(framesMeta, duracaoTotal);
 
   if (horizontal && intervalos.length > 1) {
