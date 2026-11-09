@@ -1347,3 +1347,374 @@ export function criarPilhaExplodidaWifi(THREE) {
 
   return { grupo, pecas, atualizar };
 }
+
+// --------------------------------------------------------------------------------------------
+// Props do vídeo "Por Que os Países Estão Pedindo Para Você Estocar Comida?"
+// Três cenários procedurais: mercado vazio, silo estratégico e despensa doméstica.
+// --------------------------------------------------------------------------------------------
+
+function criarGondolaMercado(THREE, r, xUnidade, zUnidade, ocupacao) {
+  const grupo = new THREE.Group();
+  const mBase = mat(THREE, 0x1f2937, { roughness: 0.72, metalness: 0.25 });
+  const mChapa = mat(THREE, 0x94a3b8, { roughness: 0.42, metalness: 0.55 });
+  const mPrateleira = mat(THREE, 0xcbd5e1, { roughness: 0.55, metalness: 0.35 });
+
+  const base = malha(THREE, new THREE.BoxGeometry(1.5, 0.34, 4.3), mBase);
+  base.position.set(xUnidade, 0.17, zUnidade);
+  grupo.add(base);
+
+  const spine = malha(THREE, new THREE.BoxGeometry(0.14, 2.55, 4.3), mChapa);
+  spine.position.set(xUnidade, 1.45, zUnidade);
+  grupo.add(spine);
+
+  const coresLata = [0xef4444, 0xf59e0b, 0x22c55e, 0x38bdf8, 0xe2e8f0, 0xa855f7, 0xfacc15];
+  const niveis = [0.58, 1.22, 1.86, 2.5];
+  const lados = [-1, 1];
+
+  for (const lado of lados) {
+    for (let n = 0; n < niveis.length; n++) {
+      const prateleira = malha(THREE, new THREE.BoxGeometry(1.12, 0.08, 4.3), mPrateleira);
+      prateleira.position.set(xUnidade + lado * 0.62, niveis[n], zUnidade);
+      grupo.add(prateleira);
+
+      for (let slot = 0; slot < 12; slot++) {
+        if (r() > ocupacao) continue;
+        const cor = coresLata[Math.floor(r() * coresLata.length)];
+        const lata = malha(
+          THREE,
+          new THREE.CylinderGeometry(0.105, 0.105, 0.3, 14),
+          mat(THREE, cor, { roughness: 0.38, metalness: 0.42 })
+        );
+        lata.position.set(
+          xUnidade + lado * (0.42 + r() * 0.32),
+          niveis[n] + 0.19,
+          zUnidade - 1.9 + slot * 0.345
+        );
+        lata.rotation.y = r() * 0.4;
+        grupo.add(lata);
+      }
+    }
+  }
+
+  grupo.userData.altura = 2.8;
+  return grupo;
+}
+
+/**
+ * Mercado noturno em ruína: corredor central, gôndolas quase vazias, luminárias que piscam.
+ * Retorna { raiz, atualizar(t, intensidadeLuz) }.
+ */
+export function criarMercadoVazio(THREE, opcoes = {}) {
+  const raiz = new THREE.Group();
+  const r = criarRand(opcoes.semente ?? 90210);
+  const ocupacao = opcoes.ocupacao ?? 0.16;
+
+  const mChao = mat(THREE, 0x151b26, { roughness: 0.88, metalness: 0.08 });
+  const mParede = mat(THREE, 0x0d1420, { roughness: 0.9 });
+  const mTeto = mat(THREE, 0x0a1018, { roughness: 0.95 });
+
+  const chao = malha(THREE, new THREE.BoxGeometry(22, 0.3, 20), mChao);
+  chao.position.set(0, -0.15, -2);
+  raiz.add(chao);
+
+  const paredeFundo = malha(THREE, new THREE.BoxGeometry(22, 5.2, 0.3), mParede);
+  paredeFundo.position.set(0, 2.6, -8.2);
+  raiz.add(paredeFundo);
+
+  const teto = malha(THREE, new THREE.BoxGeometry(22, 0.25, 20), mTeto);
+  teto.position.set(0, 4.55, -2);
+  raiz.add(teto);
+
+  const luminarias = [];
+  const luzes = [];
+  for (let i = 0; i < 4; i++) {
+    const z = -6.2 + i * 3.1;
+    const material = new THREE.MeshBasicMaterial({ color: 0xdbeafe });
+    const painel = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 0.44), material);
+    painel.rotation.x = Math.PI / 2;
+    painel.position.set(0, 4.42, z);
+    raiz.add(painel);
+    luminarias.push({ material, base: new THREE.Color(0xdbeafe) });
+
+    const luz = new THREE.PointLight(0xdbeafe, 1.15, 10, 1.6);
+    luz.position.set(0, 4.1, z);
+    raiz.add(luz);
+    luzes.push(luz);
+  }
+
+  for (const x of [-2.75, 2.75]) {
+    for (const z of [-4.6, 0.4]) {
+      raiz.add(criarGondolaMercado(THREE, r, x, z, ocupacao));
+    }
+  }
+
+  // Carrinho vazio tombado ao fundo: aro + cesto de grades
+  const carrinho = new THREE.Group();
+  const mGrade = mat(THREE, 0x94a3b8, { roughness: 0.35, metalness: 0.8 });
+  for (let i = 0; i < 4; i++) {
+    const aro = malha(THREE, new THREE.TorusGeometry(0.18, 0.025, 8, 16), mGrade);
+    aro.rotation.y = Math.PI / 2;
+    aro.position.set(-0.3 + i * 0.2, 0.18, 0);
+    carrinho.add(aro);
+  }
+  const cesto = malha(THREE, new THREE.BoxGeometry(0.72, 0.42, 0.5), mGrade);
+  cesto.position.set(0.1, 0.42, 0);
+  carrinho.add(cesto);
+  carrinho.position.set(-1.2, 0, -6.2);
+  carrinho.rotation.z = 0.32;
+  raiz.add(carrinho);
+
+  // Poça escura no piso
+  const poco = new THREE.Mesh(
+    new THREE.CircleGeometry(1.1, 28),
+    new THREE.MeshBasicMaterial({ color: 0x02060d, transparent: true, opacity: 0.55, depthWrite: false })
+  );
+  poco.rotation.x = -Math.PI / 2;
+  poco.position.set(0.9, 0.012, 2.4);
+  raiz.add(poco);
+
+  const corTemp = new THREE.Color();
+  function atualizar(t, intensidade = 1) {
+    for (let i = 0; i < luminarias.length; i++) {
+      const falha = i === 1 && Math.sin(t * 3.7 + 1.4) > 0.9;
+      const cintila = 0.82 + 0.18 * Math.sin(t * 11 + i * 2.3);
+      const n = (falha ? 0.08 : cintila) * intensidade;
+      corTemp.copy(luminarias[i].base).multiplyScalar(Math.max(0.04, n));
+      luminarias[i].material.color.copy(corTemp);
+      luzes[i].intensity = 1.3 * n;
+    }
+  }
+
+  atualizar(0, 1);
+  return { raiz, atualizar, luminarias, luzes };
+}
+
+/**
+ * Complexo de silos de grãos ao entardecer, com esteira, caminhão e sinalizadores.
+ * Retorna { raiz, atualizar(t) }.
+ */
+export function criarSiloEstrategico(THREE, opcoes = {}) {
+  const raiz = new THREE.Group();
+  const mConcreto = mat(THREE, 0x8a94a6, { roughness: 0.72, metalness: 0.22 });
+  const mAco = mat(THREE, 0x64748b, { roughness: 0.42, metalness: 0.68 });
+  const mEscuro = mat(THREE, 0x1e293b, { roughness: 0.62, metalness: 0.35 });
+  const mAmarelo = mat(THREE, 0xfacc15, { roughness: 0.45, metalness: 0.3, emissive: 0xca8a04, emissiveIntensity: 0.18 });
+
+  const plataforma = malha(THREE, new THREE.BoxGeometry(10, 0.45, 5.2), mConcreto);
+  plataforma.position.set(0, 0.225, 0);
+  raiz.add(plataforma);
+
+  const sinalizadores = [];
+  const silos = [-2.7, 0, 2.7];
+  silos.forEach((x, idx) => {
+    const corpo = malha(THREE, new THREE.CylinderGeometry(1.18, 1.18, 3.8, 28), mAco);
+    corpo.position.set(x, 2.4, 0);
+    raiz.add(corpo);
+
+    const anelBase = malha(THREE, new THREE.CylinderGeometry(1.22, 1.22, 0.12, 28), mAmarelo);
+    anelBase.position.set(x, 0.62, 0);
+    raiz.add(anelBase);
+    const anelTopo = malha(THREE, new THREE.CylinderGeometry(1.22, 1.22, 0.1, 28), mAmarelo);
+    anelTopo.position.set(x, 3.9, 0);
+    raiz.add(anelTopo);
+
+    const telhado = malha(THREE, new THREE.ConeGeometry(1.34, 0.92, 28), mEscuro);
+    telhado.position.set(x, 4.75, 0);
+    raiz.add(telhado);
+
+    const sinal = new THREE.Mesh(new THREE.SphereGeometry(0.12, 12, 10), new THREE.MeshBasicMaterial({ color: 0xef4444 }));
+    sinal.position.set(x, 5.28, 0);
+    raiz.add(sinal);
+    sinalizadores.push({ malha: sinal, fase: idx * 1.7 });
+
+    // Escada vertical no silo central
+    if (idx === 1) {
+      const trilhoE = malha(THREE, new THREE.BoxGeometry(0.06, 3.4, 0.06), mAco);
+      trilhoE.position.set(x - 0.26, 2.35, 1.16);
+      const trilhoD = trilhoE.clone();
+      trilhoD.position.x = x + 0.26;
+      raiz.add(trilhoE, trilhoD);
+      for (let d = 0; d < 10; d++) {
+        const degrau = malha(THREE, new THREE.BoxGeometry(0.56, 0.05, 0.05), mAco);
+        degrau.position.set(x, 0.72 + d * 0.32, 1.16);
+        raiz.add(degrau);
+      }
+    }
+  });
+
+  // Esteira inclinada levando grãos ao topo do silo central
+  const esteira = new THREE.Group();
+  const mBelt = mat(THREE, 0x0f172a, { roughness: 0.8 });
+  const tubo = malha(THREE, new THREE.BoxGeometry(5.6, 0.26, 0.8), mAco);
+  const correia = malha(THREE, new THREE.BoxGeometry(5.6, 0.06, 0.62), mBelt);
+  correia.position.y = 0.14;
+  esteira.add(tubo, correia);
+  esteira.position.set(-3.9, 2.35, 1.3);
+  esteira.rotation.z = 0.72;
+  raiz.add(esteira);
+
+  const graos = [];
+  for (let i = 0; i < 5; i++) {
+    const g = new THREE.Mesh(new THREE.SphereGeometry(0.07, 10, 8), new THREE.MeshBasicMaterial({ color: 0xfbbf24 }));
+    raiz.add(g);
+    graos.push(g);
+  }
+
+  // Caminhão simples na lateral
+  const caminhao = new THREE.Group();
+  const mCabine = mat(THREE, 0xb91c1c, { roughness: 0.5, metalness: 0.3 });
+  const mCarga = mat(THREE, 0xd6d3d1, { roughness: 0.7, metalness: 0.15 });
+  const bau = malha(THREE, new THREE.BoxGeometry(2.5, 1.5, 1.15), mCarga);
+  bau.position.set(0.3, 1.15, 0);
+  const cabine = malha(THREE, new THREE.BoxGeometry(1.1, 1.25, 1.1), mCabine);
+  cabine.position.set(-1.55, 1.02, 0);
+  const vidro = malha(THREE, new THREE.BoxGeometry(0.06, 0.45, 0.9), mat(THREE, 0x38bdf8, { roughness: 0.18, metalness: 0.4 }), false);
+  vidro.position.set(-2.1, 1.28, 0);
+  caminhao.add(bau, cabine, vidro);
+  for (const x of [-1.55, 0.9]) {
+    for (const z of [-0.55, 0.55]) {
+      const roda = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 0.18, 16), mEscuro);
+      roda.rotation.x = Math.PI / 2;
+      roda.position.set(x, 0.3, z);
+      caminhao.add(roda);
+    }
+  }
+  caminhao.position.set(5.2, 0, 2.1);
+  caminhao.rotation.y = -0.38;
+  raiz.add(caminhao);
+
+  function atualizar(t) {
+    sinalizadores.forEach((s) => {
+      const pisca = Math.sin(t * 4.2 + s.fase) > 0.55;
+      s.malha.material.color.setHex(pisca ? 0xff3b3b : 0x5b1414);
+    });
+    graos.forEach((g, i) => {
+      const u = ((t * 0.22 + i / graos.length) % 1 + 1) % 1;
+      g.position.set(-6.1 + u * 4.4, 0.9 + u * 3.05, 1.47 + Math.sin(u * 3.2) * 0.04);
+    });
+  }
+
+  atualizar(0);
+  return { raiz, atualizar, sinalizadores };
+}
+
+function criarPoteDespensa(THREE, r, x, y, z, tipo) {
+  const grupo = new THREE.Group();
+  if (tipo === 0) {
+    const cor = [0xd97706, 0xb45309, 0x84cc16, 0xef4444][Math.floor(r() * 4)];
+    const corpo = malha(THREE, new THREE.CylinderGeometry(0.155, 0.155, 0.34, 16), mat(THREE, cor, { roughness: 0.32, metalness: 0.18 }));
+    const tampa = malha(THREE, new THREE.CylinderGeometry(0.165, 0.165, 0.06, 16), mat(THREE, 0x94a3b8, { roughness: 0.28, metalness: 0.62 }));
+    tampa.position.y = 0.2;
+    grupo.add(corpo, tampa);
+  } else if (tipo === 1) {
+    const cor = [0x38bdf8, 0x0ea5e9, 0x7dd3fc][Math.floor(r() * 3)];
+    const corpo = malha(THREE, new THREE.CylinderGeometry(0.085, 0.085, 0.38, 14), mat(THREE, cor, { roughness: 0.2, metalness: 0.15, transparent: true, opacity: 0.82 }));
+    const gargalo = malha(THREE, new THREE.CylinderGeometry(0.045, 0.06, 0.16, 12), mat(THREE, cor, { roughness: 0.2, transparent: true, opacity: 0.82 }));
+    gargalo.position.y = 0.27;
+    grupo.add(corpo, gargalo);
+  } else if (tipo === 2) {
+    const cor = [0xb45309, 0x92400e, 0xa16207][Math.floor(r() * 3)];
+    const corpo = malha(THREE, new THREE.BoxGeometry(0.3, 0.42, 0.22), mat(THREE, cor, { roughness: 0.8 }));
+    grupo.add(corpo);
+  } else {
+    const corpo = malha(THREE, new THREE.SphereGeometry(0.28, 16, 12), mat(THREE, 0x8b6f47, { roughness: 0.92 }));
+    corpo.scale.set(1, 0.78, 0.8);
+    corpo.position.y = 0.16;
+    grupo.add(corpo);
+  }
+  grupo.position.set(x, y, z);
+  grupo.rotation.y = r() * 0.8 - 0.4;
+  return grupo;
+}
+
+/**
+ * Despensa doméstica: parede de madeira, três prateleiras e mantimentos organizados.
+ * Retorna { raiz, atualizar(t) }.
+ */
+export function criarDespensa(THREE, opcoes = {}) {
+  const raiz = new THREE.Group();
+  const r = criarRand(opcoes.semente ?? 4471);
+  const cheia = opcoes.cheia !== false;
+
+  const mChao = mat(THREE, 0x1b1510, { roughness: 0.92 });
+  const mMadeira = mat(THREE, 0x6b4a2f, { roughness: 0.82 });
+  const mMadeiraEscura = mat(THREE, 0x4a3320, { roughness: 0.86 });
+
+  const chao = malha(THREE, new THREE.BoxGeometry(7.4, 0.22, 4.2), mChao);
+  chao.position.set(0, -0.11, 0);
+  raiz.add(chao);
+
+  for (let i = 0; i < 9; i++) {
+    const tabua = malha(THREE, new THREE.BoxGeometry(0.78, 4.5, 0.16), i % 2 ? mMadeira : mMadeiraEscura);
+    tabua.position.set(-3.12 + i * 0.78, 2.25, -1.9);
+    raiz.add(tabua);
+  }
+
+  const paredeEsq = malha(THREE, new THREE.BoxGeometry(0.16, 4.5, 4.2), mMadeiraEscura);
+  paredeEsq.position.set(-3.5, 2.25, 0);
+  const paredeDir = paredeEsq.clone();
+  paredeDir.position.x = 3.5;
+  raiz.add(paredeEsq, paredeDir);
+
+  const niveis = [0.95, 2.0, 3.05];
+  for (const y of niveis) {
+    const prateleira = malha(THREE, new THREE.BoxGeometry(5.9, 0.14, 1.15), mMadeira);
+    prateleira.position.set(0, y, -1.12);
+    raiz.add(prateleira);
+    for (const x of [-2.7, 0, 2.7]) {
+      const mão = malha(THREE, new THREE.BoxGeometry(0.1, 0.42, 0.9), mMadeiraEscura);
+      mão.position.set(x, y - 0.28, -1.12);
+      raiz.add(mão);
+    }
+  }
+
+  const tipos = [0, 0, 1, 2, 2, 3];
+  for (let n = 0; n < niveis.length; n++) {
+    for (let slot = 0; slot < 14; slot++) {
+      if (r() > (cheia ? 0.88 : 0.32)) continue;
+      const tipo = tipos[Math.floor(r() * tipos.length)];
+      const x = -2.55 + slot * 0.39;
+      const z = -1.12 + (r() - 0.5) * 0.34;
+      const item = criarPoteDespensa(THREE, r, x, niveis[n] + 0.23, z, tipo);
+      item.scale.setScalar(0.98 + r() * 0.16);
+      raiz.add(item);
+    }
+  }
+
+  // Caixotes e galões no chão
+  for (const [x, z, rot] of [[-2.25, 0.6, 0.12], [2.3, 0.45, -0.18]]) {
+    const caixote = new THREE.Group();
+    const corpo = malha(THREE, new THREE.BoxGeometry(0.95, 0.62, 0.7), mMadeira);
+    corpo.position.y = 0.31;
+    for (let i = 0; i < 3; i++) {
+      const tabua = malha(THREE, new THREE.BoxGeometry(0.98, 0.05, 0.72), mMadeiraEscura);
+      tabua.position.set(0, 0.12 + i * 0.22, 0);
+      caixote.add(tabua);
+    }
+    caixote.add(corpo);
+    caixote.position.set(x, 0, z);
+    caixote.rotation.y = rot;
+    raiz.add(caixote);
+  }
+
+  for (let i = 0; i < 6; i++) {
+    const galao = malha(THREE, new THREE.CylinderGeometry(0.13, 0.13, 0.46, 14), mat(THREE, 0x7dd3fc, { roughness: 0.24, metalness: 0.1, transparent: true, opacity: 0.72 }));
+    galao.position.set(1.15 + (i % 3) * 0.28, 0.23, 1.1 + Math.floor(i / 3) * 0.28);
+    raiz.add(galao);
+  }
+
+  const luzQuente = new THREE.PointLight(0xffd9a0, opcoes.quente === false ? 0.35 : 2.0, 8, 1.4);
+  luzQuente.position.set(0, 3.7, -0.4);
+  raiz.add(luzQuente);
+  const bulbo = new THREE.Mesh(new THREE.SphereGeometry(0.08, 12, 10), new THREE.MeshBasicMaterial({ color: 0xffe0b0 }));
+  bulbo.position.copy(luzQuente.position);
+  raiz.add(bulbo);
+
+  function atualizar(t) {
+    const n = 1 + Math.sin(t * 2.2) * 0.025 + (Math.sin(t * 17.3) > 0.985 ? -0.12 : 0);
+    luzQuente.intensity = (opcoes.quente === false ? 0.35 : 2.0) * Math.max(0.86, n);
+  }
+
+  atualizar(0);
+  return { raiz, atualizar, luzQuente };
+}

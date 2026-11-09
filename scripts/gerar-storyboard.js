@@ -397,13 +397,18 @@ if (fs.existsSync(indexPath)) {
     });
   });
   const estiloGrafico = roteiro.estiloGrafico || "padrao";
-  // modo "2d": vídeo 100% vetorial (SVG + GSAP) via Motor2D, sem carregar Three.js/Motor3D.
+  // modos: "2d" (só Motor2D), "misto" (Three.js + Motor2D + cenas) e o padrão 3D.
   const modo2d = roteiro.modo === "2d";
-  const scriptsMotor =
-    (modo2d || haCenas
-      ? `<script src="assets/vendor/motor2d.global.js"></script>`
-      : `<script src="assets/vendor/three.min.js"></script>\n  <script src="assets/vendor/motor3d.global.js"></script>`) +
-    (haCenas ? `\n  <script src="assets/vendor/cenas2d.global.js"></script>` : "");
+  const modoMisto = roteiro.modo === "misto";
+  const scriptsMotor = modo2d
+    ? `<script src="assets/vendor/motor2d.global.js"></script>${haCenas ? `\n  <script src="assets/vendor/cenas2d.global.js"></script>` : ""}`
+    : modoMisto
+      ? `<script src="assets/vendor/three.min.js"></script>
+  <script src="assets/vendor/motor3d.global.js"></script>
+  <script src="assets/vendor/motor2d.global.js"></script>${haCenas ? `\n  <script src="assets/vendor/cenas2d.global.js"></script>` : ""}`
+      : haCenas
+        ? `<script src="assets/vendor/motor2d.global.js"></script>\n  <script src="assets/vendor/cenas2d.global.js"></script>`
+        : `<script src="assets/vendor/three.min.js"></script>\n  <script src="assets/vendor/motor3d.global.js"></script>`;
 
   const novoIndexHtml = `<!DOCTYPE html>
 <html lang="pt-BR">
@@ -500,7 +505,7 @@ ${horizontal ? '  <link rel="stylesheet" href="assets/css/identidade.css">\n  <s
     <!-- Track 1: Visual 3D + 2D Frames -->
 ${clipsHtml}
 
-    <!-- Track 2: ${temMasterMix ? "MASTER MIX (-14 LUFS: voz + SFX + BGM com ducking)" : "Per-Frame ElevenLabs Voice Audio"} -->
+    <!-- Track 2: ${temMasterMix ? "MASTER MIX (-14 LUFS: voz + SFX + BGM com ducking)" : "Per-Frame Voice Audio"} -->
 ${audiosHtml}
 ${temMasterMix ? "" : `
     <!-- Track 3: Sidechain-Ducked BGM + SFX Bed (-14 LUFS Balance) -->
@@ -538,11 +543,15 @@ ${transicoesJs}
 }
 
 // 4. Gera STORYBOARD.md
+const rotuloVoz =
+  roteiro.voz?.motor === "local"
+    ? `Voz local (\`${roteiro.voz?.id || "espeak-ng"}\`)`
+    : `ElevenLabs (\`${roteiro.voz?.id || "padrão"}\`)`;
 let md = `# STORYBOARD — ${roteiro.titulo} (\`${roteiro.id}\`)
 
 > **Subtítulo:** ${roteiro.subtitulo || "-"}${"  \n"}${horizontal ? `> **Formato:** \`${perfil.id}\`${"  \n"}` : ""}> **Resolução:** ${largura}x${altura} (${roteiro.fps || perfil.fps} FPS)${"  "}
 > **Duração Total:** \`${timeline.total.toFixed(2)}s\`  
-> **Voz & Ritmo:** ElevenLabs (\`${roteiro.voz?.id || "padrão"}\`) acelerada em \`${timeline.fatorAceleracaoVoz}x\` (~190 PPM) + Masterização \`-14 LUFS\` com Sidechain Ducking.
+> **Voz & Ritmo:** ${rotuloVoz} com ritmo \`${timeline.fatorAceleracaoVoz}x\` + Masterização \`-14 LUFS\` com Sidechain Ducking.
 
 ---
 

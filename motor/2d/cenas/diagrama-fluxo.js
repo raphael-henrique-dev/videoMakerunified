@@ -18,12 +18,15 @@ export function desenhar(dados, perfil, t, duracao, ctx = {}) {
   const gap = 90;
   const larg = (p.largura - gap * (n - 1)) / n;
   const alt = 190;
+  // Rótulos longos em muitas etapas precisam de fonte menor para não vazar a caixa.
+  const maiorRotulo = Math.max(...dados.etapas.map((e) => String(e).length));
+  const fonteCaixa = Math.min(40, Math.max(24, Math.floor(((larg - 36) / Math.max(1, maiorRotulo)) * 1.7)));
   const xs = dados.etapas.map((_, i) => p.x + i * (larg + gap));
   const caixas = dados.etapas
     .map((e, i) => {
       const u = entrada(t, i, n, duracao);
       return div(
-        { position: "absolute", left: `${f2(xs[i])}px`, top: `${f2(yCentro - alt / 2 + (1 - u) * 30)}px`, width: `${f2(larg)}px`, height: `${alt}px`, display: "flex", "align-items": "center", "justify-content": "center", "text-align": "center", padding: "0 18px", "box-sizing": "border-box", background: COR.painel, border: `3px solid ${i === n - 1 ? COR.ambar : COR.ciano}`, "border-radius": "20px", ...fonteUi, "font-size": "40px", "font-weight": 700, "line-height": 1.15, opacity: f2(u) },
+        { position: "absolute", left: `${f2(xs[i])}px`, top: `${f2(yCentro - alt / 2 + (1 - u) * 30)}px`, width: `${f2(larg)}px`, height: `${alt}px`, display: "flex", "align-items": "center", "justify-content": "center", "text-align": "center", padding: "0 18px", "box-sizing": "border-box", background: COR.painel, border: `3px solid ${i === n - 1 ? COR.ambar : COR.ciano}`, "border-radius": "20px", ...fonteUi, "font-size": `${fonteCaixa}px`, "font-weight": 700, "line-height": 1.15, opacity: f2(u) },
         esc(e)
       );
     })

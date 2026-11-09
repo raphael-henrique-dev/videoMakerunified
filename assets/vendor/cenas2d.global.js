@@ -135,12 +135,15 @@ function desenhar(dados, perfil, t, duracao, ctx = {}) {
   const gap = 90;
   const larg = (p.largura - gap * (n - 1)) / n;
   const alt = 190;
+  // Rótulos longos em muitas etapas precisam de fonte menor para não vazar a caixa.
+  const maiorRotulo = Math.max(...dados.etapas.map((e) => String(e).length));
+  const fonteCaixa = Math.min(40, Math.max(24, Math.floor(((larg - 36) / Math.max(1, maiorRotulo)) * 1.7)));
   const xs = dados.etapas.map((_, i) => p.x + i * (larg + gap));
   const caixas = dados.etapas
     .map((e, i) => {
       const u = entrada(t, i, n, duracao);
       return div(
-        { position: "absolute", left: `${f2(xs[i])}px`, top: `${f2(yCentro - alt / 2 + (1 - u) * 30)}px`, width: `${f2(larg)}px`, height: `${alt}px`, display: "flex", "align-items": "center", "justify-content": "center", "text-align": "center", padding: "0 18px", "box-sizing": "border-box", background: COR.painel, border: `3px solid ${i === n - 1 ? COR.ambar : COR.ciano}`, "border-radius": "20px", ...fonteUi, "font-size": "40px", "font-weight": 700, "line-height": 1.15, opacity: f2(u) },
+        { position: "absolute", left: `${f2(xs[i])}px`, top: `${f2(yCentro - alt / 2 + (1 - u) * 30)}px`, width: `${f2(larg)}px`, height: `${alt}px`, display: "flex", "align-items": "center", "justify-content": "center", "text-align": "center", padding: "0 18px", "box-sizing": "border-box", background: COR.painel, border: `3px solid ${i === n - 1 ? COR.ambar : COR.ciano}`, "border-radius": "20px", ...fonteUi, "font-size": `${fonteCaixa}px`, "font-weight": 700, "line-height": 1.15, opacity: f2(u) },
         esc(e)
       );
     })
@@ -293,6 +296,7 @@ const linhaDoTempo = __req("linha-do-tempo");
 const numeroGrande = __req("numero-grande");
 const diagramaFluxo = __req("diagrama-fluxo");
 const mascoteExplica = __req("mascote-explica");
+const { fundoAnimado } = __req("util");
 const CENAS = {
   "capitulo-titulo": capituloTitulo,
   "lista-animada": listaAnimada,
@@ -321,7 +325,11 @@ function validarCena(cena) {
 function desenharCena(tipo, dados, perfil, t, duracao, ctx = {}) {
   const mod = CENAS[tipo];
   if (!mod) throw new Error(`Tipo de cena desconhecido: '${tipo}'.`);
-  return mod.desenhar(dados || {}, perfil, t, duracao, ctx);
+  const html = mod.desenhar(dados || {}, perfil, t, duracao, ctx);
+  // Injeta o fundo animado como primeira camada da moldura (atrás do conteúdo).
+  const corte = html.indexOf(">");
+  if (corte === -1) return html;
+  return html.slice(0, corte + 1) + fundoAnimado(perfil, t) + html.slice(corte + 1);
 }
 
 function cenaUsaMascote(tipo) {
@@ -518,7 +526,7 @@ function desenhar(dados, perfil, t, duracao) {
 // motor/2d/cenas/util.js — Utilitários das cenas 2D data-driven (funções puras, sem DOM e sem aleatoriedade)
 
 const COR = {
-  fundo: "#050a14",
+  fundo: "#081120",
   painel: "#0c192c",
   painelClaro: "#13294a",
   borda: "#1e3a5f",
@@ -616,6 +624,43 @@ function moldura(perfil, interno) {
   return div({ position: "absolute", left: 0, top: 0, width: `${perfil.largura}px`, height: `${perfil.altura}px`, overflow: "hidden", background: COR.fundo }, interno);
 }
 
+/**
+ * Fundo cinematográfico determinístico: auroras que derivam e uma varredura suave.
+ * Entra como primeira camada da moldura, atrás do conteúdo — garante movimento
+ * contínuo mesmo quando a cena principal já terminou sua entrada.
+ */
+function fundoAnimado(perfil, t) {
+  const L = perfil.largura;
+  const A = perfil.altura;
+  const x1 = 28 + 16 * Math.sin(t * 0.21);
+  const y1 = 24 + 9 * Math.cos(t * 0.17);
+  const x2 = 74 + 12 * Math.cos(t * 0.19 + 1.1);
+  const y2 = 72 + 10 * Math.sin(t * 0.15 + 0.6);
+  const x3 = 50 + 22 * Math.sin(t * 0.12 + 2.2);
+  const y3 = 52 + 16 * Math.cos(t * 0.13 + 0.4);
+  const varre = ((t * 34) % (L + 900)) - 450;
+  return (
+    div({
+      position: "absolute", inset: 0, "pointer-events": "none",
+      background:
+        `radial-gradient(ellipse 62% 54% at ${f2(x1)}% ${f2(y1)}%, rgba(34,120,180,0.30) 0%, rgba(34,120,180,0.10) 38%, transparent 68%),` +
+        `radial-gradient(ellipse 52% 46% at ${f2(x2)}% ${f2(y2)}%, rgba(190,130,40,0.18) 0%, rgba(190,130,40,0.05) 42%, transparent 70%),` +
+        `radial-gradient(ellipse 70% 58% at ${f2(x3)}% ${f2(y3)}%, rgba(28,82,140,0.22) 0%, transparent 64%),` +
+        `linear-gradient(180deg, #0a1626 0%, ${COR.fundo} 52%, #091526 100%)`,
+    }) +
+    div({
+      position: "absolute", top: 0, bottom: 0, left: `${f2(varre)}px`, width: "430px", "pointer-events": "none",
+      background: "linear-gradient(90deg, transparent 0%, rgba(56,189,248,0.09) 45%, rgba(56,189,248,0.14) 50%, rgba(56,189,248,0.09) 55%, transparent 100%)",
+    }, "", 'data-layout-allow-overflow="true"') +
+    div({
+      position: "absolute", inset: 0, "pointer-events": "none", opacity: 0.16,
+      "background-image": "linear-gradient(rgba(56,189,248,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,0.16) 1px, transparent 1px)",
+      "background-size": "72px 72px",
+      "background-position": `${f2((t * 7) % 72)}px ${f2((t * 4) % 72)}px`,
+    })
+  );
+}
+
 /** Validação simples de campos: devolve lista de mensagens. */
 function exigirTexto(erros, valor, nome, max = 90) {
   if (typeof valor !== "string" || !valor.trim()) erros.push(`'${nome}' é obrigatório (texto).`);
@@ -675,6 +720,7 @@ const PARES_CONTRASTE = [
     __exp.entrada = entrada;
     __exp.cabecalho = cabecalho;
     __exp.moldura = moldura;
+    __exp.fundoAnimado = fundoAnimado;
     __exp.exigirTexto = exigirTexto;
     __exp.textoOpcional = textoOpcional;
     __exp.exigirLista = exigirLista;
