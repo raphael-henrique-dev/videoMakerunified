@@ -23,6 +23,7 @@ const PERFIS = {
     },
     miolo: { x: 60, y: 200, largura: 860, altura: 1320 },
     legenda: { posicao: "top: 1350px", larguraMaxima: 940, tamanho: 38 },
+    render: { quality: "looks", crf: 16, fps: 30 },
     camera: { fov: 42, z: 6.2 },
     transicoes: ["flash"],
     tiposCena: ["arquivo"],
@@ -41,6 +42,7 @@ const PERFIS = {
     miolo: { x: 192, y: 108, largura: 1536, altura: 864 },
     legenda: { posicao: "bottom: 54px", larguraMaxima: 1500, tamanho: 48 },
     // z provisório: ainda não validado por snapshot em 16:9 (FOV vertical fixo de 42°).
+    render: { quality: "looks", crf: 16, fps: 30, resolucao4k: "landscape-4k" },
     camera: { fov: 42, z: 8.2 },
     transicoes: ["flash"],
     tiposCena: ["arquivo"],

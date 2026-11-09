@@ -4,10 +4,15 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import crypto from "node:crypto";
-import { execFileSync } from "node:child_process";
+import { execFileSync, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { validarRoteiro } from "../schema/roteiro.schema.js";
-import { achatarRoteiro } from "../formato.js";
+import { achatarRoteiro, obterPerfil } from "../formato.js";
+import { fetchComRetry, mapComConcorrencia } from "./elevenlabs.js";
+import { ALVO_LUFS, parsearMedicaoLoudnorm, filtroMedicaoLoudnorm, filtroAplicacaoLoudnorm } from "./loudnorm.js";
+import { CROSSFADE_TRILHA_S, intervalosCapitulos, planejarSegmentosTrilha, agruparSonsPorIntervalo } from "./capitulos.js";
+
+const CONCORRENCIA_TTS = 3;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../..");
@@ -144,7 +149,7 @@ async function obterAudioFrase(vozCfg, textoMarcado, anteriorLimpo, proximoLimpo
   // 2. Se tiver ELEVENLABS_API_KEY, requisita à API
   if (vozCfg.motor === "elevenlabs" && process.env.ELEVENLABS_API_KEY) {
     const url = `https://api.elevenlabs.io/v1/text-to-speech/${cfg.id}/with-timestamps?output_format=mp3_44100_128`;
-    const res = await fetch(url, {
+    const res = await fetchComRetry(fetch, url, {
       method: "POST",
       headers: {
         "xi-api-key": process.env.ELEVENLABS_API_KEY,
@@ -163,10 +168,7 @@ async function obterAudioFrase(vozCfg, textoMarcado, anteriorLimpo, proximoLimpo
           use_speaker_boost: true,
         },
       }),
-    });
-    if (!res.ok) {
-      throw new Error(`Erro ElevenLabs (${res.status}): ${await res.text()}`);
-    }
+    }, { tentativas: 5, log: console.warn });
     const dados = await res.json();
     fs.writeFileSync(mp3Local, Buffer.from(dados.audio_base64, "base64"));
     fs.writeFileSync(jsonLocal, JSON.stringify(dados.alignment), "utf8");
@@ -253,6 +255,69 @@ function resolverArquivoSom(nome, instante = 0) {
   return path.join(dirSfx, candidatos[idx]);
 }
 
+/** Gera um barramento estéreo de SFX com `duracao` segundos a partir de sons com tempo `em` relativo ao barramento. */
+function gerarBusSfx(sons, duracao, saida, nomeScript) {
+  if (sons.length === 0) {
+    rodarFfmpeg(["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-t", duracao.toFixed(3), saida]);
+    return;
+  }
+  const inSfx = [];
+  sons.forEach((s) => inSfx.push("-i", s.arq));
+  const filtrosSfx = sons.map((s, i) => {
+    const corte = s.dur ? `atrim=0:${s.dur},afade=t=out:st=${Math.max(0, s.dur - 0.25)}:d=0.25,` : "";
+    return `[${i}]aformat=sample_rates=48000:channel_layouts=stereo,${corte}volume=${s.ganho},adelay=delays=${Math.round(s.em * 1000)}:all=1[e${i}]`;
+  });
+  filtrosSfx.push(
+    `${sons.map((_, i) => `[e${i}]`).join("")}amix=inputs=${sons.length}:normalize=0,apad=whole_dur=${duracao.toFixed(3)}[out]`
+  );
+  const scriptSfx = path.join(tmpDir, nomeScript);
+  fs.writeFileSync(scriptSfx, filtrosSfx.join(";"), "utf8");
+  rodarFfmpeg([...inSfx, "-filter_complex_script", scriptSfx, "-map", "[out]", "-ar", "48000", "-ac", "2", "-t", duracao.toFixed(3), saida]);
+}
+
+/** Mede a loudness integrada (LUFS) de um arquivo com o filtro loudnorm em modo de medição. */
+function medirLoudness(arquivo, filtro = filtroMedicaoLoudnorm()) {
+  const r = spawnSync(FFMPEG, ["-hide_banner", "-nostats", "-i", arquivo, "-af", filtro, "-f", "null", "-"], { encoding: "utf8" });
+  if (r.status !== 0) throw new Error(`Falha ao medir loudness: ${r.stderr}`);
+  return parsearMedicaoLoudnorm(r.stderr);
+}
+
+/**
+ * Monta uma trilha contínua com a música de cada capítulo (loop dentro do capítulo, crossfade de 1,5 s entre trilhas).
+ * Retorna o caminho do WAV estéreo com a duração total, ou null se nenhum trecho tem música.
+ */
+function gerarTrilhaPorCapitulo(segmentos, duracaoTotal, saida) {
+  if (!segmentos.some((sg) => sg.arquivo)) return null;
+  const resolvidos = segmentos.map((sg) => {
+    const arq = sg.arquivo ? resolverArquivoSom(sg.arquivo, 0) : null;
+    if (sg.arquivo && !arq) console.warn(`[audio] Aviso: trilha '${sg.arquivo}' não encontrada; capítulo ficará sem música.`);
+    return { ...sg, arq };
+  });
+  if (!resolvidos.some((sg) => sg.arq)) return null;
+  const dur = resolvidos.map((sg) => sg.fim - sg.inicio);
+  const xf = resolvidos.slice(0, -1).map((_, i) => Math.min(CROSSFADE_TRILHA_S, dur[i] / 2, dur[i + 1] / 2));
+  const wavs = resolvidos.map((sg, i) => {
+    const wav = path.join(tmpDir, `trilha_seg_${i}.wav`);
+    const comprimento = (dur[i] + (xf[i] ?? 0)).toFixed(3);
+    if (sg.arq) {
+      rodarFfmpeg(["-stream_loop", "-1", "-i", sg.arq, "-t", comprimento, "-af", "aformat=sample_rates=48000:channel_layouts=stereo", wav]);
+    } else {
+      rodarFfmpeg(["-f", "lavfi", "-i", "anullsrc=r=48000:cl=stereo", "-t", comprimento, wav]);
+    }
+    return wav;
+  });
+  if (wavs.length === 1) return wavs[0];
+  let filtro = "";
+  let anterior = "[0:a]";
+  for (let i = 1; i < wavs.length; i++) {
+    const rotulo = i === wavs.length - 1 ? "[out]" : `[x${i}]`;
+    filtro += `${anterior}[${i}:a]acrossfade=d=${xf[i - 1].toFixed(3)}:c1=tri:c2=tri${rotulo};`;
+    anterior = rotulo;
+  }
+  rodarFfmpeg([...wavs.flatMap((w) => ["-i", w]), "-filter_complex", filtro.slice(0, -1), "-map", "[out]", "-ar", "48000", "-ac", "2", "-t", duracaoTotal.toFixed(3), saida]);
+  return saida;
+}
+
 async function executarPipeline() {
   const roteiroPath = path.join(VIDEO_DIR, "roteiro.json");
   if (!fs.existsSync(roteiroPath)) {
@@ -282,13 +347,17 @@ async function executarPipeline() {
   });
 
   const vozCfg = roteiro.voz || { motor: "elevenlabs" };
-  const brutos = [];
-  for (let i = 0; i < listaPlana.length; i++) {
+  let concluidas = 0;
+  const brutos = await mapComConcorrencia(listaPlana, CONCORRENCIA_TTS, async (item, i) => {
     const ant = i > 0 ? limparMarcacao(listaPlana[i - 1].texto) : undefined;
     const prox = i < listaPlana.length - 1 ? limparMarcacao(listaPlana[i + 1].texto) : undefined;
-    const r = await obterAudioFrase(vozCfg, listaPlana[i].texto, ant, prox, i);
-    brutos.push(r);
-  }
+    const r = await obterAudioFrase(vozCfg, item.texto, ant, prox, i);
+    concluidas++;
+    if (listaPlana.length > 10 && (concluidas % 10 === 0 || concluidas === listaPlana.length)) {
+      console.log(`[audio] Narração: ${concluidas}/${listaPlana.length} frases (${r.modo})`);
+    }
+    return r;
+  });
 
   const fatias = brutos.map((b, i) => alinharFrase(b, i));
   const PAUSA_ENTRE_FRASES = 0.12;
@@ -471,49 +540,38 @@ async function executarPipeline() {
     .filter((s) => s.arq && s.em < duracaoTotal);
 
   const sfxBusWav = path.join(tmpDir, "sfx_bus.wav");
-  if (sfxValidos.length > 0) {
-    const inSfx = [];
-    sfxValidos.forEach((s) => inSfx.push("-i", s.arq));
-    const filtrosSfx = sfxValidos.map((s, i) => {
-      const corte = s.dur
-        ? `atrim=0:${s.dur},afade=t=out:st=${Math.max(0, s.dur - 0.25)}:d=0.25,`
-        : "";
-      return `[${i}]aformat=sample_rates=48000:channel_layouts=stereo,${corte}volume=${s.ganho},adelay=delays=${Math.round(s.em * 1000)}:all=1[e${i}]`;
+  const horizontal = obterPerfil(roteiroOriginal).id === "horizontal";
+  const intervalos = intervalosCapitulos(framesMeta, duracaoTotal);
+
+  if (horizontal && intervalos.length > 1) {
+    // Horizontal: um barramento por capítulo, depois concatenado (evita um filter_complex com centenas de entradas)
+    const grupos = agruparSonsPorIntervalo(sfxValidos, intervalos);
+    const wavsCap = intervalos.map((iv, i) => {
+      const wav = path.join(tmpDir, `sfx_cap_${i}.wav`);
+      gerarBusSfx(grupos[i].map((s) => ({ ...s, em: s.emRelativo })), iv.fim - iv.inicio, wav, `sfx_filter_${i}.txt`);
+      return wav;
     });
-    filtrosSfx.push(
-      `${sfxValidos.map((_, i) => `[e${i}]`).join("")}amix=inputs=${sfxValidos.length}:normalize=0,apad=whole_dur=${duracaoTotal.toFixed(3)}[out]`
-    );
-    const scriptSfx = path.join(tmpDir, "sfx_filter.txt");
-    fs.writeFileSync(scriptSfx, filtrosSfx.join(";"), "utf8");
     rodarFfmpeg([
-      ...inSfx,
-      "-filter_complex_script",
-      scriptSfx,
-      "-map",
-      "[out]",
-      "-ar",
-      "48000",
-      "-ac",
-      "2",
-      "-t",
-      duracaoTotal.toFixed(3),
+      ...wavsCap.flatMap((w) => ["-i", w]),
+      "-filter_complex",
+      `${wavsCap.map((_, i) => `[${i}:a]`).join("")}concat=n=${wavsCap.length}:v=0:a=1[out]`,
+      "-map", "[out]", "-ar", "48000", "-ac", "2", "-t", duracaoTotal.toFixed(3),
       sfxBusWav,
     ]);
   } else {
-    rodarFfmpeg([
-      "-f",
-      "lavfi",
-      "-i",
-      "anullsrc=r=48000:cl=stereo",
-      "-t",
-      duracaoTotal.toFixed(3),
-      sfxBusWav,
-    ]);
+    gerarBusSfx(sfxValidos, duracaoTotal, sfxBusWav, "sfx_filter.txt");
   }
 
-  const arqTrilha = roteiro.trilha ? resolverArquivoSom(roteiro.trilha.arquivo, 0) : null;
+  const temMusicaPorCapitulo = horizontal && (roteiro.capitulos || []).some((c) => c.musica);
+  let arqTrilha = roteiro.trilha ? resolverArquivoSom(roteiro.trilha.arquivo, 0) : null;
+  if (temMusicaPorCapitulo) {
+    const segmentos = planejarSegmentosTrilha(intervalos, roteiro.capitulos, roteiro.trilha?.arquivo || null);
+    arqTrilha = gerarTrilhaPorCapitulo(segmentos, duracaoTotal, path.join(tmpDir, "trilha_capitulos.wav"));
+  }
   const masterDuckedBgmWav = path.join(BGM_OUT_DIR, "master_ducked_bgm.wav");
   const masterMix14LufsWav = path.join(BGM_OUT_DIR, "master_mix_14lufs.wav");
+  const masterPreLoudnormWav = path.join(tmpDir, "master_pre_loudnorm.wav");
+  let lufsFinal = null;
 
   const ganhoEf = roteiro.efeitos?.ganho ?? 1.15;
   const ganhoTrilha = roteiro.trilha?.ganho ?? 0.24;
@@ -555,7 +613,7 @@ async function executarPipeline() {
       `[2]aformat=sample_rates=48000:channel_layouts=stereo,atrim=0:${duracaoTotal.toFixed(3)},volume=${ganhoTrilha},` +
       `afade=t=in:d=0.6,afade=t=out:st=${Math.max(0, duracaoTotal - 1.5).toFixed(3)}:d=1.5[tr];` +
       `[tr][scTr]sidechaincompress=threshold=0.035:ratio=3.2:attack=25:release=400[trd];` +
-      `[voz][ef][trd]amix=inputs=3:normalize=0,loudnorm=I=-14:TP=-1.5:LRA=11,aresample=48000,alimiter=limit=0.82:level=false:attack=1[out]`;
+      `[voz][ef][trd]amix=inputs=3:normalize=0,aresample=48000[out]`;
 
     rodarFfmpeg([
       "-i",
@@ -574,8 +632,24 @@ async function executarPipeline() {
       "48000",
       "-ac",
       "2",
+      masterPreLoudnormWav,
+    ]);
+
+    // loudnorm em 2 passadas: mede o mix e aplica com os valores medidos (linear=true)
+    const medido = medirLoudness(masterPreLoudnormWav);
+    rodarFfmpeg([
+      "-i",
+      masterPreLoudnormWav,
+      "-af",
+      `${filtroAplicacaoLoudnorm(medido)},aresample=48000,alimiter=limit=0.82:level=false:attack=1`,
+      "-ar",
+      "48000",
+      "-ac",
+      "2",
       masterMix14LufsWav,
     ]);
+    lufsFinal = medirLoudness(masterMix14LufsWav).input_i;
+    console.log(`[audio] Loudness: mix ${medido.input_i} LUFS -> master ${lufsFinal} LUFS (alvo ${ALVO_LUFS})`);
   }
 
   const timelineData = {
@@ -598,6 +672,7 @@ async function executarPipeline() {
         videoDir: path.relative(ROOT, VIDEO_DIR),
         geradoEm: new Date().toISOString(),
         duracaoTotal,
+        lufsFinal,
         totalFrases: todasFrasesTimeline.length,
         totalPalavras,
         ppmFinal: Math.round(ppmNatural * fatorAceleracao),

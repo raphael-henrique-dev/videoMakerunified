@@ -7,7 +7,8 @@ import { execFileSync, spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { carregarEnv } from "../publish/env-helper.js";
 import { HYPERFRAMES_VERSION } from "../config.js";
-import { normalizarFormato } from "../formato.js";
+import { normalizarFormato, obterPerfil } from "../formato.js";
+import { montarArgsRender } from "./render-args.js";
 
 carregarEnv();
 
@@ -210,10 +211,16 @@ switch (comando) {
     const vDir = resolverVideoDir(argVideo);
     const outMp4 = path.join(vDir, "renders", "output.mp4");
     fs.mkdirSync(path.join(vDir, "renders"), { recursive: true });
+    let rotRender = {};
+    try {
+      rotRender = JSON.parse(fs.readFileSync(path.join(vDir, "roteiro.json"), "utf8"));
+    } catch {}
+    const { args: argsRender, env: envRender, avisos: avisosRender } = montarArgsRender(obterPerfil(rotRender), process.argv.slice(4));
+    avisosRender.forEach((a) => console.warn(`⚠️ ${a}`));
     execFileSync(
       "npx",
-      ["--yes", `hyperframes@${HYPERFRAMES_VERSION}`, "render", path.relative(ROOT, vDir), "--output", outMp4],
-      { stdio: "inherit" }
+      ["--yes", `hyperframes@${HYPERFRAMES_VERSION}`, "render", path.relative(ROOT, vDir), "--output", outMp4, ...argsRender],
+      { stdio: "inherit", env: { ...process.env, ...envRender } }
     );
     console.log(`\n🎉 Renderização concluída! Arquivo: ${path.relative(ROOT, outMp4)}\n`);
     break;
@@ -347,7 +354,8 @@ Comandos disponíveis:
   npm run video:audit:fast -- <slug>      Auditoria visual determinística ultra-rápida (100% offline)
   npm run video:dev -- <slug>             Abre o estúdio/preview do vídeo no navegador
   npm run video:snapshot -- <slug>        Captura 5 snapshots visuais para verificação rápida
-  npm run video:render -- <slug>          Renderiza o arquivo MP4 final em videos/<slug>/renders/
+  npm run video:render -- <slug> [--4k] [--workers=N] [--low-memory] [--resume] [--crf=N]
+                                          Renderiza o MP4 final em videos/<slug>/renders/ (flags extras só no horizontal)
   npm run video:upload -- <slug>          Publica o vídeo MP4 no YouTube e TikTok
   npm run video:status                    Exibe o painel de status ao vivo das APIs conectadas
   npm run video:agendados                 Lista e processa a fila de vídeos agendados
