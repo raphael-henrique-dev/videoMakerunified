@@ -8,6 +8,7 @@ import * as linhaDoTempo from "./linha-do-tempo.js";
 import * as numeroGrande from "./numero-grande.js";
 import * as diagramaFluxo from "./diagrama-fluxo.js";
 import * as mascoteExplica from "./mascote-explica.js";
+import { fundoAnimado } from "./util.js";
 
 export const CENAS = {
   "capitulo-titulo": capituloTitulo,
@@ -37,7 +38,11 @@ export function validarCena(cena) {
 export function desenharCena(tipo, dados, perfil, t, duracao, ctx = {}) {
   const mod = CENAS[tipo];
   if (!mod) throw new Error(`Tipo de cena desconhecido: '${tipo}'.`);
-  return mod.desenhar(dados || {}, perfil, t, duracao, ctx);
+  const html = mod.desenhar(dados || {}, perfil, t, duracao, ctx);
+  // Injeta o fundo animado como primeira camada da moldura (atrás do conteúdo).
+  const corte = html.indexOf(">");
+  if (corte === -1) return html;
+  return html.slice(0, corte + 1) + fundoAnimado(perfil, t) + html.slice(corte + 1);
 }
 
 export function cenaUsaMascote(tipo) {
